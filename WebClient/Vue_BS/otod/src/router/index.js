@@ -20,7 +20,6 @@ const routes = [
     name: 'Login',
     component: Login
   }
-
 ]
 
 const routerObj = new Router({
@@ -28,9 +27,23 @@ const routerObj = new Router({
   mode: 'history'
 })
 
-
+// 跳转检测是否需要验证
 routerObj.beforeEach((to, from, next) => {
-    //  let token = store.state.token;
+  // 从store获取token
+  let token = store.state.token
 
+  // 当需要验证且无token时候
+  if (to.requireAuth && (token === null)) {
+    alert('Auth:' + to.requireAuth + ',token:' + token)
+
+    next({
+      path: '/login',
+      query: {redirect: to.fullPath}
+    })
+  } else {
+    // 无需验证
+    next()
+  }
 })
+
 export default routerObj

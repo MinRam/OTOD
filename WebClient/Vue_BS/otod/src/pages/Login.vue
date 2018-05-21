@@ -1,6 +1,6 @@
 <template>
     <div id="login" >
-        <div class="about-Index-showcase ready show-login" prima-component="text">
+        <div class="about-Index-showcase ready" :class="indexShow" prima-component="text">
             <div class="form_container" >
                 <div class="form_header">
                     <h1 class="logo-word large" id="logo">
@@ -16,10 +16,30 @@
                  </div>
                 <div class="form_content">
                     <div id="signup_forms" class="signup_forms clearfix">
-                        <button class="signup_forms_submit" id="signup_forms_submit">
-                            <span>开始吧</span>
+                        <div id="signup_forms_container" class="signup_forms_container clearfix animated">
+                            <div id="signup_forms_panel" class="signup_forms_panel clearfix">
+                                <form id="sign_forms" method="post">
+                                    <div>
+                                        <div class="form_row form_row_phone">
+                                            <label for="signup_phone">手机号</label>
+                                            <input id="signup_phone" type="text" onkeypress="return event.keyCode >= 48 && event.keyCode <= 57" ng-pattern="/[^a-zA-Z]/" placeholder="请输入手机"/>
+                                         </div>
+                                        <div class="form_row form_row_username">
+                                            <label for="signup_username">用户名</label>
+                                            <input id="signup_username" type="text" placeholder="输入用户名"/>
+                                         </div>
+                                        <div class="form_row form_row_password">
+                                            <label for="signup_password">密码</label>
+                                            <input id="signup_passord" type="password" placeholder="请输入用户密码"/>
+                                         </div>
+                                    </div>
+                                 </form>
+                             </div>
+                         </div>
+                        <button class="signup_forms_submit active" id="signup_forms_submit">
+                            <span>{{signup_started_btn}}</span>
                          </button>
-                        <button class="signup_forms_submit" id="signup_login_button">
+                        <button class="signup_forms_submit active" id="signup_login_button">
                             <span>登录</span>
                          </button>
                      </div>
@@ -38,9 +58,7 @@
                  </div>
              </div>
             <div class="showcase-pagination">
-                <div class="dot active" title="注册"></div>
-                <div class="dot" title="用起来真是简单到难以解释。"></div>
-                <div class="dot" title="Tumblr 就是众多博客。"></div>
+                <div class="dot" v-for="(item,index) in dotObjects" :class="{'active': item.dotActive}" :key="index" :title="item.title"/>
              </div>
          </div>
         <div class="icon-header-container" prima-component="header">
@@ -51,7 +69,32 @@
 
 <script>
 export default {
-  name: 'Login'
+  name: 'Login',
+  data () {
+    return {
+      signup_started_btn: '开始吧',
+
+      indexShow: 'show-login',
+
+      dotObjects: [{
+        dotActive: true,
+        title: '注册'
+      }, {
+        dotActive: false,
+        title: '用起来真是简单到难以解释。'
+      }, {
+        dotActive: false,
+        title: 'OTOD就是众多博客。'
+      }
+      ]
+    }
+  },
+  mounted () {
+    window.addEventListener('scroll', this.handleScroll)
+  }
+  method（）{
+
+  }
 }
 </script>
 
@@ -64,6 +107,10 @@ export default {
 
 a:hover{
     text-decoration: none;
+}
+
+.clearfix{
+    zoom: 1;
 }
 
 .about-Index-showcase{
@@ -110,6 +157,11 @@ a:hover{
     opacity: 1;
     width: 300px;
     position:relative;
+    z-index: 3;
+    transition-property: left, opacity;
+    transition-duration: 0.25s;
+    transition-timing-function: ease;
+    box-sizing: border-box;
 }
 
 #signup_forms_submit{
@@ -124,7 +176,12 @@ a:hover{
     border:none;
 }
 
+.signup_forms_submit.active{
+    display:block;
+}
+
  .signup_forms_submit {
+    display:none;
     width:100%;
     height:45px;
     margin-top:12px;

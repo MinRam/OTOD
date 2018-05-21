@@ -16,12 +16,10 @@ const state = {
 
 const mutations = {
   [LOGIN] (state, permission) {
-    state.auths = permission
-    state.isLogin = true
+    state.token = permission
   },
   [LOGOUT] (state) {
-    state.auths = []
-    state.isLogin = false
+    state.token = []
   }
 }
 
@@ -32,7 +30,7 @@ const user = {
 
 const getters = {
   user: ({ user }) => user,
-  auths: ({ user }) => user.auths
+  token: ({ user }) => user.token
 }
 
 Vue.use(Vuex)
