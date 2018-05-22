@@ -16,7 +16,7 @@
                  </div>
                 <div class="form_content">
                     <div id="signup_forms" class="signup_forms clearfix">
-                        <div id="signup_forms_container" class="signup_forms_container clearfix animated">
+                        <div id="signup_forms_container" class="signup_forms_container clearfix animated" style="display: none">
                             <div id="signup_forms_panel" class="signup_forms_panel clearfix">
                                 <form id="sign_forms" method="post">
                                     <div>
@@ -46,19 +46,20 @@
                  </div>
              </div>
             <div class="showcase">
-                <div class="section login-section active" data-section="login" section-title="注册" style="z-index:3">
+                <div class="section login-section" :class="{'active': showcaseObjects[0].active,'old-hat': showcaseObjects[0].oldHatActive}" section-title="注册" style="z-index:3">
                     <div id="fullscreen_post_bg" class="fullscreen_post_bg" style= "background-image:url(./static/backgrounds/tumblr_register_1280.jpg)" ></div>
                     <div class="about-Index-btn">What is OTOD?</div>
                  </div>
-                <div class="section about-section" data-section="about" section-title="关于" style="z-index:2"></div>
-                <div class="section welcome-section" data-section="welcome" section-title="好吧，这个不难解释。" style="z-index:1">
+                <div class="section about-section" :class="{'active': showcaseObjects[1].active,'old-hat':showcaseObjects[1].oldHatActive}" section-title="关于" style="z-index:2"></div>
+                <div class="section welcome-section" :class="{'active': showcaseObjects[2].active,'old-hat':showcaseObjects[2].oldHatActive}" section-title="好吧，这个不难解释。" style="z-index:1">
                     <div class="section-wrapper">
                         <div class="fullscreen_post_bg" style="background-image:url(./static/backgrounds/tumblr_welcome_1280.gif)"></div>
                      </div>
                  </div>
              </div>
             <div class="showcase-pagination">
-                <div class="dot" v-for="(item,index) in dotObjects" :class="{'active': item.dotActive}" :key="index" :title="item.title"/>
+                <div class="dot" v-for="(item,index) in dotObjects" :class="{'active': item.dotActive}" :key="index"
+                 :title="item.title" @click="dotsScroll(index)" />
              </div>
          </div>
         <div class="icon-header-container" prima-component="header">
@@ -76,6 +77,24 @@ export default {
 
       indexShow: 'show-login',
 
+      // showcase 响应控制对象
+      showcaseObjects: [{
+        active: true,
+        oldHatActive: false,
+        dataSection: 'login'
+      }, {
+        active: false,
+        oldHatActive: false,
+        dataSection: 'about'
+      }, {
+        active: false,
+        oldHatActive: false,
+        dataSection: 'welcome'
+      }],
+
+      currentShowcase: 0,
+
+      // dots 响应对象信息
       dotObjects: [{
         dotActive: true,
         title: '注册'
@@ -85,15 +104,46 @@ export default {
       }, {
         dotActive: false,
         title: 'OTOD就是众多博客。'
-      }
-      ]
+      }]
     }
   },
   mounted () {
-    window.addEventListener('scroll', this.handleScroll)
-  }
-  method（）{
+    window.addEventListener('mouseWheel', this.handleScroll, false)
+    window.addEventListener('DOMMouseScroll', this.handleScroll, false)
+  },
+  methods: {
+    // 滚轮实现轮播
+    handleScroll: function (event) {
+      event = event || window.event
+      if (event.wheelDelta) {
+        // var div=document.getElementById("table");
+        if (event.wheelDelta > 0) {
+          console.log('up')
+        }
+        if (event.wheelDelta < 0) {
+          console.log('down')
+        }
+      }
+    },
+    // dots 点击跳转 showcase
+    dotsScroll: function (index) {
+      this.showcaseObjects[this.currentShowcase].active = false
+      this.showcaseObjects[index].active = true
+      this.dotObjects[this.currentShowcase].dotActive = false
+      this.dotObjects[index].dotActive = true
 
+      this.indexShow = 'show-' + this.showcaseObjects[index].dataSection
+
+      for (var showcaseIndex = 0; showcaseIndex < this.showcaseObjects.length; ++showcaseIndex) {
+        if (showcaseIndex < index) {
+          this.showcaseObjects[showcaseIndex].oldHatActive = true
+        } else {
+          this.showcaseObjects[showcaseIndex].oldHatActive = false
+        }
+      }
+
+      this.currentShowcase = index
+    }
   }
 }
 </script>

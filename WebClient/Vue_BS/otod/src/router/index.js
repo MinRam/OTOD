@@ -8,17 +8,17 @@ Vue.use(Router)
 
 const routes = [
   {
+    path: '/login',
+    name: 'Login',
+    component: Login
+  },
+  {
     path: '/',
     name: 'HelloWorld',
     meta: {
       requireAuth: true
     },
     component: HelloWorld
-  },
-  {
-    path: '/login',
-    name: 'Login',
-    component: Login
   }
 ]
 
