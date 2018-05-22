@@ -16,26 +16,24 @@
                  </div>
                 <div class="form_content">
                     <div id="signup_forms" class="signup_forms clearfix">
-                        <div id="signup_forms_container" class="signup_forms_container clearfix animated" style="display: none">
+                        <div class="signup_forms_container clearfix" id="signup_forms_container">
                             <div id="signup_forms_panel" class="signup_forms_panel clearfix">
                                 <form id="sign_forms" method="post">
                                     <div>
                                         <div class="form_row form_row_phone">
-                                            <label for="signup_phone">手机号</label>
-                                            <input id="signup_phone" type="text" onkeypress="return event.keyCode >= 48 && event.keyCode <= 57" ng-pattern="/[^a-zA-Z]/" placeholder="请输入手机"/>
+                                            <input id="signup_phone" type="text" onkeypress="return event.keyCode >= 48 && event.keyCode <= 57" ng-pattern="/[^a-zA-Z]/" placeholder="手机号"/>
                                          </div>
                                         <div class="form_row form_row_username">
-                                            <label for="signup_username">用户名</label>
-                                            <input id="signup_username" type="text" placeholder="输入用户名"/>
+                                            <input id="signup_username" type="text" placeholder="用户名"/>
                                          </div>
                                         <div class="form_row form_row_password">
-                                            <label for="signup_password">密码</label>
-                                            <input id="signup_passord" type="password" placeholder="请输入用户密码"/>
+                                            <input id="signup_passord" type="password" placeholder="用户密码"/>
                                          </div>
                                     </div>
                                  </form>
                              </div>
                          </div>
+                        <ul class="signup_forms_errors" id="signup_forms_errors" style="display:none"></ul>
                         <button class="signup_forms_submit active" id="signup_forms_submit">
                             <span>{{signup_started_btn}}</span>
                          </button>
@@ -48,7 +46,15 @@
             <div class="showcase">
                 <div class="section login-section" :class="{'active': showcaseObjects[0].active,'old-hat': showcaseObjects[0].oldHatActive}" section-title="注册" style="z-index:3">
                     <div id="fullscreen_post_bg" class="fullscreen_post_bg" style= "background-image:url(./static/backgrounds/tumblr_register_1280.jpg)" ></div>
-                    <div class="about-Index-btn">What is OTOD?</div>
+                    <!-- <div class="fullscreen_post_footer">
+                        <div class="fullscreen_post_footer_inner">
+                            <div class="footer_legal_links">
+                                <a  href="https://www.baidu.com" target="_blank" class="">
+                             </div>
+                            <div class="fullscreen_post_posted_by_show"></div>
+                        </div>
+                     </div> -->
+                    <div class="about-Index-btn" @click="nextShowcase()" >What is OTOD?</div>
                  </div>
                 <div class="section about-section" :class="{'active': showcaseObjects[1].active,'old-hat':showcaseObjects[1].oldHatActive}" section-title="关于" style="z-index:2"></div>
                 <div class="section welcome-section" :class="{'active': showcaseObjects[2].active,'old-hat':showcaseObjects[2].oldHatActive}" section-title="好吧，这个不难解释。" style="z-index:1">
@@ -59,7 +65,7 @@
              </div>
             <div class="showcase-pagination">
                 <div class="dot" v-for="(item,index) in dotObjects" :class="{'active': item.dotActive}" :key="index"
-                 :title="item.title" @click="dotsScroll(index)" />
+                 :title="item.title" @click="setShowcase(index)" />
              </div>
          </div>
         <div class="icon-header-container" prima-component="header">
@@ -76,6 +82,7 @@ export default {
       signup_started_btn: '开始吧',
 
       indexShow: 'show-login',
+      indexAnimate: false,
 
       // showcase 响应控制对象
       showcaseObjects: [{
@@ -108,6 +115,7 @@ export default {
     }
   },
   mounted () {
+    window.onmousewheel = document.onmousewheel = this.handleScroll
     window.addEventListener('mouseWheel', this.handleScroll, false)
     window.addEventListener('DOMMouseScroll', this.handleScroll, false)
   },
@@ -115,24 +123,24 @@ export default {
     // 滚轮实现轮播
     handleScroll: function (event) {
       event = event || window.event
-      if (event.wheelDelta) {
-        // var div=document.getElementById("table");
-        if (event.wheelDelta > 0) {
-          console.log('up')
-        }
-        if (event.wheelDelta < 0) {
-          console.log('down')
-        }
+      if (event.wheelDelta && !this.indexAnimate) {
+        event.wheelDelta > 0 && this.preShowcase()
+        event.wheelDelta < 0 && this.nextShowcase()
       }
     },
-    // dots 点击跳转 showcase
-    dotsScroll: function (index) {
-      this.showcaseObjects[this.currentShowcase].active = false
-      this.showcaseObjects[index].active = true
-      this.dotObjects[this.currentShowcase].dotActive = false
-      this.dotObjects[index].dotActive = true
 
-      this.indexShow = 'show-' + this.showcaseObjects[index].dataSection
+    nextShowcase () {
+      this.currentShowcase < this.showcaseObjects.length - 1 && this.setShowcase(this.currentShowcase + 1)
+    },
+
+    preShowcase () {
+      this.currentShowcase > 0 && this.setShowcase(this.currentShowcase - 1)
+    },
+
+    setShowcase (index) {
+
+      this.indexAnimate = true
+      this.indexShow = 'show'
 
       for (var showcaseIndex = 0; showcaseIndex < this.showcaseObjects.length; ++showcaseIndex) {
         if (showcaseIndex < index) {
@@ -142,7 +150,23 @@ export default {
         }
       }
 
+      setTimeout(() => {
+        this._resetAnimating(),
+        this._setActiveShowcase(index)
+      }, 200)
+    },
+
+    _resetAnimating () {
+      setTimeout(this.indexAnimate = false, 200)
+    },
+
+    _setActiveShowcase (index) {
+      this.showcaseObjects[this.currentShowcase].active = false
+      this.showcaseObjects[index].active = true
+      this.dotObjects[this.currentShowcase].dotActive = false
+      this.dotObjects[index].dotActive = true
       this.currentShowcase = index
+      this.indexShow = 'show-' + this.showcaseObjects[index].dataSection
     }
   }
 }
@@ -179,7 +203,7 @@ a:hover{
     margin-left:-400px;
     position: absolute;
     box-sizing: border-box;
-    margin-top:-150px;
+    margin-top:-180px;
     z-index: 5;
     display:none;
 }
@@ -213,7 +237,27 @@ a:hover{
     transition-timing-function: ease;
     box-sizing: border-box;
 }
-
+.signup_forms input{
+    width: 100%;
+    padding: 11px 10px 11px 13px;
+    display: block;
+    margin: 0;
+    border: none;
+    background: none;
+    font: 16px/1.4 "Helvetica Neue", "HelveticaNeue", Helvetica, Arial, sans-serif;
+    box-sizing: border-box;
+}
+.signup_forms_container{
+    opacity: 1;
+    position: relative;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background: #fff;
+    border-radius: 2px;
+    background-clip: padding-box;
+    transition: opacity 0.5s ease;
+}
 #signup_forms_submit{
     background:#529ecc;
     color:#fff;
