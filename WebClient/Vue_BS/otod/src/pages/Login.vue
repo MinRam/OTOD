@@ -14,30 +14,30 @@
                     <h2 class="section-title">解释完毕~</h2>
                     <p class="subheading">好吧，我也不知道写什么。</p>
                  </div>
-                <div class="form_content">
+                <div class="form_content" :class="{'show-forms': showForms, 'has-errors':hasErrors}">
                     <div id="signup_forms" class="signup_forms clearfix">
                         <div class="signup_forms_container clearfix" id="signup_forms_container">
-                            <div id="signup_forms_panel" class="signup_forms_panel clearfix">
-                                <form id="sign_forms" method="post">
-                                    <div>
-                                        <div class="form_row form_row_phone">
-                                            <input id="signup_phone" type="text" onkeypress="return event.keyCode >= 48 && event.keyCode <= 57" ng-pattern="/[^a-zA-Z]/" placeholder="手机号"/>
-                                         </div>
+                            <div id="signup_forms_panel" class="signup_forms_panel clearfix" :class="forms_type">
+                                <form id="sign_forms" method="post" >
+                                    <div id="signup_account" class="signup_view account login" :class="{'active':formsActive}">
                                         <div class="form_row form_row_username">
                                             <input id="signup_username" type="text" placeholder="用户名"/>
                                          </div>
                                         <div class="form_row form_row_password">
-                                            <input id="signup_passord" type="password" placeholder="用户密码"/>
+                                            <input id="signup_password" type="password" placeholder="用户密码"/>
+                                         </div>
+                                        <div class="form_row form_row_phone">
+                                            <input id="signup_phone" type="text" onkeypress="return event.keyCode >= 48 && event.keyCode <= 57" ng-pattern="/[^a-zA-Z]/" placeholder="手机号"/>
                                          </div>
                                     </div>
                                  </form>
                              </div>
                          </div>
                         <ul class="signup_forms_errors" id="signup_forms_errors" style="display:none"></ul>
-                        <button class="signup_forms_submit active" id="signup_forms_submit">
+                        <button class="signup_forms_submit" :class="{'active':signupBtnActive}" id="signup_forms_submit" @click="signupBtnClick()">
                             <span>{{signup_started_btn}}</span>
                          </button>
-                        <button class="signup_forms_submit active" id="signup_login_button">
+                        <button class="signup_forms_submit" :class="{'active':signinBtnActive}" id="signup_login_button" @click="signinBtnClick()">
                             <span>登录</span>
                          </button>
                      </div>
@@ -79,10 +79,21 @@ export default {
   name: 'Login',
   data () {
     return {
+      // 按钮文本 '开始吧'/'注册'
       signup_started_btn: '开始吧',
 
-      indexShow: 'show-login',
-      indexAnimate: false,
+      forms_type: '',
+
+      // showcase 状态flags
+      indexShow: 'show-login', // 'show-' + dataSection
+      indexAnimate: false, // 变换flag ，为假时候才可变换
+      hasErrors: false, // 存在错误flag
+
+      // 表单类型 'signup_view' / 'signin_view'
+      showForms: false, // 展示表单状态
+      formsActive: false, // 表单激活
+      signupBtnActive: true, // 注册按钮
+      signinBtnActive: true, // 登录按钮
 
       // showcase 响应控制对象
       showcaseObjects: [{
@@ -99,6 +110,7 @@ export default {
         dataSection: 'welcome'
       }],
 
+      // 当前激活属性<showcase>
       currentShowcase: 0,
 
       // dots 响应对象信息
@@ -115,11 +127,27 @@ export default {
     }
   },
   mounted () {
+    // 键盘监听注册
+    document.onkeydown = this.keyDownEvent
+
+    // 滚轮监听注册
     window.onmousewheel = document.onmousewheel = this.handleScroll
     window.addEventListener('mouseWheel', this.handleScroll, false)
     window.addEventListener('DOMMouseScroll', this.handleScroll, false)
   },
   methods: {
+    // 注册按钮
+    signupBtnClick () {
+      this.formsActive = true
+      this.signinBtnActive = false
+      this.signup_started_btn = '注册'
+      this.showForms = true
+    },
+
+    signinBtnClick () {
+      this.signupBtnActive = false
+    },
+
     // 滚轮实现轮播
     handleScroll: function (event) {
       event = event || window.event
@@ -129,17 +157,35 @@ export default {
       }
     },
 
+    // 键盘实现轮播
+    keyDownEvent: function (event) {
+      event = event || window.event
+      switch (event.keyCode) {
+        case 40:
+        case 74:
+          this.nextShowcase()
+          break
+        case 38:
+        case 75:
+          this.preShowcase()
+          break
+      }
+    },
+
+    // 下一页
     nextShowcase () {
       this.currentShowcase < this.showcaseObjects.length - 1 && this.setShowcase(this.currentShowcase + 1)
     },
 
+    // 上一页
     preShowcase () {
       this.currentShowcase > 0 && this.setShowcase(this.currentShowcase - 1)
     },
 
+    // 设定第index页的shwocase
     setShowcase (index) {
-
       this.indexAnimate = true
+      // console.log('[scrollEvent]' + this.indexAnimate)
       this.indexShow = 'show'
 
       for (var showcaseIndex = 0; showcaseIndex < this.showcaseObjects.length; ++showcaseIndex) {
@@ -151,15 +197,18 @@ export default {
       }
 
       setTimeout(() => {
-        this._resetAnimating(),
+        this._resetAnimating()
         this._setActiveShowcase(index)
       }, 200)
     },
 
+    // 重置animating属性
     _resetAnimating () {
-      setTimeout(this.indexAnimate = false, 200)
+      setTimeout(this.indexAnimate = false, 300)
+      // console.log('[scrollEvent]' + this.indexAnimate)
     },
 
+    // 设置激活showcase
     _setActiveShowcase (index) {
       this.showcaseObjects[this.currentShowcase].active = false
       this.showcaseObjects[index].active = true
@@ -226,29 +275,56 @@ a:hover{
 }
 
 .signup_forms{
-    margin-left:-155px;
-    left:50%;
+    margin-left: -155px;
+    left: 50%;
     opacity: 1;
     width: 300px;
-    position:relative;
+    position: relative;
     z-index: 3;
+    -webkit-transition-property: left, opacity;
     transition-property: left, opacity;
+    -webkit-transition-duration: 0.25s;
     transition-duration: 0.25s;
+    -webkit-transition-timing-function: ease;
     transition-timing-function: ease;
+    -webkit-box-sizing: border-box;
     box-sizing: border-box;
 }
 .signup_forms input{
+    outline: none;
+    box-shadow: none;
+    border-radius: 0;
     width: 100%;
     padding: 11px 10px 11px 13px;
     display: block;
     margin: 0;
     border: none;
-    background: none;
+    background: #fff;
     font: 16px/1.4 "Helvetica Neue", "HelveticaNeue", Helvetica, Arial, sans-serif;
     box-sizing: border-box;
 }
-.signup_forms_container{
+.signup_forms .signup_forms_errors{
+    list-style-type: none;
+    border-radius: 2px;
+    margin: -2px 0 0 0;
+    padding: 0;
+    overflow: hidden;
+    clear: both;
+    opacity: 0;
+    max-height: 0;
+    transition-property: max-height, opacity, margin;
+    transition-duration: 0.5s;
+    transition-delay: 0.5s;
+    transition-timing-function: ease;
+}
+
+.show-forms .signup_forms_container{
+    background: transparent;
     opacity: 1;
+}
+
+.signup_forms_container{
+    opacity: 0;
     position: relative;
     margin: 0;
     padding: 0;
@@ -258,6 +334,38 @@ a:hover{
     background-clip: padding-box;
     transition: opacity 0.5s ease;
 }
+
+.signup_forms .signup_forms_panel{
+    position: relative;
+    left: -1024px;
+    width: 3000px;
+    transition-property: left;
+    transition-duration: 0.5s;
+    transition-timing-function: ease;
+    box-sizing: border-box;
+}
+
+.signup_forms .signup_forms_panel .signup_view{
+    max-height: 1px;
+    position: relative;
+    float: left;
+    width: 300px;
+    overflow: hidden;
+    padding-right: 260px;
+    transition-property: max-height, opacity;
+    transition-duration: 0.5s;
+    transition-timing-function: ease;
+}
+
+.show-forms .signup_forms .signup_forms_panel{
+    left: -0px;
+}
+
+.signup_forms .signup_forms_panel .signup_view.login.active{
+    max-height: 200px;
+}
+
+
 #signup_forms_submit{
     background:#529ecc;
     color:#fff;
@@ -315,6 +423,7 @@ a:hover{
     text-align: center;
     font-size: 16px;
     color:#F6F8FC;
+    white-space: nowrap;
 }
 
 .about-Index-showcase .section.login-section{
