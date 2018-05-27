@@ -4,8 +4,10 @@
     padding:0px;
 }
 
-a:hover{
+a{
     text-decoration: none;
+    outline: none;
+    color: #fff;
 }
 
 .clearfix{
@@ -137,8 +139,12 @@ a:hover{
     left: -0px;
 }
 
-.signup_forms .signup_forms_panel .signup_view.login.active{
+.signup_forms .signup_forms_panel.signup .signup_view.active{
     max-height: 200px;
+}
+
+.signup_forms .signup_forms_panel.signin .signup_view.active{
+    max-height: 88px;
 }
 
 
@@ -172,6 +178,14 @@ a:hover{
 
 .logo-word.large{
     float:none;
+}
+
+.logo_anchor{
+    position: relative;
+    margin: 50%;
+    left: -76px;
+    font-size: 45px;
+    color: #fff;
 }
 
 .about-Index-showcase .section-title{
@@ -265,13 +279,47 @@ a:hover{
 
 /* the fullscreen background */
 .fullscreen_post_bg{
-    position:fixed;
+    position: fixed;
     top:0;
     right:0;
     bottom:0;
     left:0;
     background-position: 50% 50%;
 }
+
+.fullscreen_post_footer{
+    position: absolute;
+    bottom: 45px;
+    left: 0px;
+    right: 0px;
+    background-color: transparent;
+    transition: bottom .3s ease-out 1.7s;
+}
+
+.fullscreen_post_footer .fullscreen_post_footer_inner{
+    height: 210px;
+}
+
+.fullscreen_post_footer .fullscreen_post_footer_inner .footer_legal_links{
+    position: absolute;
+    bottom: 0px;
+    opacity: 1;
+    padding: 0 20px;
+    margin: 0 0 13px 0;
+    line-height: 25px;
+    transition: opacity 0.2s linear;
+}
+
+.fullscreen_post_footer .fullscreen_post_footer_inner .footer_legal_links a{
+    color: #D1D1D1;
+    font-size: 14px;
+    padding-right: 5px;
+    padding-left: 5px;
+    margin-left: -5px;
+    font-weight: normal;
+    display: inline-block;
+}
+
 
 .about-Index-showcase .section .fullscreen_post_bg{
     background-size:0 0;

@@ -4,7 +4,7 @@
             <div class="form_container" >
                 <div class="form_header">
                     <h1 class="logo-word large" id="logo">
-                        <a class = "logo_anchor" href="/" >OneTeamOneDream</a>
+                        <a class = "logo_anchor" href="/" >OTOD</a>
                      </h1>
                     <h2 class="subheading">
                         为你的所爱而来。<br>为你的发现停留。
@@ -17,9 +17,9 @@
                 <div class="form_content" :class="{'show-forms': showForms, 'has-errors':hasErrors}">
                     <div id="signup_forms" class="signup_forms clearfix">
                         <div class="signup_forms_container clearfix" id="signup_forms_container">
-                            <div id="signup_forms_panel" class="signup_forms_panel clearfix" :class="forms_type">
+                            <div id="signup_forms_panel" class="signup_forms_panel clearfix" :class="formType">
                                 <form id="sign_forms" method="post" >
-                                    <div id="signup_account" class="signup_view account login" :class="{'active':formsActive}">
+                                    <div id="signup_account" class="signup_view" :class="{'active':formsActive}">
                                         <div class="form_row form_row_username">
                                             <input id="signup_username" type="text" placeholder="用户名"/>
                                          </div>
@@ -46,14 +46,17 @@
             <div class="showcase">
                 <div class="section login-section" :class="{'active': showcaseObjects[0].active,'old-hat': showcaseObjects[0].oldHatActive}" section-title="注册" style="z-index:3">
                     <div id="fullscreen_post_bg" class="fullscreen_post_bg" style= "background-image:url(./static/backgrounds/tumblr_register_1280.jpg)" ></div>
-                    <!-- <div class="fullscreen_post_footer">
+                    <div class="fullscreen_post_footer">
                         <div class="fullscreen_post_footer_inner">
                             <div class="footer_legal_links">
-                                <a  href="https://www.baidu.com" target="_blank" class="">
+                                <a href="https://www.baidu.com" target="_blank">使用条款</a>
+                                <a href="https://www.baidu.com" target="_blank">客户隐私</a>
+                                <a href="https://www.baidu.com" target="_blank">客户反馈</a>
+                                <a href="https://www.baidu.com" target="_blank">相关证书</a>
                              </div>
                             <div class="fullscreen_post_posted_by_show"></div>
                         </div>
-                     </div> -->
+                     </div>
                     <div class="about-Index-btn" @click="nextShowcase()" >What is OTOD?</div>
                  </div>
                 <div class="section about-section" :class="{'active': showcaseObjects[1].active,'old-hat':showcaseObjects[1].oldHatActive}" section-title="关于" style="z-index:2"></div>
@@ -80,9 +83,7 @@ export default {
   data () {
     return {
       // 按钮文本 '开始吧'/'注册'
-      signup_started_btn: '开始吧',
-
-      forms_type: '',
+      signup_started_btn: '注册',
 
       // showcase 状态flags
       indexShow: 'show-login', // 'show-' + dataSection
@@ -92,6 +93,7 @@ export default {
       // 表单类型 'signup_view' / 'signin_view'
       showForms: false, // 展示表单状态
       formsActive: false, // 表单激活
+      formType: '', // 表单类型 signup/signin
       signupBtnActive: true, // 注册按钮
       signinBtnActive: true, // 登录按钮
 
@@ -141,6 +143,7 @@ export default {
       if (this.showForms) {
 
       } else {
+        this.formType = 'signup'
         this.formsActive = true
         this.signinBtnActive = false
         this.signup_started_btn = '注册'
@@ -150,7 +153,14 @@ export default {
 
     // 登录按钮
     signinBtnClick () {
-      this.signupBtnActive = false
+      if (this.showForms) {
+
+      } else {
+        this.formType = 'signin'
+        this.formsActive = true
+        this.signupBtnActive = false
+        this.showForms = true
+      }
     },
 
     // 滚轮实现轮播
