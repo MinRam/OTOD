@@ -11,7 +11,8 @@ export const actions = {}
 
 // module
 const state = {
-  token: null
+  token: null,
+  isLogin: false
 }
 
 const mutations = {

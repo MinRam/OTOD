@@ -86,6 +86,9 @@
 <script>
 export default {
   name: 'HelloWorld',
+  create () {
+    console.log('mainPage')
+  },
   data () {
     return {
       msg: 'Welcome to Your Vue.js App'

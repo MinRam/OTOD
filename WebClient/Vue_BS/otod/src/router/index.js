@@ -33,7 +33,7 @@ routerObj.beforeEach((to, from, next) => {
   let token = store.state.token
 
   // 当需要验证且无token时候
-  if (to.requireAuth && (token === null)) {
+  if (to.meta.requireAuth && (token === null)) {
     alert('Auth:' + to.requireAuth + ',token:' + token)
 
     next({
