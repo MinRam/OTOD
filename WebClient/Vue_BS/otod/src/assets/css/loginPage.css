@@ -349,24 +349,24 @@ a{
 }
 
 .about-Index-showcase.show-about .showcase .about-section .section-wrapper .about-graphic g.bottom-left{
-    animation: aboutGraphic-bottom-left 2s ease-out .1s;
+    animation: aboutGraphic-bottom-left 2s ease-out 0s;
     animation-fill-mode: forwards;
 }
 .about-Index-showcase.show-about .showcase .about-section .section-wrapper .about-graphic g.bottom-right{
-    animation: aboutGraphic-bottom-right 2s ease-out .1s;
+    animation: aboutGraphic-bottom-right 2s ease-out 0s;
     animation-fill-mode: forwards;
 }
 .about-Index-showcase.show-about .showcase .about-section .section-wrapper .about-graphic g.top-left{
-    animation: aboutGraphic-top-left 2s ease-out .1s;
+    animation: aboutGraphic-top-left 2s ease-out 0s;
      animation-fill-mode: forwards;
 }
 .about-Index-showcase.show-about .showcase .about-section .section-wrapper .about-graphic g.top-right{
-    animation: aboutGraphic-top-right 2s ease-out .1s;
+    animation: aboutGraphic-top-right 2s ease-out 0s;
      animation-fill-mode: forwards;
 }
 
-.about-Index-showcase.show-about .showcase .about-section .section-wrapper .about-graphic g.big-t{
-    animation: aboutGraphic-big-T 2s ease-out .1s;
+.about-Index-showcase.show-about .showcase .about-section .section-wrapper .about-graphic g.big-t path{
+    animation: aboutGraphic-big-T 2s ease-out .2s;
     animation-fill-mode: forwards;
 }
 
@@ -515,7 +515,7 @@ a{
 
     to{
         opacity: 1;
-        transform: translateX(0%) translateY(0%) ;
+        transform: translateX(0%) translateY(0%)
     }
  }
 
@@ -527,15 +527,15 @@ a{
 
     to{
         opacity: 1;
-        transform: translateX(0%) translateY(0%);
+        transform: translateX(0%) translateY(0%)
     }
  }
 
  @keyframes aboutGraphic-big-T{
     0%{
-        scale:0;
+        opacity: 0
     }
     to{
-        scale:1;
+        opacity: 1
     }
  }
