@@ -234,7 +234,7 @@ a{
     text-align:center;
     margin-bottom: 15px;
     color: #fff;
-    font-size: 34px;
+    font-size: 53px;
     font-family: Gibson,Helvetica Neue,HelveticaNeue,Helvetica,Arial,sans-serif;
     font-weight: 400;
 }
@@ -340,7 +340,7 @@ a{
 }
 
 .showcase .about-section .section-wrapper .about-graphic {
-    height: 280px;
+    height: 600px;
     margin: 0 auto 20px;
     opacity: 1;
     overflow: visible;
