@@ -348,6 +348,23 @@ a{
     opacity: 1;
 }
 
+.about-Index-showcase.show-about .showcase .about-section .section-wrapper .about-graphic g.top{
+    animation: aboutGraphic-top 2s ease-out 0s;
+    animation-fill-mode: forwards;
+}
+.about-Index-showcase.show-about .showcase .about-section .section-wrapper .about-graphic g.bottom{
+    animation: aboutGraphic-bottom 2s ease-out 0s;
+    animation-fill-mode: forwards;
+}
+
+.about-Index-showcase.show-about .showcase .about-section .section-wrapper .about-graphic g.right{
+    animation: aboutGraphic-right 2s ease-out 0s;
+    animation-fill-mode: forwards;
+}
+.about-Index-showcase.show-about .showcase .about-section .section-wrapper .about-graphic g.left{
+    animation: aboutGraphic-left 2s ease-out 0s;
+    animation-fill-mode: forwards;
+}
 .about-Index-showcase.show-about .showcase .about-section .section-wrapper .about-graphic g.bottom-left{
     animation: aboutGraphic-bottom-left 2s ease-out 0s;
     animation-fill-mode: forwards;
@@ -495,6 +512,17 @@ a{
         transform: translateX(0%) translateY(0%)
     }
  }
+ @keyframes aboutGraphic-bottom-right {
+    0%{
+        opacity: 0;
+        transform: translateX(40%) translateY(100%)
+    }
+
+    to{
+        opacity: 1;
+        transform: translateX(0%) translateY(0%)
+    }
+ }
  @keyframes aboutGraphic-bottom-left {
     0%{
         opacity: 0;
@@ -531,6 +559,52 @@ a{
     }
  }
 
+ @keyframes aboutGraphic-top{
+     0%{
+        opacity: 0;
+        transform:  translateY(-100%)
+    }
+
+    to{
+        opacity: 1;
+        transform:  translateY(0%)
+    }
+
+ }
+  @keyframes aboutGraphic-bottom{
+     0%{
+        opacity: 0;
+        transform:  translateY(100%)
+    }
+
+    to{
+        opacity: 1;
+        transform:  translateY(0%)
+    }
+
+ }
+ @keyframes aboutGraphic-right {
+    0%{
+        opacity: 0;
+        transform: translateX(40%)
+    }
+
+    to{
+        opacity: 1;
+        transform: translateX(0%)
+    }
+ }
+  @keyframes aboutGraphic-left {
+    0%{
+        opacity: 0;
+        transform: translateX(-40%)
+    }
+
+    to{
+        opacity: 1;
+        transform: translateX(0%)
+    }
+ }
  @keyframes aboutGraphic-big-T{
     0%{
         opacity: 0
