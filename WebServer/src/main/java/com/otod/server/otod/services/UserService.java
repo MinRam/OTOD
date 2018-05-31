@@ -17,8 +17,18 @@ public class UserService {
 
 //    @Bean
 //    public PasswordEncoder passwordEncoder(){
-//        return BCryptPasswordEncoder();
+//        String idForEncode = "bcrypt";
+
+//        Map encoders = new HashMap<>();
+//        encoders.put(idForEncode, new BCryptPasswordEncoder());
+//        encoders.put("noop", NoOpPasswordEncoder.getInstance());
+//        encoders.put("pbkdf2", new Pbkdf2PasswordEncoder());
+//        encoders.put("scrypt", new SCryptPasswordEncoder());
+//        encoders.put("sha256", new StandardPasswordEncoder());
+//
+//        return new DelegatingPasswordEncoder(idForEncode,encoders);
 //    }
+
     @Bean
     public static NoOpPasswordEncoder passwordEncoder() {
         return (NoOpPasswordEncoder) NoOpPasswordEncoder.getInstance();

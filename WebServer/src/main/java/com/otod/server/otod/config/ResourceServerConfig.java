@@ -18,7 +18,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/","/home","/user/register","/user/login").permitAll()
+                .antMatchers("/","/home","/register","/login").permitAll()
                 .antMatchers("/private/**").authenticated()
                 .antMatchers("/post").authenticated()
                 .antMatchers("/post/postComment").authenticated()
