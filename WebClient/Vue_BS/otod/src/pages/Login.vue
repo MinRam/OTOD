@@ -266,7 +266,7 @@
                                 OTOD 让一切开始流动
                              </h1>
                             <p>
-                                我们让大学的一切流动起来，简单又随心所欲地分享自己的快乐。故事、图片、GIF 动图、电视剧、链接、俏皮话、冷笑话、不冷的笑话、曲目、MP3、视频、时尚、艺术，以及有深度的内容。
+                                我们让大学的一切流动起来，简单又随心所欲地分享自己的快乐。图书、故事、图片、GIF 动图、电视剧、链接、俏皮话、冷笑话、不冷的笑话、曲目、MP3、视频、时尚、艺术，以及有深度的内容。
                             </p>
                          </div>
                      </div>
@@ -343,11 +343,11 @@ export default {
         active: false,
         oldHatActive: false,
         dataSection: 'about'
-      },{
+      }, {
         active: false,
         oldHatActive: false,
         dataSection: 'blog'
-      },{
+      }, {
         active: false,
         oldHatActive: false,
         dataSection: 'welcome'
@@ -366,7 +366,7 @@ export default {
       }, {
         dotActive: false,
         title: 'OTOD有许多精彩多样的博客。'
-      },{
+      }, {
         dotActive: false,
         title: 'OTOD就是众多博客。'
       }],

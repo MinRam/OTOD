@@ -20,9 +20,13 @@ public class UserController  {
         return userService.getAllUsers();
     }
 
-    @PostMapping("/user/registe")
+    @PostMapping("/user/register")
     private void userRegister(@RequestBody User user){
-        userService.registeUser(user);
+        userService.save(user);
     }
 
+    @PostMapping("/post")
+    private String testAuth(){
+        return "success!";
+    }
 }
