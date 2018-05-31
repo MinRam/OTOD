@@ -271,6 +271,11 @@ a{
     display: table;
     text-align: center;
 }
+.about-Index-showcase .section.blog-section{
+    background:#a77dc2;
+    overflow:hidden;
+    text-align:left;
+}
 
 .about-Index-showcase .section.welcome-section{
     padding-top:0px;
@@ -315,13 +320,17 @@ a{
     z-index: 2;
 }
 
-.showcase .welcome-section .section-wrapper {
+.showcase .welcome-section .section-wrapper{
     display: table;
     height: 100%;
     position: relative;
     width: 100%;
     z-index: 2;
     animation: none;
+}
+.shpwcase .blog-section .section-wrapper{
+    margin-left: 180px;
+    margin-top: 150px;
 }
 
 .showcase .about-section .section-wrapper{
@@ -387,8 +396,23 @@ a{
     animation-fill-mode: forwards;
 }
 
+.showcase .section-title{
+    color: #fff;
+    font-family: Gibson,Helvetica Neue,HelveticaNeue,Helvetica,Arial,sans-serif;
+    font-size: 60px;
+    line-height: 1;
+    margin-bottom: 15px;
+}
 
-
+.showcase .blog-section .section-content{
+    margin-bottom:20px;
+    position:relative;
+    left:150px;
+    top:100px;
+    width:500px;
+    z-index:2;
+    line-height: 1.4;
+}
 .showcase .about-section .section-content{
     width: 540px;
     margin: 0 auto;

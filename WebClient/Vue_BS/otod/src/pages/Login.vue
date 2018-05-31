@@ -48,7 +48,7 @@
                  </div>
              </div>
             <div class="showcase">
-                <div class="section login-section" :class="{'active': showcaseObjects[0].active,'old-hat': showcaseObjects[0].oldHatActive}" section-title="注册" style="z-index:3">
+                <div class="section login-section" :class="{'active': showcaseObjects[0].active,'old-hat': showcaseObjects[0].oldHatActive}" section-title="注册" style="z-index:4">
                     <div id="fullscreen_post_bg" class="fullscreen_post_bg" style= "background-image:url(./static/backgrounds/tumblr_register_1280.jpg)" ></div>
                     <div class="fullscreen_post_footer">
                         <div class="fullscreen_post_footer_inner">
@@ -60,7 +60,7 @@
                      </div>
                     <div class="about-Index-btn" @click="nextShowcase()" >What is OTOD?</div>
                  </div>
-                <div class="section about-section" :class="{'active': showcaseObjects[1].active,'old-hat':showcaseObjects[1].oldHatActive}" section-title="关于" style="z-index:2">
+                <div class="section about-section" :class="{'active': showcaseObjects[1].active,'old-hat':showcaseObjects[1].oldHatActive}" section-title="关于" style="z-index:3">
                     <div class="section-wrapper">
                         <svg class="about-graphic" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 284.5 221.8" enable-background="new 0 0 284.5 221.8" xml:space="preserve">
                             <g class="bottom">
@@ -274,7 +274,16 @@
                          </div>
                      </div>
                  </div>
-                <div class="section welcome-section" :class="{'active': showcaseObjects[2].active,'old-hat':showcaseObjects[2].oldHatActive}" section-title="好吧，这个不难解释。" style="z-index:1">
+                <div class="section blog-section" :class="{'active': showcaseObjects[2].active,'old-hat':showcaseObjects[2].oldHatActive}" section-title="博客" style="z-index:2">
+                    <div class="section-wrapper">
+                        <div class="section-content">
+                            <h1 class="section-title">OTOD有许多精彩多样的博客</h1>
+                            <p>"OTOD提供发表和浏览博客的交流平台，可以让您在学习的同时谈一谈其中的感想和收获。我们也会为您寻找到并关注有对您意义的博客，也会帮助他人发现并关注您的博客."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="section welcome-section" :class="{'active': showcaseObjects[3].active,'old-hat':showcaseObjects[3].oldHatActive}" section-title="好吧，这个不难解释。" style="z-index:1">
                     <div class="section-wrapper">
                         <div class="fullscreen_post_bg" style="background-image:url(./static/backgrounds/tumblr_welcome_1280.gif)"></div>
                      </div>
@@ -337,7 +346,11 @@ export default {
         active: false,
         oldHatActive: false,
         dataSection: 'about'
-      }, {
+      },{
+        active: false,
+        oldHatActive: false,
+        dataSection: 'blog'
+      },{
         active: false,
         oldHatActive: false,
         dataSection: 'welcome'
@@ -354,6 +367,9 @@ export default {
         dotActive: false,
         title: '用起来真是简单到难以解释。'
       }, {
+        dotActive: false,
+        title: 'OTOD有许多精彩多样的博客。'
+      },{
         dotActive: false,
         title: 'OTOD就是众多博客。'
       }],
