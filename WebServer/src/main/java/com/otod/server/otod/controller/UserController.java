@@ -23,7 +23,7 @@ public class UserController  {
 
     @PostMapping("/register")
     private String userRegister(@RequestBody UserRegisteration userRegisteration) {
-        if (userService.getUser(userRegisteration.getUsername())!=null)
+        if (userService.getUser(userRegisteration.getUsername()) != null)
             return "User already exits!";
 
         userService.save(new User(

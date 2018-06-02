@@ -312,6 +312,8 @@
 </template>
 
 <script>
+import md5 from 'js-md5'
+
 export default {
   name: 'Login',
   data () {
@@ -415,10 +417,18 @@ export default {
       if (this.showForms) {
         if (this.username !== '' && this.password !== '' && this.telephone !== '') {
           console.log('name:' + this.username + ',pass:' + this.password + ',phone:' + this.telephone)
-          this.$axios.get('http://localhost:8081/users')
-            .then(function (response) {
-              this.users = response.data
-            }.bind(this))
+
+          this.$axios({
+            method: 'post',
+            url: this.$url + '/register',
+            data: {
+              username: this.username,
+              password: md5(this.password),
+              telephone: this.telephone
+            }
+          }).then(function (response) {
+            console.log('hello')
+          })
         } else {
           this._showErrors('信息不全,请补全信息！')
         }
@@ -434,25 +444,24 @@ export default {
     signinBtnClick () {
       if (this.showForms) {
         if (this.username !== '' && this.password !== '') {
+          console.log('username' + this.username + ',password:' + this.password)
+
           var params = new URLSearchParams()
           params.append('grant_type', 'password')
           params.append('username', this.username)
-          params.append('password', this.password)
-
-          console.log('username' + this.username + ',password:' + this.password)
+          params.append('password', md5(this.password))
 
           this.$axios({
             method: 'post',
-            url: 'http://localhost:8081/oauth/token',
+            url: this.$url + '/oauth/token',
             auth: {username: 'test', password: '123456'},
             headers: {'Content-type': 'application/x-www-form-urlencoded; charset=utf-8'},
             data: params
           }).then(function (response) {
             this.$setCookie('otod_access_token', response.data.access_token)
-            // document.location.replace('/')
+            document.location.replace('/')
           }.bind(this)).catch(function (error) {
-            console.log(error)
-            this._showErrors(error)
+            this._showErrors(error.response.data.error)
           }.bind(this))
         } else {
           this._showErrors('信息不全，请补全信息！')

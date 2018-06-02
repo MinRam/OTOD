@@ -9,6 +9,7 @@ import axios from 'axios'
 
 Vue.use(cookieOpe)
 
+Vue.prototype.$url = 'http://localhost:8081'
 Vue.prototype.$axios = axios
 Vue.config.productionTip = false
 
