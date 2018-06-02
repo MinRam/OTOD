@@ -5,20 +5,18 @@ import com.otod.server.otod.model.User;
 import com.otod.server.otod.pojos.UserRegisteration;
 import com.otod.server.otod.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 public class UserController  {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/login")
+    @GetMapping("/users")
     private List<User> testMappring(){
         return userService.getAllUsers();
     }

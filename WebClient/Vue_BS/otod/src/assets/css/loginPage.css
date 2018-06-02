@@ -271,10 +271,16 @@ a{
     display: table;
     text-align: center;
 }
-.about-Index-showcase .section.blog-section{
+.about-Index-showcase .section.shop-section{
     background:#a77dc2;
     overflow:hidden;
     text-align:left;
+}
+
+.about-Index-showcase .section.server-section{
+    background:#f2992e;
+    display: table;
+    text-align: center;
 }
 
 .about-Index-showcase .section.welcome-section{
@@ -328,19 +334,19 @@ a{
     z-index: 2;
     animation: none;
 }
-.shpwcase .blog-section .section-wrapper{
+.shpwcase .shop-section .section-wrapper{
     margin-left: 180px;
     margin-top: 150px;
 }
 
-.showcase .about-section .section-wrapper{
+.showcase .about-section .section-wrapper,.showcase .server-section .section-wrapper{
     display: table-cell;
     vertical-align: middle;
     width: 100%;
 }
 
 .showcase .about-section .section-wrapper .about-graphic {
-    height: 600px;
+    height: 60%;
     margin: 0 auto 20px;
     opacity: 1;
     overflow: visible;
@@ -399,12 +405,12 @@ a{
 .showcase .section-title{
     color: #fff;
     font-family: Gibson,Helvetica Neue,HelveticaNeue,Helvetica,Arial,sans-serif;
-    font-size: 60px;
+    font-size: 43px;
     line-height: 1;
     margin-bottom: 15px;
 }
 
-.showcase .blog-section .section-content{
+.showcase .shop-section .section-content{
     margin-bottom:20px;
     position:relative;
     left:150px;

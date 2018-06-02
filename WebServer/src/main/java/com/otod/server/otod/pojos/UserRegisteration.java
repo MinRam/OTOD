@@ -2,7 +2,7 @@ package com.otod.server.otod.pojos;
 
 public class UserRegisteration {
     private String username;
-    private String phone;
+    private String telephone;
     private String password;
 
     public UserRegisteration() {
@@ -24,12 +24,12 @@ public class UserRegisteration {
         this.password = password;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getTelephone() {
+        return telephone;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
     }
 
 }

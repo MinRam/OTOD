@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
+import Index from '@/pages/Index'
 import Login from '@/pages/Login'
 import store from '../store'
 
@@ -14,11 +14,11 @@ const routes = [
   },
   {
     path: '/',
-    name: 'HelloWorld',
+    name: 'Index',
     meta: {
       requireAuth: true
     },
-    component: HelloWorld
+    component: Index
   }
 ]
 

@@ -18,7 +18,7 @@ public class UserService {
 //    @Bean
 //    public PasswordEncoder passwordEncoder(){
 //        String idForEncode = "bcrypt";
-
+//
 //        Map encoders = new HashMap<>();
 //        encoders.put(idForEncode, new BCryptPasswordEncoder());
 //        encoders.put("noop", NoOpPasswordEncoder.getInstance());

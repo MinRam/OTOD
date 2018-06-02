@@ -1,8 +1,6 @@
 package com.otod.server.otod;
 
 import com.otod.server.otod.config.CustomUserDetails;
-import com.otod.server.otod.model.Role;
-import com.otod.server.otod.model.User;
 import com.otod.server.otod.respository.UserRepository;
 import com.otod.server.otod.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +9,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-import java.util.Arrays;
 
 @SpringBootApplication
 public class OtodApplication {
