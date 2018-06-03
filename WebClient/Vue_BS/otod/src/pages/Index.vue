@@ -4,8 +4,8 @@
         <h1 class="otod-logo">OTOD</h1>
         <div class="menu-nav">
             <ul class="nav-tab">
-                <li v-for="(nav,index) in navObjects">
-                    <a :href="{{nav.href}}">{{nav.title}}</a>
+                <li v-for="(nav,index) in navObjects" :key="index">
+                    <a :href="nav.href">{{nav.title}}</a>
                  </li>
             </ul>
             <div class="nav-search">
