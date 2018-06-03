@@ -15,18 +15,9 @@ const state = {
   isLogin: false
 }
 
-const mutations = {
-  [LOGIN] (state, permission) {
-    state.token = permission
-  },
-  [LOGOUT] (state) {
-    state.token = []
-  }
-}
 
 const user = {
-  state,
-  mutations
+  state
 }
 
 const getters = {

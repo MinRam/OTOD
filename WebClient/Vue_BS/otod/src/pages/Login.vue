@@ -55,7 +55,9 @@
                             <div class="footer_legal_links">
                                 <a v-for="(link, index) in footerLinks" :href="link.href" :key="index" target="_blank">{{link.title}}</a>
                              </div>
-                            <div class="fullscreen_post_posted_by_show"></div>
+                            <div class="footer-oauth2-plaforms">
+                                <a v-for="(oauth,index) in oauth2Objects" :href="oauth.href" :key="index" target="_blank">{{oauth.title}}</a>
+                            </div>
                         </div>
                      </div>
                     <div class="about-Index-btn" @click="nextShowcase()" >What is OTOD?</div>
@@ -346,6 +348,12 @@ export default {
         href: 'http://www.baidu.com'
       }],
 
+      // 第三方登录链接（待完成—）
+      oauth2Objects: [{
+        title: 'QQ',
+        href: 'http://www.baidu.com'
+      }],
+
       // showcase 响应控制对象
       showcaseObjects: [{
         active: true,
@@ -459,9 +467,11 @@ export default {
             data: params
           }).then(function (response) {
             this.$setCookie('otod_access_token', response.data.access_token)
-            document.location.replace('/')
+            this.$router.push('/')
           }.bind(this)).catch(function (error) {
-            this._showErrors(error.response.data.error)
+            if (error.response) {
+              this._showErrors(error.response.data.error)
+            }
           }.bind(this))
         } else {
           this._showErrors('信息不全，请补全信息！')

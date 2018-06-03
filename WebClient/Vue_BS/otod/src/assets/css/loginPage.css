@@ -473,6 +473,28 @@ a{
     color: #fff;
 }
 
+.fullscreen_post_footer .fullscreen_post_footer_inner .footer-oauth2-plaforms{
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    opacity: 1;
+    padding: 0 20px;
+    margin: 0 0 13px 0;
+    transition: opacity 0.2s linear;
+}
+
+.fullscreen_post_footer .fullscreen_post_footer_inner .footer-oauth2-plaforms a{
+    color: #D1D1D1;
+    font-size: 14px;
+    padding-left: 15px;
+    margin-left: -5px;
+    font-weight: normal;
+    display: inline-block;
+}
+
+.fullscreen_post_footer .fullscreen_post_footer_inner .footer-oauth2-plaforms a:hover{
+    color: #fff;
+}
 
 .about-Index-showcase .section .fullscreen_post_bg{
     background-size:0 0;

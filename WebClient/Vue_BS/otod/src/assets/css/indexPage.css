@@ -1,0 +1,22 @@
+* {
+    margin:0px;
+    padding:0px;
+}
+
+body {
+    background-color: #ededef;
+}
+
+.otod-header {
+    height:82px;
+    margin-bottom: 30px;
+    background-color: #24282B;
+}
+
+.otod-header .otod-logo{
+    margin-top:19px;
+    float:left;
+    width:220px;
+    height:44px;
+    position: relative;
+}
