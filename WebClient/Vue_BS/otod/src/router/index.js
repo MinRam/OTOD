@@ -2,6 +2,8 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
 import Login from '@/pages/Login'
+import ForumTopic from '@/pages/ForumTopic'
+import ForumReply from '@/pages/ForumReply'
 import store from '../store'
 
 Vue.use(Router)
@@ -19,7 +21,24 @@ const routes = [
       requireAuth: true
     },
     component: HelloWorld
+  },
+  {
+    path:'/forumtopic',
+    name:'ForumTopic',
+    meta:{
+
+    },
+    component:ForumTopic
+  },
+  {
+    path:'/forumreply',
+    name:'ForumReply',
+    meta:{
+
+    },
+    component:ForumReply
   }
+
 ]
 
 const routerObj = new Router({
