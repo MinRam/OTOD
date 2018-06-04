@@ -20,22 +20,31 @@
                                                 </div>
                                                 <div class="user-info">
                                                     <p>zhangyizhuo</p>
-                                                    <p>Nothing</p>
+                                                    <!-- <p>Nothing</p> -->
                                                 </div>
-                                                <div style="clear: both"></div> 
+                                                <div style="clear: both"></div>
                                             </div>
                                             <div class="button-group">
-                                                <el-button type="success" icon="el-icon-check" circle @click="static = !static" @mouseover.native="show = !show" @mouseout.native="show = !show"></el-button>
-                                                <transition name="el-zoom-in-left">
-                                                    <div v-show="show || static" class="commit-button-box"></div>
-                                                </transition>
-                                            </div>                                        
-                                        </el-aside>                    
+                                                <div style="margin-bottom: 10px;">
+                                                    <el-button type="success" icon="el-icon-check" circle @click="sstatic = !sstatic" @mouseover.native="show = !show" @mouseout.native="show = !show"></el-button>
+                                                    <transition name="el-zoom-in-left">
+                                                        <div v-show="show || sstatic" class="commit-button-box"></div>
+                                                    </transition>
+                                                    <div style="clear: both"></div>
+                                                </div>
+                                                <div style="margin-bottom: 10px;">
+                                                    <el-button type="success" icon="el-icon-check" circle @click="sstatic1 = !sstatic1" @mouseover.native="show1 = !show1" @mouseout.native="show1 = !show1"></el-button>
+                                                    <transition name="el-zoom-in-left">
+                                                        <div v-show="show1 || sstatic1" class="commit-button-box"></div>
+                                                    </transition>
+                                                    <div style="clear: both"></div>
+                                                </div>
+                                            </div>
+                                        </el-aside>
                                         <el-container>
                                             <el-header>{{ m.title }}</el-header>
                                             <el-main>{{ m.content }}</el-main>
                                         </el-container>
-
                                     </el-container>
                                 </el-card>
                             </el-col>
@@ -49,30 +58,32 @@
 
 <script>
 export default {
-    name: 'Index',
-    data() {
-        return {
-            static : false,
-            show : false,
-            message: [{
-                title: '标题一',
-                content: 'Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !',
-                emergency: '1'
-              }, {
-                title: '帮忙购买炒酸奶',
-                content: 'Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !',
-                emergency: '2'
-              }, {
-                title: '帮忙拿快递，快递号131313131',
-                content: 'Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !',
-                emergency: '3'
-              }, {
-                title: '我也不知道该写些什么就这样吧',
-                content: 'Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !',
-                emergency: '4'
-              }]
-        }
+  name: 'Index',
+  data () {
+    return {
+      sstatic: false,
+      show: false,
+      sstatic1: false,
+      show1: false,
+      message: [{
+        title: '标题一',
+        content: 'Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !',
+        emergency: '1'
+      }, {
+        title: '帮忙购买炒酸奶',
+        content: 'Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !',
+        emergency: '2'
+      }, {
+        title: '帮忙拿快递，快递号131313131',
+        content: 'Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !',
+        emergency: '3'
+      }, {
+        title: '我也不知道该写些什么就这样吧',
+        content: 'Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !',
+        emergency: '4'
+      }]
     }
+  }
 }
 </script>
 <style>
