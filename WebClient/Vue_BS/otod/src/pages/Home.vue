@@ -1,5 +1,7 @@
 <template>
-  <span> hello home</span>
+  <div class="otod-home">
+    <span>hello</span>
+  </div>
 </template>
 
 <script>

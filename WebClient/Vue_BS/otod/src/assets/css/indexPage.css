@@ -57,18 +57,28 @@ body {
     text-align: right;
 }
 
-.menu-nav .nav-tab li {
+.menu-nav .nav-tab li{
     float: left;
     font-size: 16px;
     font-weight: 100;
     margin-left: 29px;
-}
-
-.menu-nav .nav-tab li a {
+    cursor: pointer;
     color: #999;
 }
 
-.menu-nav .nav-tab li.active a,.menu-nav .nav-tab li a:hover {
+.menu-nav .nav-tab li.active::before{
+    content: ' ';
+    position: absolute;
+    margin-top: 40px;
+    margin-left: 10px;
+    width:0;
+    height:0;
+    border-left:8px solid transparent;
+    border-right:8px solid transparent;
+    border-bottom:8px solid #ededef ;
+}
+
+.menu-nav .nav-tab li.active,.menu-nav .nav-tab li:hover{
     color: #fff;
 }
 
@@ -77,26 +87,9 @@ body {
     float: right;
     position: relative;
     z-index: 100;
-    margin-left: 26px;
-    width: ;
+    margin-left: 40px;
 }
 
-.my-autocomplete {
-  li {
-    line-height: normal;
-    padding: 7px;
 
-    .name {
-      text-overflow: ellipsis;
-      overflow: hidden;
-    }
-    .addr {
-      font-size: 12px;
-      color: #b4b4b4;
-    }
 
-    .highlighted .addr {
-      color: #ddd;
-    }
-  }
-}
+
