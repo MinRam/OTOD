@@ -78,34 +78,34 @@ export default {
   data () {
     return {
     	list:[
-        	{id:1},
-        	{id:2},
-        	{id:3},
-        	{id:4},
-        	{id:5},
-        	{id:6},
-        	{id:7},
-        	{id:8}
-        ],
-        forumTopicLength:0,
-        page:0,
-        rows:10,
-        forumTopicList:[
-        	{}
-        ],
-        forumTopicPO:{
-        	id:'',
-        	click_num:'',
-        	reply_num:'',
-        	date:'',
-        	last_reply_id:'',
-        	last_reply_date:'',
-        	section_id:'',
-        	user_id:'',
-        	type:'',
-        	title:'',
-			content:''
-        }
+    	{id:1},
+    	{id:2},
+    	{id:3},
+    	{id:4},
+    	{id:5},
+    	{id:6},
+    	{id:7},
+    	{id:8}
+      ],
+      forumTopicLength:0,
+      page:0,
+      rows:10,
+      forumTopicList:[
+      	{}
+      ],
+      forumTopicPO:{
+      	id:'',
+      	click_num:'',
+      	reply_num:'',
+      	date:'',
+      	last_reply_id:'',
+      	last_reply_date:'',
+      	section_id:'',
+      	user_id:'',
+      	type:'',
+      	title:'',
+  		 content:''
+      }   
     }
   },
   mounted:function(){
@@ -131,84 +131,82 @@ export default {
 	        dataType:'json',
 	        data: this.forumTopicPO
         }).then(function (response) {
-				console.log(response);
-				alert("发表成功");
+				console.log(response)
+				alert("发表成功")
 				})
 				.catch(function (error) {
-				console.log(error);
-				});
+				console.log(error)
+				})
      },
      alee(){
-     	alert("wwww");
+     	alert("wwww")
      },
 
      test(){
      	this.$axios.get('http://localhost:8081/forumtopic/findbyid?id=1').then(function (response) {
-				console.log(response);
-				})
-				.catch(function (error) {
-				console.log(error);
-				});
+				console.log(response)
+			})
+			.catch(function (error) {
+				console.log(error)
+			})
 	},
 
-	//分页查询，axios，post
+	// 分页查询，axios，post
 	queryByPage(){
-		var t=this;
+		var t=this
 		this.$axios({
-	        method: 'get',
-	        url: 'http://localhost:8081/forumtopic/findbypage',
-	        
-	        dataType:'json',
-	        params:{
-	        	page:t.page,
-	        	row:t.rows
-	        }
-        }).then(function (response) {
-				console.log(response);
-				//this.$set("forumTopicList",response.data.content)
-			    t.forumTopicList=response.data.content;
-			    t.forumTopicLength = response.data.totalElements;
+      method: 'get',
+      url: this.$url + 'forumtopic/findbypage',
+      
+      dataType:'json',
+      params:{
+      	page:t.page,
+      	row:t.rows
+      }
+    }).then(function (response) {
+		console.log(response)
+  	// this.$set("forumTopicList",response.data.content)
+    t.forumTopicList=response.data.content
+    t.forumTopicLength = response.data.totalElements
 
-			    for(var i in t.forumTopicList)
-			    {
-			    	t.forumTopicList[i]['last_time'] = t.getLastTime(t.forumTopicList[i].date);
-			    	var date = new Date(t.forumTopicList[i].date);
-			    	if(date.getFullYear()<(new Date().getFullYear()))
-			    		t.forumTopicList[i].date = date.getFullYear()+"年"+date.getMonth()+"月"+date.getDate()+"日";
-			        else
-			        	t.forumTopicList[i].date = date.getMonth()+"月"+date.getDate()+"日";
-			    }
+    for(var i in t.forumTopicList)
+    {
+    	t.forumTopicList[i]['last_time'] = t.getLastTime(t.forumTopicList[i].date)
+    	var date = new Date(t.forumTopicList[i].date)
+    	if(date.getFullYear()<(new Date().getFullYear()))
+    		t.forumTopicList[i].date = date.getFullYear()+"年"+date.getMonth()+"月"+date.getDate()+"日"
+        else
+        	t.forumTopicList[i].date = date.getMonth()+"月"+date.getDate()+"日"
+    }
 
-			    var a=new Date(t.forumTopicList[0].date).getTime();
-        		console.log(a);
-        		console.log(t.forumTopicList);
-
-
-				})
-				.catch(function (error) {
-				console.log(error);
-				});
+    var a=new Date(t.forumTopicList[0].date).getTime()
+  		console.log(a)
+  		console.log(t.forumTopicList)
+  	})
+  	.catch(function (error) {
+  	console.log(error)
+  	})
 	},
 
-    //获得最后回复距今时间
+    // 获得最后回复距今时间
 	getLastTime(date){
-		var now = new Date().getTime();
-		var oldtime = new Date(date).getTime();
-		var difference = now-oldtime;
-		var result = '';
-		var minute = 1000*60;
-		var hour = minute*60;
-		var day = hour*24;
-		var halfamonth = day*15;
-		var month = day*30;
-		var year = month*12;
+		var now = new Date().getTime()
+		var oldtime = new Date(date).getTime()
+		var difference = now-oldtime
+		var result = ''
+		var minute = 1000*60
+		var hour = minute*60
+		var day = hour*24
+		var halfamonth = day*15
+		var month = day*30
+		var year = month*12
 
-		var _year = difference/year;
-		var _month = difference/month;
-	    var _week = difference/(7*day);
-     	var _day = difference/day;
-		var _hour = difference/hour;
-		var _minute = difference/minute;
+		var _year = difference/year
+		var _month = difference/month
+	    var _week = difference/(7*day)
+     	var _day = difference/day
+		var _hour = difference/hour
+		var _minute = difference/minute
 
 		if(_year>=1) {result=""+~~(_year)+"年前"}
 			else if(_month>=1) {result=""+~~(_month)+"个月前"}
@@ -216,19 +214,19 @@ export default {
 			else if(_day>=1) {result=""+~~(_day)+"天前"}
 			else if(_hour>=1) {result=""+~~(_hour)+"个小时前"}
 			else if(_minute>=1) {result=""+~~(_minute)+"分钟前"}
-		else result="刚刚";
-		return result;
+		else result="刚刚"
+		return result
 	},
 
-	//改变页面
+	// 改变页面
 	changepage(page){
-		this.page = page;
-		//this.queryByPage();
+		this.page = page
+		//this.queryByPage()
 	},
 
-    //回复贴跳转
+    // 回复贴跳转
 	toReply(id){
-		this.$router.push({path:"forumreply",query:{id:id}});
+		this.$router.push({path:"forumreply",query:{id:id}})
 	}
 
 
@@ -237,12 +235,12 @@ export default {
 </script>
 
 <style>
-    @import '../assets/bootstrap/css/bootstrap.min.css';
-    a {
+  @import '../assets/bootstrap/css/bootstrap.min.css'
+  a {
 	  cursor:pointer;
 	  color: black;
 	} 
 	a:hover{
 	  text-decoration:none;
-	}
+  }
 </style>
