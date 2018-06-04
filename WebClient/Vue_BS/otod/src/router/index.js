@@ -2,14 +2,11 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Index from '@/pages/Index'
 import Login from '@/pages/Login'
-<<<<<<< HEAD
 import ForumTopic from '@/pages/ForumTopic'
 import ForumReply from '@/pages/ForumReply'
 import store from '../store'
-=======
 import Home from '@/pages/Home'
-// import store from '../store'
->>>>>>> c83f4c02856ee65c270322180d10b79cf4214912
+
 
 Vue.use(Router)
 
