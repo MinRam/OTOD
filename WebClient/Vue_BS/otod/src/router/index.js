@@ -2,11 +2,17 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Index from '@/pages/Index'
 import Login from '@/pages/Login'
+import Service from '@/pages/Service'
 import store from '../store'
 
 Vue.use(Router)
 
 const routes = [
+  {
+    path: '/service',
+    name: 'Service',
+    component: Service
+  },
   {
     path: '/login',
     name: 'Login',

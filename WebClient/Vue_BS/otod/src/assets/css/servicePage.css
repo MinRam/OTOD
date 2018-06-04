@@ -1,0 +1,64 @@
+p{
+	margin: 0;
+}
+.message-bottom{
+	margin-bottom: 20px; 
+}
+.grid-content {
+    border-radius: 4px;
+    min-height: 36px;
+}
+.el-header, .el-footer {
+    /*background-color: #B3C0D1;*/
+    color: #333;
+    text-align: center;
+    line-height: 60px;
+}
+.el-container{
+}
+.bg-success{
+	background-color: #67c23a
+}
+.bg-warming{
+	background-color: #e6a23c
+}
+.bg-danger{
+	background-color: #f56c6c
+}
+.bg-info{
+	background-color: #909399
+}
+.el-aside{
+}
+.user-img{
+	float: left;
+	height: 60px;
+	width: 60px;
+	/*background-color: #909399;*/
+}
+.user-info{
+	float: left;
+	height: 60px;
+	width: 140px;
+	font-size: 15px;
+	line-height: 30px;
+	/*background-color: #f56c6c*/
+}
+.button-group{
+	padding-left: 10px;
+	padding-top: 10px;
+}
+.el-card{
+	padding: 0;
+}
+.commit-button-box {
+	float: right;
+    width: 140px;
+    height: 40px;
+    border-radius: 4px;
+    background-color: #409EFF;
+    text-align: center;
+    color: #fff;
+    box-sizing: border-box;
+  }
+
