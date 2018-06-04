@@ -4,7 +4,7 @@
             <div class="form_container" >
                 <div class="form_header">
                     <h1 class="logo-word large" id="logo">
-                        <a class = "logo_anchor" href="/" >OTOD</a>
+                        <a class = "logo_anchor" href="/" style="background-image: url(./static/logos/otod-logo1.png)"></a>
                      </h1>
                     <h2 class="subheading">
                         为你的所爱而来,<br>为你的发现停留。
@@ -48,22 +48,24 @@
                  </div>
              </div>
             <div class="showcase">
-                <div class="section login-section" :class="{'active': showcaseObjects[0].active,'old-hat': showcaseObjects[0].oldHatActive}" section-title="注册" style="z-index:3">
+                <div class="section login-section" :class="{'active': showcaseObjects[0].active,'old-hat': showcaseObjects[0].oldHatActive}" section-title="注册" style="z-index:5">
                     <div id="fullscreen_post_bg" class="fullscreen_post_bg" style= "background-image:url(./static/backgrounds/tumblr_register_1280.jpg)" ></div>
                     <div class="fullscreen_post_footer">
                         <div class="fullscreen_post_footer_inner">
                             <div class="footer_legal_links">
                                 <a v-for="(link, index) in footerLinks" :href="link.href" :key="index" target="_blank">{{link.title}}</a>
                              </div>
-                            <div class="fullscreen_post_posted_by_show"></div>
+                            <div class="footer-oauth2-plaforms">
+                                <a v-for="(oauth,index) in oauth2Objects" :href="oauth.href" :key="index" target="_blank">{{oauth.title}}</a>
+                            </div>
                         </div>
                      </div>
                     <div class="about-Index-btn" @click="nextShowcase()" >What is OTOD?</div>
                  </div>
-                <div class="section about-section" :class="{'active': showcaseObjects[1].active,'old-hat':showcaseObjects[1].oldHatActive}" section-title="关于" style="z-index:2">
+                <div class="section about-section" :class="{'active': showcaseObjects[1].active,'old-hat':showcaseObjects[1].oldHatActive}" section-title="关于" style="z-index:4">
                     <div class="section-wrapper">
                         <svg class="about-graphic" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 284.5 221.8" enable-background="new 0 0 284.5 221.8" xml:space="preserve">
-                            <g class="bottom-right">
+                            <g class="bottom">
                                 <path fill="#61E8A8" stroke="#4EB097" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="M138.5,209.7l9-9v6.5h16.9v-2.4l6.7-6.7v13c0,1.6-1.3,2.9-2.9,2.9h-20.7v6.6l-9-9C138,211,138,210.2,138.5,209.7z"></path>
                                 <path fill="#61E8A8" stroke="#4EB097" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="M139.1,191.8c0-1.6,1.3-2.9,2.9-2.9h20.7v-6.6l9,9c0.5,0.5,0.5,1.3,0,1.8l-9,9v-6.5h-16.9v2.4l-6.7,6.7V191.8z"></path>
                              </g>
@@ -74,9 +76,7 @@
                                  </path>
                              </g>
                             <g class="top-left">
-                                <path fill="#61E8A8" stroke="
-
-                                " stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="M45.7,32.1v-0.6h3.1h0h0h0.1v0c3.7,0,6.8,2.4,8,5.7c0.8-2.3,2.6-4.2,4.9-5.1v-0.6h2.3c0.3,0,0.6,0,0.8,0c0.3,0,0.6,0,0.9,0h0v0c4.3,0.4,7.7,4.1,7.7,8.5c0,4.7-3.8,8.6-8.6,8.6H48.9c-4.7,0-8.6-3.8-8.6-8.6C40.3,36.4,42.6,33.3,45.7,32.1z"></path>
+                                <path fill="#61E8A8" stroke="#4EB097" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="M45.7,32.1v-0.6h3.1h0h0h0.1v0c3.7,0,6.8,2.4,8,5.7c0.8-2.3,2.6-4.2,4.9-5.1v-0.6h2.3c0.3,0,0.6,0,0.8,0c0.3,0,0.6,0,0.9,0h0v0c4.3,0.4,7.7,4.1,7.7,8.5c0,4.7-3.8,8.6-8.6,8.6H48.9c-4.7,0-8.6-3.8-8.6-8.6C40.3,36.4,42.6,33.3,45.7,32.1z"></path>
                                 <path fill="#61E8A8" stroke="#4EB097" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="M53.1,48.7h18.9c1.1,0,2,0.9,2,2v0.7c0,1.1-0.9,2-2,2h-1.9V65c0,1.1-1.4,2-2.7,2H53.1V48.7z"></path>
                                 <path fill="#61E8A8" stroke="#4EB097" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="M30.1,48.4c0.2-0.1,0.4-0.1,0.6-0.1c0.4,0,0.8,0.2,1.1,0.5c0,0,6,6.1,6.1,6.3v-6.3h30.9v4.8h-3.6V65c0,1.1-1.4,2-2.7,2H40.5c-1.2,0-2.7-0.8-2.7-1.9v-5.7c-0.1,0.2-6.1,6.3-6.1,6.3c-0.3,0.3-0.7,0.5-1.1,0.5c-0.2,0-0.4,0-0.6-0.1c-0.6-0.2-1-0.8-1-1.4V49.8C29.1,49.2,29.5,48.7,30.1,48.4z"></path>
                                 <line fill="#61E8A8" stroke="#4EB097" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="37.8" y1="55" x2="37.8" y2="59.4"></line>
@@ -85,13 +85,12 @@
                                 <circle fill="#61E8A8" stroke="#4EB097" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" cx="45.7" cy="40" r="3.2"></circle>
                                 <line fill="#61E8A8" stroke="#4EB097" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="65" y1="31.5" x2="61.8" y2="31.5"></line>
                                 <path fill="#61E8A8" stroke="#4EB097" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="M53.8,34.6c-0.2-0.6-0.8-1.2-1.4-1.4"></path>
-                                <path fill=#61E8A8" stroke="#4EB097" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="M70.8,53.6c-1.1,0-2-0.9-2-2v-0.7c0-1.1,0.9-2,2-2"></path>
+                                <path fill="#61E8A8" stroke="#4EB097" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="M70.8,53.6c-1.1,0-2-0.9-2-2v-0.7c0-1.1,0.9-2,2-2"></path>
                              </g>
                             <g class="top-right">
                                 <path fill="#61E8A8" stroke="#4EB097" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="M258.5,56.8v-0.7H255h0h0H255v0c-4.1,0-7.5,2.7-8.8,6.3c-0.9-2.6-2.9-4.6-5.4-5.6v-0.6h-2.6c-0.3,0-0.6,0-0.9,0c-0.3,0-0.6,0-1,0h0v0c-4.8,0.5-8.5,4.5-8.5,9.4c0,5.2,4.2,9.4,9.4,9.4H255c5.2,0,9.4-4.2,9.4-9.4C264.5,61.6,262,58.2,258.5,56.8z">
                                  </path>
-                                <path fill="#61E8A8" stroke="#4EB097" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
-                                M250.3,75.1h-20.9c-1.2,0-2.2,1-2.2,2.2v0.8c0,1.2,1,2.2,2.2,2.2h2.1v12.7c0,1.2,1.6,2.2,2.9,2.2h15.9V75.1z">
+                                <path fill="#61E8A8" stroke="#4EB097" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="M250.3,75.1h-20.9c-1.2,0-2.2,1-2.2,2.2v0.8c0,1.2,1,2.2,2.2,2.2h2.1v12.7c0,1.2,1.6,2.2,2.9,2.2h15.9V75.1z">
                                  </path>
                                 <path fill="#61E8A8" stroke="#4EB097" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
                                 M275.8,74.8c-0.2-0.1-0.4-0.1-0.6-0.1c-0.4,0-0.9,0.2-1.2,0.5c0,0-6.6,6.7-6.7,6.9v-7h-34.1v5.3h4v12.7c0,1.2,1.6,2.2,2.9,2.2h24.2
@@ -106,10 +105,9 @@
                                 <circle fill="#61E8A8" stroke="#4EB097" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" cx="240.7" cy="65.6" r="3.6"></circle>
                                 <circle fill="#61E8A8" stroke="#4EB097" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" cx="258.5" cy="65.6" r="3.6"></circle>
                                 <line fill="#61E8A8" stroke="#4EB097" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="237.2" y1="56.1" x2="240.7" y2="56.1"></line>
-                                <path fill="#61E8A8" stroke="#4EB097" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="M249.6,59.6c0.3-0.7,0.9-1.3,1.6-1.5">
+                                <path fill="#61E8A8" stroke="#4EB097" stroke-widt   h="2.6" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="M249.6,59.6c0.3-0.7,0.9-1.3,1.6-1.5">
                                  </path>
-                                <path fill="#61E8A8" stroke="#4EB097" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"stroke-miterlimit="10" d="
-                                M230.9,80.5c1.2,0,2.2-1,2.2-2.2v-0.8c0-1.2-1-2.2-2.2-2.2">
+                                <path fill="#61E8A8" stroke="#4EB097" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"  stroke-miterlimit="10" d="M230.9,80.5c1.2,0,2.2-1,2.2-2.2v-0.8c0-1.2-1-2.2-2.2-2.2">
                                  </path>
                              </g>
                             <g class="top-right">
@@ -123,7 +121,7 @@
                                 c-0.5,0.2-1.1,0.3-1.9,0.5l-1.5,0.3c-1.7,0.3-2.4,0.6-2.8,0.8c-0.8,0.5-1.2,1.2-1.2,2.2c0,0.9,0.2,1.5,0.7,1.9
                                 c0.5,0.4,1.1,0.6,1.9,0.6c1.3,0,2.5-0.4,3.6-1.1c1-0.7,1.5-2,1.6-4v-1.2C211.7,92.5,211.7,92.5,211.6,92.6z"></path>
                              </g>
-                            <g class="top-left">
+                            <g class="left">
                                 <path fill="#61E8A8" stroke="#4EB097" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="M50.1,77.3H39.9l-1.9-2.9H21.8L20,77.3H9.8c-4.2,0-7.6,3.4-7.6,7.6v29.2c0,4.2,3.4,7.6,7.6,7.6h40.4c4.2,0,7.6-3.4,7.6-7.6V84.9C57.7,80.8,54.3,77.3,50.1,77.3z"></path><path fill="#61E8A8" stroke="#4EB097" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="M58.8,77.3H48.6l-1.9-2.9H30.5l-1.9,2.9H18.4c-4.2,0-7.6,3.4-7.6,7.6v29.2c0,4.2,3.4,7.6,7.6,7.6h40.4c4.2,0,7.6-3.4,7.6-7.6V84.9C66.4,80.8,62.9,77.3,58.8,77.3z"></path><path fill="#61E8A8" stroke="#4EB097" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="M38.7,117.2c-9.1,0-16.5-7.4-16.5-16.5c0-9.1,7.4-16.5,16.5-16.5h4.9v33H38.7z"></path><circle fill="#61E8A8" stroke="#4EB097" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" cx="43.7" cy="100.7" r="16.5"></circle><circle fill="#61E8A8" stroke="#4EB097" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" cx="43.7" cy="100.7" r="9.4"></circle><g><circle fill="#61E8A8" stroke="#4EB097" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" cx="43.7" cy="100.6" r="7.8"></circle><path fill="#61E8A8" stroke="#4EB097" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="M39.1,100.6c0-2.5,2.1-4.6,4.6-4.6"></path></g><circle fill="#61E8A8" stroke="#4EB097" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" cx="59.1" cy="83.7" r="2.5"></circle>
                              </g>
                             <g class="bottom-right">
@@ -134,21 +132,21 @@
                                 C237.4,162.8,234.4,159.8,230.7,159.8z"></path><path fill="#61E8A8" stroke="#4EB097" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
                                 M213,194.9c-8.1,0-14.6-6.5-14.6-14.6c0-8.1,6.5-14.6,14.6-14.6h4.4v29.2H213z"></path><circle fill="#61E8A8" stroke="#4EB097" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" cx="217.4" cy="180.3" r="14.6"></circle><circle fill="#61E8A8" stroke="#4EB097" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" cx="217.4" cy="180.3" r="8.3"></circle><g><circle fill="#61E8A8" stroke="#4EB097" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" cx="217.4" cy="180.3" r="6.9"></circle><path fill="#61E8A8" stroke="#4EB097" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
                                     M213.3,180.3c0-2.2,1.8-4.1,4.1-4.1"></path></g><circle fill="#61E8A8" stroke="#4EB097" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" cx="231" cy="165.4" r="2.2"></circle></g>
-                            <g class="bottom-left">
+                            <g class="left">
                                 <g><g><path fill="#61E8A8" stroke="#4EB097" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
                                         M18.6,161.8c-5.8,0-9.6-4.3-9.6-10.8c0-8.1,6.8-15.5,13.2-19.6l0.6-0.4l4.2,4.2l-1.1,0.9c-2.6,1.9-5.8,4.3-7,7.3
                                         c5.3,0.5,8.7,4.2,8.7,9.6C27.6,157.9,23.6,161.8,18.6,161.8z"></path></g></g><g><g><path fill="#61E8A8" stroke="#4EB097" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
                                             M41.2,161.8c-5.8,0-9.6-4.3-9.6-10.8c0-8.1,6.8-15.5,13.2-19.6l0.6-0.4l4.2,4.2l-1.1,0.9c-2.6,1.9-5.8,4.3-7,7.3
                                             c5.3,0.5,8.7,4.2,8.7,9.6C50.3,157.9,46.3,161.8,41.2,161.8z"></path></g></g>
                              </g>
-                            <g class="bottom-right">
+                            <g class="right">
                                 <g><g><path fill="#61E8A8" stroke="#4EB097" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
                                 M262.9,106.7c5.8,0,9.6,4.3,9.6,10.8c0,8.1-6.8,15.5-13.2,19.6l-0.6,0.4l-4.2-4.2l1.1-0.9c2.6-1.9,5.8-4.3,7-7.3
                                 c-5.3-0.5-8.7-4.2-8.7-9.6C253.8,110.6,257.8,106.7,262.9,106.7z"></path></g></g><g><g><path fill="#61E8A8" stroke="#4EB097" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
                                     M240.2,106.7c5.8,0,9.6,4.3,9.6,10.8c0,8.1-6.8,15.5-13.2,19.6l-0.6,0.4l-4.2-4.2l1.1-0.9c2.6-1.9,5.8-4.3,7-7.3
                                     c-5.3-0.5-8.7-4.2-8.7-9.6C231.1,110.6,235.1,106.7,240.2,106.7z"></path></g></g>
                              </g>
-                            <g class="bottom-left">
+                            <g class="left">
                                 <path fill="#61E8A8" stroke="#4EB097" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
                                 M108,113.1c-2.6-2.8-6.2-4.4-10.2-4.4c-7.9,0-14.9,6.4-15.5,14.3l-0.6,6.6h-6.6c-7.9,0-14.9,6.4-15.5,14.3c-0.3,4,0.9,7.8,3.5,10.6
                                 c2.6,2.8,6.2,4.4,10.2,4.4c7.9,0,14.9-6.4,15.5-14.3l0.6-6.6H96c7.9,0,14.9-6.4,15.5-14.3C111.8,119.7,110.6,116,108,113.1z
@@ -176,7 +174,7 @@
                                     C73.8,184.2,73.1,184.8,72.3,184.8z"></path><path fill="#4EB097" d="M78.2,196.7c-0.9,0-1.6-0.7-1.6-1.6c0-0.9,0.7-1.6,1.6-1.6c0.9,0,1.6,0.7,1.6,1.6
                                     C79.9,195.9,79.1,196.7,78.2,196.7z"></path></g><line fill="#61E8A8" stroke="#4EB097" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="89.8" y1="183.2" x2="97.7" y2="183.2"></line><line fill="#61E8A8" stroke="#4EB097" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="90.6" y1="195.9" x2="97.7" y2="195.9"></line>
                              </g>
-                            <g class="top-right">
+                            <g class="top">
                                 <g><path fill="#61E8A8" stroke="#4EB097" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
                                     M162.9,12.2h6.1c0,0-1.7-3.7-8.1-3.5l-0.3,1l2,2.5"></path><path fill="#61E8A8" stroke="#4EB097" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
                                     M169.5,20.5c0-2.1,0-4.3,0-6.1c0-3.4-3.3-6.1-7.4-6.1h-18.1c-4,0-7.4,3.3-7.4,7.4v19.6c0,4,3.3,7.4,7.4,7.4h18.1
@@ -189,7 +187,7 @@
                                     c0.9,0,1.1,0.5,1.1,1.1V30z"></path><circle fill="#4EB097" cx="149.8" cy="20.7" r="1.2"></circle><path fill="#4EB097" d="M154.4,31c-0.7,0-1.3-0.6-1.3-1.3c0-0.7,0.6-1.3,1.3-1.3c0.7,0,1.3,0.6,1.3,1.3
                                     C155.6,30.5,155.1,31,154.4,31z"></path></g><line fill="#61E8A8" stroke="#4EB097" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="163.4" y1="20.5" x2="169.5" y2="20.5"></line><line fill="#61E8A8" stroke="#4EB097" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="164" y1="30.5" x2="169.5" y2="30.5"></line>
                              </g>
-                            <g class="top-right">
+                            <g class="right">
                                 <g><path fill="#61E8A8" stroke="#4EB097" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
                                     M190.5,120.1H185c0,0,1.5-3.4,7.2-3.2l0.3,0.9l-1.8,2.3"></path><path fill="#61E8A8" stroke="#4EB097" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
                                     M184.5,127.6c0-1.9,0-3.9,0-5.5c0-3,3-5.5,6.6-5.5h16.2c3.6,0,6.6,3,6.6,6.6v17.5c0,3.6-3,6.6-6.6,6.6h-16.2
@@ -231,7 +229,7 @@
                                             c-0.3-0.3-0.3-0.7-0.2-1l3.5-8.9c0.1-0.4,0.5-0.6,0.9-0.6c0.1,0,0.1,0,0.2,0c0.5,0.1,0.8,0.5,0.8,1l0,5l1.7-0.6c0.1,0,0.2,0,0.3,0
                                             c0.3,0,0.5,0.1,0.7,0.3c0.3,0.3,0.3,0.7,0.2,1.1l-4.1,9.1C263.7,176.4,263.4,176.6,263,176.6z"></path></g>
                              </g>
-                            <g class="bottom-left">
+                            <g class="bottom">
                                 <path class="graphic-icon like-c" fill="#61E8A8" stroke="#4EB097" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
                                 M122.4,196.5c-0.3,0.2-0.7,0.2-1,0c-7-3.7-11.7-9-11.6-14.7c0.1-5.2,3.6-6.9,6.3-6.8c2.7,0.1,5,1.8,5.8,2.6h0
                                 c0.8-0.8,3.1-2.5,5.8-2.6c2.7-0.1,6.2,1.6,6.3,6.8C134.1,187.5,129.4,192.8,122.4,196.5z" ></path>
@@ -241,7 +239,7 @@
                                 M30.9,185.6c-0.2,0.1-0.5,0.1-0.7,0c-4.8-2.5-8-6.1-7.9-10.1c0.1-3.6,2.5-4.7,4.3-4.7c1.8,0,3.4,1.2,4,1.8h0c0.5-0.6,2.1-1.7,4-1.8
                                 c1.8,0,4.2,1.1,4.3,4.7C39,179.5,35.7,183.1,30.9,185.6z" ></path>
                              </g>
-                            <g class="top-left">
+                            <g class="top">
                                 <path class="graphic-icon like-a" fill="#61E8A8" stroke="#4EB097" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
                                 M146.3,80.1c-0.4,0.2-0.8,0.2-1.1,0c-8.1-4.3-13.6-10.4-13.4-17c0.1-6,4.2-8,7.3-7.9c3.1,0.1,5.8,2,6.7,3h0c0.9-1,3.6-3,6.7-3
                                 c3.1-0.1,7.2,1.9,7.3,7.9C159.9,69.7,154.5,75.8,146.3,80.1z"></path>
@@ -251,7 +249,7 @@
                                 120.9,158.3 112.9,158.3 112.9,166.3 105,166.3 105,158.3 97,158.3 97,150.3 105,150.3 105,142.3 112.9,142.3 112.9,150.3
                                 120.9,150.3 "></polygon>
                              </g>
-                            <g class="bottom-right">
+                            <g class="right">
                                 <polygon class="graphic-icon follow-b" fill="#61E8A8" stroke="#4EB097" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
                                 175.1,144.9 170,144.9 170,150.1 164.8,150.1 164.8,144.9 159.6,144.9 159.6,139.8 164.8,139.8 164.8,134.6 170,134.6 170,139.8
                                 175.1,139.8 "></polygon>
@@ -270,12 +268,31 @@
                                 OTOD 让一切开始流动
                              </h1>
                             <p>
-                                我们让大学的一切流动起来，简单又随心所欲地分享自己的快乐。故事、图片、GIF 动图、电视剧、链接、俏皮话、冷笑话、不冷的笑话、曲目、MP3、视频、时尚、艺术，以及有深度的内容。
+                                我们让大学的一切流动起来，简单又随心所欲地分享自己的快乐。图书、故事、图片、GIF 动图、电视剧、链接、俏皮话、冷笑话、不冷的笑话、曲目、MP3、视频、时尚、艺术，以及有深度的内容。
                             </p>
                          </div>
                      </div>
                  </div>
-                <div class="section welcome-section" :class="{'active': showcaseObjects[2].active,'old-hat':showcaseObjects[2].oldHatActive}" section-title="好吧，这个不难解释。" style="z-index:1">
+                <div class="section shop-section" :class="{'active': showcaseObjects[2].active,'old-hat':showcaseObjects[2].oldHatActive}" section-title="市场" style="z-index:3">
+                    <div class="section-wrapper">
+                        <div class="section-content">
+                            <h1 class="section-title">OTOD有许多精彩多样的二手商品</h1>
+                            <p>"OTOD提供发布和交易的二手市场，可以让您在大学简单的发布自己的多余物品，以及购买便宜的二手物品。无需再纠结多余物品的去处，无需再为自己的钱包担心。"
+                            </p>
+                        </div>
+                    </div>
+                 </div>
+                <div class="section server-section" :class="{'active': showcaseObjects[3].active,'old-hat':showcaseObjects[3].oldHatActive}" section-title="个性化服务" style="z-index:2">
+                    <div class="section-wrapper">
+                        <div class="server-graphic">
+                         </div>
+                        <div class="section-content">
+                            <h1 class="section-title">说真的，把需求挂在这里</h1>
+                            <p>定制您的需求，我们会为您寻找最好的“佣兵”.</p>
+                         </div>
+                     </div>
+                 </div>
+                <div class="section welcome-section" :class="{'active': showcaseObjects[4].active,'old-hat':showcaseObjects[4].oldHatActive}" section-title="好吧，这个不难解释。" style="z-index:1">
                     <div class="section-wrapper">
                         <div class="fullscreen_post_bg" style="background-image:url(./static/backgrounds/tumblr_welcome_1280.gif)"></div>
                      </div>
@@ -297,6 +314,8 @@
 </template>
 
 <script>
+import md5 from 'js-md5'
+
 export default {
   name: 'Login',
   data () {
@@ -329,6 +348,12 @@ export default {
         href: 'http://www.baidu.com'
       }],
 
+      // 第三方登录链接（待完成—）
+      oauth2Objects: [{
+        title: 'QQ',
+        href: 'http://www.baidu.com'
+      }],
+
       // showcase 响应控制对象
       showcaseObjects: [{
         active: true,
@@ -338,6 +363,14 @@ export default {
         active: false,
         oldHatActive: false,
         dataSection: 'about'
+      }, {
+        active: false,
+        oldHatActive: false,
+        dataSection: 'shop'
+      }, {
+        active: false,
+        oldHatActive: false,
+        dataSection: 'server'
       }, {
         active: false,
         oldHatActive: false,
@@ -356,6 +389,12 @@ export default {
         title: '用起来真是简单到难以解释。'
       }, {
         dotActive: false,
+        title: 'OTOD有许多二手商品。'
+      }, {
+        dotActive: false,
+        title: 'OTOD提供各种个性化服务定制'
+      }, {
+        dotActive: false,
         title: 'OTOD就是众多博客。'
       }],
 
@@ -365,7 +404,10 @@ export default {
       telephone: '',
 
       // 错误集合
-      errorList: []
+      errorList: [],
+
+      // test Users
+      users: []
     }
   },
   mounted () {
@@ -382,7 +424,19 @@ export default {
     signupBtnClick () {
       if (this.showForms) {
         if (this.username !== '' && this.password !== '' && this.telephone !== '') {
-          console.log('name:' + this.username + ',pass:' + this.password + ',tel:' + this.telephone)
+          console.log('name:' + this.username + ',pass:' + this.password + ',phone:' + this.telephone)
+
+          this.$axios({
+            method: 'post',
+            url: this.$url + '/register',
+            data: {
+              username: this.username,
+              password: md5(this.password),
+              telephone: this.telephone
+            }
+          }).then(function (response) {
+            console.log('hello')
+          })
         } else {
           this._showErrors('信息不全,请补全信息！')
         }
@@ -398,7 +452,31 @@ export default {
     signinBtnClick () {
       if (this.showForms) {
         if (this.username !== '' && this.password !== '') {
-          console.log('name:' + this.username + ',pass:' + this.password)
+          console.log('username' + this.username + ',password:' + this.password)
+
+          var params = new URLSearchParams()
+          params.append('grant_type', 'password')
+          params.append('username', this.username)
+          params.append('password', md5(this.password))
+
+          this.$axios({
+            method: 'post',
+            url: this.$url + '/oauth/token',
+            auth: {username: 'test', password: '123456'},
+            headers: {'Content-type': 'application/x-www-form-urlencoded; charset=utf-8'},
+            data: params
+          }).then(function (response) {
+            if (response.data.access_token) {
+              this.$setCookie('otod_access_token', response.data.access_token)
+            } else {
+              this._showErrors('请检查网络！')
+            }
+            this.$router.push('/')
+          }.bind(this)).catch(function (error) {
+            if (error.response) {
+              this._showErrors(error.response.data.error)
+            }
+          }.bind(this))
         } else {
           this._showErrors('信息不全，请补全信息！')
         }
@@ -426,12 +504,10 @@ export default {
     keyDownEvent: function (event) {
       event = event || window.event
       switch (event.keyCode) {
-        case 40:
         case 74:
           this.nextShowcase()
           break
         case 38:
-        case 75:
           this.preShowcase()
           break
       }
