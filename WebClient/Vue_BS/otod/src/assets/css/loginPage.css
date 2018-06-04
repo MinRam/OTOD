@@ -224,10 +224,11 @@ a{
 
 .logo_anchor{
     position: relative;
-    margin: 50%;
-    left: -76px;
-    font-size: 45px;
-    color: #fff;
+    float: left;
+    width: 200px;
+    height: 60px;
+    margin-left: 50%;
+    left: -100px;
 }
 
 .about-Index-showcase .section-title{

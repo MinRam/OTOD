@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Index from '@/pages/Index'
 import Login from '@/pages/Login'
+import Home from '@/pages/Home'
 // import store from '../store'
 
 Vue.use(Router)
@@ -18,7 +19,17 @@ const routes = [
     meta: {
       requireAuth: true
     },
-    component: Index
+    component: Index,
+    children: [
+      {
+        path: '/home',
+        name: 'Home',
+        meta: {
+          requireAuth: true
+        },
+        component: Home
+      }
+    ]
   }
 ]
 

@@ -4,7 +4,7 @@
             <div class="form_container" >
                 <div class="form_header">
                     <h1 class="logo-word large" id="logo">
-                        <a class = "logo_anchor" href="/" >OTOD</a>
+                        <a class = "logo_anchor" href="/" style="background-image: url(./static/logos/otod-logo1.png)"></a>
                      </h1>
                     <h2 class="subheading">
                         为你的所爱而来,<br>为你的发现停留。
@@ -466,7 +466,11 @@ export default {
             headers: {'Content-type': 'application/x-www-form-urlencoded; charset=utf-8'},
             data: params
           }).then(function (response) {
-            this.$setCookie('otod_access_token', response.data.access_token)
+            if (response.data.access_token) {
+              this.$setCookie('otod_access_token', response.data.access_token)
+            } else {
+              this._showErrors('请检查网络！')
+            }
             this.$router.push('/')
           }.bind(this)).catch(function (error) {
             if (error.response) {
