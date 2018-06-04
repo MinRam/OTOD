@@ -1,12 +1,17 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Index from '@/pages/Index'
 import Login from '@/pages/Login'
 import ForumTopic from '@/pages/ForumTopic'
 import ForumReply from '@/pages/ForumReply'
-import store from '../store'
+// index pages
+import Index from '@/pages/Index'
 import Home from '@/pages/Home'
-
+import Blog from '@/pages/Blog'
+import Shop from '@/pages/Shop'
+// import Service from '@/pages/Service'
+import Book from '@/pages/Book'
+import File from '@/pages/File'
+// import store from '../store'
 
 Vue.use(Router)
 
@@ -31,6 +36,41 @@ const routes = [
           requireAuth: true
         },
         component: Home
+      }, {
+        path: '/blog',
+        name: 'Blog',
+        meta: {
+          requireAuth: false
+        },
+        component: Blog
+      }, {
+        path: '/shop',
+        name: 'Shop',
+        meta: {
+          requireAuth: false
+        },
+        component: Shop
+      }, {
+      //   path: '/service',
+      //   name: 'Service',
+      //   meta: {
+      //     requireAuth: false
+      //   },
+      //   component: Service
+      // }, {
+        path: '/book',
+        name: 'Book',
+        meta: {
+          requireAuth: false
+        },
+        component: Book
+      }, {
+        path: '/file',
+        name: 'File',
+        meta: {
+          requireAuth: false
+        },
+        component: File
       }
     ]
   }, {

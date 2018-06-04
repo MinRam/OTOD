@@ -6,12 +6,12 @@
              </h1>
             <div class="menu-nav">
                 <ul class="nav-tab">
-                    <li v-for="(nav,index) in navObjects" :key="index" :class="{'active':nav.active}">
-                        <a :href="nav.href">{{nav.title}}</a>
+                    <li v-for="(nav,index) in navObjects" :class="{'active': nav.active}" :key="index" @click="navClick(index)">
+                        {{nav.title}}
                      </li>
                  </ul>
                 <div class="nav-search">
-                        <el-autocomplete popper-class="my-autocomplete" v-model="state3" :fetch-suggestions="querySearch" placeholder="搜索标签" @select="handleSelect">
+                        <el-autocomplete popper-class="el-search" v-model="state3" :fetch-suggestions="querySearch" placeholder="搜索标签" @select="handleSelect">
                             <i class="el-icon-edit el-input__icon" slot="suffix" @click="handleIconClick"></i>
                             <template slot-scope="{ item }">
                                 <div class="name">{{ item.value }}</div>
@@ -33,31 +33,31 @@ export default {
       // 菜单
       navObjects: [{
         active: true,
-        href: 'www.baidu.com',
+        href: '/home',
         title: '首页'
       }, {
-        acctive: false,
-        href: 'www.baidu.com',
+        active: false,
+        href: '/blog',
         title: '博客'
       }, {
         active: false,
-        href: 'www.baidu.com',
+        href: '/shop',
         title: '二手市场'
       }, {
         active: false,
-        href: 'www.baidu.com',
+        href: '/service',
         title: '个性化服务'
       }, {
         active: false,
-        href: 'www.baidu.com',
+        href: '/book',
         title: '图书馆'
       }, {
         active: false,
-        href: 'www.baidu.com',
+        href: '/file',
         title: '文档库'
       }, {
         active: false,
-        href: 'www.baidu.com',
+        href: '/more',
         title: '更多'
       }],
 
@@ -69,9 +69,20 @@ export default {
 
   mounted () {
     this.restaurants = this.loadAll()
+    this.$router.push('/home')
   },
 
   methods: {
+    // 菜单样式跳转
+    navClick (index) {
+      for (var i = 0; i < this.navObjects.length; ++i) {
+        this.navObjects[i].active = false
+      }
+
+      this.navObjects[index].active = true
+      this.$router.push(this.navObjects[index].href)
+    },
+
     // 搜索框响应
     querySearch (queryString, cb) {
       var restaurants = this.restaurants
