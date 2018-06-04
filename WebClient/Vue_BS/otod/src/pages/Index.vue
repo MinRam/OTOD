@@ -1,25 +1,25 @@
 <template>
     <div id="index">
         <div class="otod-header">
+          <div class="otod-hdc">
             <h1 class="otod-logo">
-                <a href="/" style="background-image: url(./static/logos/otod-logo1.png)"></a>
+              <a href="/" style="background-image: url(./static/logos/otod-logo1.png)"></a>
              </h1>
             <div class="menu-nav">
                 <ul class="nav-tab">
-                    <li v-for="(nav,index) in navObjects" :class="{'active': nav.active}" :key="index" @click="navClick(index)">
-                        {{nav.title}}
-                     </li>
+                  <li v-for="(nav,index) in navObjects" :class="{'active': nav.active}" :key="index" @click="navClick(index)">{{nav.title}}</li>
                  </ul>
                 <div class="nav-search">
-                        <el-autocomplete popper-class="el-search" v-model="state3" :fetch-suggestions="querySearch" placeholder="搜索标签" @select="handleSelect">
-                            <i class="el-icon-edit el-input__icon" slot="suffix" @click="handleIconClick"></i>
-                            <template slot-scope="{ item }">
-                                <div class="name">{{ item.value }}</div>
-                                <span class="addr">{{ item.address }}</span>
-                             </template>
-                         </el-autocomplete>
+                  <el-autocomplete popper-class="el-search" v-model="state3" :fetch-suggestions="querySearch" placeholder="搜索标签" @select="handleSelect">
+                    <i class="el-icon-edit el-input__icon" slot="suffix" @click="handleIconClick"></i>
+                    <template slot-scope="{ item }">
+                        <div class="name">{{ item.value }}</div>
+                        <span class="addr">{{ item.address }}</span>
+                     </template>
+                   </el-autocomplete>
                  </div>
              </div>
+           </div>
          </div>
         <router-view/>
      </div>
@@ -95,6 +95,7 @@ export default {
         return (restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0)
       }
     },
+
     loadAll () {
       return [
         { 'value': '三全鲜食（北新泾店）', 'address': '长宁区新渔路144号' },
@@ -147,9 +148,11 @@ export default {
         { 'value': '南拳妈妈龙虾盖浇饭', 'address': '普陀区金沙江路1699号鑫乐惠美食广场A13' }
       ]
     },
+
     handleSelect (item) {
       console.log(item)
     },
+
     handleIconClick (ev) {
       console.log(ev)
     }

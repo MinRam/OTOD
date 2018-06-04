@@ -18,10 +18,15 @@ body {
 }
 
 .otod-header {
-    width: 2000px;
+    width: 100%;
     height:82px;
     margin-bottom: 30px;
     background-color: #24282B;
+    position:relative;
+}
+
+.otod-header .otod-hdc {
+
 }
 
 .otod-header .otod-logo {
