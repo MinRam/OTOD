@@ -74,19 +74,17 @@ const routes = [
       }
     ]
   }, {
-    path:'/forumtopic',
-    name:'ForumTopic',
-    meta:{
-
+    path: '/forumtopic',
+    name: 'ForumTopic',
+    meta: {
     },
-    component:ForumTopic
+    component: ForumTopic
   }, {
-    path:'/forumreply',
-    name:'ForumReply',
-    meta:{
-
+    path: '/forumreply',
+    name: 'ForumReply',
+    meta: {
     },
-    component:ForumReply
+    component: ForumReply
   }
 ]
 

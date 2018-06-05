@@ -31,8 +31,9 @@ public class UserController  {
                 userRegisteration.getPassword(),
                 Arrays.asList(new Role("USER"))
         ));
+
         return "User created!";
     }
 
-    
+
 }
