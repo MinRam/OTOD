@@ -51,8 +51,8 @@ p{
 	padding-left: 10px;
 	padding-top: 10px;
 }
-.el-card{
-	min-width: 700px;
+.center-container-card{
+	/*min-width: 600px;*/
 	padding: 0;
 }
 .commit-button-box {
@@ -65,4 +65,8 @@ p{
     color: #fff;
     box-sizing: border-box;
   }
+.right-container-menu{
+	min-width: 212px;
+	float: left;
 
+}

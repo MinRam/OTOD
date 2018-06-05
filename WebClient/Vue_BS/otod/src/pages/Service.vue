@@ -1,13 +1,13 @@
 <template>
     <div>
         <div style="margin-top: 150px;"></div>
-        <el-row>
-            <el-col :span="12" :offset="4">
+        <el-row :gutter="20" style="min-width: 1000px;">
+            <el-col :xs="12" :sm="12" :md="12" :xl="12" :offset="4">
                 <el-ul>
                     <el-li v-for="m in message" :key="m.id">
                         <el-row class="message-bottom" type="flex" justify="center">
                             <el-col :span="24">
-                                <el-card shadow="hover">
+                                <el-card shadow="hover" class="center-container-card">
                                     <div v-if="m.emergency === '1'" style="height: 3px; clear: both; width: 100%" class="bg-danger"></div>
                                     <div v-if="m.emergency === '2'" style="height: 3px; clear: both; width: 100%" class="bg-warning"></div>
                                     <div v-if="m.emergency === '3'" style="height: 3px; clear: both; width: 100%" class="bg-success"></div>
@@ -53,7 +53,52 @@
                         </el-row>
                     </el-li>
                 </el-ul>
+                <el-row type="flex" justify="center">
+                    <el-col :span="14">
+                        <div>
+                            <el-pagination
+                              background
+                              layout="prev, pager, next"
+                              :total=page[0].max>
+                            </el-pagination>
+                        </div>
+                    </el-col>
+                </el-row>
             </el-col>
+            <div class="right-container-menu">
+                <el-menu
+                    default-active="1"
+                    class="right-side-menu"
+                    background-color="#545c64"
+                    text-color="#fff"
+                    active-text-color="#ffd04b"
+                    :collapse="isCollapse"
+                    @open="handleOpen"
+                    @close="handleClose">
+                    <el-menu-item index="1">
+                        <i class="el-icon-menu"></i>
+                        <span slot="title">订单列表</span>
+                    </el-menu-item>
+                    <el-submenu index="2">
+                        <template slot="title">
+                            <i class="el-icon-location"></i>
+                            <span>我的订单</span>
+                        </template>
+                        <el-menu-item index="2-1">所有订单</el-menu-item>
+                        <el-menu-item index="2-2">进行中</el-menu-item>
+                        <el-menu-item index="2-3">已完成</el-menu-item>
+                    </el-submenu>
+                    <el-submenu index="3">
+                        <template slot="title">
+                            <i class="el-icon-document"></i>
+                            <span slot="title">我的求助</span>
+                        </template>
+                        <el-menu-item index="3-1">所有求助</el-menu-item>
+                        <el-menu-item index="3-2">进行中</el-menu-item>
+                        <el-menu-item index="3-3">已完成</el-menu-item>
+                    </el-submenu>
+                </el-menu>
+            </div>
         </el-row>
     </div>
 </template>
@@ -63,6 +108,7 @@ export default {
   name: 'Index',
   data () {
     return {
+      isCollapse: false,
       sstatic: false,
       show: false,
       sstatic1: false,
@@ -97,6 +143,9 @@ export default {
         content: 'Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !',
         contributers: '6',
         emergency: '4'
+      }],
+      page: [{
+        max: 100
       }]
     }
   }
