@@ -1,75 +1,74 @@
 <template>
 	<div class="container"  id="app">
-	     <div class="jumbotron">
-	     	 <h1>博客论坛系统</h1>
-		 </div>
-		 <div class="row" style="margin:40px 70px;">
-			
-			 <div class="col-md-2 panel panel-warning" style="margin:3px;max-width:200px" v-for="x in list">
-			 <div class="panel-body">
-			 	<div class="pull-left col-md-4">
-			 		<span class="glyphicon glyphicon-subscript"></span>
-			 	</div>
-			 	<div class="pull-right col-md-8">
-			 	<span>影视</span>
-			 	</div>
-			 </div>
-			 </div>
-		 </div>
-		 <div class="row" style="margin: 10px 0px;">
-	 		<div class="col-md-4 pull-right input-group">
-	 			<span class="input-group-addon">标题：</span>
-		 		<input type="text" class="form-control" style="width: auto;">
-		 		<button class="btn btn-success">搜索</button>
-		 	</div>
-		 </div>
-		 <div class="row">
-			 <table class="table table-striped">
-			 <tbody>
-			 <tr v-for="x in forumTopicList">
-			 	<td class="col-md-1">{{ x.click_num }}</td>
-			 	<td class="col-md-9"><a v-on:click="toReply(x.id)">{{ x.title }}</a></td>
-			 	<td  class="col-md-1">
-			 		<a href="#">id：{{ x.user_id }}</a>
-			 		<div class="clear-both"></div>
-			 		<span style="color:#828282;">{{ x.date }}</span>
-	            </td>
-			 	<td  class="col-md-1">
-			 		<span style="color:#828282;">{{ x.last_time }}</span>
-			 		<div class="clear-both"></div>
-			 		<a href="#">黑色的毒龙</a>
-	     		</td>
-			 	<td></td>
-			 </tr>
-			 </tbody>
-			 </table>
-		 </div>
-		 <div class="row">
-		    <ul class="pagination">
-			<li><a href="#">&laquo;</a></li>
-			<li><a v-on:click="changepage(0)">1</a></li>
-			<li><a v-on:click="changepage(1)">2</a></li>
-			<li><a v-on:click="changepage(2)">3</a></li>
-			<li><a v-on:click="changepage(3)">4</a></li>
-			<li><a v-on:click="changepage(4)">5</a></li>
-			<li><a href="#">&raquo;</a></li>
-		    </ul>
-		 </div>
-		 <div class="row">
-		 	<form class="bs-example bs-example-form">
-		 	<div class="input-group" style="margin:8px 0px;">
-				<span class="input-group-addon">标题</span>
-				<input type="text" class="form-control" placeholder="请输入标题" v-model="forumTopicPO.title">
-			</div>
-			<div class="form-group">
-				<textarea class="form-control" rows="10" name="textarea" placeholder="请输入内容" v-model="forumTopicPO.content"></textarea>
-			</div>
-			<input type="button" value="确定" class="btn btn-success" v-on:click="changepage(1)">
-		 	</form>
-
-		 	<input type="button" value="确定" class="btn btn-success" v-on:click="queryByPage">
-		 </div>
+    <div class="jumbotron">
+      <h1>博客论坛系统</h1>
+    </div>
+    <div class="row" style="margin:40px 70px;">
+      <div class="col-md-2 panel panel-warning" style="margin:3px;max-width:200px" v-for="x in list">
+        <div class="panel-body">
+         <div class="pull-left col-md-4">
+          <span class="glyphicon glyphicon-subscript"></span>
+        </div>
+        <div class="pull-right col-md-8">
+         <span>影视</span>
+       </div>
+     </div>
+   </div>
  </div>
+ <div class="row" style="margin: 10px 0px;">
+  <div class="col-md-4 pull-right input-group">
+   <span class="input-group-addon">标题：</span>
+   <input type="text" class="form-control" style="width: auto;">
+   <button class="btn btn-success">搜索</button>
+ </div>
+</div>
+<div class="row">
+  <table class="table table-striped">
+    <tbody>
+      <tr v-for="x in forumTopicList">
+       <td class="col-md-1">{{ x.click_num }}</td>
+       <td class="col-md-9"><a v-on:click="toReply(x.id)">{{ x.title }}</a></td>
+       <td  class="col-md-1">
+        <a href="#">id：{{ x.user_id }}</a>
+        <div class="clear-both"></div>
+        <span style="color:#828282;">{{ x.date }}</span>
+      </td>
+      <td  class="col-md-1">
+        <span style="color:#828282;">{{ x.last_time }}</span>
+        <div class="clear-both"></div>
+        <a href="#">黑色的毒龙</a>
+      </td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<div class="row">
+  <ul class="pagination">
+   <li><a href="#">&laquo;</a></li>
+   <li><a v-on:click="changepage(0)">1</a></li>
+   <li><a v-on:click="changepage(1)">2</a></li>
+   <li><a v-on:click="changepage(2)">3</a></li>
+   <li><a v-on:click="changepage(3)">4</a></li>
+   <li><a v-on:click="changepage(4)">5</a></li>
+   <li><a href="#">&raquo;</a></li>
+ </ul>
+</div>
+<div class="row">
+  <form class="bs-example bs-example-form">
+    <div class="input-group" style="margin:8px 0px;">
+      <span class="input-group-addon">标题</span>
+      <input type="text" class="form-control" placeholder="请输入标题" v-model="forumTopicPO.title">
+    </div>
+    <div class="form-group">
+      <textarea class="form-control" rows="10" name="textarea" placeholder="请输入内容" v-model="forumTopicPO.content"></textarea>
+    </div>
+    <input type="button" value="确定" class="btn btn-success" v-on:click="changepage(1)">
+  </form>
+
+  <input type="button" value="确定" class="btn btn-success" v-on:click="queryByPage">
+</div>
+</div>
 </template>
 
 <script>
@@ -203,8 +202,8 @@ export default {
 
 		var _year = difference/year
 		var _month = difference/month
-	    var _week = difference/(7*day)
-     	var _day = difference/day
+    var _week = difference/(7*day)
+   	var _day = difference/day
 		var _hour = difference/hour
 		var _minute = difference/minute
 
