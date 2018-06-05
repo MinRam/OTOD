@@ -86,20 +86,24 @@ export default {
       }],
 
       userInfo: {
-        headPhoto: 'http://localhost:8081/images/6630576284002729390.jpg',
-        username: '祎隋',
-        telephone: 'Tel:15005933722'
+        headPhoto: '',
+        username: '',
+        telephone: ''
       }
     }
   },
   mounted () {
-    // 键盘监听注册
-    document.onkeydown = this.keyDownEvent
-
-    // 滚轮监听注册
-    window.onmousewheel = document.onmousewheel = this.handleScroll
-    window.addEventListener('mouseWheel', this.handleScroll, false)
-    window.addEventListener('DOMMouseScroll', this.handleScroll, false)
+    this.$axios({
+      method: 'get',
+      url: this.$url + '/getSimpleInfo',
+      params: {
+        access_token: this.$getCookie('otod_access_token')
+      }
+    }).then(function (response) {
+      this.userInfo.headPhoto = this.$url + '/images' + response.data.headImage
+      this.userInfo.username = response.data.nickname
+      this.userInfo.telephone = 'Tel:' + response.data.telephone
+    }.bind(this))
   },
   methods: {
     // 发布点击

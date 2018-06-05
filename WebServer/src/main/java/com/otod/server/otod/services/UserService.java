@@ -77,7 +77,6 @@ public class UserService {
         // 关联信息表
         userInfo.setSex("男");
         userInfo.setUser(user);
-        userInfo.setId(user.getUserId());
         userInfoRespository.save(userInfo);
     }
 }

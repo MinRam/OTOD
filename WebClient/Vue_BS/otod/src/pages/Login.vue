@@ -435,8 +435,12 @@ export default {
               telephone: this.telephone
             }
           }).then(function (response) {
-            console.log('hello')
-          })
+            if (response.data === 'success') {
+              this.$router.push('')
+            } else {
+              this._showErrors(response.data)
+            }
+          }.bind(this))
         } else {
           this._showErrors('信息不全,请补全信息！')
         }

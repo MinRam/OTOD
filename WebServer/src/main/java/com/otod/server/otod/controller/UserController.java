@@ -51,7 +51,7 @@ public class UserController  {
                 userInfo
         );
 
-        return "用户注册成功";
+        return "success";
     }
 
     @GetMapping("/getSimpleInfo")
@@ -61,7 +61,7 @@ public class UserController  {
 
         UserInfo userInfo = userService.getUserInfo(user);
 
-        UserSimpleInfo simpleInfo = new UserSimpleInfo(userInfo.getNickname(),userInfo.getHeadImage(),userInfo.getTelphone());
+        UserSimpleInfo simpleInfo = new UserSimpleInfo(userInfo.getNickname(),userInfo.getTelphone(),userInfo.getHeadImage());
 
         return simpleInfo;
     }

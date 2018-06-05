@@ -3,15 +3,15 @@ package com.otod.server.otod.pojos;
 public class UserSimpleInfo {
     private String nickname;
     private String telephone;
-    private String headphone;
+    private String headImage;
 
     public UserSimpleInfo() {
     }
 
-    public UserSimpleInfo(String nickname, String telphone, String userHphoto) {
+    public UserSimpleInfo(String nickname, String telphone, String headImage) {
         this.nickname = nickname;
         this.telephone = telphone;
-        this.headphone = userHphoto;
+        this.headImage = headImage;
     }
 
     public String getNickname() {
@@ -30,11 +30,11 @@ public class UserSimpleInfo {
         this.telephone = telephone;
     }
 
-    public String getHeadphone() {
-        return headphone;
+    public String getHeadImage() {
+        return headImage;
     }
 
-    public void setHeadphone(String headphone) {
-        this.headphone = headphone;
+    public void setHeadImage(String headImage) {
+        this.headImage = headImage;
     }
 }
