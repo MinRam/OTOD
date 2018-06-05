@@ -1,7 +1,7 @@
 <template>
     <div>
         <div style="margin-top: 150px;"></div>
-        <el-row :gutter="20" style="min-width: 1000px;">
+        <el-row :gutter="40" style="min-width: 1000px;">
             <el-col :xs="12" :sm="12" :md="12" :xl="12" :offset="4">
                 <el-ul>
                     <el-li v-for="m in message" :key="m.id">
