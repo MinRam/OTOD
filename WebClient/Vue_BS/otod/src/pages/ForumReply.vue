@@ -10,7 +10,7 @@
                     <td class="col-md-2">
                         <span>黑色的野马</span>
                         <div class="clear-both"></div>
-                        <span><a @click="">id:874445</a></span>
+                        <span><a @click="test()">id:874445</a></span>
                      </td>
                     <td class="col-md-10">
                         <div class="row">
@@ -71,7 +71,9 @@ export default {
     }
   },
   methods: {
-
+    test: function () {
+      console.log('hello')
+    }
   }
 }
 </script>

@@ -4,7 +4,7 @@
             <div class="form_container" >
                 <div class="form_header">
                     <h1 class="logo-word large" id="logo">
-                        <a class = "logo_anchor" href="/" style="background-image: url(./static/logos/otod-logo1.png)"></a>
+                        <a class = "logo_anchor" href="/"></a>
                      </h1>
                     <h2 class="subheading">
                         为你的所爱而来,<br>为你的发现停留。
@@ -49,7 +49,7 @@
              </div>
             <div class="showcase">
                 <div class="section login-section" :class="{'active': showcaseObjects[0].active,'old-hat': showcaseObjects[0].oldHatActive}" section-title="注册" style="z-index:5">
-                    <div id="fullscreen_post_bg" class="fullscreen_post_bg" style= "background-image:url(./static/backgrounds/tumblr_register_1280.jpg)" ></div>
+                    <div id="fullscreen_post_bg" class="fullscreen_post_bg"></div>
                     <div class="fullscreen_post_footer">
                         <div class="fullscreen_post_footer_inner">
                             <div class="footer_legal_links">
@@ -294,7 +294,7 @@
                  </div>
                 <div class="section welcome-section" :class="{'active': showcaseObjects[4].active,'old-hat':showcaseObjects[4].oldHatActive}" section-title="好吧，这个不难解释。" style="z-index:1">
                     <div class="section-wrapper">
-                        <div class="fullscreen_post_bg" style="background-image:url(./static/backgrounds/tumblr_welcome_1280.gif)"></div>
+                        <div class="fullscreen_post_bg"></div>
                      </div>
                  </div>
              </div>
