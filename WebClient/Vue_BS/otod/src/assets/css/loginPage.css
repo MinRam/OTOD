@@ -245,7 +245,7 @@ a{
     overflow: hidden;
     margin: auto;
     width:232px;
-    height: 50px;
+    height: 60px;
     padding:0px;
     font-size: 20px;
 }
@@ -440,11 +440,11 @@ a{
 }
 
 .login-section .fullscreen_post_bg {
-    background-image: url(../backgrounds/tumblr_register_1280.jpg);
+    background-image: url(../backgrounds/login.jpg);
 }
 
 .welcome-section .fullscreen_post_bg {
-    background-image: url(../backgrounds/tumblr_welcome_1280.gif);
+    background-image: url(../backgrounds/login2.jpg);
 }
 
 

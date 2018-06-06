@@ -436,7 +436,29 @@ export default {
             }
           }).then(function (response) {
             if (response.data === 'success') {
-              this.$router.push('')
+              var params = new URLSearchParams()
+              params.append('grant_type', 'password')
+              params.append('username', this.username)
+              params.append('password', md5(this.password))
+
+              this.$axios({
+                method: 'post',
+                url: this.$url + '/oauth/token',
+                auth: {username: 'test', password: '123456'},
+                headers: {'Content-type': 'application/x-www-form-urlencoded; charset=utf-8'},
+                data: params
+              }).then(function (response) {
+                if (response.data.access_token) {
+                  this.$setCookie('otod_access_token', response.data.access_token)
+                } else {
+                  this._showErrors('请检查网络！')
+                }
+                this.$router.push('/')
+              }.bind(this)).catch(function (error) {
+                if (error.response) {
+                  this._showErrors(error.response.data.error)
+                }
+              }.bind(this))
             } else {
               this._showErrors(response.data)
             }
