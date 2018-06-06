@@ -3,8 +3,8 @@
         <div style="margin-top: 150px;"></div>
         <el-row :gutter="40" style="min-width: 1000px;">
             <el-col :xs="12" :sm="12" :md="12" :xl="12" :offset="4">
-                <el-ul>
-                    <el-li v-for="m in message" :key="m.id">
+                <ul>
+                    <li v-for="m in message" :key="m.id">
                         <el-row class="message-bottom" type="flex" justify="center">
                             <el-col :span="24">
                                 <el-card shadow="hover" class="center-container-card">
@@ -51,8 +51,8 @@
                                 </el-card>
                             </el-col>
                         </el-row>
-                    </el-li>
-                </el-ul>
+                    </li>
+                </ul>
                 <el-row type="flex" justify="center">
                     <el-col :span="14">
                         <div>
@@ -72,9 +72,7 @@
                     background-color="#545c64"
                     text-color="#fff"
                     active-text-color="#ffd04b"
-                    :collapse="isCollapse"
-                    @open="handleOpen"
-                    @close="handleClose">
+                    :collapse="isCollapse">
                     <el-menu-item index="1">
                         <i class="el-icon-menu"></i>
                         <span slot="title">订单列表</span>
@@ -147,6 +145,20 @@ export default {
       page: [{
         max: 100
       }]
+    }
+  },
+  mounted () {
+    this.getAllServices()
+  },
+  methods: {
+    getAllServices () {
+      this.$axios.get(this.$url + '/allServices')
+        .then(function (response) {
+          console.log(response.data)
+        })
+        .catch(function (error) {
+          console.log(error.message)
+        })
     }
   }
 }
