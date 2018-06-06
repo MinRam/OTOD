@@ -4,7 +4,7 @@
             <div class="form_container" >
                 <div class="form_header">
                     <h1 class="logo-word large" id="logo">
-                        <a class = "logo_anchor" href="/" >OTOD</a>
+                        <a class = "logo_anchor" href="/"></a>
                      </h1>
                     <h2 class="subheading">
                         为你的所爱而来,<br>为你的发现停留。
@@ -49,13 +49,15 @@
              </div>
             <div class="showcase">
                 <div class="section login-section" :class="{'active': showcaseObjects[0].active,'old-hat': showcaseObjects[0].oldHatActive}" section-title="注册" style="z-index:5">
-                    <div id="fullscreen_post_bg" class="fullscreen_post_bg" style= "background-image:url(./static/backgrounds/tumblr_register_1280.jpg)" ></div>
+                    <div id="fullscreen_post_bg" class="fullscreen_post_bg"></div>
                     <div class="fullscreen_post_footer">
                         <div class="fullscreen_post_footer_inner">
                             <div class="footer_legal_links">
                                 <a v-for="(link, index) in footerLinks" :href="link.href" :key="index" target="_blank">{{link.title}}</a>
                              </div>
-                            <div class="fullscreen_post_posted_by_show"></div>
+                            <div class="footer-oauth2-plaforms">
+                                <a v-for="(oauth,index) in oauth2Objects" :href="oauth.href" :key="index" target="_blank">{{oauth.title}}</a>
+                            </div>
                         </div>
                      </div>
                     <div class="about-Index-btn" @click="nextShowcase()" >What is OTOD?</div>
@@ -292,7 +294,7 @@
                  </div>
                 <div class="section welcome-section" :class="{'active': showcaseObjects[4].active,'old-hat':showcaseObjects[4].oldHatActive}" section-title="好吧，这个不难解释。" style="z-index:1">
                     <div class="section-wrapper">
-                        <div class="fullscreen_post_bg" style="background-image:url(./static/backgrounds/tumblr_welcome_1280.gif)"></div>
+                        <div class="fullscreen_post_bg"></div>
                      </div>
                  </div>
              </div>
@@ -343,6 +345,12 @@ export default {
         href: 'http://www.baidu.com'
       }, {
         title: '相关证书',
+        href: 'http://www.baidu.com'
+      }],
+
+      // 第三方登录链接（待完成—）
+      oauth2Objects: [{
+        title: 'QQ',
         href: 'http://www.baidu.com'
       }],
 
@@ -427,8 +435,12 @@ export default {
               telephone: this.telephone
             }
           }).then(function (response) {
-            console.log('hello')
-          })
+            if (response.data === 'success') {
+              this.$router.push('')
+            } else {
+              this._showErrors(response.data)
+            }
+          }.bind(this))
         } else {
           this._showErrors('信息不全,请补全信息！')
         }
@@ -458,10 +470,16 @@ export default {
             headers: {'Content-type': 'application/x-www-form-urlencoded; charset=utf-8'},
             data: params
           }).then(function (response) {
-            this.$setCookie('otod_access_token', response.data.access_token)
-            document.location.replace('/')
+            if (response.data.access_token) {
+              this.$setCookie('otod_access_token', response.data.access_token)
+            } else {
+              this._showErrors('请检查网络！')
+            }
+            this.$router.push('/')
           }.bind(this)).catch(function (error) {
-            this._showErrors(error.response.data.error)
+            if (error.response) {
+              this._showErrors(error.response.data.error)
+            }
           }.bind(this))
         } else {
           this._showErrors('信息不全，请补全信息！')

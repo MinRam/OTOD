@@ -1,0 +1,101 @@
+* {
+    margin:0px;
+    padding:0px;
+}
+
+a {
+    text-decoration: none;
+    outline: none;
+    color: #fff;
+}
+
+li {
+    list-style-type: none;
+}
+
+body {
+    background-color: #ededef;
+}
+
+.otod-header {
+    width: 100%;
+    height: 82px;
+    margin-bottom: 30px;
+    background-color: #24282B;
+}
+
+.otod-header .otod-hdc {
+    margin: 0px auto;
+    width: 1100px;
+}
+
+.otod-header .otod-logo {
+    margin-top: 10px;
+    margin-left: 20px;
+    float: left;
+    width: 220px;
+    height: 60px;
+    position: relative;
+}
+
+.otod-header .otod-logo a{
+    position: relative;
+    float: left;
+    width: 200px;
+    height: 55px;
+    background-image: url(../logos/otod-logo1.png);
+}
+
+.otod-header .menu-nav {
+    float: left;
+    margin: 35px 0 0;
+}
+
+/* 菜单样式 */
+
+.menu-nav .nav-tab {
+    display: inline-block;
+    position: relative;
+    z-index: 65;
+    height: 50px;
+    padding-top: 22px;
+    margin: -22px 0 0;
+    text-align: right;
+}
+
+.menu-nav .nav-tab li{
+    float: left;
+    font-size: 16px;
+    font-weight: 100;
+    margin-left: 29px;
+    cursor: pointer;
+    color: #999;
+}
+
+.menu-nav .nav-tab li.active::before{
+    content: ' ';
+    position: absolute;
+    margin-top: 40px;
+    margin-left: 10px;
+    width:0;
+    height:0;
+    border-left:8px solid transparent;
+    border-right:8px solid transparent;
+    border-bottom:8px solid #ededef ;
+}
+
+.menu-nav .nav-tab li.active,.menu-nav .nav-tab li:hover{
+    color: #fff;
+}
+
+.menu-nav .nav-search {
+    display: inline-block;
+    float: right;
+    position: relative;
+    z-index: 100;
+    margin-left: 40px;
+}
+
+
+
+

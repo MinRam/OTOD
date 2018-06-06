@@ -6,12 +6,11 @@ import router from './router'
 import cookieOpe from './utils/cookieOp'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
-import 'element-ui/lib/theme-chalk/display.css'
 // 采用axios代替ajax
 import axios from 'axios'
 
-Vue.use(cookieOpe)
 Vue.use(ElementUI)
+Vue.use(cookieOpe)
 
 Vue.prototype.$url = 'http://localhost:8081'
 Vue.prototype.$axios = axios

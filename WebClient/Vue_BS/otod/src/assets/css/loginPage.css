@@ -224,10 +224,12 @@ a{
 
 .logo_anchor{
     position: relative;
-    margin: 50%;
-    left: -76px;
-    font-size: 45px;
-    color: #fff;
+    float: left;
+    width: 200px;
+    height: 60px;
+    margin-left: 50%;
+    left: -100px;
+    background-image: url(../logos/otod-logo1.png);
 }
 
 .about-Index-showcase .section-title{
@@ -437,6 +439,15 @@ a{
     background-position: 50% 50%;
 }
 
+.login-section .fullscreen_post_bg {
+    background-image: url(../backgrounds/tumblr_register_1280.jpg);
+}
+
+.welcome-section .fullscreen_post_bg {
+    background-image: url(../backgrounds/tumblr_welcome_1280.gif);
+}
+
+
 .fullscreen_post_footer{
     position: absolute;
     bottom: 45px;
@@ -473,6 +484,28 @@ a{
     color: #fff;
 }
 
+.fullscreen_post_footer .fullscreen_post_footer_inner .footer-oauth2-plaforms{
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    opacity: 1;
+    padding: 0 20px;
+    margin: 0 0 13px 0;
+    transition: opacity 0.2s linear;
+}
+
+.fullscreen_post_footer .fullscreen_post_footer_inner .footer-oauth2-plaforms a{
+    color: #D1D1D1;
+    font-size: 14px;
+    padding-left: 15px;
+    margin-left: -5px;
+    font-weight: normal;
+    display: inline-block;
+}
+
+.fullscreen_post_footer .fullscreen_post_footer_inner .footer-oauth2-plaforms a:hover{
+    color: #fff;
+}
 
 .about-Index-showcase .section .fullscreen_post_bg{
     background-size:0 0;
