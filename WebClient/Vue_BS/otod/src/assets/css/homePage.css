@@ -20,8 +20,10 @@ li {
 }
 
 
+/* main publish navs*/
 .main .publish-navs {
     height: 110px;
+    margin-bottom: 20px;
     background-position: 0px 0px;
     background: url(../images/publish-navs.png);
     box-shadow: 1px 2px 2px #888888;
@@ -49,6 +51,24 @@ li {
     display: block;
     width: 110px;
     height: 110px;
+}
+
+/*main notice bars*/
+.main .notice-tips {
+    position: relative;
+    overflow: hidden;
+    height: 50px;
+    background-color: blue;
+}
+
+.notice-tips .notice-list{
+    float: right;
+    height:30px;
+    width: 557px;
+    background-color: white;
+    background: url(../images/isay24.png) no-repeat 999px 999px;
+    background-position: -1015px 0;
+    background-repeat: repeat-y;
 }
 
 
@@ -124,6 +144,47 @@ li {
 
 .user-menu .large .menu-item .txt{
     height: 36px;
+}
+
+.user-menu .small .menu-item .icon {
+    float: left;
+    width: 25px;
+    height: 18px;
+    margin: 0 0 0 16px;
+    overflow: hidden;
+    background: url(../images/icon24.png) no-repeat 999px 999px;
+}
+
+.user-menu .small .menu-item .icon.icon-1{
+    background-position: 0 -1684px;
+}
+
+.user-menu .small .menu-item .icon.icon-2{
+    background-position: 0 -432px;
+}
+
+.user-menu .small .menu-item .icon.icon-3{
+    background-position: 0 -1756px;
+}
+
+.user-menu .small .menu-item .icon.icon-4{
+    background-position: 0 -288px;
+}
+
+.user-menu .small .menu-item .icon.icon-5{
+    background-position: 0 -1823px;
+}
+
+.user-menu .small .menu-item .icon.icon-6{
+    background-position: 0 -1966px;
+}
+
+.user-menu .small .menu-item .inf {
+    float: right;
+    color: #888;
+    white-space: nowrap;
+    margin-right: 18px;
+    font-size: 12px;
 }
 
 .menu-item .lg1{
