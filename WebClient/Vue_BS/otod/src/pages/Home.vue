@@ -14,15 +14,27 @@
                      </li>
                  </ul>
              </div>
-            <div class="notice-tips">
+            <div class="notice-tips" v-if="noticeList.length > 0">
                 <div class="notice-list">
                     <div class="notice-head">
                         <h3>通知</h3>
-                        <a class="close" >关闭</a>
+                        <a class="close" @click="noticeClose()">关闭</a>
                      </div>
                     <div class="notice-content">
                         <ul>
-                            <li v-for="(notice,index) in noticeList" :key="index"></li>
+                            <li v-for="(notice,index) in noticeList" :key="index">
+                                <div class="notice-headImage">
+                                    <a href="http://minram.lofter.com" target="_blank" title="MinRam - 1分钟前">
+                                        <img class="itag" :src="notice.headphoto"/>
+                                    </a>
+                                    <span class="w-icn3 w-icn3-2">&nbsp;</span>
+                                 </div>
+                                <div class="notice-title">
+                                    <a href="http://www.baidu.com" target="_blank">{{notice.nickname}}</a>
+                                    &nbsp;&nbsp;推荐了您的&nbsp;&nbsp;
+                                    <a href="http://www.baidu.com" target="_blank">{{notice.objectTitle}}</a>
+                                 </div>
+                            </li>
                          </ul>
                     </div>
                  </div>
@@ -104,15 +116,18 @@ export default {
         number: 0
       }],
 
-      noticeList: [
-
-      ],
+      noticeList: [{
+        headphoto: this.$url + '/images/' + 'hp/6630576284002729390.jpg',
+        nickname: 'MinRam',
+        objectTitle: '图片：日常作品'
+      }],
 
       userInfo: {
         headPhoto: '',
         username: '',
         telephone: ''
       },
+
       followInfo: {
         followList: [],
         followedList: []
@@ -157,6 +172,13 @@ export default {
         this.menuList[3].number = this.followInfo.followList.length
         this.menuList[2].number = this.followInfo.followedList.length
       }.bind(this))
+
+      // get notice list
+    },
+
+    // 通知栏关闭
+    noticeClose () {
+      this.noticeList = []
     }
   }
 }

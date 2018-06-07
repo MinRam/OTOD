@@ -49,18 +49,21 @@ public class UserService {
         return (NoOpPasswordEncoder) NoOpPasswordEncoder.getInstance();
     }
 
-    public List<User> getAllUsers(){
-        return userRepository.findAll();
-    }
-
+    // 获取 User
     public User getUser(String username){
         return userRepository.findByUsername(username);
     }
 
+    public List<User> getAllUsers(){
+        return userRepository.findAll();
+    }
+
+    // 获取 UserInfo
     public UserInfo  getUserInfo(User user){
         return userInfoRespository.findByUser(user);
     }
 
+    // 注册新用户
     public void registerUser(User user, List<String> userRoleNames,UserInfo userInfo) {
         // 注册身份
         List<Role> userRole = new ArrayList<>();
