@@ -26,7 +26,7 @@
                                             <input id="signup_password" type="password" placeholder="用户密码" v-model="password"/>
                                          </div>
                                         <div class="form_row form_row_phone">
-                                            <input id="signup_phone" type="text" onkeypress="return event.keyCode >= 48 && event.keyCode <= 57" ng-pattern="/[^a-zA-Z]/" placeholder="手机号" v-model="telephone"/>
+                                            <input id="signup_phone" type="text"  placeholder="手机号" v-model="telephone"/>
                                          </div>
                                     </div>
                              </div>

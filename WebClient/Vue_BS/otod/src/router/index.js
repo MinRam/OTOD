@@ -8,7 +8,7 @@ import Index from '@/pages/Index'
 import Home from '@/pages/Home'
 import Blog from '@/pages/Blog'
 import Shop from '@/pages/Shop'
-// import Service from '@/pages/Service'
+import Service from '@/pages/Service'
 import Book from '@/pages/Book'
 import File from '@/pages/File'
 // import store from '../store'
@@ -51,13 +51,13 @@ const routes = [
         },
         component: Shop
       }, {
-      //   path: '/service',
-      //   name: 'Service',
-      //   meta: {
-      //     requireAuth: false
-      //   },
-      //   component: Service
-      // }, {
+        path: '/service',
+        name: 'Service',
+        meta: {
+          requireAuth: false
+        },
+        component: Service
+      }, {
         path: '/book',
         name: 'Book',
         meta: {

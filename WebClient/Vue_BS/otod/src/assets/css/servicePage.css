@@ -1,6 +1,12 @@
 p{
 	margin: 0;
 }
+li{
+	list-style: none;
+}
+ul{
+	margin: 0;
+}
 .message-bottom{
 	margin-bottom: 20px; 
 }
