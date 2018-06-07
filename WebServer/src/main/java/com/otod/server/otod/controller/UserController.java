@@ -91,4 +91,9 @@ public class UserController  {
         return new UserFollowList(userFollowInfoList,userFollowedInfoList);
     }
 
+    @GetMapping("/getAllInfo")
+    private UserInfo allInfo(){
+        User user = userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName());
+        return userService.getUserInfo(user);
+    }
 }
