@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by zhang on 2018/6/6.
@@ -18,5 +19,14 @@ public class ServiceController {
     private ServiceService serviceService;
 
     @GetMapping("/allServices")
-    private String getAllServices(){return serviceService.getAllServices();}
+    private List<CommenOrder> getAllCommenOrders(){
+        return serviceService.getAllCommenOrders();
+    }
+
+    @GetMapping("/serviceById")
+    private Optional<CommenOrder> getCommenOrderById(Long id){
+        return serviceService.getCommenOrderById(id);
+    }
+
+
 }

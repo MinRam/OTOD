@@ -110,37 +110,7 @@ export default {
       show: false,
       sstatic1: false,
       show1: false,
-      message: [{
-        title: '标题一',
-        user_name: 'zhangyz',
-        content: 'Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !',
-        contributers: '4',
-        emergency: '1'
-      }, {
-        title: '帮忙购买炒酸奶',
-        user_name: 'zhangyh',
-        content: 'Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !',
-        contributers: '2',
-        emergency: '2'
-      }, {
-        title: '帮忙拿快递，快递号131313131',
-        user_name: 'zhangyh',
-        content: 'Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !',
-        contributers: '1',
-        emergency: '3'
-      }, {
-        title: '我也不知道该写些什么就这样吧',
-        user_name: 'zhangyizhuo',
-        content: 'Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !',
-        contributers: '5',
-        emergency: '4'
-      }, {
-        title: '我也不知道该写些什么就这样吧',
-        user_name: 'DogeZhang',
-        content: 'Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !Content !',
-        contributers: '6',
-        emergency: '4'
-      }],
+      message: '',
       page: [{
         max: 100
       }]
@@ -153,7 +123,7 @@ export default {
     getAllServices () {
       this.$axios.get(this.$url + '/allServices')
         .then(function (response) {
-          console.log(response.data)
+          this.message = response.data
         })
         .catch(function (error) {
           console.log(error.message)

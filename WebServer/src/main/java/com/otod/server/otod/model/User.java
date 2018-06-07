@@ -5,7 +5,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "user")
@@ -28,6 +30,10 @@ public class User {
 
     @ManyToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
     private List<Role> roles;
+
+
+
+
 
     public User() {
     }
@@ -76,6 +82,14 @@ public class User {
 
     public void setIdentity_type(String identity_type) {
         this.identityType = identity_type;
+    }
+
+    public String getIdentityType() {
+        return identityType;
+    }
+
+    public void setIdentityType(String identityType) {
+        this.identityType = identityType;
     }
 
     @Override
