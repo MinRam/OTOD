@@ -1,5 +1,7 @@
 package com.otod.server.otod.pojos;
 
+import com.otod.server.otod.model.UserInfo;
+
 public class UserSimpleInfo {
     private String nickname;
     private String telephone;
@@ -8,10 +10,10 @@ public class UserSimpleInfo {
     public UserSimpleInfo() {
     }
 
-    public UserSimpleInfo(String nickname, String telphone, String headImage) {
-        this.nickname = nickname;
-        this.telephone = telphone;
-        this.headImage = headImage;
+    public UserSimpleInfo(UserInfo userInfo) {
+        this.nickname = userInfo.getNickname();
+        this.telephone = userInfo.getTelphone();
+        this.headImage = userInfo.getHeadImage();
     }
 
     public String getNickname() {
