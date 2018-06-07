@@ -58,7 +58,7 @@ li {
     position: relative;
     overflow: hidden;
     height: 50px;
-    background-color: blue;
+/*    background-color: blue;*/
 }
 
 .notice-tips .notice-list{
@@ -70,6 +70,39 @@ li {
     background-position: -1015px 0;
     background-repeat: repeat-y;
 }
+
+.notice-tips .notice-head{
+    background-color: #F3F3F3;
+    height: 17px;
+    line-height: 17px;
+    padding: 12px 12px  11px 30px;
+    border-bottom: 1px solid #e7e7e7;
+}
+
+.notice-tips .notice-head h3{
+    float: left;
+    font-size: 15px;
+    font-weight: normal;
+}
+
+.notice-tips .notice-head .close {
+    float: right;
+    margin-top: 2px;
+}
+
+.close {
+    text-indent: -2000px;
+    background: url(../images/icon2.png) no-repeat 999px 999px;
+    background-position: 0 0;
+    cursor: pointer;
+}
+
+.close:hover {
+    background-position: -88px 0;
+}
+
+
+
 
 
 /*reside css*/
@@ -92,6 +125,7 @@ li {
 .reside .user-menu ul{
     float: left;
     width: 100%;
+    box-shadow: 1px 2px 2px #888888;
 }
 
 .user-menu .large{

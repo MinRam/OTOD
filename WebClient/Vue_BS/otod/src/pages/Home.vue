@@ -17,8 +17,14 @@
             <div class="notice-tips">
                 <div class="notice-list">
                     <div class="notice-head">
-                        <h1>通知</h1>
+                        <h3>通知</h3>
+                        <a class="close" >关闭</a>
                      </div>
+                    <div class="notice-content">
+                        <ul>
+                            <li v-for="(notice,index) in noticeList" :key="index"></li>
+                         </ul>
+                    </div>
                  </div>
             </div>
             <div class="m-mlist"></div>
@@ -83,11 +89,11 @@ export default {
       }, {
         icon: 'icon-3',
         title: '粉丝',
-        number: 9
+        number: 0
       }, {
         icon: 'icon-4',
         title: '关注',
-        number: 9
+        number: 0
       }, {
         icon: 'icon-5',
         title: '通知',
@@ -98,10 +104,18 @@ export default {
         number: 0
       }],
 
+      noticeList: [
+
+      ],
+
       userInfo: {
         headPhoto: '',
         username: '',
         telephone: ''
+      },
+      followInfo: {
+        followList: [],
+        followedList: []
       }
     }
   },
@@ -127,8 +141,23 @@ export default {
         this.userInfo.username = response.data.nickname
         this.userInfo.telephone = 'Tel:' + response.data.telephone
       }.bind(this))
-    }
 
+
+      // get followList
+      this.$axios({
+        method: 'get',
+        url: this.$url + '/getfollowInfo',
+        params: {
+          access_token: this.$getCookie('otod_access_token')
+        }
+      }).then(function (response) {
+        this.followInfo.followList = response.data.userFollow
+        this.followInfo.followedList = response.data.userFollowed
+
+        this.menuList[3].number = this.followInfo.followList.length
+        this.menuList[2].number = this.followInfo.followedList.length
+      }.bind(this))
+    }
   }
 }
 </script>
