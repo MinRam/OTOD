@@ -66,12 +66,23 @@ public class CommenOrder {
     //失败原因
     @Column(name = "reason")
     private String reason;
+    //需要的人数
+    @Column(name = "contributers")
+    private int contributers;
 
     @OneToOne
     private OrderEval orderEval;
 
 
     public CommenOrder(){
+    }
+
+    public int getContributers() {
+        return contributers;
+    }
+
+    public void setContributers(int contributers) {
+        this.contributers = contributers;
     }
 
     public Long getId() {

@@ -12,6 +12,10 @@ import Service from '@/pages/Service'
 import Book from '@/pages/Book'
 import File from '@/pages/File'
 // import store from '../store'
+// server pages
+import OrderList from '@/components/OrderList'
+import PublishOrder from '@/components/PublishOrder'
+
 
 Vue.use(Router)
 
@@ -56,7 +60,25 @@ const routes = [
         meta: {
           requireAuth: false
         },
-        component: Service
+        component: Service,
+        children: [
+          {
+            path: '/service/orderlist',
+            name: 'OrderList',
+            meta: {
+              requireAuth: false
+            },
+            component: OrderList
+          },
+          {
+            path: '/service/publishorder',
+            name: 'PublishOrder',
+            meta: {
+              requireAuth: false
+            },
+            component: PublishOrder
+          }
+        ]
       }, {
         path: '/book',
         name: 'Book',
