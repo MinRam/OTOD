@@ -40,7 +40,11 @@
                  </div>
              </div>
             <div v-for="(update,index) in updatings" :key="index" class="update-item">
-                <div class="update-userHead"></div>
+                <div class="update-userHead">
+                    <a>
+                        <img/>
+                    </a>
+                </div>
                 <div class="update-content">
 
                 </div>
