@@ -1,7 +1,9 @@
 package com.otod.server.otod.controller;
 
+import com.otod.server.otod.model.Notice;
 import com.otod.server.otod.model.User;
 import com.otod.server.otod.model.UserInfo;
+import com.otod.server.otod.pojos.NoticePojo;
 import com.otod.server.otod.pojos.UserFollowList;
 import com.otod.server.otod.pojos.UserRegisteration;
 import com.otod.server.otod.pojos.UserSimpleInfo;
@@ -95,5 +97,19 @@ public class UserController  {
     private UserInfo allInfo(){
         User user = userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName());
         return userService.getUserInfo(user);
+    }
+
+    @GetMapping("/Notice")
+    private List<NoticePojo> notice(){
+        User user = userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName());
+        List<Notice> noticeList =  userService.getAllNotices(user);
+        List<NoticePojo> noticePojosList = new ArrayList<>();
+
+        for(Notice notice : noticeList){
+            UserInfo userInfo = userService.getUserInfo(notice.getUserOut());
+            noticePojosList.add(new NoticePojo(notice,userInfo));
+        }
+
+        return noticePojosList;
     }
 }

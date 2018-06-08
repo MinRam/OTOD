@@ -52,7 +52,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 withClient("test")
                 .authorizedGrantTypes("client_credentials", "password")
                 .authorities("ROLE_CLIENT","ROLE_TRUSTED_CLIENT").scopes("read","write","trust")
-                .resourceIds("oauth2-resource").accessTokenValiditySeconds(5000).secret("123456");
+                .resourceIds("oauth2-resource").accessTokenValiditySeconds(16000).secret("123456");
     }
 
     /**

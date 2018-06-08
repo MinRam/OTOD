@@ -56,7 +56,7 @@
                                 <a v-for="(link, index) in footerLinks" :href="link.href" :key="index" target="_blank">{{link.title}}</a>
                              </div>
                             <div class="footer-oauth2-plaforms">
-                                <a v-for="(oauth,index) in oauth2Objects" :href="oauth.href" :key="index" target="_blank">{{oauth.title}}</a>
+                                <a v-for="(oauth,index) in oauth2Objects" :href="oauth.href" :class="oauth.style" :key="index" target="_blank">{{oauth.title}}</a>
                             </div>
                         </div>
                      </div>
@@ -295,6 +295,16 @@
                 <div class="section welcome-section" :class="{'active': showcaseObjects[4].active,'old-hat':showcaseObjects[4].oldHatActive}" section-title="好吧，这个不难解释。" style="z-index:1">
                     <div class="section-wrapper">
                         <div class="fullscreen_post_bg"></div>
+                        <div class="fullscreen_post_footer">
+                            <div class="fullscreen_post_footer_inner">
+                                <div class="footer_legal_links">
+                                    <a v-for="(link, index) in footerLinks" :href="link.href" :key="index" target="_blank">{{link.title}}</a>
+                                 </div>
+                                <div class="footer-oauth2-plaforms">
+                                    <a v-for="(oauth,index) in oauth2Objects" :href="oauth.href" :class="oauth.style" :key="index" target="_blank">{{oauth.title}}</a>
+                                </div>
+                            </div>
+                         </div>
                      </div>
                  </div>
              </div>
@@ -350,7 +360,16 @@ export default {
 
       // 第三方登录链接（待完成—）
       oauth2Objects: [{
+        style: 'qq',
         title: 'QQ',
+        href: 'http://www.baidu.com'
+      }, {
+        style: 'weixin',
+        title: 'WeiXin',
+        href: 'http://www.baidu.com'
+      }, {
+        style: 'xina',
+        title: 'Xina',
         href: 'http://www.baidu.com'
       }],
 

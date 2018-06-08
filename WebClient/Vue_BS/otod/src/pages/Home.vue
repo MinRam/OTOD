@@ -14,20 +14,36 @@
                      </li>
                  </ul>
              </div>
-            <div class="notice-tips">
+            <div class="notice-tips" v-if="noticeList.length > 0">
                 <div class="notice-list">
                     <div class="notice-head">
                         <h3>通知</h3>
-                        <a class="close" >关闭</a>
+                        <a class="close" @click="noticeClose()">关闭</a>
                      </div>
                     <div class="notice-content">
                         <ul>
-                            <li v-for="(notice,index) in noticeList" :key="index"></li>
+                            <li v-for="(notice,index) in noticeList" :key="index">
+                                <div class="notice-headImage">
+                                    <a href="http://minram.lofter.com" target="_blank" :title="notice.userOut.nickname + '1分钟前'">
+                                        <img class="itag" :src="$url + '/images/' + notice.userOut.headImage"/>
+                                    </a>
+                                    <span class="w-icn3 w-icn3-2">&nbsp;</span>
+                                 </div>
+                                <div class="notice-title">
+                                    <a href="http://www.baidu.com" target="_blank">{{notice.userOut.nickname}}</a>
+                                    &nbsp;&nbsp;{{notice.title}}&nbsp;&nbsp;
+                                    <a href="http://www.baidu.com" target="_blank">{{notice.object}}</a>
+                                 </div>
+                            </li>
                          </ul>
                     </div>
                  </div>
+             </div>
+            <div v-for="(update,index) in updatings" :key="index" class="m-mlist">
             </div>
-            <div class="m-mlist"></div>
+            <div class="load-bar" v-if="loading">
+                <div class="loading">玩命加载中</div>
+            </div>
          </div>
         <div class="reside">
             <div class="user-box">
@@ -68,7 +84,7 @@ export default {
       publishPosts: [{
         title: 'Blog'
       }, {
-        title: 'Shop'
+        title: 'Market'
       }, {
         title: 'Service'
       }, {
@@ -104,19 +120,25 @@ export default {
         number: 0
       }],
 
-      noticeList: [
+      // 通知信息
+      noticeList: [],
 
-      ],
-
+      // 用户基本信息
       userInfo: {
         headPhoto: '',
         username: '',
         telephone: ''
       },
+
+      // 关注列表与被关注列表
       followInfo: {
         followList: [],
         followedList: []
-      }
+      },
+
+      // 动态信息
+      updatings: [],
+      loading: 'true'
     }
   },
   mounted () {
@@ -157,6 +179,22 @@ export default {
         this.menuList[3].number = this.followInfo.followList.length
         this.menuList[2].number = this.followInfo.followedList.length
       }.bind(this))
+
+      // get notice list
+      this.$axios({
+        method: 'get',
+        url: this.$url + '/Notice',
+        params: {
+          access_token: this.$getCookie('otod_access_token')
+        }
+      }).then(function (response) {
+        this.noticeList = response.data
+      }.bind(this))
+    },
+
+    // 通知栏关闭
+    noticeClose () {
+      this.noticeList = []
     }
   }
 }
@@ -165,4 +203,3 @@ export default {
 <style>
     @import '../assets/css/homePage.css'
 </style>
-
