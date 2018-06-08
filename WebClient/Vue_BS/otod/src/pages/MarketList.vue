@@ -46,7 +46,7 @@
                 </el-table-column>
                 <el-table-column label="商品名称" width="500">
                   <template slot-scope="scope">
-                    <a href="#"><img :src="scope.row.product_img_url" width="46px" height="46px" alt="">{{scope.row.product_name}}</a>
+                    <a href="#" @click="changepage('/market/')"><img :src="scope.row.product_img_url" width="46px" height="46px" alt="">{{scope.row.product_name}}</a>
                   </template>
                 </el-table-column>
                 <el-table-column prop="product_price" label="商品价格" width="180">
@@ -104,9 +104,12 @@ export default {
         t.total_product_num = response.data.totalElements
         t.total_page_num = response.data.totalPages
       })
+    },
+
+    changepage (path) {
+      this.$router.push(path)
     }
 
-    
   }
 }
 </script>

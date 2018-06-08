@@ -7,10 +7,12 @@ import ForumReply from '@/pages/ForumReply'
 import Index from '@/pages/Index'
 import Home from '@/pages/Home'
 import Blog from '@/pages/Blog'
-import Shop from '@/pages/Shop'
 import Service from '@/pages/Service'
 import Book from '@/pages/Book'
 import File from '@/pages/File'
+// market pages
+import Market from '@/pages/MarketList'
+import Product from '@/pages/Product'
 // import store from '../store'
 // server pages
 import OrderList from '@/components/OrderList'
@@ -48,12 +50,21 @@ const routes = [
         },
         component: Blog
       }, {
-        path: '/shop',
-        name: 'Shop',
+        path: '/market',
+        name: 'Market',
         meta: {
           requireAuth: false
         },
-        component: Shop
+        component: Market,
+        children: [
+          {
+            path: '/market/product',
+            name: 'Product',
+            meta: {
+              requireAuth: false
+            }
+          }
+        ]
       }, {
         path: '/service',
         name: 'Service',

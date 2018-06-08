@@ -41,7 +41,7 @@ export default {
         title: '博客'
       }, {
         active: false,
-        href: '/shop',
+        href: '/market',
         title: '二手市场'
       }, {
         active: false,
@@ -163,4 +163,3 @@ export default {
 <style>
     @import '../assets/css/indexPage.css'
 </style>
-
