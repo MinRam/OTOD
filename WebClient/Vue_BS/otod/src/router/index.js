@@ -12,7 +12,7 @@ import Book from '@/pages/Book'
 import File from '@/pages/File'
 // market pages
 import Market from '@/pages/MarketList'
-import Product from '@/pages/Product'
+//import Product from '@/pages/Product'
 // import store from '../store'
 // server pages
 import OrderList from '@/components/OrderList'
