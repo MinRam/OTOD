@@ -12,6 +12,7 @@ public class NoticePojo {
     private UserSimpleInfo userOut;
     private Integer object;
     private Integer type;
+    private Integer read;
 
     public NoticePojo(Notice notice,UserInfo userInfo){
         this.noticeId = notice.getNoticeId();
@@ -19,18 +20,27 @@ public class NoticePojo {
         this.object = notice.getObject();
         this.type = notice.getType();
         this.userOut =  new UserSimpleInfo(userInfo);;
+        this.read = notice.getRead();
     }
 
-    public NoticePojo(Long noticeId, Date addtime, String title,UserInfo userInfo, Integer object, Integer type) {
+    public NoticePojo(Long noticeId, Date addtime, String title,UserInfo userInfo, Integer object, Integer type, Integer read) {
         this.noticeId = noticeId;
         this.addtime = addtime;
         this.title = title;
         this.userOut =  new UserSimpleInfo(userInfo);;
         this.object = object;
         this.type = type;
+        this.read = read;
     }
 
 
+    public Integer getRead() {
+        return read;
+    }
+
+    public void setRead(Integer read) {
+        this.read = read;
+    }
 
     public Long getNoticeId() {
         return noticeId;

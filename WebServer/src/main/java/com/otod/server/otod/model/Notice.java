@@ -33,6 +33,9 @@ public class Notice {
     @JoinColumn(name = "notice_origin_user")
     private User userOut;
 
+    @Column(name = "notice_read")
+    private Integer read;
+
     public Notice() {
     }
 
@@ -42,6 +45,14 @@ public class Notice {
         this.type = type;
     }
 
+
+    public Integer getRead() {
+        return read;
+    }
+
+    public void setRead(Integer read) {
+        this.read = read;
+    }
 
     public Long getNoticeId() {
         return noticeId;

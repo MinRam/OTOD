@@ -59,7 +59,7 @@ public class UserService {
     public UserInfo  getUserInfo(User user){
         return userInfoRespository.findByUser(user);
     }
-    
+
     public List<Notice> getAllNotices(User user){
         return noticeRespository.findAllByUserOwn(user);
     }
