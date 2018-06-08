@@ -56,7 +56,7 @@
                     <el-pagination
                       background
                       layout="prev, pager, next"
-                      :total="page[0].max">
+                      :total="totalPages">
                     </el-pagination>
                 </div>
             </el-col>
@@ -75,9 +75,7 @@ export default {
       sstatic1: false,
       show1: false,
       message: '',
-      page: [{
-        max: 100
-      }]
+      totalPages: ''
     }
   },
   mounted () {
@@ -86,10 +84,11 @@ export default {
   methods: {
     getAllServices () {
       var t = this
-      t.$axios.get(this.$url + '/allServices')
+      t.$axios.get(this.$url + '/listServices?currentPage=0&size=2')
         .then(function (response) {
-          t.message = response.data.commenOrders
-          console.log(this.message)
+          t.message = response.data.content
+          t.totalPages = response.data.totalPages * 10
+          console.log(t.totalPages)
         })
         .catch(function (error) {
           console.log(error.message)

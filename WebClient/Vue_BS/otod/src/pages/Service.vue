@@ -10,13 +10,13 @@
                     text-color="#fff"
                     active-text-color="#ffd04b"
                     :collapse="isCollapse">
-                    <el-menu-item index="1">
+                    <el-menu-item @click="navClick('/service/publishorder')" index="1">
                         <i class="el-icon-menu"></i>
-                        <span slot="title" @click="navClick('/service/publishorder')">发布订单</span>
+                        <span slot="title">发布订单</span>
                     </el-menu-item>
-                    <el-menu-item index="2">
+                    <el-menu-item @click="navClick('/service/orderlist')" index="2">
                         <i class="el-icon-menu"></i>
-                        <span slot="title" @click="navClick('/service/orderlist')">订单列表</span>
+                        <span slot="title">订单列表</span>
                     </el-menu-item>
                     <el-submenu index="3">
                         <template slot="title">

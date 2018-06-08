@@ -88,7 +88,7 @@ export default {
       publishPosts: [{
         title: 'Blog'
       }, {
-        title: 'Shop'
+        title: 'Market'
       }, {
         title: 'Service'
       }, {
@@ -217,4 +217,3 @@ export default {
 <style>
     @import '../assets/css/homePage.css'
 </style>
-
