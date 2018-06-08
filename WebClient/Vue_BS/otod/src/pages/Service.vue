@@ -1,72 +1,10 @@
 <template>
     <div>
         <el-row :gutter="40" style="min-width: 1000px;">
-            <el-col :xs="12" :sm="12" :md="12" :xl="12" :offset="4">
-                <ul>
-                    <li v-for="m in message" :key="m.id">
-                        <el-row class="message-bottom" type="flex" justify="center">
-                            <el-col :span="24">
-                                <el-card shadow="hover" class="center-container-card">
-                                    <div v-if="m.emergency === '1'" style="height: 3px; clear: both; width: 100%" class="bg-danger"></div>
-                                    <div v-if="m.emergency === '2'" style="height: 3px; clear: both; width: 100%" class="bg-warning"></div>
-                                    <div v-if="m.emergency === '3'" style="height: 3px; clear: both; width: 100%" class="bg-success"></div>
-                                    <div v-if="m.emergency === '4'" style="height: 3px; clear: both; width: 100%" class="bg-info"></div>
-                                    <el-container class="bg-purple">
-                                        <el-aside class="" width="200px">
-                                            <div>
-                                                <div class="user-img">
-                                                    <i class="el-icon-menu" style="font-size: 60px;color: #409EFF"></i>
-                                                </div>
-                                                <div class="user-info">
-                                                    <p>{{ m.user_name }}</p>
-                                                    <!-- <p>Nothing</p> -->
-                                                </div>
-                                                <div style="clear: both"></div>
-                                            </div>
-                                            <div class="button-group">
-                                                <div style="margin-bottom: 10px;">
-                                                    <el-button type="success" icon="el-icon-check" circle @click="sstatic = !sstatic" @mouseover.native="show = !show" @mouseout.native="show = !show"></el-button>
-                                                    <transition name="el-zoom-in-left">
-                                                        <div v-show="show || sstatic" class="commit-button-box bg-success"></div>
-                                                    </transition>
-                                                    <div style="clear: both"></div>
-                                                </div>
-                                                <div style="margin-bottom: 10px;">
-                                                    <el-button type="warning" icon="el-icon-arrow-right" circle @click="sstatic1 = !sstatic1" @mouseover.native="show1 = !show1" @mouseout.native="show1 = !show1"></el-button>
-                                                    <transition name="el-zoom-in-left">
-                                                        <div v-show="show1 || sstatic1" class="commit-button-box bg-warning">
-                                                            <span>我需要{{ m.contributers }}个人</span>
-                                                        </div>
-                                                    </transition>
-                                                    <div style="clear: both"></div>
-                                                </div>
-                                            </div>
-                                        </el-aside>
-                                        <el-container>
-                                            <el-header>{{ m.title }}</el-header>
-                                            <el-main>{{ m.content }}</el-main>
-                                        </el-container>
-                                    </el-container>
-                                </el-card>
-                            </el-col>
-                        </el-row>
-                    </li>
-                </ul>
-                <el-row type="flex" justify="center">
-                    <el-col :span="14">
-                        <div>
-                            <el-pagination
-                              background
-                              layout="prev, pager, next"
-                              :total=page[0].max>
-                            </el-pagination>
-                        </div>
-                    </el-col>
-                </el-row>
-            </el-col>
+            <router-view/>
             <div class="right-container-menu">
                 <el-menu
-                    default-active="1"
+                    default-active="2"
                     class="right-side-menu"
                     background-color="#545c64"
                     text-color="#fff"
@@ -74,25 +12,29 @@
                     :collapse="isCollapse">
                     <el-menu-item index="1">
                         <i class="el-icon-menu"></i>
-                        <span slot="title">订单列表</span>
+                        <span slot="title" @click="navClick('/service/publishorder')">发布订单</span>
                     </el-menu-item>
-                    <el-submenu index="2">
+                    <el-menu-item index="2">
+                        <i class="el-icon-menu"></i>
+                        <span slot="title" @click="navClick('/service/orderlist')">订单列表</span>
+                    </el-menu-item>
+                    <el-submenu index="3">
                         <template slot="title">
                             <i class="el-icon-location"></i>
                             <span>我的订单</span>
                         </template>
-                        <el-menu-item index="2-1">所有订单</el-menu-item>
-                        <el-menu-item index="2-2">进行中</el-menu-item>
-                        <el-menu-item index="2-3">已完成</el-menu-item>
+                        <el-menu-item index="3-1">所有订单</el-menu-item>
+                        <el-menu-item index="3-2">进行中</el-menu-item>
+                        <el-menu-item index="3-3">已完成</el-menu-item>
                     </el-submenu>
-                    <el-submenu index="3">
+                    <el-submenu index="4">
                         <template slot="title">
                             <i class="el-icon-document"></i>
                             <span slot="title">我的求助</span>
                         </template>
-                        <el-menu-item index="3-1">所有求助</el-menu-item>
-                        <el-menu-item index="3-2">进行中</el-menu-item>
-                        <el-menu-item index="3-3">已完成</el-menu-item>
+                        <el-menu-item index="4-1">所有求助</el-menu-item>
+                        <el-menu-item index="4-2">进行中</el-menu-item>
+                        <el-menu-item index="4-3">已完成</el-menu-item>
                     </el-submenu>
                 </el-menu>
             </div>
@@ -117,17 +59,22 @@ export default {
     }
   },
   mounted () {
-    this.getAllServices()
+    this.$router.push('/service/orderlist')
   },
   methods: {
     getAllServices () {
-      this.$axios.get(this.$url + '/allServices')
+      var t = this
+      t.$axios.get(this.$url + '/allServices')
         .then(function (response) {
-          this.message = response.data
+          t.message = response.data.commenOrders
+          console.log(this.message)
         })
         .catch(function (error) {
           console.log(error.message)
         })
+    },
+    navClick (path) {
+      this.$router.push(path)
     }
   }
 }

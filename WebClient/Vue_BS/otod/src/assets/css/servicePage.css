@@ -7,6 +7,10 @@ li{
 ul{
 	margin: 0;
 }
+.order-content{
+	word-wrap:break-word;  
+    word-break:break-all; 
+}
 .message-bottom{
 	margin-bottom: 20px; 
 }
@@ -60,6 +64,12 @@ ul{
 .center-container-card{
 	/*min-width: 600px;*/
 	padding: 0;
+}
+.header-container{
+	border-bottom: 1px solid #F5F5F5;
+}
+.aside-container{
+	border-right: 1px solid #F5F5F5;
 }
 .commit-button-box {
 	float: right;

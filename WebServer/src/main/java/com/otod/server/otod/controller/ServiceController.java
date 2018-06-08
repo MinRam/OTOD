@@ -1,6 +1,7 @@
 package com.otod.server.otod.controller;
 
 import com.otod.server.otod.model.CommenOrder;
+import com.otod.server.otod.pojos.CommenOrdersPOJO;
 import com.otod.server.otod.services.ServiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,8 +20,10 @@ public class ServiceController {
     private ServiceService serviceService;
 
     @GetMapping("/allServices")
-    private List<CommenOrder> getAllCommenOrders(){
-        return serviceService.getAllCommenOrders();
+    private CommenOrdersPOJO getAllCommenOrders(){
+        List<CommenOrder> commenOrders =  serviceService.getAllCommenOrders();
+        CommenOrdersPOJO commenOrdersPOJO = new CommenOrdersPOJO(commenOrders);
+        return commenOrdersPOJO;
     }
 
     @GetMapping("/serviceById")
