@@ -2,6 +2,7 @@ package com.otod.server.otod.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -16,11 +17,13 @@ public class User {
     @GeneratedValue(generator = "IdGenerator")
     @GenericGenerator(name = "IdGenerator", strategy = "com.otod.server.otod.others.IDWorker.IdGenerator")
     @Column(name = "user_id")
+    @JsonIgnore
     private Long userId;
 
     @Column(name = "identity_type")
     private String identityType;
 
+    @JsonIgnore
     @Column(name="identifier")
     private String username;
 
@@ -30,10 +33,6 @@ public class User {
 
     @ManyToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
     private List<Role> roles;
-
-
-
-
 
     public User() {
     }

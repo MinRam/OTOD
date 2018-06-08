@@ -1,13 +1,7 @@
 package com.otod.server.otod.services;
 
-import com.otod.server.otod.model.Role;
-import com.otod.server.otod.model.User;
-import com.otod.server.otod.model.UserFollow;
-import com.otod.server.otod.model.UserInfo;
-import com.otod.server.otod.respository.RoleRespository;
-import com.otod.server.otod.respository.UserFollowRespository;
-import com.otod.server.otod.respository.UserInfoRespository;
-import com.otod.server.otod.respository.UserRepository;
+import com.otod.server.otod.model.*;
+import com.otod.server.otod.respository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
@@ -29,6 +23,9 @@ public class UserService {
 
     @Autowired
     private UserFollowRespository userFollowRespository;
+
+    @Autowired
+    private NoticeRespository noticeRespository;
 
 //    @Bean
 //    public PasswordEncoder passwordEncoder(){
@@ -61,6 +58,9 @@ public class UserService {
         return userInfoRespository.findByUser(user);
     }
 
+    public List<Notice> getAllNotices(User user){
+        return noticeRespository.findAllByUserOwn(user);
+    }
     public void registerUser(User user, List<String> userRoleNames,UserInfo userInfo) {
         // 注册身份
         List<Role> userRole = new ArrayList<>();
