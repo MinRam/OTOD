@@ -21,6 +21,7 @@ public class NoticePojo {
         this.type = notice.getType();
         this.userOut =  new UserSimpleInfo(userInfo);;
         this.read = notice.getRead();
+        this.title = notice.getTitle();
     }
 
     public NoticePojo(Long noticeId, Date addtime, String title,UserInfo userInfo, Integer object, Integer type, Integer read) {
