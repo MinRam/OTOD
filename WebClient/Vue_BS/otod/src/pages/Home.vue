@@ -14,14 +14,36 @@
                      </li>
                  </ul>
              </div>
-            <div class="notice-tips">
+            <div class="notice-tips" v-if="noticeList.length > 0">
                 <div class="notice-list">
                     <div class="notice-head">
-                        <h1>通知</h1>
+                        <h3>通知</h3>
+                        <a class="close" @click="noticeClose()">关闭</a>
                      </div>
+                    <div class="notice-content">
+                        <ul>
+                            <li v-for="(notice,index) in noticeList" :key="index">
+                                <div class="notice-headImage">
+                                    <a href="http://minram.lofter.com" target="_blank" :title="notice.userOut.nickname + '1分钟前'">
+                                        <img class="itag" :src="$url + '/images/' + notice.userOut.headImage"/>
+                                    </a>
+                                    <span class="w-icn3 w-icn3-2">&nbsp;</span>
+                                 </div>
+                                <div class="notice-title">
+                                    <a href="http://www.baidu.com" target="_blank">{{notice.userOut.nickname}}</a>
+                                    &nbsp;&nbsp;{{notice.title}}&nbsp;&nbsp;
+                                    <a href="http://www.baidu.com" target="_blank">{{notice.object}}</a>
+                                 </div>
+                            </li>
+                         </ul>
+                    </div>
                  </div>
+             </div>
+            <div v-for="(update,index) in updatings" :key="index" class="m-mlist">
             </div>
-            <div class="m-mlist"></div>
+            <div class="load-bar" v-if="loading">
+                <div class="loading">玩命加载中</div>
+            </div>
          </div>
         <div class="reside">
             <div class="user-box">
@@ -83,11 +105,11 @@ export default {
       }, {
         icon: 'icon-3',
         title: '粉丝',
-        number: 9
+        number: 0
       }, {
         icon: 'icon-4',
         title: '关注',
-        number: 9
+        number: 0
       }, {
         icon: 'icon-5',
         title: '通知',
@@ -98,11 +120,25 @@ export default {
         number: 0
       }],
 
+      // 通知信息
+      noticeList: [],
+
+      // 用户基本信息
       userInfo: {
         headPhoto: '',
         username: '',
         telephone: ''
-      }
+      },
+
+      // 关注列表与被关注列表
+      followInfo: {
+        followList: [],
+        followedList: []
+      },
+
+      // 动态信息
+      updatings: [],
+      loading: 'true'
     }
   },
   mounted () {
@@ -127,8 +163,39 @@ export default {
         this.userInfo.username = response.data.nickname
         this.userInfo.telephone = 'Tel:' + response.data.telephone
       }.bind(this))
-    }
 
+
+      // get followList
+      this.$axios({
+        method: 'get',
+        url: this.$url + '/getfollowInfo',
+        params: {
+          access_token: this.$getCookie('otod_access_token')
+        }
+      }).then(function (response) {
+        this.followInfo.followList = response.data.userFollow
+        this.followInfo.followedList = response.data.userFollowed
+
+        this.menuList[3].number = this.followInfo.followList.length
+        this.menuList[2].number = this.followInfo.followedList.length
+      }.bind(this))
+
+      // get notice list
+      this.$axios({
+        method: 'get',
+        url: this.$url + '/Notice',
+        params: {
+          access_token: this.$getCookie('otod_access_token')
+        }
+      }).then(function (response) {
+        this.noticeList = response.data
+      }.bind(this))
+    },
+
+    // 通知栏关闭
+    noticeClose () {
+      this.noticeList = []
+    }
   }
 }
 </script>

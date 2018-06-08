@@ -22,6 +22,8 @@ body {
     height: 82px;
     margin-bottom: 30px;
     background-color: #24282B;
+    /*background-image: url(../backgrounds/top.jpg);*/
+    background-position: 0 -22px;
 }
 
 .otod-header .otod-hdc {

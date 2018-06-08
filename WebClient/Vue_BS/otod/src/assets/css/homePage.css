@@ -26,8 +26,6 @@ li {
     margin-bottom: 20px;
     background-position: 0px 0px;
     background: url(../images/publish-navs.png);
-    box-shadow: 1px 2px 2px #888888;
-
 }
 
 .main .publish-navs li {
@@ -57,21 +55,101 @@ li {
 .main .notice-tips {
     position: relative;
     overflow: hidden;
-    height: 50px;
-    background-color: blue;
+    height: auto;
+/*    background-color: blue;*/
 }
 
 .notice-tips .notice-list{
     float: right;
-    height:30px;
     width: 557px;
-    background-color: white;
     background: url(../images/isay24.png) no-repeat 999px 999px;
-    background-position: -1015px 0;
+    background-position: -1038px 0;
     background-repeat: repeat-y;
 }
 
+.notice-tips .notice-head{
+    background-color: #F3F3F3;
+    height: 17px;
+    line-height: 17px;
+    padding: 12px 12px  11px 30px;
+    border-bottom: 1px solid #e7e7e7;
+}
 
+.notice-tips .notice-head h3{
+    float: left;
+    font-size: 15px;
+    font-weight: normal;
+}
+
+.notice-tips .notice-head .close {
+    float: right;
+    margin-top: 2px;
+}
+
+.close {
+    text-indent: -2000px;
+    width: 12px;
+    height: 12px;
+    background: url(../images/icon2.png) no-repeat 999px 999px;
+    background-position: 0 0;
+    cursor: pointer;
+}
+
+.close:hover {
+    background-position: -88px 0;
+}
+
+.notice-tips .notice-content {
+    position: relative;
+}
+
+.notice-content li {
+    float: left;
+    width: 497px;
+    border-top: 1px solid #e7e7e7;
+    padding: 10px 30px;
+}
+
+.notice-content li .notice-headImage {
+    float: left;
+}
+
+.notice-content li .notice-headImage img{
+    width: 24px;
+    height: 24px;
+}
+
+.notice-content li .notice-title {
+    float: right;
+    width: 436px;
+    line-height: 24px;
+    color: #888;
+    font-size: 12px;
+}
+.notice-content li .notice-title a{
+    color: #888;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.notice-content li .notice-title a:hover{
+    color: #7594B3;
+}
+
+/*load bar css*/
+.main .load-bar {
+    width: 100%;
+    margin: 20px auto;
+    text-align: center;
+}
+.load-bar .loading{
+    display: inline-block;
+    padding-right: 68px;
+    color: #444;
+    font-size: 22px;
+    line-height: 25px;
+    background: url(../images/loading.gif) no-repeat right center;
+}
 /*reside css*/
 .otod-home .otod-content .reside {
     float: right;
@@ -196,4 +274,8 @@ li {
 .menu-item .lg2{
     display: block;
     font-size: 12px;
+}
+
+.reside .user-menu ul, .main .publish-navs{
+    box-shadow: 1px 2px 2px #888888;
 }

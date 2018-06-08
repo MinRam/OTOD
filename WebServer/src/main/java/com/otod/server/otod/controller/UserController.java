@@ -1,7 +1,10 @@
 package com.otod.server.otod.controller;
 
+import com.otod.server.otod.model.Notice;
 import com.otod.server.otod.model.User;
 import com.otod.server.otod.model.UserInfo;
+import com.otod.server.otod.pojos.NoticePojo;
+import com.otod.server.otod.pojos.UserFollowList;
 import com.otod.server.otod.pojos.UserRegisteration;
 import com.otod.server.otod.pojos.UserSimpleInfo;
 import com.otod.server.otod.services.UserService;
@@ -11,6 +14,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -61,9 +65,51 @@ public class UserController  {
 
         UserInfo userInfo = userService.getUserInfo(user);
 
-        UserSimpleInfo simpleInfo = new UserSimpleInfo(userInfo.getNickname(),userInfo.getTelphone(),userInfo.getHeadImage());
+        UserSimpleInfo simpleInfo = new UserSimpleInfo(userInfo);
 
         return simpleInfo;
     }
 
+    @GetMapping("/getfollowInfo")
+    private UserFollowList getFollowInfo(){
+        User user = userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName());
+
+        List<User> userFollowList = userService.getUserFollow(user);
+        List<User> userFollowedList = userService.getUserFollowed(user);
+
+        List<UserSimpleInfo> userFollowInfoList = new ArrayList<>();
+        List<UserSimpleInfo> userFollowedInfoList = new ArrayList<>();
+
+        for(User userFollow : userFollowList){
+            UserInfo userInfo = userService.getUserInfo(userFollow);
+            userFollowInfoList.add(new UserSimpleInfo(userInfo));
+        }
+
+        for(User userFollowed : userFollowedList){
+            UserInfo userInfo = userService.getUserInfo(userFollowed);
+            userFollowedInfoList.add(new UserSimpleInfo(userInfo));
+        }
+        
+        return new UserFollowList(userFollowInfoList,userFollowedInfoList);
+    }
+
+    @GetMapping("/getAllInfo")
+    private UserInfo allInfo(){
+        User user = userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName());
+        return userService.getUserInfo(user);
+    }
+
+    @GetMapping("/Notice")
+    private List<NoticePojo> notice(){
+        User user = userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName());
+        List<Notice> noticeList =  userService.getAllNotices(user);
+        List<NoticePojo> noticePojosList = new ArrayList<>();
+
+        for(Notice notice : noticeList){
+            UserInfo userInfo = userService.getUserInfo(notice.getUserOut());
+            noticePojosList.add(new NoticePojo(notice,userInfo));
+        }
+
+        return noticePojosList;
+    }
 }

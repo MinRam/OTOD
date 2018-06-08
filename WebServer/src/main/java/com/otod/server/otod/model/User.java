@@ -2,10 +2,13 @@ package com.otod.server.otod.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "user")
@@ -14,11 +17,13 @@ public class User {
     @GeneratedValue(generator = "IdGenerator")
     @GenericGenerator(name = "IdGenerator", strategy = "com.otod.server.otod.others.IDWorker.IdGenerator")
     @Column(name = "user_id")
+    @JsonIgnore
     private Long userId;
 
     @Column(name = "identity_type")
     private String identityType;
 
+    @JsonIgnore
     @Column(name="identifier")
     private String username;
 
@@ -76,6 +81,14 @@ public class User {
 
     public void setIdentity_type(String identity_type) {
         this.identityType = identity_type;
+    }
+
+    public String getIdentityType() {
+        return identityType;
+    }
+
+    public void setIdentityType(String identityType) {
+        this.identityType = identityType;
     }
 
     @Override

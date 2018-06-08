@@ -7,7 +7,8 @@ import javax.persistence.*;
 public class UserFollow {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long followId;
+    @Column(name = "follow_id")
+    private Integer followId;
 
     @OneToOne
     @JoinColumn(name = "user_id")
@@ -25,11 +26,11 @@ public class UserFollow {
         this.userFollow = userFollow;
     }
 
-    public Long getFollowId() {
+    public Integer getFollowId() {
         return followId;
     }
 
-    public void setFollowId(Long followId) {
+    public void setFollowId(Integer followId) {
         this.followId = followId;
     }
 
