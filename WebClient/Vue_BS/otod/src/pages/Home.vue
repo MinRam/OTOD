@@ -24,22 +24,34 @@
                         <ul>
                             <li v-for="(notice,index) in noticeList" :key="index">
                                 <div class="notice-headImage">
-                                    <a href="http://minram.lofter.com" target="_blank" title="MinRam - 1分钟前">
-                                        <img class="itag" :src="notice.headphoto"/>
+                                    <a href="http://minram.lofter.com" target="_blank" :title="notice.userOut.nickname + '1分钟前'">
+                                        <img class="itag" :src="$url + '/images/' + notice.userOut.headImage"/>
                                     </a>
                                     <span class="w-icn3 w-icn3-2">&nbsp;</span>
                                  </div>
                                 <div class="notice-title">
-                                    <a href="http://www.baidu.com" target="_blank">{{notice.nickname}}</a>
-                                    &nbsp;&nbsp;推荐了您的&nbsp;&nbsp;
-                                    <a href="http://www.baidu.com" target="_blank">{{notice.objectTitle}}</a>
+                                    <a href="http://www.baidu.com" target="_blank">{{notice.userOut.nickname}}</a>
+                                    &nbsp;&nbsp;{{notice.title}}&nbsp;&nbsp;
+                                    <a href="http://www.baidu.com" target="_blank">{{notice.object}}</a>
                                  </div>
                             </li>
                          </ul>
                     </div>
                  </div>
+             </div>
+            <div v-for="(update,index) in updatings" :key="index" class="update-item">
+                <div class="update-userHead">
+                    <a>
+                        <img/>
+                    </a>
+                </div>
+                <div class="update-content">
+
+                </div>
             </div>
-            <div class="m-mlist"></div>
+            <div class="load-bar" v-if="loading">
+                <div class="loading">玩命加载中</div>
+            </div>
          </div>
         <div class="reside">
             <div class="user-box">
@@ -80,7 +92,7 @@ export default {
       publishPosts: [{
         title: 'Blog'
       }, {
-        title: 'Shop'
+        title: 'Market'
       }, {
         title: 'Service'
       }, {
@@ -116,22 +128,31 @@ export default {
         number: 0
       }],
 
-      noticeList: [{
-        headphoto: this.$url + '/images/' + 'hp/6630576284002729390.jpg',
-        nickname: 'MinRam',
-        objectTitle: '图片：日常作品'
-      }],
+      // 通知信息
+      noticeList: [],
 
+      // 用户基本信息
       userInfo: {
         headPhoto: '',
         username: '',
         telephone: ''
       },
 
+      // 关注列表与被关注列表
       followInfo: {
         followList: [],
         followedList: []
-      }
+      },
+
+      // 动态信息列表
+      updatings: [{
+        userOut: {
+          headImage: '1'
+        }
+      }],
+
+      // 加载显示
+      loading: 'true'
     }
   },
   mounted () {
@@ -174,6 +195,19 @@ export default {
       }.bind(this))
 
       // get notice list
+      this.$axios({
+        method: 'get',
+        url: this.$url + '/Notice',
+        params: {
+          access_token: this.$getCookie('otod_access_token')
+        }
+      }).then(function (response) {
+        this.noticeList = response.data
+      }.bind(this))
+
+      // get upadtes
+      // this.$axios()
+      this.loading = false
     },
 
     // 通知栏关闭
@@ -187,4 +221,3 @@ export default {
 <style>
     @import '../assets/css/homePage.css'
 </style>
-

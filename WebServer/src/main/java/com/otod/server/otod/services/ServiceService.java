@@ -4,6 +4,10 @@ import com.otod.server.otod.model.CommenOrder;
 import com.otod.server.otod.pojos.CommenOrdersPOJO;
 import com.otod.server.otod.respository.CommenOrderRespository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,5 +31,15 @@ public class ServiceService {
         return commenOrderRespository.findById(id);
     }
 
+    //currentPage 当前页
+    //size 每页的数量
+    public Page<CommenOrder> getListPage(int currentPage, int size){
+        Pageable pageable = new PageRequest(currentPage, size, Sort.DEFAULT_DIRECTION, "sDate");
+        return commenOrderRespository.findAll(pageable);
+    }
+
+    public void saveOrder(CommenOrder commenOrder){
+        commenOrderRespository.save(commenOrder);
+    }
 
 }

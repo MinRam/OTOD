@@ -123,8 +123,45 @@ li {
     float: right;
     width: 436px;
     line-height: 24px;
+    color: #888;
+    font-size: 12px;
+}
+.notice-content li .notice-title a{
+    color: #888;
+    text-decoration: underline;
+    cursor: pointer;
 }
 
+.notice-content li .notice-title a:hover{
+    color: #7594B3;
+}
+
+/*main update css*/
+.main  .update-item {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.update-item  .updaate-userHead {
+    float: left;
+    width: 30px;
+    height: 30px;
+    background-color: blue;
+}
+/*load bar css*/
+.main .load-bar {
+    width: 100%;
+    margin: 20px auto;
+    text-align: center;
+}
+.load-bar .loading{
+    display: inline-block;
+    padding-right: 68px;
+    color: #444;
+    font-size: 22px;
+    line-height: 25px;
+    background: url(../images/loading.gif) no-repeat right center;
+}
 /*reside css*/
 .otod-home .otod-content .reside {
     float: right;

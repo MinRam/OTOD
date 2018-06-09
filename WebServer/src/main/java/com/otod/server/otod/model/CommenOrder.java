@@ -60,9 +60,9 @@ public class CommenOrder {
     //报酬
     @Column(name = "profits")
     private int profits;
-    //订单截至日期（小时）
+    //订单截至日期
     @Column(name = "deadline")
-    private int deadline;
+    private Date deadline;
     //失败原因
     @Column(name = "reason")
     private String reason;
@@ -181,11 +181,11 @@ public class CommenOrder {
         this.profits = profits;
     }
 
-    public int getDeadline() {
+    public Date getDeadline() {
         return deadline;
     }
 
-    public void setDeadline(int deadline) {
+    public void setDeadline(Date deadline) {
         this.deadline = deadline;
     }
 
