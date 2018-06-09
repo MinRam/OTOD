@@ -4,6 +4,7 @@ import com.otod.server.otod.model.CommenOrder;
 import com.otod.server.otod.pojos.CommenOrdersPOJO;
 import com.otod.server.otod.services.ServiceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,5 +32,9 @@ public class ServiceController {
         return serviceService.getCommenOrderById(id);
     }
 
+    @GetMapping("/listServices")
+    private Page<CommenOrder> getListServices(int currentPage, int size){
+        return serviceService.getListPage(currentPage,size);
+    }
 
 }

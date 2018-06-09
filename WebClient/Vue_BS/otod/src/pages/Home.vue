@@ -39,7 +39,15 @@
                     </div>
                  </div>
              </div>
-            <div v-for="(update,index) in updatings" :key="index" class="m-mlist">
+            <div v-for="(update,index) in updatings" :key="index" class="update-item">
+                <div class="update-userHead">
+                    <a>
+                        <img/>
+                    </a>
+                </div>
+                <div class="update-content">
+
+                </div>
             </div>
             <div class="load-bar" v-if="loading">
                 <div class="loading">玩命加载中</div>
@@ -136,8 +144,14 @@ export default {
         followedList: []
       },
 
-      // 动态信息
-      updatings: [],
+      // 动态信息列表
+      updatings: [{
+        userOut: {
+          headImage: '1'
+        }
+      }],
+
+      // 加载显示
       loading: 'true'
     }
   },
@@ -190,6 +204,10 @@ export default {
       }).then(function (response) {
         this.noticeList = response.data
       }.bind(this))
+
+      // get upadtes
+      // this.$axios()
+      this.loading = false
     },
 
     // 通知栏关闭
