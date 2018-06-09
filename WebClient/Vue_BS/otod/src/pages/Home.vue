@@ -42,11 +42,33 @@
             <div v-for="(update,index) in updatings" :key="index" class="update-item">
                 <div class="update-userHead">
                     <a>
-                        <img/>
+                        <img :src="update.author.headPhoto"/>
                     </a>
                 </div>
                 <div class="update-content">
-
+                    <div class="bg-triangle">
+                        <a class="update-page" title="详情">打开新页</a>
+                     </div>
+                    <div class="update-message">
+                        <div class="message-who">
+                            <a class="message-user">{{update.author.username}}</a>
+                         </div>
+                        <div class="message-content">
+                            <div class="content-">
+                            </div>
+                         </div>
+                        <div class="message-footer">
+                            <div class="message-tags">
+                                <span v-for="(tag,index) in update.updateTags" :key="index">{{tag.name}}</span>
+                             </div>
+                            <div class="message-options">
+                                <span class="opt-share">推荐</span>
+                                <span class="opt-love">
+                                    <a class="love-icon" hideFocus="true" title="喜欢">喜欢</a>
+                                </span>
+                             </div>
+                         </div>
+                     </div>
                 </div>
             </div>
             <div class="load-bar" v-if="loading">
@@ -146,8 +168,18 @@ export default {
 
       // 动态信息列表
       updatings: [{
-        userOut: {
-          headImage: '1'
+        author: {
+          headPhoto: 'http://localhost:8081/images/hp/6630576284002729390.jpg',
+          username: 'TianChengLiu',
+          telephone: ''
+        },
+        updateTags: [{
+          name: '刘天成'
+        }, {
+          name: '刘天成'
+        }],
+        updateOpt: {
+
         }
       }],
 

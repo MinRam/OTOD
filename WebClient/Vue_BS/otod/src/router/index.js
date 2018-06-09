@@ -7,8 +7,7 @@ import ForumReply from '@/pages/ForumReply'
 import Index from '@/pages/Index'
 import Home from '@/pages/Home'
 import Blog from '@/pages/Blog'
-import Shop from '@/pages/Shop'
-// import Service from '@/pages/Service'
+import BlogReply from '@/pages/BlogReply'
 import Service from '@/pages/Service'
 import Book from '@/pages/Book'
 import File from '@/pages/File'
@@ -76,7 +75,6 @@ const routes = [
       }, {
         path: '/service',
         name: 'Service',
->>>>>>> 7eaf43da13703632a35218c5867fad7d4afa5581
         meta: {
           requireAuth: false
         },
