@@ -54,8 +54,12 @@
             <el-col :span="14">
                 <div>
                     <el-pagination
+                      @size-change="getServicePage"
+                      @current-change="getServicePage"
                       background
                       layout="prev, pager, next"
+                      :current-page=currentPage
+                      :page-size=size
                       :total="totalPages">
                     </el-pagination>
                 </div>
@@ -75,7 +79,9 @@ export default {
       sstatic1: false,
       show1: false,
       message: '',
-      totalPages: ''
+      totalPages: '',
+      currentPage: 0,
+      size: 2
     }
   },
   mounted () {
@@ -85,6 +91,19 @@ export default {
     getAllServices () {
       var t = this
       t.$axios.get(this.$url + '/listServices?currentPage=0&size=2')
+        .then(function (response) {
+          t.message = response.data.content
+          t.totalPages = response.data.totalPages * 10
+          console.log(t.totalPages)
+        })
+        .catch(function (error) {
+          console.log(error.message)
+        })
+    },
+    getServicePage () {
+        console.log(this.$url + '/listServices?currentPage='+currentPage+'&size='+size)
+        var t = this
+        t.$axios.get(this.$url + '/listServices?currentPage='+currentPage+'&size='+size)
         .then(function (response) {
           t.message = response.data.content
           t.totalPages = response.data.totalPages * 10

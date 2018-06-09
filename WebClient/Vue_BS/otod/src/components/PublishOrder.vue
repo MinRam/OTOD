@@ -1,6 +1,5 @@
 <template>
     <el-col :xs="12" :sm="12" :md="12" :xl="12" :offset="4">
-<<<<<<< HEAD
         <el-card>
             <el-container>
                 <el-header>publish order</el-header>
@@ -35,9 +34,6 @@
                 </el-main>
             </el-container>
         </el-card>
-=======
-        <span>publish order</span>
->>>>>>> 92528660ca6c9b7c5a1e064c1fa58bd678c42325
     </el-col>
 </template>
 
