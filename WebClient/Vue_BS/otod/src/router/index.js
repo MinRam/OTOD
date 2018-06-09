@@ -12,11 +12,6 @@ import Book from '@/pages/Book'
 import File from '@/pages/File'
 // market pages
 import Market from '@/pages/MarketList'
-<<<<<<< HEAD
-// import Product from '@/pages/Product'
-=======
-//import Product from '@/pages/Product'
->>>>>>> 8adba2b1fbc35f899a643418c2b15d4c44e6aee1
 // import store from '../store'
 // server pages
 import OrderList from '@/components/OrderList'

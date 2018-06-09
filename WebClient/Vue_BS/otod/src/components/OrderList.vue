@@ -5,10 +5,10 @@
                 <el-row class="message-bottom" type="flex" justify="center">
                     <el-col :span="24">
                         <el-card shadow="hover" class="center-container-card">
-                            <div v-if="m.emergency === '1'" style="height: 3px; clear: both; width: 100%" class="bg-danger"></div>
-                            <div v-if="m.emergency === '2'" style="height: 3px; clear: both; width: 100%" class="bg-warning"></div>
-                            <div v-if="m.emergency === '3'" style="height: 3px; clear: both; width: 100%" class="bg-success"></div>
-                            <div v-if="m.emergency === '4'" style="height: 3px; clear: both; width: 100%" class="bg-info"></div>
+                            <div v-if="m.urgency == '4'" style="height: 3px; clear: both; width: 100%" class="bg-danger"></div>
+                            <div v-if="m.urgency == '3'" style="height: 3px; clear: both; width: 100%" class="bg-warning"></div>
+                            <div v-if="m.urgency == '2'" style="height: 3px; clear: both; width: 100%" class="bg-success"></div>
+                            <div v-if="m.urgency == '1'" style="height: 3px; clear: both; width: 100%" class="bg-info"></div>
                             <el-container class="bg-purple">
                                 <el-aside class="aside-container" width="200px">
                                     <div>
@@ -41,7 +41,7 @@
                                     </div>
                                 </el-aside>
                                 <el-container>
-                                    <el-header class="header-container">{{ m.title }}</el-header>
+                                    <el-header class="header-container"><strong>{{ m.title }}</strong></el-header>
                                     <el-main><p class="order-content">{{ m.content }}</p></el-main>
                                 </el-container>
                             </el-container>
@@ -54,12 +54,11 @@
             <el-col :span="14">
                 <div>
                     <el-pagination
-                      @size-change="getServicePage"
                       @current-change="getServicePage"
                       background
                       layout="prev, pager, next"
-                      :current-page=currentPage
-                      :page-size=size
+                      :current-page="currentPage"
+                      :page-size="size"
                       :total="totalPages">
                     </el-pagination>
                 </div>
@@ -79,9 +78,9 @@ export default {
       sstatic1: false,
       show1: false,
       message: '',
-      totalPages: '',
+      totalPages: 0,
       currentPage: 0,
-      size: 2
+      size: 5
     }
   },
   mounted () {
@@ -90,23 +89,24 @@ export default {
   methods: {
     getAllServices () {
       var t = this
-      t.$axios.get(this.$url + '/listServices?currentPage=0&size=2')
+      t.$axios.get(this.$url + '/listServices?currentPage=' + t.currentPage + '&size=' + t.size)
         .then(function (response) {
+          console.log(response)
           t.message = response.data.content
-          t.totalPages = response.data.totalPages * 10
+          t.totalPages = response.data.totalPages * t.size
           console.log(t.totalPages)
         })
         .catch(function (error) {
           console.log(error.message)
         })
     },
-    getServicePage () {
-        console.log(this.$url + '/listServices?currentPage='+currentPage+'&size='+size)
-        var t = this
-        t.$axios.get(this.$url + '/listServices?currentPage='+currentPage+'&size='+size)
+    getServicePage (currentPage) {
+      var t = this
+      t.$axios.get(t.$url + '/listServices?currentPage=' + (currentPage - 1) + '&size=' + t.size)
         .then(function (response) {
+          console.log(t.$url + '/listServices?currentPage=' + (currentPage - 1) + '&size=' + t.size)
           t.message = response.data.content
-          t.totalPages = response.data.totalPages * 10
+          t.totalPages = response.data.totalPages * t.size
           console.log(t.totalPages)
         })
         .catch(function (error) {
@@ -118,5 +118,5 @@ export default {
 </script>
 
 <style>
-    @import '../assets/css/servicePage.css';
+    @import '../assets/css/OrderList.css';
 </style>
