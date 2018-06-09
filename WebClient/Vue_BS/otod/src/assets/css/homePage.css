@@ -10,6 +10,7 @@ li {
 }
 
 a {
+    hideFocus: true;
     cursor: pointer;
 }
 
@@ -149,7 +150,7 @@ a {
     float: left;
 }
 
-.update-item img{
+.update-item .update-userHead img{
     width: 64px;
     height: 64px;
     box-shadow: 2px 2px 3px #888888;
@@ -193,6 +194,11 @@ a {
     background-position: -1015px 0;
     background-repeat: repeat-y;
 }
+/*message who*/
+
+.update-message .message-who{
+    margin-bottom: 20px;
+}
 
 .update-message .message-user{
     color: #888;
@@ -200,6 +206,22 @@ a {
 
 .update-message .message-user:hover{
     color: #7594B3;
+}
+
+
+/*message content*/
+.update-message .message-content{
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+.message-content .content-img img{
+    width: 100%;
+}
+
+.message-content .content-txt{
+
 }
 
 /*message footer*/
@@ -244,6 +266,10 @@ a {
 
 .message-options .opt-love .love-icon:hover{
     background-position: -82px -2722px;
+}
+
+.message-options .opt-love .love-icon.active{
+    background-position: -82px -2790px;
 }
 
 /*load bar css*/

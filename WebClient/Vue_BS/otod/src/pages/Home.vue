@@ -54,8 +54,12 @@
                             <a class="message-user">{{update.author.username}}</a>
                          </div>
                         <div class="message-content">
-                            <div class="content-">
+                            <div class="content-img">
+                                <a>
+                                  <img :src="update.updateMessage.images[0].url" :title="update.updateMessage.images[0].title"/>
+                                </a>
                             </div>
+                            <div class="content-txt"></div>
                          </div>
                         <div class="message-footer">
                             <div class="message-tags">
@@ -64,7 +68,7 @@
                             <div class="message-options">
                                 <span class="opt-share">推荐</span>
                                 <span class="opt-love">
-                                    <a class="love-icon" hideFocus="true" title="喜欢">喜欢</a>
+                                    <a class="love-icon" :class="{'active':update.updateOpt.recommened}" hideFocus="true" title="喜欢">喜欢</a>
                                 </span>
                              </div>
                          </div>
@@ -178,8 +182,15 @@ export default {
         }, {
           name: '刘天成'
         }],
+        updateMessage: {
+          images: [{
+            url: 'http://localhost:8081/images/Images/1.jpg',
+            title: '早上好'
+          }],
+          Content: '怕上火爆王老菊'
+        },
         updateOpt: {
-
+          recommened: false
         }
       }],
 
