@@ -7,12 +7,18 @@ import ForumReply from '@/pages/ForumReply'
 import Index from '@/pages/Index'
 import Home from '@/pages/Home'
 import Blog from '@/pages/Blog'
-import BlogReply from '@/pages/BlogReply'
 import Shop from '@/pages/Shop'
 // import Service from '@/pages/Service'
+import Service from '@/pages/Service'
 import Book from '@/pages/Book'
 import File from '@/pages/File'
+// market pages
+import Market from '@/pages/MarketList'
 // import store from '../store'
+// server pages
+import OrderList from '@/components/OrderList'
+import PublishOrder from '@/components/PublishOrder'
+
 
 Vue.use(Router)
 
@@ -52,20 +58,48 @@ const routes = [
         },
         component: BlogReply
       }, {
-        path: '/shop',
-        name: 'Shop',
+        path: '/market',
+        name: 'Market',
         meta: {
           requireAuth: false
         },
-        component: Shop
+        component: Market,
+        children: [
+          {
+            path: '/market/product',
+            name: 'Product',
+            meta: {
+              requireAuth: false
+            }
+          }
+        ]
       }, {
-      //   path: '/service',
-      //   name: 'Service',
-      //   meta: {
-      //     requireAuth: false
-      //   },
-      //   component: Service
-      // }, {
+        path: '/service',
+        name: 'Service',
+>>>>>>> 7eaf43da13703632a35218c5867fad7d4afa5581
+        meta: {
+          requireAuth: false
+        },
+        component: Service,
+        children: [
+          {
+            path: '/service/orderlist',
+            name: 'OrderList',
+            meta: {
+              requireAuth: false
+            },
+            component: OrderList
+          },
+          {
+            path: '/service/publishorder',
+            name: 'PublishOrder',
+            meta: {
+              requireAuth: false
+            },
+            component: PublishOrder
+          }
+        ]
+      }, {
         path: '/book',
         name: 'Book',
         meta: {

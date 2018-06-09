@@ -1,0 +1,11 @@
+.po-header-container{
+	font-size: 20px;
+	border-bottom: 1px solid #F5F5F5;
+	color: #333;
+    text-align: center;
+    line-height: 40px;
+}
+.po-footer-container{
+	padding: 20px 0 0 0;
+	border-top: 1px solid #F5F5F5;
+}

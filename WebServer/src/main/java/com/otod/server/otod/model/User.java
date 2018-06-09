@@ -2,35 +2,45 @@ package com.otod.server.otod.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jdk.nashorn.internal.ir.annotations.Ignore;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "user")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(generator = "IdGenerator")
+    @GenericGenerator(name = "IdGenerator", strategy = "com.otod.server.otod.others.IDWorker.IdGenerator")
     @Column(name = "user_id")
+    @JsonIgnore
     private Long userId;
 
-    @Column(name="user_account")
+    @Column(name = "identity_type")
+    private String identityType;
+
+    @JsonIgnore
+    @Column(name="identifier")
     private String username;
 
     @JsonIgnore
-    @Column(name ="user_password")
+    @Column(name ="credential")
     private String password;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
     private List<Role> roles;
 
     public User() {
     }
 
-    public User(String username, String password, List<Role> roles) {
+    public User(String identityType,String username, String password) {
         this.username = username;
         this.password = password;
-        this.roles = roles;
+        this.identityType = identityType;
     }
 
     public Long getUserId() {
@@ -63,6 +73,22 @@ public class User {
 
     public void setRoles(List<Role> roles) {
         this.roles = roles;
+    }
+
+    public String getIdentity_type() {
+        return identityType;
+    }
+
+    public void setIdentity_type(String identity_type) {
+        this.identityType = identity_type;
+    }
+
+    public String getIdentityType() {
+        return identityType;
+    }
+
+    public void setIdentityType(String identityType) {
+        this.identityType = identityType;
     }
 
     @Override

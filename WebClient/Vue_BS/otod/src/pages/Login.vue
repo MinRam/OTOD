@@ -4,7 +4,7 @@
             <div class="form_container" >
                 <div class="form_header">
                     <h1 class="logo-word large" id="logo">
-                        <a class = "logo_anchor" href="/" style="background-image: url(./static/logos/otod-logo1.png)"></a>
+                        <a class = "logo_anchor" href="/"></a>
                      </h1>
                     <h2 class="subheading">
                         为你的所爱而来,<br>为你的发现停留。
@@ -26,7 +26,7 @@
                                             <input id="signup_password" type="password" placeholder="用户密码" v-model="password"/>
                                          </div>
                                         <div class="form_row form_row_phone">
-                                            <input id="signup_phone" type="text" onkeypress="return event.keyCode >= 48 && event.keyCode <= 57" ng-pattern="/[^a-zA-Z]/" placeholder="手机号" v-model="telephone"/>
+                                            <input id="signup_phone" type="text"  placeholder="手机号" v-model="telephone"/>
                                          </div>
                                     </div>
                              </div>
@@ -49,14 +49,14 @@
              </div>
             <div class="showcase">
                 <div class="section login-section" :class="{'active': showcaseObjects[0].active,'old-hat': showcaseObjects[0].oldHatActive}" section-title="注册" style="z-index:5">
-                    <div id="fullscreen_post_bg" class="fullscreen_post_bg" style= "background-image:url(./static/backgrounds/tumblr_register_1280.jpg)" ></div>
+                    <div id="fullscreen_post_bg" class="fullscreen_post_bg"></div>
                     <div class="fullscreen_post_footer">
                         <div class="fullscreen_post_footer_inner">
                             <div class="footer_legal_links">
                                 <a v-for="(link, index) in footerLinks" :href="link.href" :key="index" target="_blank">{{link.title}}</a>
                              </div>
                             <div class="footer-oauth2-plaforms">
-                                <a v-for="(oauth,index) in oauth2Objects" :href="oauth.href" :key="index" target="_blank">{{oauth.title}}</a>
+                                <a v-for="(oauth,index) in oauth2Objects" :href="oauth.href" :class="oauth.style" :key="index" target="_blank">{{oauth.title}}</a>
                             </div>
                         </div>
                      </div>
@@ -294,7 +294,17 @@
                  </div>
                 <div class="section welcome-section" :class="{'active': showcaseObjects[4].active,'old-hat':showcaseObjects[4].oldHatActive}" section-title="好吧，这个不难解释。" style="z-index:1">
                     <div class="section-wrapper">
-                        <div class="fullscreen_post_bg" style="background-image:url(./static/backgrounds/tumblr_welcome_1280.gif)"></div>
+                        <div class="fullscreen_post_bg"></div>
+                        <div class="fullscreen_post_footer">
+                            <div class="fullscreen_post_footer_inner">
+                                <div class="footer_legal_links">
+                                    <a v-for="(link, index) in footerLinks" :href="link.href" :key="index" target="_blank">{{link.title}}</a>
+                                 </div>
+                                <div class="footer-oauth2-plaforms">
+                                    <a v-for="(oauth,index) in oauth2Objects" :href="oauth.href" :class="oauth.style" :key="index" target="_blank">{{oauth.title}}</a>
+                                </div>
+                            </div>
+                         </div>
                      </div>
                  </div>
              </div>
@@ -350,7 +360,16 @@ export default {
 
       // 第三方登录链接（待完成—）
       oauth2Objects: [{
+        style: 'qq',
         title: 'QQ',
+        href: 'http://www.baidu.com'
+      }, {
+        style: 'weixin',
+        title: 'WeiXin',
+        href: 'http://www.baidu.com'
+      }, {
+        style: 'xina',
+        title: 'Xina',
         href: 'http://www.baidu.com'
       }],
 
@@ -435,8 +454,34 @@ export default {
               telephone: this.telephone
             }
           }).then(function (response) {
-            console.log('hello')
-          })
+            if (response.data === 'success') {
+              var params = new URLSearchParams()
+              params.append('grant_type', 'password')
+              params.append('username', this.username)
+              params.append('password', md5(this.password))
+
+              this.$axios({
+                method: 'post',
+                url: this.$url + '/oauth/token',
+                auth: {username: 'test', password: '123456'},
+                headers: {'Content-type': 'application/x-www-form-urlencoded; charset=utf-8'},
+                data: params
+              }).then(function (response) {
+                if (response.data.access_token) {
+                  this.$setCookie('otod_access_token', response.data.access_token)
+                } else {
+                  this._showErrors('请检查网络！')
+                }
+                this.$router.push('/')
+              }.bind(this)).catch(function (error) {
+                if (error.response) {
+                  this._showErrors(error.response.data.error)
+                }
+              }.bind(this))
+            } else {
+              this._showErrors(response.data)
+            }
+          }.bind(this))
         } else {
           this._showErrors('信息不全,请补全信息！')
         }

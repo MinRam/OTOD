@@ -3,7 +3,7 @@
         <div class="otod-header">
           <div class="otod-hdc">
             <h1 class="otod-logo">
-              <a href="/" style="background-image: url(./static/logos/otod-logo1.png)"></a>
+              <a href="/"></a>
              </h1>
             <div class="menu-nav">
                 <ul class="nav-tab">
@@ -41,7 +41,7 @@ export default {
         title: '博客'
       }, {
         active: false,
-        href: '/shop',
+        href: '/market',
         title: '二手市场'
       }, {
         active: false,
@@ -163,4 +163,3 @@ export default {
 <style>
     @import '../assets/css/indexPage.css'
 </style>
-
