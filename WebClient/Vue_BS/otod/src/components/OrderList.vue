@@ -1,6 +1,6 @@
 <template>
     <el-col :xs="12" :sm="12" :md="12" :xl="12" :offset="4">
-        <ul>
+        <ul v-loading="loadingOrder">
             <li v-for="m in message" :key="m.id">
                 <el-row class="message-bottom" type="flex" justify="center">
                     <el-col :span="24">
@@ -13,10 +13,11 @@
                                 <el-aside class="aside-container" width="200px">
                                     <div>
                                         <div class="user-img">
-                                            <i class="el-icon-menu" style="font-size: 60px;color: #409EFF"></i>
+                                            <i v-if="m.userinfo_s.headImage == ''" class="el-icon-menu" style="font-size: 60px;color: #409EFF"></i>
+                                            <img v-if="m.userinfo_s.headImage != ''" class="user-img" :src="$url + '/images/' + m.userinfo_s.headImage"/>
                                         </div>
                                         <div class="user-info">
-                                            <p>{{ m.user_name }}</p>
+                                            <p>{{ m.userinfo_s.nickname }}</p>
                                             <!-- <p>Nothing</p> -->
                                         </div>
                                         <div style="clear: both"></div>
@@ -72,6 +73,7 @@ export default {
   name: 'Service',
   data () {
     return {
+      navSelected: 2,
       isCollapse: false,
       sstatic: false,
       show: false,
@@ -80,6 +82,7 @@ export default {
       message: '',
       totalPages: 0,
       currentPage: 0,
+      loadingOrder: 'true',
       size: 5
     }
   },
@@ -89,11 +92,13 @@ export default {
   methods: {
     getAllServices () {
       var t = this
+      t.loadingOrder = true
       t.$axios.get(this.$url + '/listServices?currentPage=' + t.currentPage + '&size=' + t.size)
         .then(function (response) {
           console.log(response)
           t.message = response.data.content
           t.totalPages = response.data.totalPages * t.size
+          t.loadingOrder = false
           console.log(t.totalPages)
         })
         .catch(function (error) {
@@ -102,11 +107,13 @@ export default {
     },
     getServicePage (currentPage) {
       var t = this
+      t.loadingOrder = true
       t.$axios.get(t.$url + '/listServices?currentPage=' + (currentPage - 1) + '&size=' + t.size)
         .then(function (response) {
           console.log(t.$url + '/listServices?currentPage=' + (currentPage - 1) + '&size=' + t.size)
           t.message = response.data.content
           t.totalPages = response.data.totalPages * t.size
+          t.loadingOrder = false
           console.log(t.totalPages)
         })
         .catch(function (error) {

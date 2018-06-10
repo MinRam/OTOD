@@ -56,13 +56,17 @@ public class ServiceController {
         System.out.println(publishOrder.getDeadline());
         DateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         DateFormat dateFormat1 = new SimpleDateFormat("yyyy-MM-dd");
-        String sdateStr = publishOrder.getDeadline().substring(0,10);
+        String edateStr = publishOrder.getDeadline().substring(0,10);
+        Date sdate = new Date();
+        commenOrder.setsDate(sdate);
 
         User user = userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName());
+
+        commenOrder.setUserinfo_s(userService.getUserInfo(user));
         try{
-            Date sdate = dateFormat1.parse(sdateStr);
-            commenOrder.setsDate(sdate);
-            System.out.println(sdate + " -- "+ sdateStr);
+            Date edate = dateFormat1.parse(edateStr);
+            commenOrder.setsDate(edate);
+//            System.out.println(sdate + " -- "+ edateStr);
         }
         catch (Exception e) {
             System.out.println(e);

@@ -14,7 +14,7 @@
                         <i class="el-icon-menu"></i>
                         <span slot="title">发布订单</span>
                     </el-menu-item>
-                    <el-menu-item @click="navClick('/service/orderlist')" index="2">
+                    <el-menu-item id="order-list" @click="navClick('/service/orderlist')" index="2">
                         <i class="el-icon-menu"></i>
                         <span slot="title">订单列表</span>
                     </el-menu-item>
