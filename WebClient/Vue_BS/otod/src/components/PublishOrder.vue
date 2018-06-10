@@ -169,8 +169,7 @@ export default {
           url: t.$url + '/saveOrder',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + t.$getCookie('otod_access_token'),
-            'Cache-Control': 'no-cache'
+            'Authorization': 'Bearer ' + t.$getCookie('otod_access_token')
           },
           data: {
             title: t.form.title,

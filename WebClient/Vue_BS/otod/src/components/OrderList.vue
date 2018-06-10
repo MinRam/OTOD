@@ -1,14 +1,17 @@
 <template>
     <el-col :xs="12" :sm="12" :md="12" :xl="12" :offset="4">
         <ul v-loading="loadingOrder">
+          <!-- 这个是element的特有写法 v-for 就是一个循环 循环输出<li>里面的html message是一个数组，里面存着order 相当于for(m in message){ <li>里面的代码</li>} -->
             <li v-for="m in message" :key="m.id">
                 <el-row class="message-bottom" type="flex" justify="center">
                     <el-col :span="24">
                         <el-card shadow="hover" class="center-container-card">
+                          <!-- v-if 也是element里面特有的写法 如果里面的判断为真就显示 为假就不显示 m.urgency是message里面的一个数据 就和c里面的strut一样 如果里面还有其他的话就一直。。。下去 -->
                             <div v-if="m.urgency == '4'" style="height: 3px; clear: both; width: 100%" class="bg-danger"></div>
                             <div v-if="m.urgency == '3'" style="height: 3px; clear: both; width: 100%" class="bg-warning"></div>
                             <div v-if="m.urgency == '2'" style="height: 3px; clear: both; width: 100%" class="bg-success"></div>
                             <div v-if="m.urgency == '1'" style="height: 3px; clear: both; width: 100%" class="bg-info"></div>
+                            <!-- el-container是一个element封装好的写法 你可以到 http://element-cn.eleme.io/#/zh-CN 里面看它的实例，想用的话之间复制他的代码自己改 -->
                             <el-container class="bg-purple">
                                 <el-aside class="aside-container" width="200px">
                                     <div>
@@ -17,6 +20,7 @@
                                             <img v-if="m.userinfo_s != null" class="user-img" :src="$url + '/images/' + m.userinfo_s.headImage"/>
                                         </div>
                                         <div class="user-info">
+                                          <!-- {{ }} 是一种输出，就像printf一样，把里面的内容输出来 -->
                                             <p v-if="m.userinfo_s != null">{{ m.userinfo_s.nickname }}</p>
                                             <!-- <p>Nothing</p> -->
                                         </div>
@@ -54,6 +58,7 @@
         <el-row type="flex" justify="center">
             <el-col :span="14">
                 <div>
+                  <!-- 这个也是独特的用法 可以在网站shang看到 -->
                     <el-pagination
                       @current-change="getServicePage"
                       background
