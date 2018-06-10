@@ -170,7 +170,8 @@ export default {
             content: this.form.content,
             deadline: this.form.e_date,
             urgency: this.form.urgency,
-            contributers: this.form.contributers
+            contributers: this.form.contributers,
+            access_token: this.$getCookie('otod_access_token')
           }
         })
           .then(function (response) {

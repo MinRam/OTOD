@@ -1,11 +1,14 @@
 package com.otod.server.otod.controller;
 
 import com.otod.server.otod.model.CommenOrder;
+import com.otod.server.otod.model.User;
 import com.otod.server.otod.pojos.CommenOrdersPOJO;
 import com.otod.server.otod.pojos.PublishOrder;
 import com.otod.server.otod.services.ServiceService;
+import com.otod.server.otod.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.DateFormat;
@@ -24,6 +27,8 @@ import java.util.Optional;
 public class ServiceController {
     @Autowired
     private ServiceService serviceService;
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/allServices")
     private CommenOrdersPOJO getAllCommenOrders(){
@@ -42,7 +47,7 @@ public class ServiceController {
         return serviceService.getListPage(currentPage,size);
     }
 
-//    String title, String content, String deadline, String urgency, String contributers
+//    String title, String content, String deadline, String urgency, int contributers
     @PostMapping("/saveOrder")
     private String saveOrder(@RequestBody PublishOrder publishOrder){
         CommenOrder commenOrder = new CommenOrder();
@@ -52,6 +57,8 @@ public class ServiceController {
         DateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         DateFormat dateFormat1 = new SimpleDateFormat("yyyy-MM-dd");
         String sdateStr = publishOrder.getDeadline().substring(0,10);
+
+        User user = userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName());
         try{
             Date sdate = dateFormat1.parse(sdateStr);
             commenOrder.setsDate(sdate);
