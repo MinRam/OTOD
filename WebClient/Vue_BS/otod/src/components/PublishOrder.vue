@@ -167,13 +167,17 @@ export default {
         this.$axios({
           method: 'post',
           url: t.$url + '/saveOrder',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + t.$getCookie('otod_access_token'),
+            'Cache-Control': 'no-cache'
+          },
           data: {
             title: t.form.title,
             content: t.form.content,
             deadline: t.form.e_date,
             urgency: t.form.urgency,
-            contributers: t.form.contributers,
-            access_token: t.$getCookie('otod_access_token')
+            contributers: t.form.contributers
           }
         })
           .then(function (response) {

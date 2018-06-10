@@ -13,11 +13,11 @@
                                 <el-aside class="aside-container" width="200px">
                                     <div>
                                         <div class="user-img">
-                                            <i v-if="m.userinfo_s.headImage == ''" class="el-icon-menu" style="font-size: 60px;color: #409EFF"></i>
-                                            <img v-if="m.userinfo_s.headImage != ''" class="user-img" :src="$url + '/images/' + m.userinfo_s.headImage"/>
+                                            <i v-if="m.userinfo_s == null" class="el-icon-menu" style="font-size: 60px;color: #409EFF"></i>
+                                            <img v-if="m.userinfo_s != null" class="user-img" :src="$url + '/images/' + m.userinfo_s.headImage"/>
                                         </div>
                                         <div class="user-info">
-                                            <p>{{ m.userinfo_s.nickname }}</p>
+                                            <p v-if="m.userinfo_s != null">{{ m.userinfo_s.nickname }}</p>
                                             <!-- <p>Nothing</p> -->
                                         </div>
                                         <div style="clear: both"></div>
