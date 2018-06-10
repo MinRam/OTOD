@@ -13,7 +13,7 @@ public class UserRegisteration {
     }
 
     public void setUsername(String username) {
-        this.username = username;
+        this.username = username   ;
     }
 
     public String getPassword() {

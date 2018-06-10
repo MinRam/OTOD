@@ -7,6 +7,7 @@ import ForumReply from '@/pages/ForumReply'
 import Index from '@/pages/Index'
 import Home from '@/pages/Home'
 import Blog from '@/pages/Blog'
+import BlogReply from '@/pages/BlogReply'
 import Service from '@/pages/Service'
 import Book from '@/pages/Book'
 import File from '@/pages/File'
@@ -48,6 +49,13 @@ const routes = [
           requireAuth: false
         },
         component: Blog
+      }, {
+        path: '/blogreply',
+        name: 'BlogReply',
+        meta: {
+          requireAuth: false
+        },
+        component: BlogReply
       }, {
         path: '/market',
         name: 'Market',
@@ -109,12 +117,14 @@ const routes = [
     path: '/forumtopic',
     name: 'ForumTopic',
     meta: {
+      requireAuth: false
     },
     component: ForumTopic
   }, {
     path: '/forumreply',
     name: 'ForumReply',
     meta: {
+      requireAuth: false
     },
     component: ForumReply
   }

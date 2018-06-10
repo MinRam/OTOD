@@ -9,6 +9,11 @@ li {
     list-style: none;
 }
 
+a {
+    hideFocus: true;
+    cursor: pointer;
+}
+
 .otod-home {
     margin: 0 auto;
     width: 930px;
@@ -129,7 +134,6 @@ li {
 .notice-content li .notice-title a{
     color: #888;
     text-decoration: underline;
-    cursor: pointer;
 }
 
 .notice-content li .notice-title a:hover{
@@ -142,12 +146,132 @@ li {
     margin-top: 20px;
 }
 
-.update-item  .updaate-userHead {
+.update-item  .update-userHead {
     float: left;
-    width: 30px;
-    height: 30px;
-    background-color: blue;
 }
+
+.update-item .update-userHead img{
+    width: 64px;
+    height: 64px;
+    box-shadow: 2px 2px 3px #888888;
+}
+
+.update-item  .update-content {
+    float: right;
+    width: 580px;
+}
+
+.update-content .bg-triangle, .update-content .bg-triangle .update-page{
+    background: url(../images/isay24.png) no-repeat 999px 999px;
+}
+
+.update-content .bg-triangle{
+    height: 24px;
+    background-position: 0 0;
+}
+.update-content .bg-triangle .update-page{
+    float: right;
+    width: 21px;
+    height: 20px;
+    overflow: hidden;
+    text-indent: -2000px;
+    background-position: -668px 0;
+}
+
+.update-content:hover .bg-triangle .update-page{
+    background-position: -785px 0;
+}
+
+.update-content .bg-triangle .update-page:hover{
+    background-position: -898px 0;
+}
+
+.update-content .update-message {
+    zoom: 1;
+    padding: 3px 32px 28px 53px;
+    margin-top: -1px;
+    background-image: url(../images/isay24.png);
+    background-position: -1015px 0;
+    background-repeat: repeat-y;
+}
+/*message who*/
+
+.update-message .message-who{
+    margin-bottom: 20px;
+}
+
+.update-message .message-user{
+    color: #888;
+}
+
+.update-message .message-user:hover{
+    color: #7594B3;
+}
+
+
+/*message content*/
+.update-message .message-content{
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+.message-content .content-img img{
+    width: 100%;
+}
+
+.message-content .content-txt{
+
+}
+
+/*message footer*/
+.update-message .message-footer{
+    position: relative;
+    z-index: 3;
+    height: 19px;
+    margin-top: 11px;
+    line-height: 19px;
+    color: #aaa;
+}
+
+.message-footer .message-tags{
+    float: left;
+    padding-left: 10px;
+    background: url(../images/icon24.png) no-repeat 999px 999px;
+    background-position: 0 -103px;
+}
+
+.message-footer .message-tags span{
+    padding-left: 10px;
+    font-size: 12px;
+}
+
+.message-footer .message-options{
+    float: right;
+}
+
+.message-footer .message-options span{
+    float: left;
+    margin-left: 15px;
+}
+
+.message-options .opt-love .love-icon{
+    display: block;
+    width: 20px;
+    height: 18px;
+    text-indent: -2000px;
+    background: url(../images/icon24.png) no-repeat 999px 999px;
+    background-position: -82px -2759px;
+}
+
+.message-options .opt-love .love-icon:hover{
+    background-position: -82px -2722px;
+}
+
+.message-options .opt-love .love-icon.active{
+    background-position: -82px -2790px;
+}
+
 /*load bar css*/
 .main .load-bar {
     width: 100%;
@@ -209,7 +333,6 @@ li {
     height: 18px;
     overflow: hidden;
     padding: 10px 0;
-    border-top: 1px solid #fff;
     line-height: 15px;
     font-size: 14px;
 }
