@@ -10,6 +10,10 @@ a{
     color: #fff;
 }
 
+img{
+    border-width:0;
+}
+
 .clearfix{
     zoom: 1;
 }
@@ -412,6 +416,11 @@ a{
     margin-bottom: 15px;
 }
 
+.showcase .about-section .section-content{
+    width: 540px;
+    margin: 0 auto;
+    line-height: 1.4;
+}
 .showcase .shop-section .section-content{
     margin-bottom:20px;
     position:relative;
@@ -421,12 +430,80 @@ a{
     z-index:2;
     line-height: 1.4;
 }
-.showcase .about-section .section-content{
-    width: 540px;
-    margin: 0 auto;
-    line-height: 1.4;
+
+
+.showcase .server-section .section-content{
+    margin: 30px auto;
+    margin-top: 300px;
+    width: 700px;
 }
 
+.showcase .server-section .section-wrapper .server-graphic{
+    margin: 30px auto;
+    width: 500px;
+}
+
+ .section-wrapper .server-graphic .server-post-item{
+    display: inline-block;
+    opacity: 0;
+    float: left;
+    position: relative;
+    font-size: 14px;
+    height: auto;
+    margin-left: 34px;
+    margin-bottom: 20px;
+    width: 80px;
+    transform-origin: 50% 50%;
+    transform: scale(0);
+    transition: none;
+}
+
+.show-server .showcase .server-section .server-post-item{
+    opacity: 1;
+    transform: scale(1);
+    transition-property: transform;
+    transition-delay: 0.3s;
+    transition-duration: 1.4s;
+    transition-timing-function: cubic-bezier(.19,1,.22,1);
+}
+
+.section-wrapper .server-graphic .server-post-item .icon-picture{
+    width: 80px;
+    height: 80px;
+    margin-bottom: 8px;
+}
+
+.section-wrapper .server-graphic .server-post-item.server-1 .icon-picture{
+    background-image: url(../images/server1.png);
+}
+
+.section-wrapper .server-graphic .server-post-item.server-2 .icon-picture{
+    background-image: url(../images/server2.png);
+}
+
+.section-wrapper .server-graphic .server-post-item.server-3 .icon-picture{
+    background-image: url(../images/server3.png);
+}
+
+.section-wrapper .server-graphic .server-post-item.server-4 .icon-picture{
+    background-image: url(../images/server4.png);
+}
+
+.section-wrapper .server-graphic .server-post-item.server-5 .icon-picture{
+    background-image: url(../images/server5.png);
+}
+
+.section-wrapper .server-graphic .server-post-item.server-6 .icon-picture{
+    background-image: url(../images/server6.png);
+}
+
+.section-wrapper .server-graphic .server-post-item.server-7 .icon-picture{
+    background-image: url(../images/server7.png);
+}
+
+.section-wrapper .server-graphic .server-post-item.server-8 .icon-picture{
+    background-image: url(../images/server8.png);
+}
 
 
 /* the fullscreen background */

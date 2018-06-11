@@ -154,8 +154,6 @@ export default {
         console.log(error)
       })
     },
-
-
     alee () {
       alert(this.page)
     },
@@ -177,7 +175,6 @@ export default {
         console.log(error)
       })
     },
-
     // 获得最后回复距今时间
     getLastTime (date) {
       var now = new Date().getTime()

@@ -70,7 +70,7 @@
 
 <script>
 export default {
-  name: 'Login',
+  name: 'BlogReply',
   data () {
     return {
       id: this.$route.query.id,

@@ -2,6 +2,7 @@ package com.otod.server.otod.services;
 
 import com.otod.server.otod.model.*;
 import com.otod.server.otod.respository.*;
+import org.springframework.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
@@ -47,6 +48,7 @@ public class UserService {
     }
 
     // 获取 User
+
     public User getUser(String username){
         return userRepository.findByUsername(username);
     }
@@ -58,6 +60,10 @@ public class UserService {
     // 获取 UserInfo
     public UserInfo  getUserInfo(User user){
         return userInfoRespository.findByUser(user);
+    }
+
+    public UserInfo getUserInfo(String nickname) {
+        return userInfoRespository.findByNickname(nickname);
     }
 
     public List<Notice> getAllNotices(User user){

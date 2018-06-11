@@ -19,6 +19,7 @@ import Market from '@/pages/MarketList'
 import OrderList from '@/components/OrderList'
 import PublishOrder from '@/components/PublishOrder'
 import QuillEditor from '@/components/quillEditor'
+import AllOrder from '@/components/AllOrder'
 
 Vue.use(Router)
 
@@ -106,6 +107,14 @@ const routes = [
               requireAuth: false
             },
             component: PublishOrder
+          },
+          {
+            path: '/service/allorder',
+            name: 'AllOrder',
+            meta: {
+              requireAuth: false
+            },
+            component: AllOrder
           }
         ]
       }, {

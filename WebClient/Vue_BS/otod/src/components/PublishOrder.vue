@@ -114,6 +114,7 @@ export default {
   },
   methods: {
     submit () {
+      console.log(this.$getCookie('otod_access_token'))
       if (this.form.title === '') {
         this.$message({
           showClose: true,
@@ -162,18 +163,31 @@ export default {
         //   contributers: 'this.form.contributers',
         //   orderEval: ''
         // }]
+        var t = this
         this.$axios({
           method: 'post',
-          url: this.$url + '/saveOrder',
+          url: t.$url + '/saveOrder',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + t.$getCookie('otod_access_token')
+          },
           data: {
-            title: this.form.title,
-            content: this.form.content,
-            deadline: this.form.e_date,
-            urgency: this.form.urgency,
-            contributers: this.form.contributers
+            title: t.form.title,
+            content: t.form.content,
+            deadline: t.form.e_date,
+            urgency: t.form.urgency,
+            contributers: t.form.contributers
           }
         })
           .then(function (response) {
+            t.form = ''
+            t.$message({
+              showClose: true,
+              message: '发布成功！~',
+              type: 'success'
+            })
+            // t.$router.push('/service/orderlist')
+            document.getElementById('order-list').click()
             console.log(response)
           })
           .catch(function (error) {

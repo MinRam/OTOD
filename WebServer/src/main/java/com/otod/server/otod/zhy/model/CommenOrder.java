@@ -1,14 +1,10 @@
-package com.otod.server.otod.model;
+package com.otod.server.otod.zhy.model;
 
-import com.sun.org.apache.regexp.internal.RE;
-import org.aspectj.weaver.ast.Or;
-import org.codehaus.jackson.annotate.JsonIgnore;
+import com.otod.server.otod.model.UserInfo;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by zhang on 2018/6/5.
@@ -42,13 +38,13 @@ public class CommenOrder {
     private Date receiveTime;
     //发布用户（外键）
     @ManyToOne
-    @JoinColumn(name = "user_s_id")
-    private User user_s;
+    @JoinColumn(name = "userinfo_s_id")
+    private UserInfo userinfo_s;
 //    @Column(name = "user_s_id")
 //    private String userSId;
     //接受用户（外键）
     @ManyToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
-    private List<User> user_r;
+    private List<UserInfo> userinfo_r;
 //    @Column(name = "user_r_id")
 //    private String userRId;
     //订单完成时间
@@ -141,20 +137,20 @@ public class CommenOrder {
         this.receiveTime = receiveTime;
     }
 
-    public User getUser_s() {
-        return user_s;
+    public UserInfo getUserinfo_s() {
+        return userinfo_s;
     }
 
-    public void setUser_s(User user_s) {
-        this.user_s = user_s;
+    public void setUserinfo_s(UserInfo userinfo_s) {
+        this.userinfo_s = userinfo_s;
     }
 
-    public List<User> getUser_r() {
-        return user_r;
+    public List<UserInfo> getUserinfo_r() {
+        return userinfo_r;
     }
 
-    public void setUser_r(List<User> user_r) {
-        this.user_r = user_r;
+    public void setUserinfo_r(List<UserInfo> userinfo_r) {
+        this.userinfo_r = userinfo_r;
     }
 
     public Date getCompleteTime() {

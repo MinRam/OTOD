@@ -1,5 +1,5 @@
 <template>
-  <div class="container"  id="app">
+<div class="container"  id="app">
     <div class="jumbotron">
       <h1>博客论坛系统</h1>
     </div>
@@ -29,7 +29,7 @@
       </table>
     </div>
     <div class="row">
-      <ul class="pagination">
+        <ul class="pagination">
         <li><a href="#">&laquo;</a></li>
         <li><a href="#">1</a></li>
         <li><a href="#">2</a></li>
@@ -40,7 +40,7 @@
       </ul>
     </div>
     <div class="row">
-      <form class="bs-example bs-example-form" role="form">
+       <form class="bs-example bs-example-form" role="form">
         <div class="form-group">
           <textarea class="form-control" rows="10" name=textarea v-model="forumReplyPO.content"></textarea>
         </div>
@@ -49,7 +49,6 @@
       <button class="btn btn-success" @click="queryByConditions()">回复</button>
     </div>
   </div>
-
 </template>
 
 <script>

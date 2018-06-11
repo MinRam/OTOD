@@ -6,9 +6,7 @@
                     <h1 class="logo-word large" id="logo">
                         <a class = "logo_anchor" href="/"></a>
                      </h1>
-                    <h2 class="subheading">
-                        为你的所爱而来,<br>为你的发现停留。
-                     </h2>
+                    <h2 class="subheading">为你的所爱而来,<br>为你的发现停留。</h2>
                  </div>
                 <div class="form-header-welcome">
                     <h2 class="section-title">解释完毕~</h2>
@@ -276,15 +274,25 @@
                 <div class="section shop-section" :class="{'active': showcaseObjects[2].active,'old-hat':showcaseObjects[2].oldHatActive}" section-title="市场" style="z-index:3">
                     <div class="section-wrapper">
                         <div class="section-content">
-                            <h1 class="section-title">OTOD有许多精彩多样的二手商品</h1>
-                            <p>"OTOD提供发布和交易的二手市场，可以让您在大学简单的发布自己的多余物品，以及购买便宜的二手物品。无需再纠结多余物品的去处，无需再为自己的钱包担心。"
-                            </p>
+                            <h1 class="section-title">独特多样的二手市场</h1>
+                            <p>"OTOD提供发布和交易的二手市场，可以让您在大学简单的发布自己的多余物品，以及购买便宜的二手物品。无需再纠结多余物品的去处，无需再为自己的钱包担心。"</p>
                         </div>
+                        <div class="section-wrapper">
+                            <div class="shop-graphic">
+                                <div v-for="(shopItem,index) in shops" class="shop-post-item" :key="index">
+
+                                 </div>
+                             </div>
+                         </div>
                     </div>
                  </div>
                 <div class="section server-section" :class="{'active': showcaseObjects[3].active,'old-hat':showcaseObjects[3].oldHatActive}" section-title="个性化服务" style="z-index:2">
                     <div class="section-wrapper">
                         <div class="server-graphic">
+                            <div v-for="(serverItem,index) in servers" class="server-post-item" :class="serverItem.picture" :key="index">
+                                <div class="icon-picture"></div>
+                                <span class="icon-label">{{serverItem.title}}</span>
+                             </div>
                          </div>
                         <div class="section-content">
                             <h1 class="section-title">说真的，把需求挂在这里</h1>
@@ -417,16 +425,46 @@ export default {
         title: 'OTOD就是众多博客。'
       }],
 
+      // shops section
+      shops: [{
+        username: 'user1',
+        goodImage: ''
+      }],
+      // servers section
+      servers: [{
+        title: '辅导',
+        picture: 'server-1'
+      }, {
+        title: '家教',
+        picture: 'server-2'
+      }, {
+        title: '快递',
+        picture: 'server-3'
+      }, {
+        title: '设计',
+        picture: 'server-4'
+      }, {
+        title: '促销',
+        picture: 'server-5'
+      }, {
+        title: '维修',
+        picture: 'server-6'
+      }, {
+        title: '代班',
+        picture: 'server-7'
+      }, {
+        title: '其他',
+        picture: 'server-8'
+      }],
+
       // userData form
       username: '',
       password: '',
       telephone: '',
 
       // 错误集合
-      errorList: [],
+      errorList: []
 
-      // test Users
-      users: []
     }
   },
   mounted () {
@@ -472,7 +510,7 @@ export default {
                 } else {
                   this._showErrors('请检查网络！')
                 }
-                this.$router.push('/')
+                this.$router.push('/home')
               }.bind(this)).catch(function (error) {
                 if (error.response) {
                   this._showErrors(error.response.data.error)
