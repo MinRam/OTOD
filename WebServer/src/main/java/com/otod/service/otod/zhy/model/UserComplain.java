@@ -1,4 +1,4 @@
-package com.otod.server.otod.model;
+package com.otod.service.otod.zhy.model;
 
 import javax.persistence.*;
 import java.util.Date;
