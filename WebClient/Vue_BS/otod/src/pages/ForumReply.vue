@@ -4,7 +4,7 @@
       <h1>博客论坛系统</h1>
     </div>
     <div class="row">
-        <span>{{ topic_title }}</span>
+      <span>{{ topic_title }}</span>
       <table class="table table-bordered table-striped">
         <tbody>
           <tr v-for="(x,index) in pagelist" style="height:100px" :key="index">
@@ -85,7 +85,6 @@ export default {
     }
   },
   methods: {
-
     save () {
       var t = this
       this.$axios({
@@ -161,5 +160,4 @@ export default {
 </script>
 
 <style>
-@import '../assets/bootstrap/css/bootstrap.min.css';
 </style>

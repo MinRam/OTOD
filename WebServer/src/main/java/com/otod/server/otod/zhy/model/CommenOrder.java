@@ -1,14 +1,10 @@
-package com.otod.server.otod.model;
+package com.otod.server.otod.zhy.model;
 
-import com.sun.org.apache.regexp.internal.RE;
-import org.aspectj.weaver.ast.Or;
-import org.codehaus.jackson.annotate.JsonIgnore;
+import com.otod.server.otod.model.UserInfo;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by zhang on 2018/6/5.
