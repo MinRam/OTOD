@@ -37,12 +37,12 @@ public class CommenOrder {
     //发布用户（外键）
     @ManyToOne
     @JoinColumn(name = "userinfo_s_id")
-    private UserInfo userinfo_s;
+    private UserInfo userinfoS;
 //    @Column(name = "user_s_id")
 //    private String userSId;
     //接受用户（外键）
     @ManyToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
-    private List<UserInfo> userinfo_r;
+    private List<UserInfo> userinfoR;
 //    @Column(name = "user_r_id")
 //    private String userRId;
     //订单完成时间
@@ -63,6 +63,10 @@ public class CommenOrder {
     //需要的人数
     @Column(name = "contributers")
     private int contributers;
+
+    //已有人数
+    @Column(name = "contributers_recive")
+    private int contributersRecive;
 
     @OneToOne
     private OrderEval orderEval;
@@ -135,20 +139,20 @@ public class CommenOrder {
         this.receiveTime = receiveTime;
     }
 
-    public UserInfo getUserinfo_s() {
-        return userinfo_s;
+    public UserInfo getUserinfoS() {
+        return userinfoS;
     }
 
-    public void setUserinfo_s(UserInfo userinfo_s) {
-        this.userinfo_s = userinfo_s;
+    public void setUserinfoS(UserInfo userinfoS) {
+        this.userinfoS = userinfoS;
     }
 
-    public List<UserInfo> getUserinfo_r() {
-        return userinfo_r;
+    public List<UserInfo> getUserinfoR() {
+        return userinfoR;
     }
 
-    public void setUserinfo_r(List<UserInfo> userinfo_r) {
-        this.userinfo_r = userinfo_r;
+    public void setUserinfoR(List<UserInfo> userinfoR) {
+        this.userinfoR = userinfoR;
     }
 
     public Date getCompleteTime() {
@@ -197,5 +201,13 @@ public class CommenOrder {
 
     public void setOrderEval(OrderEval orderEval) {
         this.orderEval = orderEval;
+    }
+
+    public int getContributersRecive() {
+        return contributersRecive;
+    }
+
+    public void setContributersRecive(int contributersRecive) {
+        this.contributersRecive = contributersRecive;
     }
 }
