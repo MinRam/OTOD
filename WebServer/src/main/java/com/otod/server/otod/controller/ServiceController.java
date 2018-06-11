@@ -1,5 +1,6 @@
 package com.otod.server.otod.controller;
 
+import com.otod.server.otod.model.UserInfo;
 import com.otod.server.otod.pojos.CommenOrdersPOJO;
 import com.otod.server.otod.model.CommenOrder;
 import com.otod.server.otod.model.User;
@@ -74,5 +75,14 @@ public class ServiceController {
         commenOrder.setContributers(publishOrder.getContributers());
         serviceService.saveOrder(commenOrder);
         return "fun";
+    }
+
+    //
+    @GetMapping("/reciveOrder")
+    private String reciveOrder(@RequestParam (value = "OrderId") Long id){
+        Optional<CommenOrder> c = serviceService.getCommenOrderById(id);
+        CommenOrder commenOrder = c.get();
+        UserInfo userInfo = userService.getUserInfo(userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName()));
+        return serviceService.reciveOrder(commenOrder, userInfo)? "yeah":"false";
     }
 }
