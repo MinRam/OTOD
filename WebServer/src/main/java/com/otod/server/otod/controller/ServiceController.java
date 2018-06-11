@@ -62,7 +62,7 @@ public class ServiceController {
 
         User user = userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName());
 
-        commenOrder.setUserinfo_s(userService.getUserInfo(user));
+        commenOrder.setUserinfoS(userService.getUserInfo(user));
         try{
             Date edate = dateFormat1.parse(edateStr);
             commenOrder.setsDate(edate);
@@ -83,6 +83,15 @@ public class ServiceController {
         Optional<CommenOrder> c = serviceService.getCommenOrderById(id);
         CommenOrder commenOrder = c.get();
         UserInfo userInfo = userService.getUserInfo(userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName()));
+        if(userInfo.getId() == commenOrder.getUserinfoS().getId()){
+            return "the publisher..";
+        }
         return serviceService.reciveOrder(commenOrder, userInfo)? "yeah":"false";
+    }
+
+    @GetMapping("/allOrders")
+    private List<CommenOrder> getAllOrders(){
+        UserInfo userInfo = userService.getUserInfo(userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName()));
+        return serviceService.getAllOrder(userInfo);
     }
 }
