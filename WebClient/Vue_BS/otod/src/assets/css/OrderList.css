@@ -1,0 +1,82 @@
+p{
+	margin: 0;
+}
+li{
+	list-style: none;
+}
+ul{
+	margin: 0;
+}
+.order-content{
+	word-wrap:break-word;  
+    word-break:break-all; 
+}
+.message-bottom{
+	margin-bottom: 20px; 
+}
+.grid-content {
+    border-radius: 4px;
+    min-height: 36px;
+}
+.el-container{
+}
+.bg-primary{
+	background-color: #409EFF;
+}
+.bg-success{
+	background-color: #67c23a
+}
+.bg-warning{
+	background-color: #e6a23c
+}
+.bg-danger{
+	background-color: #f56c6c
+}
+.bg-info{
+	background-color: #909399
+}
+.el-aside{
+}
+.user-img{
+	float: left;
+	height: 60px;
+	width: 60px;
+	/*background-color: #909399;*/
+}
+.user-info{
+	float: left;
+	height: 60px;
+	width: auto;
+	font-size: 15px;
+	line-height: 30px;
+	margin-left: 10px;
+	/*background-color: #f56c6c*/
+}
+.button-group{
+	padding-left: 10px;
+	padding-top: 10px;
+}
+.center-container-card{
+	/*min-width: 600px;*/
+	padding: 0;
+}
+.header-container{
+	font-size: 20px;
+	border-bottom: 1px solid #F5F5F5;
+	color: #333;
+    text-align: center;
+    line-height: 40px;
+}
+.aside-container{
+	border-right: 1px solid #F5F5F5;
+}
+.commit-button-box {
+	float: right;
+    width: 140px;
+    height: 40px;
+    border-radius: 4px;
+    text-align: center;
+    line-height: 40px;
+    color: #fff;
+    box-sizing: border-box;
+  }

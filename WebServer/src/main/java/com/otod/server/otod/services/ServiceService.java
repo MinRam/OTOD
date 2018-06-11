@@ -38,4 +38,8 @@ public class ServiceService {
         return commenOrderRespository.findAll(pageable);
     }
 
+    public void saveOrder(CommenOrder commenOrder){
+        commenOrderRespository.save(commenOrder);
+    }
+
 }

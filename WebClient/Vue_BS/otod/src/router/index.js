@@ -7,6 +7,7 @@ import ForumReply from '@/pages/ForumReply'
 import Index from '@/pages/Index'
 import Home from '@/pages/Home'
 import Blog from '@/pages/Blog'
+// import BlogReply from '@/pages/BlogReply'
 import Service from '@/pages/Service'
 import Book from '@/pages/Book'
 import File from '@/pages/File'
@@ -19,7 +20,7 @@ import Payfor from '@/pages/payfor'
 // server pages
 import OrderList from '@/components/OrderList'
 import PublishOrder from '@/components/PublishOrder'
-
+import AllOrder from '@/components/AllOrder'
 
 Vue.use(Router)
 
@@ -52,6 +53,7 @@ const routes = [
         },
         component: Blog
       }, {
+
         path: '/service',
         name: 'Service',
         meta: {
@@ -74,6 +76,14 @@ const routes = [
               requireAuth: false
             },
             component: PublishOrder
+          },
+          {
+            path: '/service/allorder',
+            name: 'AllOrder',
+            meta: {
+              requireAuth: false
+            },
+            component: AllOrder
           }
         ]
       }, {
@@ -124,12 +134,14 @@ const routes = [
     path: '/forumtopic',
     name: 'ForumTopic',
     meta: {
+      requireAuth: false
     },
     component: ForumTopic
   }, {
     path: '/forumreply',
     name: 'ForumReply',
     meta: {
+      requireAuth: false
     },
     component: ForumReply
   }
