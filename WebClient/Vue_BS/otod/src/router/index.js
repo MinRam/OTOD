@@ -97,7 +97,7 @@ const routes = [
             component: PublishOrder
           },
           {
-            path:'/service/allorder',
+            path: '/service/allorder',
             name: 'AllOrder',
             meta: {
               requireAuth: false
