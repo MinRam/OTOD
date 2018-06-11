@@ -55,7 +55,8 @@ export default {
       message: '',
       page: [{
         max: 100
-      }]
+      }],
+      ss: ''
     }
   },
   mounted () {
