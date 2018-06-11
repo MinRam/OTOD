@@ -4,92 +4,109 @@
           <div class="container">
 
 <br/><br/>
+<br/>
           <!--搜索栏-->
             <div class="search">
-              <div class="row">
-                <div class="col-lg-6 pull-right">
+              <el-row>
+                <el-col :span="8" :push="14">
                   <div class="search_form">
                     <el-form :inline="true"  class="demo-form-inline">
                       <el-form-item label="商品查询">
-                        <el-input v-model="product_key" placeholder="请输入商品关键字"></el-input>
+                        <el-input v-model="product_key" placeholder="请输入商品关键字" clearable></el-input>
                       </el-form-item>
                       <el-form-item>
-                        <el-button type="primary" @click="page_num=1,search()">查询</el-button>
+                        <el-button type="primary" @click="search()">查询</el-button>
                       </el-form-item>
                     </el-form>
                   </div>
-                </div><!-- /.col-lg-6 -->
-              </div><!-- /.row -->
+                </el-col><!-- /.col-lg-6 -->
+              </el-row><!-- /.row -->
             </div>
 
-<br/>
             <div id="position">
-              <p>您当前的位置是：二手市场</p>
-            </div>
-            <div class="row">
-              <div class="col-md-8">
-                <ul class="nav nav-tabs">
-                  <li role="presentation" class="disabled"><a href="#">商品信息</a></li>
-                </ul>
-              </div>
-              <div class="col-md-4">
-                <ul class="nav nav-pills nav-justified">
-                  <li><a href="market/sell">我要出售</a></li>
-                </ul>
-              </div>
+              <el-row>
+                <el-col :span="10" :push="6">
+                  <p>您当前的位置是：二手市场</p>
+                </el-col>
+              </el-row>
             </div>
 
+            <el-row>
+              <el-col :span="11" :push="4">
+                <el-tabs>
+                  <el-tab-pane label="商品列表"></el-tab-pane>
+                </el-tabs>
+              </el-col>
+
+              <el-col :span="2" :offset="6">
+                <el-tabs>
+                  <el-button type="primary" @click="changepage('/market/sell')" round>我要出售</el-button>
+                </el-tabs>
+              </el-col>
+            </el-row>
+<br><br>
             <!--商品表-->
             <div id="goods_table">
-              <el-table :data="product" style="width: 100%">
-                <el-table-column prop="product_encoding" label="商品编码" width="240">
-                </el-table-column>
-                <el-table-column label="商品名称" width="500">
-                  <template slot-scope="scope">
-                    <a href="#" @click="changepage('/market/')"><img :src="scope.row.product_img_url" width="46px" height="46px" alt="">{{scope.row.product_name}}</a>
-                  </template>
-                </el-table-column>
-                <el-table-column prop="product_price" label="商品价格" width="180">
-                </el-table-column>
-                <el-table-column prop="product_stock" label="商品库存" width="180">
-                </el-table-column>
-              </el-table>
+              <el-row>
+                <el-col :push="4" span="14">
+                  <el-table :data="product_list" style="width: 100%" v-loading="loading">
+                    <el-table-column prop="product_encoding" label="商品编码" width="240">
+                    </el-table-column>
+                    <el-table-column label="商品名称" width="500">
+                      <template slot-scope="scope">
+                        <el-button type="text" @click="changepage('/market/product?product_id='+scope.row.product_id)"><img :src="scope.row.product_img_url" width="46px" height="46px" alt="">{{scope.row.product_name}}</el-button>
+                      </template>
+                    </el-table-column>
+                    <el-table-column prop="product_price" label="商品价格" width="180">
+                    </el-table-column>
+                    <el-table-column prop="product_stock" label="商品库存" width="180">
+                    </el-table-column>
+                  </el-table>
+                </el-col>
+              </el-row>
             </div>
 
+<br>
             <!--分页-->
-
             <div id="page" class="text-center">
-              <el-pagination
-                :page-size="1"
-                :pager-count="11"
-                layout="prev, pager, next"
-                :total="total_page_num"
-                :current-page.sync="page_num"
-                @current-change="search()"
-                >
-              </el-pagination>
+              <el-row>
+                <el-col :span="6" :push="9">
+                  <el-pagination
+                    :page-size="1"
+                    :pager-count="11"
+                    layout="prev, pager, next"
+                    :total="total_page_num"
+                    :current-page.sync="page_num"
+                    @current-change="search()"
+                    >
+                  </el-pagination>
+                </el-col>
+              </el-row>
             </div>
+
           </div>
         </section>
   </div>
 </template>
 <script>
 export default {
+  mounted () {
+    this.search()
+  },
   data () {
     return {
+      loading: true,
       page_num: 1,
-      product: [],
-      product_key: '',
+      product_list: [],
+      product_key: this.$route.query.product_key,
       total_page_num: 0,
       total_product_num: ''
     }
   },
-  mounted () {
-    this.search()
-  },
   methods: {
     search () {
       var t = this
+      console.log(t)
       this.$axios({
         method: 'get',
         url: 'http://localhost:8081/market/search',
@@ -99,20 +116,17 @@ export default {
           page_num: t.page_num
         }
       }).then(function (response) {
-        console.log(JSON.parse(JSON.stringify(response.data))['content'])
-        t.product = response.data.content
+        t.product_list = response.data.content
         t.total_product_num = response.data.totalElements
         t.total_page_num = response.data.totalPages
+        t.loading = false
       })
     },
-
     changepage (path) {
       this.$router.push(path)
     }
-
   }
 }
 </script>
 <style>
-  @import '../assets/bootstrap/css/bootstrap.min.css'
 </style>
