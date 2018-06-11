@@ -64,15 +64,15 @@ a {
     background-position: -224px -133px;
 }
 
-.main .publish-navs li.service a:hover{
-    background-position: -335px -133px;
+.main .publish-navs li.file a:hover{
+    background-position: -335px -134px;
+}
+
+.main .publish-navs li.service  a:hover{
+    background-position: -446px -134px;
 }
 
 .main .publish-navs li.book  a:hover{
-    background-position: -446px -133px;
-}
-
-.main .publish-navs li.file  a:hover{
     background-position: -557px -133px;
 }
 
@@ -170,7 +170,8 @@ a {
 .main  .update-item {
     float: left;
     width: 672px;
-    margin-top: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .update-item  .update-userHead {
@@ -302,13 +303,16 @@ a {
 
 /*load bar css*/
 .main .load-bar {
+    float: left;
     width: 100%;
-    margin: 20px auto;
+    margin: 40px auto;
+    padding-left: 110px;
     text-align: center;
 }
 .load-bar .loading{
     display: inline-block;
     padding-right: 68px;
+    margin-left: -70px;
     color: #444;
     font-size: 22px;
     line-height: 25px;
@@ -376,6 +380,10 @@ a {
     font-size: 14px;
 }
 
+.user-menu .user-setting .menu-item{
+    padding: 6px 0;
+}
+
 .user-menu .large .menu-item{
     height: 36px;
     padding-left: 16px;
@@ -383,7 +391,7 @@ a {
     /*border-right: 1px solid #dfdfdf;*/
 }
 
-.user-menu .menu-item .txt{
+.user-menu .menu-item .txt, .user-setting .menu-item .txt{
     float: left;
     width: 140px;
     height: 18px;
@@ -398,7 +406,7 @@ a {
     height: 36px;
 }
 
-.user-menu .small .menu-item .icon {
+.user-menu .menu-item .icon {
     float: left;
     width: 25px;
     height: 18px;
@@ -429,6 +437,10 @@ a {
 
 .user-menu .small .menu-item .icon.icon-6{
     background-position: 0 -1966px;
+}
+
+.user-menu .user-setting .icon.setting{
+    background-position: 0 -1601px;
 }
 
 .user-menu .small .menu-item .inf {

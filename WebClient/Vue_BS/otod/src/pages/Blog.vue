@@ -191,7 +191,7 @@ export default {
       }
     }
   },
-  
+
   methods: {
     // 发表帖子
     postData () {
@@ -413,6 +413,3 @@ export default {
   }
 }
 </script>
-
-<style>
-</style>

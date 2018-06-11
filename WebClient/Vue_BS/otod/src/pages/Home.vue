@@ -22,7 +22,10 @@
                              </a>
                          </li>
                         <li class="user-setting" @click="setting()">
-                            <span>个人信息设置</span>
+                            <a class="menu-item">
+                              <span class="icon setting"></span>
+                              <span class="txt">个人信息设置</span>
+                             </a>
                          </li>
                      </ul>
                  </div>

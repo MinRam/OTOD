@@ -8,7 +8,7 @@
                          </a>
                      </li>
                     <li class="publish-link" v-for="(publish,index) in publishPosts" :class="publish.title" :key="index">
-                        <a href="">{{publish.title}}</a>
+                        <a @click="goRouter(publish.link)">{{publish.title}}</a>
                      </li>
                  </ul>
              </div>
@@ -40,7 +40,7 @@
             <div v-for="(update,index) in updatings" :key="index" class="update-item">
                 <div class="update-userHead">
                     <a>
-                        <img :src="update.author.headPhoto"/>
+                        <img :src="$imageUrl + update.author.headPhoto"/>
                     </a>
                 </div>
                 <div class="update-content">
@@ -54,7 +54,7 @@
                         <div class="message-content">
                             <div class="content-img">
                                 <a>
-                                  <img :src="update.images[0].url" :title="update.images[0].title"/>
+                                  <img :src="$imageUrl + update.images[0].url" :title="update.images[0].title"/>
                                 </a>
                             </div>
                             <div class="content-txt"></div>
@@ -86,15 +86,20 @@ export default{
     return {
       // 发布按钮
       publishPosts: [{
-        title: 'blog'
+        title: 'blog',
+        link: '/forumtopic/quilleditor'
       }, {
-        title: 'market'
+        title: 'market',
+        link: '/market/sell'
       }, {
-        title: 'service'
+        title: 'file',
+        link: ''
       }, {
-        title: 'book'
+        title: 'service',
+        link: '/service/publishorder'
       }, {
-        title: 'file'
+        title: 'book',
+        link: ''
       }],
 
       // 通知信息
@@ -103,7 +108,7 @@ export default{
       // 动态信息列表
       updatings: [{
         author: {
-          headPhoto: 'http://localhost:8081/images/hp/6630576284002729390.jpg',
+          headPhoto: 'hp/6630576284002729390.jpg',
           username: 'TianChengLiu',
           telephone: ''
         },
@@ -113,7 +118,7 @@ export default{
           name: '揍你'
         }],
         images: [{
-          url: 'http://localhost:8081/images/Images/1.jpg',
+          url: 'Images/1.jpg',
           title: '早上好'
         }],
         Content: '怕上火爆王老菊',
@@ -122,7 +127,7 @@ export default{
         }
       }, {
         author: {
-          headPhoto: 'http://localhost:8081/images/hp/6630576284002729390.jpg',
+          headPhoto: 'hp/6630576284002729390.jpg',
           username: 'TianChengLiu',
           telephone: ''
         },
@@ -132,7 +137,7 @@ export default{
           name: '揍你'
         }],
         images: [{
-          url: 'http://localhost:8081/images/Images/1.jpg',
+          url: 'Images/1.jpg',
           title: '早上好'
         }],
         Content: '怕上火爆王老菊',
@@ -162,9 +167,13 @@ export default{
         this.noticeList = response.data
       }.bind(this))
 
-
-
+      this.loading = false
       console.log('finished')
+    },
+
+    // route link
+    goRouter (src) {
+      this.$router.push(src)
     },
 
     // 通知栏关闭
