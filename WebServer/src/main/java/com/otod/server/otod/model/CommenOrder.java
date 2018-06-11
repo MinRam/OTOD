@@ -1,6 +1,4 @@
-package com.otod.server.otod.zhy.model;
-
-import com.otod.server.otod.model.UserInfo;
+package com.otod.server.otod.model;
 
 import javax.persistence.*;
 import java.util.Date;
