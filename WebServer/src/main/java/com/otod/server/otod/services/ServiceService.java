@@ -23,6 +23,8 @@ public class ServiceService {
 
 
     public List<CommenOrder> getAllCommenOrders(){
+//        String sql = "select * from commenorder where order_state=1";
+//        return getAllCommenOrders().query(sql,new ItemRowMapper());
         return commenOrderRespository.findAll();
     }
 
