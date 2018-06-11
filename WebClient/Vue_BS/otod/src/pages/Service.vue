@@ -23,7 +23,7 @@
                             <i class="el-icon-location"></i>
                             <span>我的订单</span>
                         </template>
-                        <el-menu-item @click="navClick('service/allorder')" index="3-1">所有订单</el-menu-item>
+                        <el-menu-item index="3-1">所有订单</el-menu-item>
                         <el-menu-item index="3-2">进行中</el-menu-item>
                         <el-menu-item index="3-3">已完成</el-menu-item>
                     </el-submenu>
