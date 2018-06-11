@@ -1,8 +1,9 @@
 package com.otod.server.otod.model;
 
 import com.sun.org.apache.regexp.internal.RE;
-import org.aspectj.weaver.ast.Or;
-import org.codehaus.jackson.annotate.JsonIgnore;
+import com.sun.tools.corba.se.idl.constExpr.Or;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 import javax.persistence.*;
 import java.util.Date;
