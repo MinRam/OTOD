@@ -1,8 +1,6 @@
-package com.otod.service.otod.zhy.model;
+package com.otod.server.otod.zhy.model;
 
 import com.otod.server.otod.model.UserInfo;
-import org.aspectj.weaver.ast.Or;
-import org.codehaus.jackson.annotate.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.Date;

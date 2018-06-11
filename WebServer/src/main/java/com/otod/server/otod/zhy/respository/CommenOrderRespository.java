@@ -1,6 +1,6 @@
-package com.otod.service.otod.zhy.respository;
+package com.otod.server.otod.zhy.respository;
 
-import com.otod.service.otod.zhy.model.CommenOrder;
+import com.otod.server.otod.zhy.model.CommenOrder;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;

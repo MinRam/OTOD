@@ -1,10 +1,10 @@
-package com.otod.service.otod.zhy.controller;
+package com.otod.server.otod.zhy.controller;
 
-import com.otod.service.otod.zhy.model.CommenOrder;
+import com.otod.server.otod.zhy.model.CommenOrder;
 import com.otod.server.otod.model.User;
-import com.otod.service.otod.zhy.pojos.CommenOrdersPOJO;
-import com.otod.service.otod.zhy.pojos.PublishOrder;
-import com.otod.service.otod.zhy.services.ServiceService;
+import com.otod.server.otod.zhy.pojos.CommenOrdersPOJO;
+import com.otod.server.otod.zhy.pojos.PublishOrder;
+import com.otod.server.otod.zhy.services.ServiceService;
 import com.otod.server.otod.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

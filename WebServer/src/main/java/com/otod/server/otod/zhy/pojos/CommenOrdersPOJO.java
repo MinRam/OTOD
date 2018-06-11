@@ -1,6 +1,6 @@
-package com.otod.service.otod.zhy.pojos;
+package com.otod.server.otod.zhy.pojos;
 
-import com.otod.service.otod.zhy.model.CommenOrder;
+import com.otod.server.otod.zhy.model.CommenOrder;
 
 import java.util.List;
 
