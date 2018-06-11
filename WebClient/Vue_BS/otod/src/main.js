@@ -6,11 +6,16 @@ import router from './router'
 import cookieOpe from './utils/cookieOp'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
+import VueQuillEditor from 'vue-quill-editor'
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
 // 采用axios代替ajax
 import axios from 'axios'
 
 Vue.use(ElementUI)
 Vue.use(cookieOpe)
+Vue.use(VueQuillEditor)
 
 Vue.prototype.$url = 'http://localhost:8081'
 Vue.prototype.$axios = axios

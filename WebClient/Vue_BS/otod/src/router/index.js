@@ -7,7 +7,7 @@ import ForumReply from '@/pages/ForumReply'
 import Index from '@/pages/Index'
 import Home from '@/pages/Home'
 import Blog from '@/pages/Blog'
-import Shop from '@/pages/Shop'
+import BlogReply from '@/pages/BlogReply'
 // import Service from '@/pages/Service'
 import Service from '@/pages/Service'
 import Book from '@/pages/Book'
@@ -18,7 +18,7 @@ import Market from '@/pages/MarketList'
 // server pages
 import OrderList from '@/components/OrderList'
 import PublishOrder from '@/components/PublishOrder'
-
+import QuillEditor from '@/components/quillEditor'
 
 Vue.use(Router)
 
@@ -49,7 +49,17 @@ const routes = [
         meta: {
           requireAuth: false
         },
-        component: Blog
+        component: Blog,
+        children: [
+          {
+            path: '/forumtopic/quilleditor',
+            name: 'QuillEditor',
+            meta: {
+              requireAuth: false
+            },
+            component: QuillEditor
+          }
+        ]
       }, {
         path: '/blogreply',
         name: 'BlogReply',
@@ -76,7 +86,6 @@ const routes = [
       }, {
         path: '/service',
         name: 'Service',
->>>>>>> 7eaf43da13703632a35218c5867fad7d4afa5581
         meta: {
           requireAuth: false
         },
@@ -121,7 +130,18 @@ const routes = [
     meta: {
       requireAuth: false
     },
-    component: ForumTopic
+    component: ForumTopic,
+    children: [
+      {
+        path: '/forumtopic/quilleditor',
+        name: 'QuillEditor',
+        meta: {
+          requireAuth: false
+        },
+        component: QuillEditor
+      }
+    ]
+
   }, {
     path: '/forumreply',
     name: 'ForumReply',
