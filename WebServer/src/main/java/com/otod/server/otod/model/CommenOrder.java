@@ -64,6 +64,10 @@ public class CommenOrder {
     @Column(name = "contributers")
     private int contributers;
 
+    //已有人数
+    @Column(name = "contributers_recive")
+    private int contributersRecive;
+
     @OneToOne
     private OrderEval orderEval;
 
@@ -197,5 +201,13 @@ public class CommenOrder {
 
     public void setOrderEval(OrderEval orderEval) {
         this.orderEval = orderEval;
+    }
+
+    public int getContributersRecive() {
+        return contributersRecive;
+    }
+
+    public void setContributersRecive(int contributersRecive) {
+        this.contributersRecive = contributersRecive;
     }
 }
