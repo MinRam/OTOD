@@ -113,4 +113,14 @@ public class UserService {
         }
         return userList;
     }
+
+    // 关注用户
+    public boolean followUser(User user,String nickname){
+        User followUser = this.getUserInfo(nickname).getUser();
+        if(followUser == null) return false;
+        else if(userFollowRespository.findAllByUserAndUserFollow(user,followUser)!= null){
+            this.userFollowRespository.save(new UserFollow(user,followUser));
+            return true;
+        }else return false;
+    }
 }
