@@ -1,4 +1,4 @@
-package com.otod.server.otod.market.service;
+package com.otod.server.otod.services;
 
 
 import java.text.SimpleDateFormat;
@@ -10,15 +10,16 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.otod.server.otod.market.domain.Market_record;
-import com.otod.server.otod.market.domain.Market_user;
-import com.otod.server.otod.market.domain.P_Order;
-import com.otod.server.otod.market.domain.Product;
-import com.otod.server.otod.market.repository.MURepository;
-import com.otod.server.otod.market.repository.P_OrderRepository;
-import com.otod.server.otod.market.repository.ProductRepository;
-import com.otod.server.otod.market.repository.RecordRepository;
-
+import com.otod.server.otod.model.Market_record;
+import com.otod.server.otod.model.Market_user;
+import com.otod.server.otod.model.P_Order;
+import com.otod.server.otod.model.Product;
+import com.otod.server.otod.respository.MURepository;
+import com.otod.server.otod.respository.P_OrderRepository;
+import com.otod.server.otod.respository.ProductRepository;
+import com.otod.server.otod.respository.RecordRepository;
+/*
+ * 市场订单*/
 
 @Service("orderService")
 public class OrderService {

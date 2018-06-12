@@ -1,4 +1,4 @@
-package com.otod.server.otod.market.pojo;
+package com.otod.server.otod.pojos;
 
 public class ResultVo {
 	

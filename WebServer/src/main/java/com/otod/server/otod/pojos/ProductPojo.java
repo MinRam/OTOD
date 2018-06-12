@@ -1,4 +1,4 @@
-package com.otod.server.otod.market.pojo;
+package com.otod.server.otod.pojos;
 
 import java.util.Arrays;
 

@@ -1,4 +1,4 @@
-package com.otod.server.otod.market.controller;
+package com.otod.server.otod.controller;
 
 
 import java.io.File;
@@ -26,12 +26,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.otod.server.otod.market.domain.Product;
-import com.otod.server.otod.market.pojo.ProductPojo;
-import com.otod.server.otod.market.pojo.ResultVo;
-import com.otod.server.otod.market.repository.ProductRepository;
-import com.otod.server.otod.market.service.OrderService;
-import com.otod.server.otod.market.service.ProductService;
+import com.otod.server.otod.model.Product;
+import com.otod.server.otod.pojos.ProductPojo;
+import com.otod.server.otod.pojos.ResultVo;
+import com.otod.server.otod.respository.ProductRepository;
+import com.otod.server.otod.services.OrderService;
+import com.otod.server.otod.services.ProductService;
 
 @CrossOrigin
 @Controller

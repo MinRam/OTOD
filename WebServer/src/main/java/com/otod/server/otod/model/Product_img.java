@@ -1,4 +1,4 @@
-package com.otod.server.otod.market.domain;
+package com.otod.server.otod.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

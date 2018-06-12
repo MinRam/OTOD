@@ -1,4 +1,4 @@
-package com.otod.server.otod.market.repository;
+package com.otod.server.otod.respository;
 
 import java.util.Date;
 import java.util.List;
@@ -13,7 +13,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.otod.server.otod.market.domain.Product;
+import com.otod.server.otod.model.Product;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Integer>,JpaSpecificationExecutor<Product>{

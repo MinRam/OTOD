@@ -1,4 +1,4 @@
-package com.otod.server.otod.market.repository;
+package com.otod.server.otod.respository;
 
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.otod.server.otod.market.domain.P_Order;
+import com.otod.server.otod.model.P_Order;
 @Repository
 public interface P_OrderRepository extends JpaRepository<P_Order, Integer>{
 

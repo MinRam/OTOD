@@ -1,4 +1,4 @@
-package com.otod.server.otod.market.service;
+package com.otod.server.otod.services;
 
 
 import java.text.SimpleDateFormat;
@@ -10,17 +10,16 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.otod.server.otod.market.domain.Catalog;
-import com.otod.server.otod.market.domain.Market_record;
-import com.otod.server.otod.market.domain.Market_user;
-import com.otod.server.otod.market.domain.Product;
-import com.otod.server.otod.market.domain.Product_img;
-import com.otod.server.otod.market.pojo.ProductPojo;
-import com.otod.server.otod.market.repository.CatalogRepository;
-import com.otod.server.otod.market.repository.MURepository;
-import com.otod.server.otod.market.repository.ProductImgRepository;
-import com.otod.server.otod.market.repository.ProductRepository;
-import com.otod.server.otod.market.repository.RecordRepository;
+import com.otod.server.otod.model.Catalog;
+import com.otod.server.otod.model.Market_record;
+import com.otod.server.otod.model.Market_user;
+import com.otod.server.otod.model.Product;
+import com.otod.server.otod.model.Product_img;
+import com.otod.server.otod.pojos.ProductPojo;
+import com.otod.server.otod.respository.CatalogRepository;
+import com.otod.server.otod.respository.ProductImgRepository;
+import com.otod.server.otod.respository.ProductRepository;
+import com.otod.server.otod.respository.RecordRepository;
 
 
 @Service("productService")
@@ -35,8 +34,6 @@ public class ProductService {
 	@Autowired
 	private CatalogRepository catalogRepository;
 	
-	@Autowired
-	private MURepository muRepository;
 	
 	@Autowired
 	private RecordRepository recordRepository;

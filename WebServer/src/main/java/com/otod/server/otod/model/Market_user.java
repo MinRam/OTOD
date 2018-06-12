@@ -1,4 +1,4 @@
-package com.otod.server.otod.market.domain;
+package com.otod.server.otod.model;
 
 import java.util.HashSet;
 import java.util.Set;
