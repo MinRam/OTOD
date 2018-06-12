@@ -26,6 +26,8 @@ import OrderList from '@/components/OrderList'
 import PublishOrder from '@/components/PublishOrder'
 import QuillEditor from '@/components/quillEditor'
 import AllOrder from '@/components/AllOrder'
+import RunningS from '@/components/Runnings'
+import WaitingRequest from '@/components/WaitingRequest'
 
 Vue.use(Router)
 
@@ -109,6 +111,22 @@ const routes = [
               requireAuth: false
             },
             component: AllOrder
+          },
+          {
+            path: '/service/waitingrequest',
+            name: 'WaitingRequest',
+            meta: {
+              requireAuth: false
+            },
+            component: WaitingRequest
+          },
+          {
+            path: '/service/runnings',
+            name: 'RunningS',
+            meta: {
+              requireAuth: false
+            },
+            component: RunningS
           }
         ]
       }, {

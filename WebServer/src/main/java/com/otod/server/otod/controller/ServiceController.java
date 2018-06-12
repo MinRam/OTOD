@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -53,6 +54,7 @@ public class ServiceController {
         CommenOrder commenOrder = new CommenOrder();
         commenOrder.setTitle(publishOrder.getTitle());
         commenOrder.setContent(publishOrder.getContent());
+        commenOrder.setOrderState("1");
         System.out.println(publishOrder.getDeadline());
         DateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         DateFormat dateFormat1 = new SimpleDateFormat("yyyy-MM-dd");
@@ -86,12 +88,70 @@ public class ServiceController {
         if(userInfo.getId() == commenOrder.getUserinfoS().getId()){
             return "the publisher..";
         }
+        List<UserInfo> list = commenOrder.getUserinfoR();
+        for(UserInfo temp: list){
+            if(temp.getId() == userInfo.getId()){
+                return "false";
+            }
+        }
+        list.add(userInfo);
+        commenOrder.setUserinfoR(list);
+        commenOrder.setOrderState("2");
         return serviceService.reciveOrder(commenOrder, userInfo)? "yeah":"false";
     }
-
     @GetMapping("/allOrders")
     private List<CommenOrder> getAllOrders(){
         UserInfo userInfo = userService.getUserInfo(userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName()));
         return serviceService.getAllOrder(userInfo);
     }
+
+    @GetMapping("/allOrderPage")
+    private Page<CommenOrder> getAllOrderPage(int currentPage, int size){
+        UserInfo userInfo = userService.getUserInfo(userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName()));
+        return serviceService.getAllOrderPage(userInfo,currentPage,size);
+    }
+
+    @GetMapping("/waitingRequests")
+    private List<String> getwaitingRequests() {
+        UserInfo userInfo = userService.getUserInfo(userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName()));
+        List<CommenOrder> list = serviceService.getAllOrder(userInfo);
+        List<String> result = new ArrayList<>();
+        for (CommenOrder c : list) {
+            result.add(c.getOrderState());
+
+        }
+        return result;
+    }
+    @GetMapping("/runningOrders")
+    private List<CommenOrder> getRunningOrders(){
+        UserInfo userInfo = userService.getUserInfo(userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName()));
+        List<CommenOrder> list = serviceService.getAllOrder(userInfo);
+        List<CommenOrder> result = list;
+        for(CommenOrder c : list){
+            String state = c.getOrderState();
+            if(state.equals("2")){
+
+            } else {
+                result.remove(c);
+            }
+        }
+        return result;
+
+    }
+    @GetMapping("/finishedOrders")
+    private List<CommenOrder> getFinishedOrders(){
+        UserInfo userInfo = userService.getUserInfo(userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName()));
+        List<CommenOrder> list = serviceService.getAllOrder(userInfo);
+        List<CommenOrder> result = list;
+        for(CommenOrder co : list){
+            String state = co.getOrderState();
+            if(state.equals("3")){
+
+            } else {
+                result.remove(co);
+            }
+        }
+        return result;
+    }
+
 }

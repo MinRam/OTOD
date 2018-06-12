@@ -60,7 +60,7 @@
                 <div>
                   <!-- 这个也是独特的用法 可以在网站shang看到 -->
                     <el-pagination
-                      @current-change="getOrderPage"
+                      @current-change="getServicePage"
                       background
                       layout="prev, pager, next"
                       :current-page="currentPage"
@@ -92,38 +92,27 @@ export default {
     }
   },
   mounted () {
-    this.getAllOrders()
+    this.getAllServices()
   },
   methods: {
-    getAllOrders () {
+    getAllServices () {
       var t = this
       t.loadingOrder = true
-      t.$axios({
-        method: 'get',
-        url: this.$url + '/allOrders',
-        params: {
-          access_token: this.$getCookie('otod_access_token')
-        }
-      })
+      this.$axios.get(t.$url + '/waitingRequests')
         .then(function (response) {
           console.log(response)
           t.message = response.data
           t.loadingOrder = false
+          console.log(t.totalPages)
         })
         .catch(function (error) {
           console.log(error.message)
         })
     },
-    getOrderPage (currentPage) {
+    getServicePage (currentPage) {
       var t = this
       t.loadingOrder = true
-      t.$axios({
-        method: 'get',
-        url: this.$url + '/listServices?currentPage=' + t.currentPage + '&size=' + t.size,
-        params: {
-          access_token: this.$getCookie('otod_access_token')
-        }
-      })
+      t.$axios.get(t.$url + '/listServices?currentPage=' + (currentPage - 1) + '&size=' + t.size)
         .then(function (response) {
           console.log(t.$url + '/listServices?currentPage=' + (currentPage - 1) + '&size=' + t.size)
           t.message = response.data.content
