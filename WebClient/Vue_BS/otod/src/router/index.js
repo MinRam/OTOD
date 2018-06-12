@@ -5,7 +5,11 @@ import ForumTopic from '@/pages/ForumTopic'
 import ForumReply from '@/pages/ForumReply'
 // index pages
 import Index from '@/pages/Index'
+
 import Home from '@/pages/Home'
+import Person from '@/components/Person'
+import Setting from '@/components/Setting'
+
 import Blog from '@/pages/Blog'
 import BlogReply from '@/pages/BlogReply'
 // import Service from '@/pages/Service'
@@ -43,12 +47,22 @@ const routes = [
         meta: {
           requireAuth: true
         },
-        component: Home
+        component: Home,
+        children: [
+          {
+            path: '/home/person',
+            name: 'Person',
+            meta: {
+              requireAuth: true
+            },
+            component: Person
+          }
+        ]
       }, {
         path: '/blog',
         name: 'Blog',
         meta: {
-          requireAuth: false
+          requireAuth: true
         },
         component: Blog,
         children: [
@@ -131,6 +145,13 @@ const routes = [
           requireAuth: false
         },
         component: File
+      }, {
+        path: '/user/setting',
+        name: 'Setting',
+        meta: {
+          requireAuth: true
+        },
+        component: Setting
       }
     ]
   }, {

@@ -1,7 +1,9 @@
-package com.otod.server.otod.zhy.services;
+package com.otod.server.otod.services;
 
-import com.otod.server.otod.zhy.respository.CommenOrderRespository;
-import com.otod.server.otod.zhy.model.CommenOrder;
+import com.otod.server.otod.model.CommenOrder;
+import com.otod.server.otod.model.UserInfo;
+import com.otod.server.otod.pojos.CommenOrdersPOJO;
+import com.otod.server.otod.respository.CommenOrderRespository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -39,6 +41,24 @@ public class ServiceService {
 
     public void saveOrder(CommenOrder commenOrder){
         commenOrderRespository.save(commenOrder);
+    }
+
+
+    public boolean reciveOrder(CommenOrder commenOrder, UserInfo userInfo){
+        List<UserInfo> list = commenOrder.getUserinfoR();
+        for(UserInfo temp: list){
+            if(temp.getId() == userInfo.getId()){
+                return false;
+            }
+        }
+        list.add(userInfo);
+        commenOrder.setUserinfoR(list);
+        commenOrderRespository.save(commenOrder);
+        return true;
+    }
+
+    public List<CommenOrder> getAllOrder(UserInfo userInfo){
+        return commenOrderRespository.findByUserinfoS(userInfo);
     }
 
 }

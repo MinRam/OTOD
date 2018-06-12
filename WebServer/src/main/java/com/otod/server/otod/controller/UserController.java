@@ -93,6 +93,12 @@ public class UserController  {
         return new UserFollowList(userFollowInfoList,userFollowedInfoList);
     }
 
+    @GetMapping("/followUser")
+    private String followUser(@RequestParam (value = "nickname") String nickname){
+        User user = userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName());
+        return userService.followUser(user,nickname)?"true":"false";
+    }
+
     @GetMapping("/getAllInfo")
     private UserInfo allInfo(){
         User user = userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName());
@@ -100,16 +106,16 @@ public class UserController  {
     }
 
     @GetMapping("/Notice")
-        private List<NoticePojo> notice(){
-            User user = userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName());
-            List<Notice> noticeList =  userService.getAllNotices(user);
-            List<NoticePojo> noticePojosList = new ArrayList<>();
+    private List<NoticePojo> notice(){
+        User user = userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName());
+        List<Notice> noticeList =  userService.getAllNotices(user);
+        List<NoticePojo> noticePojosList = new ArrayList<>();
 
-            for(Notice notice : noticeList){
-                UserInfo userInfo = userService.getUserInfo(notice.getUserOut());
-                noticePojosList.add(new NoticePojo(notice,userInfo));
-            }
+        for(Notice notice : noticeList){
+            UserInfo userInfo = userService.getUserInfo(notice.getUserOut());
+            noticePojosList.add(new NoticePojo(notice,userInfo));
+        }
 
-            return noticePojosList;
+        return noticePojosList;
         }
 }
