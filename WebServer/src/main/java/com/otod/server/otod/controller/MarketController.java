@@ -16,6 +16,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -27,11 +28,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.otod.server.otod.model.Product;
+import com.otod.server.otod.model.UserInfo;
 import com.otod.server.otod.pojos.ProductPojo;
 import com.otod.server.otod.pojos.ResultVo;
 import com.otod.server.otod.respository.ProductRepository;
 import com.otod.server.otod.services.OrderService;
 import com.otod.server.otod.services.ProductService;
+import com.otod.server.otod.services.UserService;
 
 @CrossOrigin
 @Controller
@@ -46,6 +49,9 @@ public class MarketController {
 	
 	@Autowired
 	private OrderService OrderService;
+	
+	@Autowired
+	private UserService userService;
 	
 	 @Value("${cbs.imagesPath}")
 	 private String webUploadPath;
@@ -62,7 +68,8 @@ public class MarketController {
 	@RequestMapping(value="/addproduct",method=RequestMethod.POST)
 	public String add(@RequestBody ProductPojo pojo) {
 		System.out.println(pojo.toString());
-		productService.SaveByPojo(pojo);
+		UserInfo userInfo = userService.getUserInfo(userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName()));
+		productService.SaveByPojo(pojo,userInfo);
 		return "success";
 	}
 	
@@ -73,12 +80,10 @@ public class MarketController {
 		if(map.containsKey("product_key")){
 			key = map.get("product_key");
 		}
-		System.out.println(key);
 		String page_num = map.get("page_num");
-		System.out.println(page_num);
 		Pageable pageable = new PageRequest(Integer.parseInt(page_num) - 1 , 15);
 		Page<Product> page= repository.findByName(key, pageable);
-		System.out.println(page.toString());
+		System.out.println("page : "+page.toString());
 		return page;
 	}
 	

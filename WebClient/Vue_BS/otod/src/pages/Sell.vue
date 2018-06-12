@@ -320,6 +320,10 @@ export default {
             method: 'post',
             url: 'http://localhost:8081/market/addproduct',
             dataType: 'json',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer ' + t.$getCookie('otod_access_token')
+            },
             data: t.ruleForm
           })
         } else {

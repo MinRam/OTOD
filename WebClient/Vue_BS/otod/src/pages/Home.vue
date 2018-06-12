@@ -32,6 +32,7 @@
              </div>
          </div>
      </div>
+    <a title="回到顶部" class="w-top" href="javascript:scrollTo(0,0);" id="gtotop" hidefocus="true" style="visibility: visible; opacity: 1;">回到顶部</a>
   </div>
 </template>
 
@@ -86,16 +87,11 @@ export default {
     this.initialData()
   },
   methods: {
-    // 发布点击
-    publishNavsclick () {
-
-    },
-
     initialData () {
       // simple user inoformation : headphoto,username,telephone
       this.$axios({
         method: 'get',
-        url: this.$url + '/getSimpleInfo',
+        url: this.$url + '/user/getSimpleInfo',
         params: {
           access_token: this.$getCookie('otod_access_token')
         }
@@ -109,7 +105,7 @@ export default {
       // get followList
       this.$axios({
         method: 'get',
-        url: this.$url + '/getfollowInfo',
+        url: this.$url + '/user/getfollowInfo',
         params: {
           access_token: this.$getCookie('otod_access_token')
         }

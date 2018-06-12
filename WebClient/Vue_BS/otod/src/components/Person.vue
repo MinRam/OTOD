@@ -35,6 +35,7 @@
                             </li>
                          </ul>
                     </div>
+
                  </div>
              </div>
             <div v-for="(update,index) in updatings" :key="index" class="update-item">
@@ -71,6 +72,7 @@
                              </div>
                          </div>
                      </div>
+                    <div class="update-bottom"/>
                 </div>
              </div>
             <div class="load-bar" v-if="loading">
@@ -159,7 +161,7 @@ export default{
       // get notice list
       this.$axios({
         method: 'get',
-        url: this.$url + '/Notice',
+        url: this.$url + '/user/Notice',
         params: {
           access_token: this.$getCookie('otod_access_token')
         }
