@@ -104,14 +104,13 @@ public class ServiceController {
         UserInfo userInfo = userService.getUserInfo(userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName()));
         return serviceService.getAllOrder(userInfo);
     }
-<<<<<<< HEAD
 
     @GetMapping("/allOrderPage")
     private Page<CommenOrder> getAllOrderPage(int currentPage, int size){
         UserInfo userInfo = userService.getUserInfo(userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName()));
         return serviceService.getAllOrderPage(userInfo,currentPage,size);
     }
-=======
+
     @GetMapping("/waitingRequests")
     private List<String> getwaitingRequests() {
         UserInfo userInfo = userService.getUserInfo(userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName()));
@@ -155,5 +154,4 @@ public class ServiceController {
         return result;
     }
 
->>>>>>> 6446aadb2763d08032629827d840da21ba4310fd
 }
