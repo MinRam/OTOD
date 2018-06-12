@@ -1,7 +1,11 @@
 package com.otod.server.otod.config;
 
+import javax.servlet.MultipartConfigElement;
+
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.servlet.MultipartConfigFactory;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -27,4 +31,5 @@ public class WebAppConfig  implements WebMvcConfigurer {
         LoggerFactory.getLogger(WebAppConfig.class).info("imagesPath="+mImagesPath);
         registry.addResourceHandler("/images/**").addResourceLocations(mImagesPath);
     }
+    
 }
