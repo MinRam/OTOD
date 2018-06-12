@@ -33,7 +33,7 @@ export default {
       // 菜单
       navObjects: [{
         active: true,
-        href: '/home',
+        href: '/home/person',
         title: '首页'
       }, {
         active: false,
@@ -45,7 +45,7 @@ export default {
         title: '二手市场'
       }, {
         active: false,
-        href: '/service',
+        href: '/service/orderlist',
         title: '个性化服务'
       }, {
         active: false,

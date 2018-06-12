@@ -1,6 +1,7 @@
 <template>
   <div>
       <quilleditor v-model="content"
+              style="background-color:white;"
               ref="myTextEditor"
               :options="editorOption"
               @change="onChange">
@@ -19,7 +20,7 @@
     <span class="ql-formats"><button type="button" class="ql-video"></button></span>
           </div>
 </quilleditor>
-<el-button @click="test()"></el-button>
+<el-button @click="test()">发表</el-button>
   </div>
 </template>
 <script>

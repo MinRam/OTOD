@@ -2,7 +2,6 @@ package com.otod.server.otod.services;
 
 import com.otod.server.otod.model.CommenOrder;
 import com.otod.server.otod.model.UserInfo;
-import com.otod.server.otod.pojos.CommenOrdersPOJO;
 import com.otod.server.otod.respository.CommenOrderRespository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -37,7 +36,7 @@ public class ServiceService {
     //currentPage 当前页
     //size 每页的数量
     public Page<CommenOrder> getListPage(int currentPage, int size){
-        Pageable pageable = new PageRequest(currentPage, size, Sort.DEFAULT_DIRECTION, "sDate");
+        Pageable pageable = PageRequest.of(currentPage, size, Sort.DEFAULT_DIRECTION, "sDate");
         return commenOrderRespository.findAll(pageable);
     }
 

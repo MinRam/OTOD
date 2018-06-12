@@ -130,5 +130,5 @@ export default {
 </script>
 
 <style>
-    @import '../assets/css/OrderList.css';
+    @import '../assets/css/OrderList.css'
 </style>

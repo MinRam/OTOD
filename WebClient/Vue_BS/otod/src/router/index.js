@@ -8,16 +8,18 @@ import Index from '@/pages/Index'
 
 import Home from '@/pages/Home'
 import Person from '@/components/Person'
-import Setting from '@/components/Setting'
+// import Setting from '@/components/Setting'
 
 import Blog from '@/pages/Blog'
-import BlogReply from '@/pages/BlogReply'
-// import Service from '@/pages/Service'
+// import BlogReply from '@/pages/BlogReply'
 import Service from '@/pages/Service'
 import Book from '@/pages/Book'
 import File from '@/pages/File'
 // market pages
 import Market from '@/pages/MarketList'
+import Product from '@/pages/Product'
+import Sell from '@/pages/Sell'
+import Payfor from '@/pages/payfor'
 // import store from '../store'
 // server pages
 import OrderList from '@/components/OrderList'
@@ -76,29 +78,7 @@ const routes = [
           }
         ]
       }, {
-        path: '/blogreply',
-        name: 'BlogReply',
-        meta: {
-          requireAuth: false
-        },
-        component: BlogReply
-      }, {
-        path: '/market',
-        name: 'Market',
-        meta: {
-          requireAuth: false
-        },
-        component: Market,
-        children: [
-          {
-            path: '/market/product',
-            name: 'Product',
-            meta: {
-              requireAuth: false
-            }
-          }
-        ]
-      }, {
+
         path: '/service',
         name: 'Service',
         meta: {
@@ -146,12 +126,33 @@ const routes = [
         },
         component: File
       }, {
-        path: '/user/setting',
-        name: 'Setting',
+        path: '/market',
+        name: 'Market',
         meta: {
-          requireAuth: true
+          requireAuth: false
         },
-        component: Setting
+        component: Market
+      }, {
+        path: '/market/product',
+        name: 'Product',
+        meta: {
+          requireAuth: false
+        },
+        component: Product
+      }, {
+        path: '/market/sell',
+        name: 'Sell',
+        meta: {
+          requireAuth: false
+        },
+        component: Sell
+      }, {
+        path: '/market/product/pay',
+        name: 'payfor',
+        meta: {
+          requireAuth: false
+        },
+        component: Payfor
       }
     ]
   }, {

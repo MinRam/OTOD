@@ -59,7 +59,6 @@ export default {
     }
   },
   mounted () {
-    this.$router.push('/service/orderlist')
   },
   methods: {
     getAllServices () {
