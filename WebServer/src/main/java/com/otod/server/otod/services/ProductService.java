@@ -1,6 +1,8 @@
 package com.otod.server.otod.services;
 
 
+import static org.hamcrest.CoreMatchers.nullValue;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
@@ -15,8 +17,10 @@ import com.otod.server.otod.model.Market_record;
 import com.otod.server.otod.model.Market_user;
 import com.otod.server.otod.model.Product;
 import com.otod.server.otod.model.Product_img;
+import com.otod.server.otod.model.UserInfo;
 import com.otod.server.otod.pojos.ProductPojo;
 import com.otod.server.otod.respository.CatalogRepository;
+import com.otod.server.otod.respository.MURepository;
 import com.otod.server.otod.respository.ProductImgRepository;
 import com.otod.server.otod.respository.ProductRepository;
 import com.otod.server.otod.respository.RecordRepository;
@@ -34,9 +38,11 @@ public class ProductService {
 	@Autowired
 	private CatalogRepository catalogRepository;
 	
-	
 	@Autowired
 	private RecordRepository recordRepository;
+	
+	@Autowired
+	private MURepository muRepository;
 	
 	public Product FindById(int id)
 	{
@@ -53,7 +59,7 @@ public class ProductService {
 	}
 	
 	@Transactional
-	public void SaveByPojo(ProductPojo pojo)
+	public void SaveByPojo(ProductPojo pojo,UserInfo userInfo)
 	{
 		Catalog catalog = catalogRepository.findById(Integer.parseInt(pojo.getProduct_catalog())).get();
 		String product_encoding = EncodingGenerater();
@@ -77,11 +83,7 @@ public class ProductService {
 		}
 
 		Product product = new Product();
-		
-		Market_user seller = new Market_user();
-		seller.setMarket_user_id(1);
-		
-		
+		Market_user seller = userInfo.getmUser();
 		
 		product.setProduct_catalog(catalog);
 		product.setSeller(seller);

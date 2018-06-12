@@ -3,11 +3,14 @@ package com.otod.server.otod.model;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 
@@ -16,12 +19,18 @@ import javax.persistence.Table;
 public class Market_user {
 /*CREATE TABLE `market_user` (
   `market_user_id` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`market_user_id`)
-)*/
+  `user_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`market_user_id`),
+  KEY `mu_ui_uid` (`user_id`),
+  CONSTRAINT `mu_ui_uid` FOREIGN KEY (`user_id`) REFERENCES `user_info` (`user_id`)
+) */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int market_user_id;
 	
+	@OneToOne
+	@JoinColumn(name="user_info_id")
+	private UserInfo userInfo ;
 	
 	@OneToMany(mappedBy="buyer")
 	private Set<P_Order> orders = new HashSet<P_Order>();
@@ -63,6 +72,14 @@ public class Market_user {
 
 	public void setRecords(Set<Market_record> records) {
 		this.records = records;
+	}
+
+	public UserInfo getUserInfo() {
+		return userInfo;
+	}
+
+	public void setUserInfo(UserInfo userInfo) {
+		this.userInfo = userInfo;
 	}
 	
 	
