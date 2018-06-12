@@ -46,14 +46,6 @@ public class ServiceService {
 
 
     public boolean reciveOrder(CommenOrder commenOrder, UserInfo userInfo){
-        List<UserInfo> list = commenOrder.getUserinfoR();
-        for(UserInfo temp: list){
-            if(temp.getId() == userInfo.getId()){
-                return false;
-            }
-        }
-        list.add(userInfo);
-        commenOrder.setUserinfoR(list);
         commenOrderRespository.save(commenOrder);
         return true;
     }
