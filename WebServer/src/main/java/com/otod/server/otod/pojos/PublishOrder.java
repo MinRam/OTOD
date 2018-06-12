@@ -1,4 +1,4 @@
-package com.otod.service.otod.zhy.pojos;
+package com.otod.server.otod.pojos;
 
 /**
  * Created by zhang on 2018/6/9.

@@ -2,7 +2,6 @@ package com.otod.server.otod.services;
 
 import com.otod.server.otod.model.*;
 import com.otod.server.otod.respository.*;
-import org.springframework.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
@@ -113,5 +112,15 @@ public class UserService {
             userList.add(userTemp);
         }
         return userList;
+    }
+
+    // 关注用户
+    public boolean followUser(User user,String nickname){
+        User followUser = this.getUserInfo(nickname).getUser();
+        if(followUser == null) return false;
+        else if(userFollowRespository.findAllByUserAndUserFollow(user,followUser)!= null){
+            this.userFollowRespository.save(new UserFollow(user,followUser));
+            return true;
+        }else return false;
     }
 }

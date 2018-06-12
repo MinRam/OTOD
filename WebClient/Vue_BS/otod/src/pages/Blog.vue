@@ -127,12 +127,15 @@
         v-model="forumTopicPO.content">
       </el-input>
       <el-button type="success" plain @click="postData()">发表</el-button>
+      <el-button type="success" plain @click="alee()">发表</el-button>
+      <router-view/>
     </el-footer>
   </el-container>
 </div>
 </template>
 
 <script>
+// import QuillEditor from '@/components/quillEditor'
 export default {
   name: 'Blog',
   data () {
@@ -174,6 +177,7 @@ export default {
     // 键盘监听注册
     this.queryByCondition()
     this.querySectionList()
+    this.$router.push('/forumtopic/quilleditor')
   },
   watch: {
     page: {
@@ -289,7 +293,8 @@ export default {
     },
 
     alee () {
-      alert(this.page)
+      alert(this.$refs.myTextEditor.content)
+      console.log(this.mycontent)
     },
 
     querySectionList () {
@@ -365,6 +370,7 @@ export default {
     changesection_id (val) {
       this.condition.section_id = val
     },
+
     // 删除主题帖
     deletebyid (id) {
       var t = this
@@ -398,10 +404,11 @@ export default {
         message: '删除成功',
         type: 'error'
       })
+    },
+
+    handlePreview (file) {
+      console.log(file)
     }
   }
 }
 </script>
-
-<style>
-</style>

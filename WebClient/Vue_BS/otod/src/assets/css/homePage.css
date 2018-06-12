@@ -22,6 +22,7 @@ a {
 /*main css*/
 .otod-home .otod-content .main{
     float: left;
+    width: 672px;
 }
 
 
@@ -36,6 +37,8 @@ a {
 .main .publish-navs li {
     float: left;
     width: 111px;
+    height: 110px;
+    overflow: hidden;
 }
 
 .main .publish-navs li.user-icon {
@@ -44,10 +47,33 @@ a {
 }
 
 .main .publish-navs li  a{
-    overflow: visible;
+    display: block;
     position: relative;
+    width: 111px;
+    height: 110px;
     zoom: 1;
-    text-indent: -2000px;
+    text-indent: -20000px;
+    background: url(../images/publish-navs.png) no-repeat 999px 999px;
+}
+
+.main .publish-navs li.blog  a:hover{
+    background-position: -113px -133px;
+}
+
+.main .publish-navs li.market  a:hover{
+    background-position: -224px -133px;
+}
+
+.main .publish-navs li.file a:hover{
+    background-position: -335px -134px;
+}
+
+.main .publish-navs li.service  a:hover{
+    background-position: -446px -134px;
+}
+
+.main .publish-navs li.book  a:hover{
+    background-position: -557px -133px;
 }
 
 .main .publish-navs li.user-icon img {
@@ -92,7 +118,7 @@ a {
 }
 
 .close {
-    text-indent: -2000px;
+    text-indent: -20000px;
     width: 12px;
     height: 12px;
     background: url(../images/icon2.png) no-repeat 999px 999px;
@@ -142,8 +168,10 @@ a {
 
 /*main update css*/
 .main  .update-item {
-    width: 100%;
-    margin-top: 20px;
+    float: left;
+    width: 672px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .update-item  .update-userHead {
@@ -174,8 +202,8 @@ a {
     width: 21px;
     height: 20px;
     overflow: hidden;
-    text-indent: -2000px;
-    background-position: -668px 0;
+    text-indent: -20000px;
+    background-position: -670px 0;
 }
 
 .update-content:hover .bg-triangle .update-page{
@@ -248,6 +276,7 @@ a {
 
 .message-footer .message-options{
     float: right;
+    font-size: 14px;
 }
 
 .message-footer .message-options span{
@@ -259,7 +288,7 @@ a {
     display: block;
     width: 20px;
     height: 18px;
-    text-indent: -2000px;
+    text-indent: -20000px;
     background: url(../images/icon24.png) no-repeat 999px 999px;
     background-position: -82px -2759px;
 }
@@ -274,13 +303,16 @@ a {
 
 /*load bar css*/
 .main .load-bar {
+    float: left;
     width: 100%;
-    margin: 20px auto;
+    margin: 40px auto;
+    padding-left: 110px;
     text-align: center;
 }
 .load-bar .loading{
     display: inline-block;
     padding-right: 68px;
+    margin-left: -70px;
     color: #444;
     font-size: 22px;
     line-height: 25px;
@@ -312,6 +344,7 @@ a {
     height: 53px;
     overflow: visible;
     z-index: 6;
+    box-shadow: 0px 1px 2px #A1A0A0;
 }
 
 .user-menu li{
@@ -323,8 +356,18 @@ a {
     height: 38px;
     border-top: 1px solid #dfdfdf;
     background-color: #f3f3f3;
-    /*background: url(../images/menu24.png) no-repeat 999px 999px;*/
     transition: background-color 0.3s,height 0.3s,opacity 0.3s;
+}
+
+.user-menu li:hover{
+    background-color: #fff;
+}
+
+.user-menu .user-setting{
+    height: 32px;
+    border-color: #b2b2b2;
+    background-color: #e7e7e7;
+    background-position: -1148px -1px;
 }
 
 .user-menu .menu-item{
@@ -337,6 +380,10 @@ a {
     font-size: 14px;
 }
 
+.user-menu .user-setting .menu-item{
+    padding: 6px 0;
+}
+
 .user-menu .large .menu-item{
     height: 36px;
     padding-left: 16px;
@@ -344,7 +391,7 @@ a {
     /*border-right: 1px solid #dfdfdf;*/
 }
 
-.user-menu .menu-item .txt{
+.user-menu .menu-item .txt, .user-setting .menu-item .txt{
     float: left;
     width: 140px;
     height: 18px;
@@ -359,7 +406,7 @@ a {
     height: 36px;
 }
 
-.user-menu .small .menu-item .icon {
+.user-menu .menu-item .icon {
     float: left;
     width: 25px;
     height: 18px;
@@ -390,6 +437,10 @@ a {
 
 .user-menu .small .menu-item .icon.icon-6{
     background-position: 0 -1966px;
+}
+
+.user-menu .user-setting .icon.setting{
+    background-position: 0 -1601px;
 }
 
 .user-menu .small .menu-item .inf {

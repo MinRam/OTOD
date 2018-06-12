@@ -1,10 +1,11 @@
-package com.otod.service.otod.zhy.controller;
+package com.otod.server.otod.controller;
 
-import com.otod.service.otod.zhy.model.CommenOrder;
+import com.otod.server.otod.model.UserInfo;
+import com.otod.server.otod.pojos.CommenOrdersPOJO;
+import com.otod.server.otod.model.CommenOrder;
 import com.otod.server.otod.model.User;
-import com.otod.service.otod.zhy.pojos.CommenOrdersPOJO;
-import com.otod.service.otod.zhy.pojos.PublishOrder;
-import com.otod.service.otod.zhy.services.ServiceService;
+import com.otod.server.otod.pojos.PublishOrder;
+import com.otod.server.otod.services.ServiceService;
 import com.otod.server.otod.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -61,7 +62,7 @@ public class ServiceController {
 
         User user = userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName());
 
-        commenOrder.setUserinfo_s(userService.getUserInfo(user));
+        commenOrder.setUserinfoS(userService.getUserInfo(user));
         try{
             Date edate = dateFormat1.parse(edateStr);
             commenOrder.setsDate(edate);
@@ -74,5 +75,23 @@ public class ServiceController {
         commenOrder.setContributers(publishOrder.getContributers());
         serviceService.saveOrder(commenOrder);
         return "fun";
+    }
+
+    //
+    @GetMapping("/reciveOrder")
+    private String reciveOrder(@RequestParam (value = "OrderId") Long id){
+        Optional<CommenOrder> c = serviceService.getCommenOrderById(id);
+        CommenOrder commenOrder = c.get();
+        UserInfo userInfo = userService.getUserInfo(userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName()));
+        if(userInfo.getId() == commenOrder.getUserinfoS().getId()){
+            return "the publisher..";
+        }
+        return serviceService.reciveOrder(commenOrder, userInfo)? "yeah":"false";
+    }
+
+    @GetMapping("/allOrders")
+    private List<CommenOrder> getAllOrders(){
+        UserInfo userInfo = userService.getUserInfo(userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName()));
+        return serviceService.getAllOrder(userInfo);
     }
 }

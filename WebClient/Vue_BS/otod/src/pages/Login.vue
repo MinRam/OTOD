@@ -510,7 +510,7 @@ export default {
                 } else {
                   this._showErrors('请检查网络！')
                 }
-                this.$router.push('/home')
+                this.$router.push('/home/person')
               }.bind(this)).catch(function (error) {
                 if (error.response) {
                   this._showErrors(error.response.data.error)
