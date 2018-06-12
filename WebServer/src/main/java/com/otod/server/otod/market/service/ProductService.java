@@ -76,7 +76,7 @@ public class ProductService {
 			product_img = null;
 		}
 		else {
-			product_img = pojo.getProduct_img()[0];
+			product_img = "http://localhost:8081/" + pojo.getProduct_img()[0];
 		}
 
 		Product product = new Product();
@@ -107,7 +107,7 @@ public class ProductService {
 			{
 				Product_img pImg = new Product_img();
 				pImg.setProduct(product);
-				pImg.setImg_url(pojo.getProduct_img()[i]);
+				pImg.setImg_url("http://localhost:8081/" + pojo.getProduct_img()[i]);
 				imgRepository.save(pImg);
 			}
 		}

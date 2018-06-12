@@ -69,7 +69,7 @@
               </el-row>
 
               <el-row>
-                <el-col :push="4">
+                <el-col :span="14" :push="4">
                   <el-form-item label="商品图片" >
                     <el-upload
                       ref="upload"
@@ -309,12 +309,7 @@ export default {
     },
     filllist (response, file) {
       var t = this.ruleForm.product_img
-      var tt = this
-      if (response.res === '1') {
-        t.push(response.path)
-      } else {
-        console.log(tt)
-      }
+      t.push(response.data.file)
     },
     submitForm (formName) {
       this.$refs.upload.submit()

@@ -8,7 +8,7 @@
       <!--搜索栏-->
         <div class="search">
           <el-row>
-            <el-col :span="8" :push="14">
+            <el-col :span=8 :push="14">
               <div class="search_form">
                 <el-form :inline="true"  class="demo-form-inline">
                   <el-form-item label="商品查询">
@@ -25,7 +25,7 @@
 
         <div id="position">
           <el-row>
-            <el-col :span="10" :push="6">
+            <el-col :span=10 :push="6">
               <p>您当前的位置是：二手市场</p>
             </el-col>
           </el-row>
@@ -35,30 +35,39 @@
         <!--商品信息-->
         <div id="product">
           <el-row>
-            <el-col :span="10" :push="9"><div class="grid-content text-center"><h3  style="font-family: 'Microsoft YaHei';">{{product.product_name}}</h3></div></el-col>
+            <el-col :span=10 :push="9"><div class="grid-content text-center"><h3  style="font-family: 'Microsoft YaHei';">{{product.product_name}}</h3></div></el-col>
           </el-row>
           <el-row>
-            <el-col :push="4" span="3">
+            <el-col :push="4" span=4>
               <!--商品图片-->
               <div id="product_img ">
               <!--当前展示图片-->
                 <div id="img-top">
-                  <a id="1">
-                    <img class="thumbnail" src="product.product_img_url" alt="" width="420px" height="400px"/>
+                  <a @click="handlePictureCardPreview(show_picture)">
+                    <img class="thumbnail" :src="show_picture" alt="" width="420px" height="400px"/>
                   </a>
                 </div>
-
+                <el-dialog :visible.sync="dialogVisible">
+                  <img width="100%" :src="dialogImageUrl" alt="">
+                </el-dialog>
                 <!--待选图片-->
                 <hr>
+
                 <div id="img-box">
+                  <template v-for="item in img_url">
+                    <el-button :key="item" @click="toshow(item.img_url)" circle>
+                      <img class="thumbnail" :src="item.img_url" alt="" width="45px" height="45px"/>
+                    </el-button>
+                  </template>
                 </div>
+
               </div>
             </el-col>
 
             <!--商品参数-->
 
             <div id="product_attribute">
-              <el-col :push="7" span="5">
+              <el-col :push="7" span=5>
                 <div class="top">
                   <ul class="list-group">
                     <li class="list-group-item"><span >价格： <strong> {{product.product_price}} 元</strong></span></li>
@@ -81,10 +90,10 @@
                       诚信保障：
                     </dt>
                     <dd>
-                      <a href="" ><img src="img/security.ico" alt="" width="20px" height="20px"></a>
+                      <a href="" ><img :src="component_img.security" alt="" width="20px" height="20px"></a>
                     </dd>
                     <dd>
-                      <span><img src="img/security.ico" alt="" width="20px" height="20px"></span>
+                      <span><img :src="component_img.security" alt="" width="20px" height="20px"></span>
                       <span>担保交易，卖家自主发货</span>
                     </dd>
                   </dl>
@@ -93,7 +102,7 @@
                   <!--购买商品-->
                   <div id="add_cart" class="pull-right">
                     <a href="product/pay?product_id=<%=p.getProduct_id() %>" class="btn btn-default">
-                      <span><img src="img/add_cart.ico" alt="" width="40px" height="40px"></span>
+                      <span><img :src="component_img.add_cart" alt="" width="40px" height="40px"></span>
                       <span>购买商品</span>
                     </a>
                   </div>
@@ -103,7 +112,7 @@
 
             <!--卖家信息-->
               <div id="seller_message">
-                <el-col :span="3" :push="8">
+                <el-col :span=3 :push="8">
                   <ul class="list-group">
                     <li class="list-group-item">
                       <span ><img src="img/user_id.jpg" alt="卖家信息" width="60px" height="60px"></span>
@@ -127,11 +136,11 @@
 
         <div id="detail">
           <el-row>
-            <el-col :push="4" :span="16">
+            <el-col :push="4" :span=16>
               <el-tabs @tab-click="handleClick">
                 <el-tab-pane label="商品详情">
                   <div id="product_description" >
-                    <el-col :push="1" span="22">
+                    <el-col :push="1" span=22>
                       <!--商品详情 卖家填写的详细内容 先由纯文字构成-->
                       <p>{{product.product_description}}</p>
                     </el-col>
@@ -139,9 +148,9 @@
                 </el-tab-pane>
 
                 <el-tab-pane label="购买流程">
-                  <div id="liucheng" style="display:none">
-                    <el-col :push="1" span="22">
-                      <img src="img/liucheng.png" alt="">
+                  <div id="liucheng" >
+                    <el-col :push="1" span=22>
+                      <img :src="component_img.liucheng" alt="">
                     </el-col>
                   </div>
                 </el-tab-pane>
@@ -160,13 +169,23 @@ export default {
   },
   data () {
     return {
+      dialogImageUrl: '',
+      dialogVisible: false,
       loading: true,
       product: [],
+      show_picture: '',
       page_num: 1,
       product_list: [],
       product_key: '',
       total_page_num: 0,
-      total_product_num: ''
+      total_product_num: '',
+      component_img:
+      {
+        security: 'http://localhost:8081/component/security.ico',
+        add_cart: 'http://localhost:8081/component/add_cart.ico',
+        liucheng: 'http://localhost:8081/component/liucheng.png'
+      },
+      img_url: {}
     }
   },
   methods: {
@@ -192,7 +211,6 @@ export default {
     },
     findproduct () {
       var t = this
-      console.log(t)
       this.$axios({
         method: 'get',
         url: 'http://localhost:8081/market/product',
@@ -203,10 +221,18 @@ export default {
       }).then(function (response) {
         console.log(response)
         t.product = response.data
+        t.show_picture = t.product.product_img_url
+        t.img_url = response.data.product_imgs
+        console.log(t.img_url)
       })
     },
-    handleClick (tab, event) {
-
+    handleClick (tab, event) {},
+    toshow (src) {
+      this.show_picture = src
+    },
+    handlePictureCardPreview (src) {
+      this.dialogImageUrl = src
+      this.dialogVisible = true
     }
   }
 }

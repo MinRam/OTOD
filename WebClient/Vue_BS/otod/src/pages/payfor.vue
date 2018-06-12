@@ -3,26 +3,26 @@
     <br><br><br>
     <el-container>
       <el-col :span="8" :push="14">
-      <!--搜索栏-->
-        <div class="search">
-          <div class="row">
-            <div class="col-lg-6 pull-right">
-              <div class="search_form">
-                <el-form :inline="true"  class="demo-form-inline">
-                  <el-form-item label="商品查询">
-                    <el-input v-model="product_key" placeholder="请输入商品关键字" clearable></el-input>
-                  </el-form-item>
-                  <el-form-item>
-                    <el-button type="primary" @click="changepage('/market?product_key='+product_key),search()">查询</el-button>
-                  </el-form-item>
-                </el-form>
-              </div>
-            </div><!-- /.col-lg-6 -->
-          </div><!-- /.row -->
-        </div>
+        <!--搜索栏-->
+          <div class="search">
+            <el-row>
+              <el-col :span="8" :push="14">
+                <div class="search_form">
+                  <el-form :inline="true"  class="demo-form-inline">
+                    <el-form-item label="商品查询">
+                      <el-input v-model="product_key" placeholder="请输入商品关键字" clearable></el-input>
+                    </el-form-item>
+                    <el-form-item>
+                      <el-button type="primary" @click="changepage('/market?product_key='+product_key),search()">查询</el-button>
+                    </el-form-item>
+                  </el-form>
+                </div>
+              </el-col><!-- /.col-lg-6 -->
+            </el-row><!-- /.row -->
+          </div>
+
+
       </el-col>
-
-
     </el-container>
   </div>
 </template>

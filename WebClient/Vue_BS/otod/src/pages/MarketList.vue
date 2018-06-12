@@ -8,7 +8,7 @@
           <!--搜索栏-->
             <div class="search">
               <el-row>
-                <el-col :span="8" :push="14">
+                <el-col :span=8 :push="14">
                   <div class="search_form">
                     <el-form :inline="true"  class="demo-form-inline">
                       <el-form-item label="商品查询">
@@ -25,20 +25,20 @@
 
             <div id="position">
               <el-row>
-                <el-col :span="10" :push="6">
+                <el-col :span=10 :push="6">
                   <p>您当前的位置是：二手市场</p>
                 </el-col>
               </el-row>
             </div>
 
             <el-row>
-              <el-col :span="11" :push="4">
+              <el-col :span=11 :push="4">
                 <el-tabs>
                   <el-tab-pane label="商品列表"></el-tab-pane>
                 </el-tabs>
               </el-col>
 
-              <el-col :span="2" :offset="6">
+              <el-col :span=2 :offset="6">
                 <el-tabs>
                   <el-button type="primary" @click="changepage('/market/sell')" round>我要出售</el-button>
                 </el-tabs>
@@ -48,18 +48,18 @@
             <!--商品表-->
             <div id="goods_table">
               <el-row>
-                <el-col :push="4" span="14">
+                <el-col :push="4" span=14>
                   <el-table :data="product_list" style="width: 100%" v-loading="loading">
-                    <el-table-column prop="product_encoding" label="商品编码" width="240">
+                    <el-table-column prop="product_encoding" label="商品编码" width="260">
                     </el-table-column>
-                    <el-table-column label="商品名称" width="500">
+                    <el-table-column label="商品名称" width="520">
                       <template slot-scope="scope">
                         <el-button type="text" @click="changepage('/market/product?product_id='+scope.row.product_id)"><img :src="scope.row.product_img_url" width="46px" height="46px" alt="">{{scope.row.product_name}}</el-button>
                       </template>
                     </el-table-column>
-                    <el-table-column prop="product_price" label="商品价格" width="180">
+                    <el-table-column prop="product_price" label="商品价格" width="160">
                     </el-table-column>
-                    <el-table-column prop="product_stock" label="商品库存" width="180">
+                    <el-table-column prop="product_stock" label="商品库存" width="160">
                     </el-table-column>
                   </el-table>
                 </el-col>
@@ -70,7 +70,7 @@
             <!--分页-->
             <div id="page" class="text-center">
               <el-row>
-                <el-col :span="6" :push="9">
+                <el-col :span=6 :push="9">
                   <el-pagination
                     :page-size="1"
                     :pager-count="11"
