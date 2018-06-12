@@ -94,4 +94,10 @@ public class ServiceController {
         UserInfo userInfo = userService.getUserInfo(userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName()));
         return serviceService.getAllOrder(userInfo);
     }
+
+    @GetMapping("/allOrderPage")
+    private Page<CommenOrder> getAllOrderPage(int currentPage, int size){
+        UserInfo userInfo = userService.getUserInfo(userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName()));
+        return serviceService.getAllOrderPage(userInfo,currentPage,size);
+    }
 }

@@ -9,8 +9,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.criteria.*;
 import java.util.List;
 import java.util.Optional;
 
@@ -61,4 +63,15 @@ public class ServiceService {
         return commenOrderRespository.findByUserinfoS(userInfo);
     }
 
+    public Page<CommenOrder> getAllOrderPage(UserInfo userInfo, int currentPage, int size){
+        Pageable pageable = new PageRequest(currentPage, size, Sort.DEFAULT_DIRECTION, "sDate");
+        commenOrderRespository.findAll(new Specification<CommenOrder>() {
+            @Override
+            public Predicate toPredicate(Root<CommenOrder> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+                criteriaQuery.where(criteriaBuilder.equal(root.get("userinfoS").as(UserInfo.class),userInfo));
+                return null;
+            }
+        },pageable);
+        return commenOrderRespository.findAll(pageable);
+    }
 }
