@@ -50,6 +50,22 @@
                     <h3 class="title">个人信息</h3>
                  </div>
                 <div class="item-content">
+                    <div class="info-head">
+                        <div class="user-head">
+                            <img :src="$imageUrl + $store.state.headImage"/>
+                         </div>
+                        <div class="user-uploader">
+                            <el-upload
+                              class="img-uploader"
+                              action="https://jsonplaceholder.typicode.com/posts/"
+                              :show-file-list="false"
+                              :on-success="handleAvatarSuccess"
+                              :before-upload="beforeAvatarUpload">
+                                <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                                <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                            </el-upload>
+                         </div>
+                    </div>
                  </div>
              </div>
 
@@ -74,10 +90,38 @@ export default {
 
       }
     }
+  },
+  mounted () {
+    // get user all info
+    this.$axios({
+      method: 'get',
+      url: this.$url + '/user/getAllInfo'
+    }).then(function (response) {
+      if (response.data !== null) {
+        this.userInfo = response.data
+      }
+    }.bind(this))
+  },
+  methods: {
+    handleAvatarSuccess (res, file) {
+      this.imageUrl = URL.createObjectURL(file.raw)
+    },
+    beforeAvatarUpload (file) {
+      const isJPG = file.type === 'image/jpeg'
+      const isLt2M = file.size / 1024 / 1024 < 2
+
+      if (!isJPG) {
+        this.$message.error('上传头像图片只能是 JPG 格式!')
+      }
+      if (!isLt2M) {
+        this.$message.error('上传头像图片大小不能超过 2MB!')
+      }
+      return isJPG && isLt2M
+    }
   }
 }
 </script>
 
 <style>
-    @import '../assets/css/SettingPage.css';
+    @import '../assets/css/SettingPage.css'
 </style>

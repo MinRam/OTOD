@@ -498,6 +498,7 @@ export default {
               params.append('username', this.username)
               params.append('password', md5(this.password))
 
+              // 注册后登录
               this.$axios({
                 method: 'post',
                 url: this.$url + '/oauth/token',
@@ -587,7 +588,7 @@ export default {
     keyDownEvent: function (event) {
       event = event || window.event
       switch (event.keyCode) {
-        case 74:
+        case 40:
           this.nextShowcase()
           break
         case 38:

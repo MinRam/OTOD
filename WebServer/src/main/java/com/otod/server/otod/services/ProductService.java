@@ -1,29 +1,15 @@
 package com.otod.server.otod.services;
 
-
-import static org.hamcrest.CoreMatchers.nullValue;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Random;
-
-import javax.transaction.Transactional;
-
+import com.otod.server.otod.model.*;
+import com.otod.server.otod.pojos.ProductPojo;
+import com.otod.server.otod.respository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.otod.server.otod.model.Catalog;
-import com.otod.server.otod.model.Market_record;
-import com.otod.server.otod.model.Market_user;
-import com.otod.server.otod.model.Product;
-import com.otod.server.otod.model.Product_img;
-import com.otod.server.otod.model.UserInfo;
-import com.otod.server.otod.pojos.ProductPojo;
-import com.otod.server.otod.respository.CatalogRepository;
-import com.otod.server.otod.respository.MURepository;
-import com.otod.server.otod.respository.ProductImgRepository;
-import com.otod.server.otod.respository.ProductRepository;
-import com.otod.server.otod.respository.RecordRepository;
+import javax.transaction.Transactional;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Random;
 
 
 @Service("productService")

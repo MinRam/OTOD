@@ -52,6 +52,9 @@ body{
     float: left;
     border-bottom: 1px solid #ebebeb;
     background-color: #fff;
+    padding: 24px 30px 20px;
+    background-position: -3958px 0;
+    background-repeat: repeat-y;
 }
 
 .item-title .title{
@@ -69,11 +72,6 @@ body{
     width: 690px;
 }
 /*手机绑定栏*/
-.setting-main .setting-phone{
-    padding: 24px 30px 20px;
-    background-position: -3958px 0;
-    background-repeat: repeat-y;
-}
 
 .telephone-content,.oauth-content{
     padding-left: 40px;
@@ -96,11 +94,6 @@ body{
 }
 
 /*第三方认证*/
-.setting-main .setting-oauth{
-    padding: 24px 30px 20px;
-    background-position: -3958px 0;
-    background-repeat: repeat-y;
-}
 
 .connection .connection-name{
     font-size: 12px;
@@ -147,4 +140,16 @@ body{
     background-color: #fff;
     background-position: -3958px 0;
     background-repeat: repeat-y;
+}
+
+.setting-info .info-head{
+    padding-left: 40px;
+}
+
+.info-head .user-head{
+    float: left;
+}
+
+.info-head .user-uploader{
+    float: left;
 }

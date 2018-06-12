@@ -8,7 +8,7 @@ import Index from '@/pages/Index'
 
 import Home from '@/pages/Home'
 import Person from '@/components/Person'
-// import Setting from '@/components/Setting'
+import Setting from '@/components/Setting'
 
 import Blog from '@/pages/Blog'
 // import BlogReply from '@/pages/BlogReply'
@@ -153,6 +153,13 @@ const routes = [
           requireAuth: false
         },
         component: Payfor
+      }, {
+        path: '/user/setting',
+        name: 'Setting',
+        meta: {
+          requireAuth: true
+        },
+        component: Setting
       }
     ]
   }, {
@@ -172,7 +179,6 @@ const routes = [
         component: QuillEditor
       }
     ]
-
   }, {
     path: '/forumreply',
     name: 'ForumReply',
