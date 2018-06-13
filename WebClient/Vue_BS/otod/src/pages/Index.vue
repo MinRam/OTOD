@@ -33,37 +33,31 @@ export default {
       // 菜单
       navObjects: [{
         active: true,
-        link: 'Person',
-        name: 'home',
+        href: '/home/person',
         title: '首页'
       }, {
         active: false,
-        link: 'Blog',
-        name: 'blog',
+        href: '/blog',
         title: '博客'
       }, {
         active: false,
-        link: 'Market',
-        name: 'market',
+        href: '/market',
         title: '二手市场'
       }, {
         active: false,
-        link: 'OrderList',
-        name: 'service',
+        href: '/service/orderlist',
         title: '个性化服务'
       }, {
         active: false,
-        link: 'Book',
-        name: 'book',
+        href: '/book',
         title: '图书馆'
       }, {
         active: false,
-        link: 'File',
-        name: 'file',
+        href: '/file',
         title: '文档库'
       }, {
         active: false,
-        link: '/more',
+        href: '/more',
         title: '更多'
       }],
 
@@ -77,22 +71,16 @@ export default {
     this.restaurants = this.loadAll()
     this.$router.push('/home')
   },
-  watch: {
-    '$route': '_changeHead'
-  },
 
   methods: {
-    _changeHead () {
-      if (this.$route.params.page) {
-        for (var i = 0; i < this.navObjects.length; ++i) {
-          this.navObjects[i].active = (this.navObjects[i].name === this.$route.params.page)
-        }
-      }
-    },
-
     // 菜单样式跳转
     navClick (index) {
-      this.$router.push({ name: this.navObjects[index].link, params: {page: this.navObjects[index].name} })
+      for (var i = 0; i < this.navObjects.length; ++i) {
+        this.navObjects[i].active = false
+      }
+
+      this.navObjects[index].active = true
+      this.$router.push(this.navObjects[index].href)
     },
 
     // 搜索框响应
