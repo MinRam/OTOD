@@ -69,10 +69,10 @@ public class ProductService {
 		}
 
 		Product product = new Product();
-		Market_user seller = userInfo.getmUser();
+//		Market_user seller = userInfo.getmUser();
 		
 		product.setProduct_catalog(catalog);
-		product.setSeller(seller);
+//		product.setSeller(seller);
 		product.setProduct_encoding(product_encoding);
 		product.setProduct_name(product_name);
 		product.setProduct_price(product_price);
@@ -99,7 +99,7 @@ public class ProductService {
 		
 		Market_record record = new Market_record();
 		record.setCreatetime(createtime);
-		record.setMarket_user(seller);
+//		record.setMarket_user(seller);
 		record.setOperation(1);
 		record.setProduct(product);
 		recordRepository.save(record);
