@@ -9,7 +9,18 @@
               {{ file.name }}<br>
               {{ file.description }}<br>
               <a v-bind:href="'http://127.0.0.1:8082/vrss/Download/download?file_url=' + file.file_url" v-bind:download="file.name">下载</a>
-              <span class="switcher" v-bind:class="{'left': isClose, 'right': isOpen}" @click="switcher()">收藏</span>
+              <span class="switcher" v-bind:class="{'left': isClose, 'right': isOpen}" @click="switcher()">
+                <p v-if="isClose == true">未收藏（点击收藏）</p>
+                <p v-else>
+                  已收藏至
+                </p>
+              </span>
+              <select v-show="isOpen">
+                <option value ="0">默认收藏夹</option>
+                <option value ="1">收藏1</option>
+                <option value="2">收藏2</option>
+                <option value="3">收藏3</option>
+              </select>
             </p>
           </div>
         </li>
