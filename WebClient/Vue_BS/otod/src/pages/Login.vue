@@ -569,7 +569,7 @@ export default {
               this._showErrors('请检查网络！')
             }
             this.$store.commit('userSignIn')
-            this.$router.push('/')
+            this.$router.push({ name: 'Person', params: { page: 'home' } })
           }.bind(this)).catch(function (error) {
             if (error.response) {
               this._showErrors(error.response.data.error)

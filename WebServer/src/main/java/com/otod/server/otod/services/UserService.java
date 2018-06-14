@@ -49,7 +49,7 @@ public class UserService {
         return (NoOpPasswordEncoder) NoOpPasswordEncoder.getInstance();
     }
 
-    // 获取 User
+    // 获取 VrssUser
 
     public User getUser(String username){
         return userRepository.findByUsername(username);

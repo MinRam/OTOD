@@ -17,7 +17,7 @@ export default new Vuex.Store({
       state.isLogin = false
     },
     initialName (state, name) {
-      state.nickname = name
+      state.nickname = ''
     },
     initialHead (state, head) {
       state.headImage = head

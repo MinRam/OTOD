@@ -38,7 +38,7 @@ export default {
         title: '首页'
       }, {
         active: false,
-        link: 'Blog',
+        link: 'QuillEditor',
         name: 'blog',
         title: '博客'
       }, {
@@ -75,17 +75,42 @@ export default {
 
   mounted () {
     this.restaurants = this.loadAll()
-    this.$router.push('/home')
+    // this.$router.push('/home')
+    this._changeHead()
+
+    this.initialUserInfo()
   },
   watch: {
     '$route': '_changeHead'
   },
 
   methods: {
+    // initial userInfo
+    initialUserInfo () {
+      // simple user inoformation : headphoto,username,telephone
+      if (!this.$store.state.isLogin || this.$store.state.nickname === '') {
+        this.$axios({
+          method: 'get',
+          url: this.$url + '/user/getSimpleInfo',
+          params: {
+            access_token: this.$getCookie('otod_access_token')
+          }
+        }).then(function (response) {
+          this.$store.commit('initialName', response.data.nickname)
+          this.$store.commit('initialHead', response.data.headImage)
+          this.$store.commit('initialTel', response.data.telephone)
+        }.bind(this))
+      }
+    },
+
     _changeHead () {
       if (this.$route.params.page) {
         for (var i = 0; i < this.navObjects.length; ++i) {
           this.navObjects[i].active = (this.navObjects[i].name === this.$route.params.page)
+        }
+      } else {
+        for (i = 0; i < this.navObjects.length; ++i) {
+          this.navObjects[i].active = (this.navObjects[i].link === this.$route.name)
         }
       }
     },
