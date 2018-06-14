@@ -277,11 +277,14 @@
                             <h1 class="section-title">独特多样的二手市场</h1>
                             <p>"OTOD提供发布和交易的二手市场，可以让您在大学简单的发布自己的多余物品，以及购买便宜的二手物品。无需再纠结多余物品的去处，无需再为自己的钱包担心。"</p>
                         </div>
-                        <div class="section-wrapper">
-                            <div class="shop-graphic">
-                                <div v-for="(shopItem,index) in shops" class="shop-post-item" :key="index">
-
-                                 </div>
+                        <div class="shop-graphic">
+                            <div v-for="(shopItem,index) in shops" class="shop-post-item" :key="index">
+                                <div class="item-head">
+                                    <span>{{shopItem.title}}</span>
+                                </div>
+                                <div class="item-content">
+                                    <img :src="$imageUrl + shopItem.goodImage"/>
+                                </div>
                              </div>
                          </div>
                     </div>
@@ -428,7 +431,16 @@ export default {
       // shops section
       shops: [{
         username: 'user1',
-        goodImage: ''
+        goodImage: 'Images/1.jpg',
+        title: '123'
+      }, {
+        username: 'user1',
+        goodImage: 'Images/2.jpg',
+        title: '123'
+      }, {
+        username: 'user1',
+        goodImage: 'Images/3.jpg',
+        title: '123'
       }],
       // servers section
       servers: [{

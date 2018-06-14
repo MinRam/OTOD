@@ -151,6 +151,22 @@ export default {
         this.$message.error('上传头像图片大小不能超过 2MB!')
       }
       return isJPG && isLt2M
+    },
+    // check nickname
+    nicknameCheck () {
+      if (this.userInfo.nickname === '') {
+        this.$axios({
+          method: 'get',
+          url: this.$url + '/user/setAllInfo',
+          params: {
+            access_token: this.$getCookie('otod_access_token')
+          }
+        }).then(function (response) {
+          if (response.data === 'exit') {
+            console.log('exit')
+          }
+        })
+      }
     }
   }
 }

@@ -91,7 +91,8 @@ public class UserService {
         userInfo.setSex("男");
         userInfo.setUser(user);
         userInfoRespository.save(userInfo);
-        
+
+        // 设置mUser
         Market_user mUser = new Market_user();
         mUser.setUserInfo(userInfo);
         mURepository.save(mUser);
