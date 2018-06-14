@@ -45,7 +45,7 @@ export default {
 </script>
 
 <style scoped>
-  @import '../../../assets/bootstrap/css/bootstrap.css'
+  @import '../../../assets/css/bootstrap.css'
   .div-flow{
     margin-bottom: 1rem;
   }
