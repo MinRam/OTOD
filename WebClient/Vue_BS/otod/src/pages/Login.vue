@@ -520,10 +520,11 @@ export default {
               }).then(function (response) {
                 if (response.data.access_token) {
                   this.$setCookie('otod_access_token', response.data.access_token)
+                  this.$store.commit('userSignIn')
+                  this.$router.push('/')
                 } else {
                   this._showErrors('请检查网络！')
                 }
-                this.$router.push('/home/person')
               }.bind(this)).catch(function (error) {
                 if (error.response) {
                   this._showErrors(error.response.data.error)
@@ -567,6 +568,7 @@ export default {
             } else {
               this._showErrors('请检查网络！')
             }
+            this.$store.commit('userSignIn')
             this.$router.push('/')
           }.bind(this)).catch(function (error) {
             if (error.response) {
