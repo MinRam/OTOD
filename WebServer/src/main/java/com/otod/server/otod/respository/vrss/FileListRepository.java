@@ -1,5 +1,6 @@
 package com.otod.server.otod.respository.vrss;
 
+import com.otod.server.otod.model.vrss.FileInfo;
 import com.otod.server.otod.model.vrss.FileList;
 import com.otod.server.otod.model.vrss.Tag;
 import com.otod.server.otod.model.vrss.VrssUser;
@@ -20,4 +21,5 @@ public interface FileListRepository extends JpaRepository<FileList,Integer> {
     @Query(value="select f from FileList f where f.name like %:p% or f.description like %:p%")
     List<FileList> findBykey(@Param("p") String key);
     List<FileList> findAllByVrssUser(VrssUser vrssUser);
+    List<FileList> findByFile(FileInfo fileInfo);
 }

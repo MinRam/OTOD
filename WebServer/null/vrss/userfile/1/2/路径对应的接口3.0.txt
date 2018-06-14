@@ -1,0 +1,73 @@
+/vrss/Comment(测试通过)
+    /add(comment,user,reply_id(0),file_id(0),filelist_id(0),score)  return Comment:发表评论
+    /like(id):点赞
+    /filecomment(id)    return List<Comment>:返回该文件的评论
+    /filelistcomment(id)    return List<Comment>:返回该专辑的评论
+
+/vrss/Download(测试通过)
+    /add(user_id,file_id):添加下载记录
+    /list(user_id)  return List<Download>:查看用户下载记录
+    /download(file_url):下载文件
+
+/vrss/FileInfo(测试通过)
+	/get(file_id)	return FileInfo:获取文件信息
+    /upload(name,uploader_id,size,type,description,file)    return Integer:上传文件,返回文件id
+    /delete(file_id):删除文件
+    /update(file_id,name,description):修改文件信息
+    /love(user_id,file_id):收藏文件
+    /unlove(user_id,file_id):取消收藏文件
+    /view(file_id):浏览文件
+    /filetag(file_id)   return List<Tag>:返回该文件的标签
+    /list(user_id(0),tag_id(0),key(null),type(0)) return List<FileInfo>:type=
+        0:空
+        1:默认排序
+        2:收藏数排序
+        3:浏览数排序
+        4:评分排序
+        5:下载数排序
+        6:时间排序
+        7:根据标签查找
+        8:根据关键词查找
+        9:用户上传的文件
+        10:用户收藏的文件
+
+/vrss/FileList(测试通过)
+	/get(filelist_id)	return FileList:获取专辑信息
+    /add(name,creator_id,description):添加专辑
+    /delete(filelist_id):删除专辑
+    /update(filelist_id,name,description):修改专辑信息
+    /love(user_id,filelist_id):收藏专辑
+    /unlove(user_id,filelist_id):取消收藏专辑
+    /view(filelist_id):浏览专辑
+    /addfile(filelist_id,file_id):在专辑中添加文件
+    /deletefile(filelist_id,file_id):在专辑中删除文件
+    /listfile(filelist_id)  return List<FileInfo>:返回该专辑的文件
+    /filelisttag(filelist_id)   return List<Tag>:返回该专辑的标签
+    /listfilelist(user_id(0),tag_id(0),key(null),type(0))  return List<FileList>:type=
+        0:空
+        1:默认排序
+        2:收藏数排序
+        3:浏览数排序
+        4:评分排序
+        5:根据标签查找
+        6:根据关键词查找
+        7:用户创建的专辑
+        8:用户收藏的专辑
+
+/vrss/Tag(测试通过)
+    /addfiletag(file_id,tag_id):给文件添加标签
+    /deletefiletag(file_id,tag_id):给文件删除标签
+    /addfilelisttag(filelist_id,tag_id):给专辑添加标签
+    /deletefilelisttag(filelist_id,tag_id):给专辑删除标签
+    /listtag()  return List<Tag>:返回所有的标签
+
+/vrss/User(测试通过)
+    /getName(user_id)   return String:返回名字
+    /register(user_id):注册后插入子系统表
+
+ps:
+    1.fun(param1,param2(0)):param2若没有传参有默认值0
+    2./vrss/path1
+        /path2:表示路径为/vrss/path1/path2
+    3.后端端口8081
+    4.http://127.0.0.1:8081/

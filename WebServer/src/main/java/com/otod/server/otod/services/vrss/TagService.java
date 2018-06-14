@@ -25,6 +25,8 @@ public class TagService {
         FileInfo file=t_fileInfoRepository.findById(file_id).get();
         for (Integer t:tag_id){
             Tag tag= t_tagRepository.findById(t).get();
+            List<FileInfo> l=t_fileInfoRepository.findAllByTag(tag);
+            if(l.size()>0)  continue;
             file.getTag().add(tag);
             t_fileInfoRepository.save(file);
         }
@@ -34,6 +36,8 @@ public class TagService {
         FileInfo file=t_fileInfoRepository.findById(file_id).get();
         for (Integer t:tag_id){
             Tag tag= t_tagRepository.findById(t).get();
+            List<FileInfo> l=t_fileInfoRepository.findAllByTag(tag);
+            if(l.size()>0)  continue;
             file.getTag().remove(tag);
             t_fileInfoRepository.save(file);
         }
@@ -43,6 +47,8 @@ public class TagService {
         FileList filelist= t_fileListRepository.findById(filelist_id).get();
         for (Integer t:tag_id){
             Tag tag= t_tagRepository.findById(t).get();
+            List<FileList> l=t_fileListRepository.findAllByTag(tag);
+            if(l.size()>0)  continue;
             filelist.getTag().add(tag);
             t_fileListRepository.save(filelist);
         }
@@ -52,7 +58,9 @@ public class TagService {
         FileList filelist= t_fileListRepository.findById(filelist_id).get();
         for (Integer t:tag_id){
             Tag tag= t_tagRepository.findById(t).get();
-            filelist.getTag().add(tag);
+            List<FileList> l=t_fileListRepository.findAllByTag(tag);
+            if(l.size()>0)  continue;
+            filelist.getTag().remove(tag);
             t_fileListRepository.save(filelist);
         }
     }
