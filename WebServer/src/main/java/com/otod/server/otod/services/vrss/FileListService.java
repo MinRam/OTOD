@@ -61,6 +61,8 @@ public class FileListService {
         FileList filelist= fl_fileListRepository.findById(filelist_id).get();
         filelist.setLove(filelist.getLove()+1);
         VrssUser vrssUser = fl_Vrss_userRepository.findById(user_id).get();
+        List<VrssUser> l=fl_Vrss_userRepository.findByFilelist(filelist);
+        if(l.size()>0)  return;
         vrssUser.getFilelist().add(filelist);
         fl_Vrss_userRepository.save(vrssUser);
         fl_fileListRepository.save(filelist);
@@ -70,6 +72,8 @@ public class FileListService {
         FileList filelist= fl_fileListRepository.findById(filelist_id).get();
         filelist.setLove(filelist.getLove()-1);
         VrssUser vrssUser = fl_Vrss_userRepository.findById(user_id).get();
+        List<VrssUser> l=fl_Vrss_userRepository.findByFilelist(filelist);
+        if(l.size()>0)  return;
         vrssUser.getFilelist().remove(filelist);
         fl_Vrss_userRepository.save(vrssUser);
         fl_fileListRepository.save(filelist);
@@ -84,6 +88,8 @@ public class FileListService {
     public void addFile(Integer filelist_id,Integer file_id){
         FileList filelist= fl_fileListRepository.findById(filelist_id).get();
         FileInfo file= fl_fileInfoRepository.findById(file_id).get();
+        List<FileList> l=fl_fileListRepository.findByFile(file);
+        if(l.size()>0)  return;
         filelist.getFile().add(file);
         fl_fileListRepository.save(filelist);
     }

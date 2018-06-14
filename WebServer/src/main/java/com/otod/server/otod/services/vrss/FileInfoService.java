@@ -30,7 +30,7 @@ public class FileInfoService {
     private CommentRepository fi_commentRepository;
 
     private Integer copy(MultipartFile src, VrssUser vrssUser, FileInfo fileInfo){
-        String webroot=System.getProperty("vrssUser.dir");
+        String webroot=System.getProperty("user.dir");
         String file_url= "/vrss/userfile/" + vrssUser.getUser_id()+"/"+fileInfo.getId()+"/"+src.getOriginalFilename();
         File dst =new File(webroot+file_url);
         try {
@@ -86,6 +86,8 @@ public class FileInfoService {
         FileInfo file= fi_fileInfoRepository.findById(file_id).get();
         file.setLove(file.getLove()+1);
         VrssUser vrssUser = fi_Vrss_userRepository.findById(user_id).get();
+        List<VrssUser> l=fi_Vrss_userRepository.findByFile(file);
+        if(l.size()>0)  return;
         vrssUser.getFile().add(file);
         fi_fileInfoRepository.save(file);
         fi_Vrss_userRepository.save(vrssUser);
@@ -95,6 +97,8 @@ public class FileInfoService {
         FileInfo file= fi_fileInfoRepository.findById(file_id).get();
         file.setLove(file.getLove()-1);
         VrssUser vrssUser = fi_Vrss_userRepository.findById(user_id).get();
+        List<VrssUser> l=fi_Vrss_userRepository.findByFile(file);
+        if(l.size()>0)  return;
         vrssUser.getFile().remove(file);
         fi_fileInfoRepository.save(file);
         fi_Vrss_userRepository.save(vrssUser);

@@ -10,8 +10,11 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name="section_info")
+@JsonIgnoreProperties({"forumTopicPOs"}) 
 public class SectionInfoPO {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
