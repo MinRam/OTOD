@@ -9,6 +9,7 @@
               {{ file.name }}<br>
               {{ file.description }}<br>
               <a v-bind:href="'http://127.0.0.1:8082/vrss/Download/download?file_url=' + file.file_url" v-bind:download="file.name">下载</a>
+              <span class="switcher" v-bind:class="{'left': isClose, 'right': isOpen}" @click="switcher()">收藏</span>
             </p>
           </div>
         </li>
@@ -25,7 +26,9 @@ export default {
     return {
       file: {
         type: Object
-      }
+      },
+      isClose: true,
+      isOpen: false// 假设默认关闭
     }
   },
   created () {
@@ -52,6 +55,11 @@ export default {
       }).catch((error) => {
         console.log(error)
       })
+    },
+    switcher: function () {
+      // s实现开关切换
+      this.isClose = !this.isClose
+      this.isOpen = !this.isOpen
     }
   }
 }
@@ -62,5 +70,14 @@ export default {
   .info {
   }
   .comment {
+  }
+  .switcher {
+    transition: left 0.8s;
+  }
+  .left {
+    color: green;
+  }
+  .right {
+    color: red;
   }
 </style>
