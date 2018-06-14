@@ -81,7 +81,7 @@ export default {
 </script>
 
 <style scoped>
-  @import '../../css/elements.css'
+  @import '../../../assets/css/bootstrap.css'
   .template-float {
     position: relative;
     top: 103;

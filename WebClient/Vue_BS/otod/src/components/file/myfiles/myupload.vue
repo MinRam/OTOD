@@ -53,7 +53,7 @@ export default {
 </script>
 
 <style>
-  @import '../../../assets/bootstrap/css/bootstrap.css'
+  @import '../../../assets/css/bootstrap.css'
   .card-float {
     position: relative;;
     float: left

@@ -12,16 +12,16 @@
               border
               style="width: 100%">
               <el-table-column
-                label="标题"
+                label="用户"
                 width="200">
                 <template slot-scope="scope">
-                  <el-button type="text">用户昵称</el-button>
+                  <el-button type="text">{{ scope.row.userInfo.nickname }}</el-button>
                   <br>
                   <el-button type="text">id :{{ scope.row.user_id }}</el-button>
                 </template>
               </el-table-column>
               <el-table-column
-                label="作者"
+                label="内容"
                 width="1000">
                 <template slot-scope="scope">
                   <el-row :gutter="1">
@@ -33,7 +33,7 @@
                     </el-col>
                   </el-row>
                   <el-row type="flex" class="row-bg" justify="start">
-                    <span>{{ scope.row.content }}</span>
+                    <quillEditor v-model="scope.row.content" :options="showEditorOption"></quillEditor>
                   </el-row>
                 </template>
               </el-table-column>
@@ -44,11 +44,11 @@
           <div class="block">
             <el-pagination
               background
-              @size-change="handleSizeChange"
+              @size-change="changerows"
               @current-change="changepage"
               :current-page="page"
               :page-sizes="[10, 15, 20, 30]"
-              :page-size="10"
+              :page-size="rows"
               layout="sizes, prev, pager, next,total, jumper"
               :total="forumTopicLength">
             </el-pagination>
@@ -56,12 +56,7 @@
         </el-row>
       </el-main>
       <el-footer>
-        <el-input
-          type="textarea"
-          :rows="8"
-          placeholder="请输入内容"
-          v-model="forumReplyPO.content">
-        </el-input>
+        <QuillEditor ref="quillEditor"></QuillEditor>
         <el-button type="success" plain @click="save()">发表</el-button>
       </el-footer>
     </el-container>
@@ -69,13 +64,15 @@
 </template>
 
 <script>
+import { quillEditor } from 'vue-quill-editor'
+import QuillEditor from '@/components/quillEditor'
 export default {
   name: 'BlogReply',
   data () {
     return {
       id: this.$route.query.id,
       page: 1,
-      row: 10,
+      rows: 10,
       forumTopicLength: 0,
       topic_title: '',
       forumReplyPO: {
@@ -86,7 +83,14 @@ export default {
       },
       pagelist: [
         {}
-      ]
+      ],
+      showEditorOption: {
+        modules: {
+          toolbar: false
+        },
+        theme: 'bubble',
+        readOnly: true
+      }
     }
   },
   mounted: function () {
@@ -98,28 +102,46 @@ export default {
       handler: function (val, oldval) {
         this.queryByConditions()
       }
+    },
+    rows: {
+      handler: function (val, oldval) {
+        this.queryByConditions()
+      }
     }
+  },
+  components: {
+    QuillEditor,
+    quillEditor
   },
   methods: {
     save () {
       var t = this
-      this.$axios({
-        method: 'post',
-        url: 'http://localhost:8081/forumreply/save',
-        dataType: 'json',
-        data: {
-          user_id: this.forumReplyPO.user_id,
-          content: this.forumReplyPO.content,
-          topic_id: this.$route.query.id
-        }
-      }).then(function (response) {
-        console.log(response)
-        alert('回复成功')
-        // 提交完刷新一次数据
-        t.queryByConditions()
-      }).catch(function (error) {
-        console.log(error)
-      })
+      if (this.$refs.quillEditor.content === '') {
+        this.errorMessageSave()
+      } else {
+        this.$axios({
+          method: 'post',
+          url: 'http://localhost:8081/forumreply/save',
+          dataType: 'json',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + t.$getCookie('otod_access_token')
+          },
+          data: {
+            user_id: this.forumReplyPO.user_id,
+            content: this.$refs.quillEditor.content,
+            topic_id: this.$route.query.id
+          }
+        }).then(function (response) {
+          console.log(response)
+          t.successMessageSave()
+          // 提交完刷新一次数据
+          t.queryByConditions()
+          t.$refs.quillEditor.content = ''
+        }).catch(function (error) {
+          console.log(error)
+        })
+      }
     },
     alee () {
       alert(this.forumReplyPO.topic_id)
@@ -150,7 +172,7 @@ export default {
         dataType: 'json',
         data: {
           page: this.page - 1,
-          row: this.row,
+          row: this.rows,
           topic_id: this.id
         }
       }).then(function (response) {
@@ -162,7 +184,12 @@ export default {
           if (date.getFullYear() < (new Date().getFullYear())) {
             t.pagelist[i].date = date.getFullYear() + '年' + date.getMonth() + '月' + date.getDate() + '日'
           } else {
-            t.pagelist[i].date = date.getMonth() + '月' + date.getDate() + '日 ' + date.getHours() + ':' + date.getMinutes()
+            t.pagelist[i].date = date.getMonth() + '月' + date.getDate() + '日 ' + date.getHours()
+            if (date.getMinutes() < 10) {
+              t.pagelist[i].date = t.pagelist[i].date + ':0' + date.getMinutes()
+            } else {
+              t.pagelist[i].date = t.pagelistt[i].date + ':' + date.getMinutes()
+            }
           }
         }
         if (t.topic_title === '') {
@@ -176,10 +203,31 @@ export default {
     // 改变页面
     changepage (val) {
       this.page = val
+    },
+
+    // 改变页面大小
+    changerows (val) {
+      this.rows = val
+    },
+    // 发表成功信息顶部弹出
+    successMessageSave () {
+      this.$message({
+        showClose: true,
+        message: '发表成功',
+        type: 'success'
+      })
+    },
+
+    // 标题未写错误信息
+    errorMessageSave () {
+      this.$message({
+        showClose: true,
+        message: '发表失败，请填写标题',
+        type: 'error'
+      })
     }
   }
 }
 </script>
-
 <style>
 </style>
