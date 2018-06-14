@@ -17,9 +17,9 @@ public class ForumRecordPO {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	private String description;
-	private int adminId;
+	private Long adminId;
 	private Date date;
-	private int userId;
+	private long userId;
 	private String type;
 	private String name;
 	
@@ -35,10 +35,10 @@ public class ForumRecordPO {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public int getAdminId() {
+	public Long getAdminId() {
 		return adminId;
 	}
-	public void setAdminId(int adminId) {
+	public void setAdminId(Long adminId) {
 		this.adminId = adminId;
 	}
 	public Date getDate() {
@@ -47,10 +47,10 @@ public class ForumRecordPO {
 	public void setDate(Date date) {
 		this.date = date;
 	}
-	public int getUserId() {
+	public Long getUserId() {
 		return userId;
 	}
-	public void setUserId(int userId) {
+	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
 	public String getType() {

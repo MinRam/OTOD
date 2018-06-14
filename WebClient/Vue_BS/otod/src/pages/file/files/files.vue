@@ -29,7 +29,7 @@ export default {
 </script>
 
 <style scoped>
-  @import '../../../assets/bootstrap/css/bootstrap.css'
+  @import '../../../assets/css/bootstrap.css'
   .main {background-color:#f8f8f8; padding-top:20px;}
   .rightBox {background:#fff; padding-bottom:2em; padding-top:5px;}
   .commentBox {margin:20px;}
