@@ -44,7 +44,7 @@ export default {
           console.log(error)
         })
       } else {
-        this.getlist()
+        this.getdownload()
       }
     }
   },
@@ -84,7 +84,7 @@ export default {
       })
     },
     getlist () {
-      if (this.str === '') {
+      if (this.str === '' || this.str == null) {
         this.getdownload()
       } else {
         this.getsearch()
