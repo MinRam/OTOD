@@ -8,7 +8,7 @@
                          </a>
                      </li>
                     <li class="publish-link" v-for="(publish,index) in publishPosts" :class="publish.title" :key="index">
-                        <a @click="goRouter(index)">{{publish.title}}</a>
+                        <a @click="goRouter(publish.link)">{{publish.title}}</a>
                      </li>
                  </ul>
              </div>
@@ -89,16 +89,16 @@ export default{
       // 发布按钮
       publishPosts: [{
         title: 'blog',
-        link: 'QuillEditor'
+        link: '/forumtopic/quilleditor'
       }, {
         title: 'market',
-        link: 'Sell'
+        link: '/market/sell'
       }, {
         title: 'file',
         link: ''
       }, {
         title: 'service',
-        link: 'PublishOrder'
+        link: '/service/publishorder'
       }, {
         title: 'book',
         link: ''
@@ -176,12 +176,12 @@ export default{
       })
 
       this.loading = false
-      // console.log('finished')
+      console.log('finished')
     },
 
     // route link
-    goRouter (index) {
-      this.$router.push({ name: this.publishPosts[index].link, params: { page: this.publishPosts[index].title } })
+    goRouter (src) {
+      this.$router.push(src)
     },
 
     // 通知栏关闭

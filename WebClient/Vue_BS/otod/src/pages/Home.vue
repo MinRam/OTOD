@@ -68,6 +68,13 @@ export default {
         number: 0
       }],
 
+      // 用户基本信息
+      userInfo: {
+        headPhoto: '',
+        username: '',
+        telephone: ''
+      },
+
       // 关注列表与被关注列表
       followInfo: {
         followList: [],
@@ -77,27 +84,23 @@ export default {
   },
   mounted () {
     // this.$router.push('/home/person')
-    this._initialData()
+    this.initialData()
   },
   methods: {
-    _initialData () {
+    initialData () {
       // simple user inoformation : headphoto,username,telephone
-      if (!this.$store.state.isLogin) {
-        this.$axios({
-          method: 'get',
-          url: this.$url + '/user/getSimpleInfo',
-          params: {
-            access_token: this.$getCookie('otod_access_token')
-          }
-        }).then(function (response) {
-          this.$store.commit('initialName', response.data.nickname)
-          this.$store.commit('initialHead', response.data.headImage)
-          this.$store.commit('initialTel', response.data.telephone)
-          this.$router.push('/home/person')
-        }.bind(this))
-      } else {
+      this.$axios({
+        method: 'get',
+        url: this.$url + '/user/getSimpleInfo',
+        params: {
+          access_token: this.$getCookie('otod_access_token')
+        }
+      }).then(function (response) {
+        this.$store.commit('initialName', response.data.nickname)
+        this.$store.commit('initialHead', response.data.headImage)
+        this.$store.commit('initialTel', response.data.telephone)
         this.$router.push('/home/person')
-      }
+      }.bind(this))
 
       // get followList
       this.$axios({
