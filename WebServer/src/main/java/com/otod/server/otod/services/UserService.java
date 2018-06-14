@@ -26,6 +26,9 @@ public class UserService {
 
     @Autowired
     private NoticeRespository noticeRespository;
+    
+    @Autowired
+    private MURepository mURepository;
 
 //    @Bean
 //    public PasswordEncoder passwordEncoder(){
@@ -88,6 +91,11 @@ public class UserService {
         userInfo.setSex("男");
         userInfo.setUser(user);
         userInfoRespository.save(userInfo);
+
+        // 设置mUser
+        Market_user mUser = new Market_user();
+        mUser.setUserInfo(userInfo);
+        mURepository.save(mUser);
     }
 
     // 获取自己关注的用户列表

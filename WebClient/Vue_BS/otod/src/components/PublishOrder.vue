@@ -176,7 +176,7 @@ export default {
             content: t.form.content,
             deadline: t.form.e_date,
             urgency: t.form.urgency,
-            contributers: t.form.contributers
+            contributers: t.form.contributer
           }
         })
           .then(function (response) {

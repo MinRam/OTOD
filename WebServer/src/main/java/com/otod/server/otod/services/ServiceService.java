@@ -2,15 +2,16 @@ package com.otod.server.otod.services;
 
 import com.otod.server.otod.model.CommenOrder;
 import com.otod.server.otod.model.UserInfo;
-import com.otod.server.otod.pojos.CommenOrdersPOJO;
 import com.otod.server.otod.respository.CommenOrderRespository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.criteria.*;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,6 +26,8 @@ public class ServiceService {
 
 
     public List<CommenOrder> getAllCommenOrders(){
+//        String sql = "select * from commenorder where order_state=1";
+//        return getAllCommenOrders().query(sql,new ItemRowMapper());
         return commenOrderRespository.findAll();
     }
 
@@ -35,7 +38,7 @@ public class ServiceService {
     //currentPage 当前页
     //size 每页的数量
     public Page<CommenOrder> getListPage(int currentPage, int size){
-        Pageable pageable = new PageRequest(currentPage, size, Sort.DEFAULT_DIRECTION, "sDate");
+        Pageable pageable = PageRequest.of(currentPage, size, Sort.DEFAULT_DIRECTION, "sDate");
         return commenOrderRespository.findAll(pageable);
     }
 
@@ -45,14 +48,6 @@ public class ServiceService {
 
 
     public boolean reciveOrder(CommenOrder commenOrder, UserInfo userInfo){
-        List<UserInfo> list = commenOrder.getUserinfoR();
-        for(UserInfo temp: list){
-            if(temp.getId() == userInfo.getId()){
-                return false;
-            }
-        }
-        list.add(userInfo);
-        commenOrder.setUserinfoR(list);
         commenOrderRespository.save(commenOrder);
         return true;
     }
@@ -61,4 +56,15 @@ public class ServiceService {
         return commenOrderRespository.findByUserinfoS(userInfo);
     }
 
+    public Page<CommenOrder> getAllOrderPage(UserInfo userInfo, int currentPage, int size){
+        Pageable pageable = new PageRequest(currentPage, size, Sort.DEFAULT_DIRECTION, "sDate");
+        commenOrderRespository.findAll(new Specification<CommenOrder>() {
+            @Override
+            public Predicate toPredicate(Root<CommenOrder> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+                criteriaQuery.where(criteriaBuilder.equal(root.get("userinfoS").as(UserInfo.class),userInfo));
+                return null;
+            }
+        },pageable);
+        return commenOrderRespository.findAll(pageable);
+    }
 }

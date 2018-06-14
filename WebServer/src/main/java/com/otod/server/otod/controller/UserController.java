@@ -24,14 +24,15 @@ public class UserController  {
     @Autowired
     private UserService userService;
 
+    @Qualifier("getTokenStore")
+    @Autowired
+    private TokenStore tokenStore;
+
+    // test
     @GetMapping("/users")
     private List<User> testMappring(){
         return userService.getAllUsers();
     }
-
-    @Qualifier("getTokenStore")
-    @Autowired
-    private TokenStore tokenStore;
 
     @GetMapping("/logouts")
     private void logout(@RequestParam (value = "access_token") String accessToken){
@@ -58,7 +59,7 @@ public class UserController  {
         return "success";
     }
 
-    @GetMapping("/getSimpleInfo")
+    @GetMapping("/user/getSimpleInfo")
     private UserSimpleInfo getUserSimpleInfo(){
 
         User user = userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName());
@@ -70,7 +71,12 @@ public class UserController  {
         return simpleInfo;
     }
 
-    @GetMapping("/getfollowInfo")
+    @GetMapping("/user/getSimpleByNickname")
+    private UserSimpleInfo getSimpleByNickname(@RequestParam (value = "nickname") String nickname){
+        return new UserSimpleInfo(userService.getUserInfo(nickname));
+    }
+
+    @GetMapping("/user/getfollowInfo")
     private UserFollowList getFollowInfo(){
         User user = userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName());
 
@@ -93,19 +99,24 @@ public class UserController  {
         return new UserFollowList(userFollowInfoList,userFollowedInfoList);
     }
 
-    @GetMapping("/followUser")
+    @GetMapping("/user/followUser")
     private String followUser(@RequestParam (value = "nickname") String nickname){
         User user = userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName());
         return userService.followUser(user,nickname)?"true":"false";
     }
 
-    @GetMapping("/getAllInfo")
+    @GetMapping("/user/getAllInfo")
     private UserInfo allInfo(){
         User user = userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName());
         return userService.getUserInfo(user);
     }
 
-    @GetMapping("/Notice")
+    @GetMapping("/user/setAllInfo")
+    private String setInfo(){
+        return "success";
+    }
+
+    @GetMapping("/user/Notice")
     private List<NoticePojo> notice(){
         User user = userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName());
         List<Notice> noticeList =  userService.getAllNotices(user);
@@ -118,4 +129,14 @@ public class UserController  {
 
         return noticePojosList;
         }
+
+    @GetMapping("/user/getUpdateList")
+    private List<Integer> getUpdteList(){
+        User user = userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName());
+        UserInfo userInfo =  userService.getUserInfo(user);
+
+
+
+        return null;
+    }
 }

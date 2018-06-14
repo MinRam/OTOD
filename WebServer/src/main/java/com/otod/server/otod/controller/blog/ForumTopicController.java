@@ -2,27 +2,13 @@ package com.otod.server.otod.controller.blog;
 
 
 
-import java.util.Map;
-
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.Root;
-
-import org.hibernate.criterion.CriteriaQuery;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.jpa.domain.Specification;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.jayway.jsonpath.Predicate;
-import com.jayway.jsonpath.internal.Path;
 import com.otod.server.otod.model.blog.ForumTopicPO;
 import com.otod.server.otod.services.blog.ForumTopicService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RequestMapping("/forumtopic")
 @RestController
