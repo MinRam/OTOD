@@ -16,7 +16,7 @@ public class SectionInfoPO {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
-	private int admin_id;
+	private Long admin_id;
 	private String name;
 	private String statement;
 	private int click_num;
@@ -32,10 +32,10 @@ public class SectionInfoPO {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getAdmin_id() {
+	public Long getAdmin_id() {
 		return admin_id;
 	}
-	public void setAdmin_id(int admin_id) {
+	public void setAdmin_id(Long admin_id) {
 		this.admin_id = admin_id;
 	}
 	public String getName() {

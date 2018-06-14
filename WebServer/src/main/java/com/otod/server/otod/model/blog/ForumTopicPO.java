@@ -20,6 +20,7 @@ import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.otod.server.otod.model.UserInfo;
 
 @Entity
 @Table(name="forum_topic")
@@ -29,7 +30,7 @@ public class ForumTopicPO {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
-	private int user_id;
+	//private int user_id;
 	private String title;
 	@Column(length=20000)
 	private String content;
@@ -38,9 +39,19 @@ public class ForumTopicPO {
 	private Date date;
 	//private int section_id;
 	private int click_num;
-	private int last_reply_id;
+	//private int last_reply_id;
 	@Column(name="last_reply_date")
 	private Date lastReplyDate;
+	
+	//主题贴用户外键
+	@ManyToOne
+	@JoinColumn(name="user_id")
+	private UserInfo userInfo;
+	
+	//主题帖最后回复用户外键
+	@ManyToOne
+	@JoinColumn(name="last_reply_id")
+	private UserInfo lastUserInfo;
 	
 	//一对多
 	//一主题贴对应多个回复贴
@@ -60,12 +71,12 @@ public class ForumTopicPO {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getUser_id() {
+/*	public int getUser_id() {
 		return user_id;
 	}
 	public void setUser_id(int user_id) {
 		this.user_id = user_id;
-	}
+	}*/
 	public String getTitle() {
 		return title;
 	}
@@ -102,12 +113,6 @@ public class ForumTopicPO {
 	public void setClick_num(int click_num) {
 		this.click_num = click_num;
 	}
-	public int getLast_reply_id() {
-		return last_reply_id;
-	}
-	public void setLast_reply_id(int last_reply_id) {
-		this.last_reply_id = last_reply_id;
-	}
 	public Date getLastReplyDate() {
 		return lastReplyDate;
 	}
@@ -125,6 +130,18 @@ public class ForumTopicPO {
 	}
 	public void setSectionInfoPO(SectionInfoPO sectionInfoPO) {
 		this.sectionInfoPO = sectionInfoPO;
+	}
+	public UserInfo getUserInfo() {
+		return userInfo;
+	}
+	public void setUserInfo(UserInfo userInfo) {
+		this.userInfo = userInfo;
+	}
+	public UserInfo getLastUserInfo() {
+		return lastUserInfo;
+	}
+	public void setLastUserInfo(UserInfo lastUserInfo) {
+		this.lastUserInfo = lastUserInfo;
 	}
 	
 	

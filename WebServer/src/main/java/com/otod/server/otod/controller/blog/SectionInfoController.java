@@ -7,7 +7,9 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.otod.server.otod.model.blog.SectionInfoPO;
+import com.otod.server.otod.pojos.ResultVo;
 import com.otod.server.otod.services.blog.SectionInfoService;
 
 @RequestMapping("/sectioninfo")
@@ -27,6 +30,9 @@ public class SectionInfoController {
 	
 	@Autowired
 	private SectionInfoService sectionInfoService;
+	
+	 @Value("${cbs.imagesPath}")
+	 private String webUploadPath;
 	
 	@RequestMapping("/hello")
 	public String Hello(){
@@ -45,47 +51,45 @@ public class SectionInfoController {
 	
 	@ResponseBody
 	@RequestMapping(value="/saveimg",method=RequestMethod.POST)
-	public Map<String, String> saveimg(@RequestParam MultipartFile file,HttpServletRequest request,HttpServletResponse response)throws Exception
+	public ResultVo saveimg(@RequestParam MultipartFile file,HttpServletRequest request,HttpServletResponse response)throws Exception
 	{
-		String path = null;// 文件路径
-        String json = "";
-        Map<String, String> map = new HashMap<String, String>();
-        if (file!=null) {// 判断上传的文件是否为空
-
-            String type = null;// 文件类型
-            String fileName = file.getOriginalFilename();// 文件原名称
-            System.out.println("上传的文件原名称:"+fileName);
-            // 判断文件类型
-            type = fileName.indexOf(".")!=-1?fileName.substring(fileName.lastIndexOf(".")+1, fileName.length()):null;
-            if (type!=null) {// 判断文件类型是否为空
-                if ("GIF".equals(type.toUpperCase())||"PNG".equals(type.toUpperCase())||"JPG".equals(type.toUpperCase())) {
-                    // 项目在容器中实际发布运行的根路径
-                    String realPath = request.getSession().getServletContext().getRealPath("/");
-                    // 自定义的文件名称
-                    String trueFileName = String.valueOf(System.currentTimeMillis()) + "." + type;
-                    // 设置存放图片文件的路径
-                    path = realPath+trueFileName;
-                    System.out.println("存放图片文件的路径:"+path);
-                    // 转存文件到指定的路径
-                    file.transferTo(new File(path));
-                    System.out.println("文件成功上传到指定目录下");   
-                    map.put("path", path);
-                    map.put("res", "1");
-                    }else {
-                    System.out.println("不是我们想要的文件类型,请按要求重新上传");
-                    //return null;
-                    map.put("res", "0");
-                }
-            }else {
-                System.out.println("文件类型为空");
-                //return null;
-                map.put("res", "0");
-            }
-        }else {
-        	System.out.println("文件为空");
-        	map.put("res", "0");
-        }
-        response.setContentType("application/json;charset=UTF-8");
-        return map;
+		ResultVo resultVo = new ResultVo();
+		if (!file.isEmpty()) {
+			if (file.getContentType().contains("image")) {
+				 {
+					String temp = "blog" + File.separator;
+					// 获取图片的文件名
+					  String fileName = file.getOriginalFilename();
+					  // 获取图片的扩展名
+					  String extensionName = StringUtils.substringAfter(fileName, ".");
+					  // 新的图片文件名 = 获取时间戳+"."图片扩展名
+					  String newFileName = String.valueOf(System.currentTimeMillis()) + "." + extensionName;
+					  // 数据库保存的目录
+					  String datdDirectory = temp;
+					  // 文件路径
+					  String filePath = webUploadPath.concat(datdDirectory);
+					  File dest = new File(filePath, newFileName);
+					  if (!dest.getParentFile().exists()) {
+						  dest.getParentFile().mkdirs();
+					  }
+					  System.out.println(dest.getPath());
+					  file.transferTo(dest);
+					  // 将反斜杠转换为正斜杠
+					  String data = datdDirectory.replaceAll("\\\\", "/") + newFileName;
+					  String url = "http://localhost:8081/" + data ;
+					  Map<String, String> resultMap = new HashMap<>();
+					  resultMap.put("file", data);
+					  resultMap.put("url", url);
+					  resultVo.setData(resultMap);
+					  resultVo.setError(1, "上传成功!");
+				} 
+			} else {
+				resultVo.setError(0, "上传的文件不是图片类型，请重新上传!");
+			}
+			return resultVo;
+		} else {
+			 resultVo.setError(0, "上传失败，请选择要上传的图片!");
+			 return resultVo;
+		}
 	}
 }
