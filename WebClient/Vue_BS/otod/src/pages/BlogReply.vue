@@ -2,6 +2,12 @@
   <div>
     <el-container style="width:80%;margin:auto;">
       <el-header>
+        <el-breadcrumb separator-class="el-icon-arrow-right">
+          <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+          <el-breadcrumb-item>活动管理</el-breadcrumb-item>
+          <el-breadcrumb-item>活动列表</el-breadcrumb-item>
+          <el-breadcrumb-item>{{ topic_title }}</el-breadcrumb-item>
+        </el-breadcrumb>
       </el-header>
       <el-main>
         <el-row type="flex" class="row-bg" justify="center">
@@ -50,7 +56,7 @@
               :page-sizes="[10, 15, 20, 30]"
               :page-size="rows"
               layout="sizes, prev, pager, next,total, jumper"
-              :total="forumTopicLength">
+              :total="forumReplyLength">
             </el-pagination>
           </div>
         </el-row>
@@ -73,7 +79,7 @@ export default {
       id: this.$route.query.id,
       page: 1,
       rows: 10,
-      forumTopicLength: 0,
+      forumReplyLength: 0,
       topic_title: '',
       forumReplyPO: {
         topic_id: this.$route.query.id,
@@ -178,23 +184,22 @@ export default {
       }).then(function (response) {
         console.log(response)
         t.pagelist = response.data.content
-        t.forumTopicLength = response.data.totalElements
+        t.forumReplyLength = response.data.totalElements
         for (var i in t.pagelist) {
           var date = new Date(t.pagelist[i].date)
           if (date.getFullYear() < (new Date().getFullYear())) {
-            t.pagelist[i].date = date.getFullYear() + '年' + date.getMonth() + '月' + date.getDate() + '日'
+            t.pagelist[i].date = date.getFullYear() + '年' + (date.getMonth() + 1) + '月' + date.getDate() + '日'
           } else {
-            t.pagelist[i].date = date.getMonth() + '月' + date.getDate() + '日 ' + date.getHours()
+            t.pagelist[i].date = (date.getMonth() + 1) + '月' + date.getDate() + '日 ' + date.getHours()
             if (date.getMinutes() < 10) {
               t.pagelist[i].date = t.pagelist[i].date + ':0' + date.getMinutes()
             } else {
-              t.pagelist[i].date = t.pagelistt[i].date + ':' + date.getMinutes()
+              t.pagelist[i].date = t.pagelist[i].date + ':' + date.getMinutes()
             }
           }
         }
-        if (t.topic_title === '') {
-          t.topic_title = t.pagelist[0].forumTopicPO.title
-        }
+        //为标题赋值
+        t.topic_title = t.pagelist[0].forumTopicPO.title
       }).catch(function (error) {
         console.log(error)
       })

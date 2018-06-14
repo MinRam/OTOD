@@ -40,9 +40,18 @@
             stripe
             style="width: 100%">
             <el-table-column
-              prop="reply_num"
               label="回复数"
+              align="center"
               width="100">
+              <template slot-scope="scope">
+                <el-row type="flex" class="row-bg" justify="center">
+                  <el-card :body-style="{ padding: '0px 20px'  }">
+                    <span>
+                      {{ scope.row.reply_num }}
+                    </span>
+                  </el-card>
+                </el-row>
+              </template>
             </el-table-column>
             <el-table-column
               label="标题"
@@ -53,6 +62,7 @@
             </el-table-column>
             <el-table-column
               label="作者"
+              align="center"
               width="150">
               <template slot-scope="scope">
                 <img :src="scope.row.userInfo.headimg">
@@ -269,6 +279,7 @@ export default {
       })
     },
 
+    // 根据id查找主题帖
     test () {
       this.$axios.get('http://localhost:8081/forumtopic/findbyid?id=1').then(function (response) {
         console.log(response)
@@ -327,6 +338,9 @@ export default {
           row: t.rows
         }
       }).then(function (response) {
+        if (t.$route.query.section_id) {
+          t.condition.section_id = t.$route.query.section_id
+        }
         console.log(response)
         t.sectionList = response.data.content
       }).catch(function (error) {

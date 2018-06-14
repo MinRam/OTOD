@@ -24,7 +24,7 @@ import com.otod.server.otod.model.UserInfo;
 
 @Entity
 @Table(name="forum_topic")
-@JsonIgnoreProperties({"forumReplyPOs","sectionInfoPO"})  
+@JsonIgnoreProperties({"forumReplyPOs"})  
 public class ForumTopicPO {
 
 	@Id
