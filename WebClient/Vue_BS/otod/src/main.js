@@ -29,13 +29,6 @@ Vue.config.productionTip = false
 
 // // http request 拦截器
 // axios.interceptors.request.use(
-//   config => {
-//     // 判断是否存在token，如果存在的话，则每个http header都加上token
-//     if (store.state.token) {
-//       config.headers.Authorization = `token ${store.state.token}`
-//     }
-//     return config
-//   },
 //   err => {
 //     return Promise.reject(err)
 //   }

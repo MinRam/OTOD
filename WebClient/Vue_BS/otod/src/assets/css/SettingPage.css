@@ -6,7 +6,7 @@ body{
     color: #444;
 }
 
-.setting-main,.setting-phone,.setting-oauth,.setting-info{
+.setting-main,.setting-phone,.setting-oauth,.setting-info,.setting-interesting{
     background: url(../images/bd24.png) no-repeat 999px 999px;
 }
 
@@ -77,13 +77,13 @@ body{
     padding-left: 40px;
 }
 
-.telephone-content .txt,.oauth-content .txt{
+.telephone-content .txt,.oauth-content .txt,.interesting-content .txt{
     font-size: 12px;
     margin-bottom: 17px;
     color: #888;
 }
 
-.telephone-content .link{
+.telephone-content .link,.interesting-content .link{
     float: left;
     padding-right: 11px;
     line-height: 15px;
@@ -152,4 +152,45 @@ body{
 
 .info-head .user-uploader{
     float: left;
+}
+
+/*兴趣设置*/
+.interesting-content {
+    padding-left: 40px;
+}
+
+
+/*保存设置*/
+.setting-save{
+    float:left;
+    width: 776px;
+    padding: 26px 30px 16px;
+    border-bottom: 1px solid #ebebeb;
+    background-color: #fff;
+    margin-bottom: 40px;
+}
+
+.setting-save .btns{
+    position: relative;
+    height: 40px;
+    margin: 5px 0 15px;
+}
+
+.btns .save{
+    width: 104px;
+    height: 40px;
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: #fff;
+    line-height: 40px;
+    text-align: center;
+    text-shadow: -1px -1px 0px #779e00;
+    background-image: url(../images/btn24.png);
+    background-position: 0 0;
+}
+
+.btns .save:hover{
+    background-position: -114px 0;
 }
