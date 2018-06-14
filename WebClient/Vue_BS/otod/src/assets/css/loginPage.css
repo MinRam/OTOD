@@ -453,7 +453,7 @@ img{
 
 .show-shop .shop-graphic .shop-post-item{
     opacity: 1;
-    animation: shopPostItem .5s ease-out .7s;
+    animation: shopPostItem .5s cubic-bezier(0.550, 0.055, 0.675, 0.190) .7s;
     animation-fill-mode: backwards;
 }
 
@@ -466,9 +466,13 @@ img{
     color: #444;
 }
 
+.shop-post-item .item-content {
+    height: 0px;
+    transition: all .5s cubic-bezier(0.645, 0.045, 0.355, 1.000) 1.3s;
+}
+
 .show-shop .shop-graphic .shop-post-item .item-content {
-    animation: shopPostItemContent .5s ease-out 1.2s;
-    animation-fill-mode: backwards;
+    height: 200px;
 }
 
 
@@ -829,14 +833,5 @@ img{
     fo{
         opacity: 1;
         transform: translateX(100%);
-    }
- }
-
- @keyframes shopPostItemContent{
-    from{
-        transform: scaleY(0);
-    }
-    fo{
-        transform: scaleY(1);
     }
  }

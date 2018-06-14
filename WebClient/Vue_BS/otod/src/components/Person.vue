@@ -170,10 +170,10 @@ export default{
       }.bind(this))
 
       // get Update List
-      this.$axios({
-        method: 'get',
-        url: this.$url + '/user/get'
-      })
+      // this.$axios({
+      //   method: 'get',
+      //   url: this.$url + '/user/get'
+      // })
 
       this.loading = false
       // console.log('finished')
