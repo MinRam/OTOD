@@ -26,7 +26,7 @@
         </ul>
         <form class="form-inline my-2 my-lg-0 form-float">
           <input class="form-control mr-sm-2" type="text" placeholder="搜索" v-model="searchtext">
-          <router-link class="btn btn-outline-success my-2 my-sm-0" :to="{ path: '/file/download', query: { search: this.searchtext } }">
+          <router-link class="btn btn-outline-success my-2 my-sm-0" :to="{ path: '/file/download', query: { search: this.searchtext } }" @click.native="strnull">
             <b>搜索</b>
           </router-link>
         </form>
@@ -44,6 +44,9 @@ export default {
     }
   },
   methods: {
+    strnull () {
+      this.searchtext = ''
+    }
   }
 }
 </script>

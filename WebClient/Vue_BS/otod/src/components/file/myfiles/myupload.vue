@@ -6,7 +6,7 @@
           <div class="card-block card-float">
             <h4 class="card-title">{{file.id}}</h4>
             <p class="card-text">{{file.name}}</p>
-            <router-link class="card-link" :to="{path: '/files', query: {filename: JSON.stringify(file)}}" target="_blank">查看</router-link>
+            <router-link class="card-link" :to="{path: '/file/files', query: {filename: JSON.stringify(file)}}" target="_blank">查看</router-link>
           </div>
         </div>
       </li>

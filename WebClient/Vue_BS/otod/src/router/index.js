@@ -148,12 +148,9 @@ const routes = [
         meta: {
           requireAuth: false
         },
+        redirect: '/file/recommend',
         component: File,
         children: [{
-          path: '',
-          redirect: '/file/recommend'
-        },
-        {
           path: '/file/recommend',
           component: recommend
         },

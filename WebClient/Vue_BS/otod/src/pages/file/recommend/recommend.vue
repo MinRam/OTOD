@@ -8,7 +8,7 @@
             <h4 class="card-title">{{filelist.name}}</h4>
             <p class="card-text">浏览数：{{filelist.views}}</p>
             <p class="card-text">评数：{{filelist.score}}</p>
-            <router-link class="card-link" :to="{path: '/filelist', query: {listname: JSON.stringify(filelist)}}" target="_blank">查看</router-link>
+            <router-link class="card-link" :to="{path: '/file/filelist', query: {listname: JSON.stringify(filelist)}}" target="_blank">查看</router-link>
           </div>
         </div>
       </li>

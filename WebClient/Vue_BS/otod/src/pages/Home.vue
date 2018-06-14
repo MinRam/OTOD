@@ -81,24 +81,6 @@ export default {
   },
   methods: {
     _initialData () {
-      // simple user inoformation : headphoto,username,telephone
-      if (!this.$store.state.isLogin) {
-        this.$axios({
-          method: 'get',
-          url: this.$url + '/user/getSimpleInfo',
-          params: {
-            access_token: this.$getCookie('otod_access_token')
-          }
-        }).then(function (response) {
-          this.$store.commit('initialName', response.data.nickname)
-          this.$store.commit('initialHead', response.data.headImage)
-          this.$store.commit('initialTel', response.data.telephone)
-          this.$router.push('/home/person')
-        }.bind(this))
-      } else {
-        this.$router.push('/home/person')
-      }
-
       // get followList
       this.$axios({
         method: 'get',

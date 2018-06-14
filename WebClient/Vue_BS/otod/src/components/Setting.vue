@@ -16,6 +16,7 @@
                     <div class="telephone-content">
                         <p class="txt">为您的账号绑定一个手机号，绑定后可开放更多功能。</p>
                         <a class="link">绑定手机号</a>
+                        <span>{{$store.state}}</span>
                      </div>
                  </div>
              </div>
@@ -69,6 +70,7 @@
                         <div class="user-head">
                             <img :src="$imageUrl + $store.state.headImage"/>
                          </div>
+                        <span class="user-point"/>
                         <div class="user-uploader">
                             <el-upload
                               class="img-uploader"
@@ -85,11 +87,13 @@
                         <ul>
                             <li><h6>Nickname:</h6><input type="text" name="nickname" v-model="userInfo.nickname"/></li>
                             <li><h6>Position:</h6><input type="text" name="position" v-model="userInfo.position"/></li>
-                            <li><h6>Sex:</h6><div style="padding:15px 0 30px;" class="sex-logo-box">
+                            <li><h6>Sex:</h6>
+                              <div style="padding:15px 0 30px;" class="sex-logo-box">
                                     <span class="sex-logo logo-checked">男</span>
                                     <span class="sex-logo">女</span>
                                     <span class="sex-logo">保密</span>
-                                </div></li>
+                               </div>
+                             </li>
                             <li><h6>Age:</h6><input type="number" name="age" v-model="userInfo.age" /></li>
                             <li><h6>Address</h6><input type="text" name="address" v-model="userInfo.address"/></li>
                             <li><h6>email</h6><input type="email" name="email" v-model="userInfo.email"/></li>

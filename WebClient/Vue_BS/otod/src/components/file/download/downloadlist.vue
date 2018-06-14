@@ -2,7 +2,7 @@
   <div id="list">
     <ul>
        <li v-for="file in filelist" :key="file.id">
-        <router-link :to="{path: '/files', query: {filename: JSON.stringify(file)}}" target="_blank">{{ file.id }}</router-link>
+        <router-link :to="{path: '/file/files', query: {filename: JSON.stringify(file)}}" target="_blank">{{ file.id }}</router-link>
       </li>
     </ul>
   </div>
@@ -44,7 +44,7 @@ export default {
           console.log(error)
         })
       } else {
-        this.getlist()
+        this.getdownload()
       }
     }
   },
@@ -84,7 +84,7 @@ export default {
       })
     },
     getlist () {
-      if (this.str === '') {
+      if (this.str === '' || this.str == null) {
         this.getdownload()
       } else {
         this.getsearch()
