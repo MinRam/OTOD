@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @CrossOrigin
-@RequestMapping(value = "/vrss/user")
+@RequestMapping(value = "/vrss/User")
 public class VrssUserController {
     @Autowired
     private VrssUserService vrssUserService;

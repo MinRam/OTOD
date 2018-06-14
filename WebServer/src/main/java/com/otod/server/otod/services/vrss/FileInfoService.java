@@ -56,6 +56,7 @@ public class FileInfoService {
         Date date=new java.sql.Date(new Date().getTime());
         file.setUploadTime(date);
         file.setDescription(description);
+        file.setDownloadCnt(0);
         file.setScore(0.);
         file.setViews(0);
         file.setLove(0);
