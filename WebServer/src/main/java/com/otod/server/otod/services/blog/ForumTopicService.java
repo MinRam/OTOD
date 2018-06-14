@@ -13,8 +13,9 @@ public interface ForumTopicService {
 	public ForumTopicPO findById(Integer id);
 	public Page<ForumTopicPO> findByPage(Integer page,Integer row);
 	public List<ForumTopicPO> findAll();
-	public Page<ForumTopicPO> findByConditions(Map<String, String> map,Integer page,Integer row);
+	//public Page<ForumTopicPO> findByConditions(Map<String, String> map,Integer page,Integer row);
+	public Map<String, Object> findByConditions(Map<String, String> map,Integer page,Integer row);
 	public void deleteByid(Integer id);
-	
+	public Page<ForumTopicPO> findPageByUserId(Map<String, String> map,Integer page,Integer row);
 	
 }

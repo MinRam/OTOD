@@ -35,6 +35,7 @@
       <el-row type="flex" class="row-bg" justify="center">
         <div class="block">
           <el-table
+            v-loading="loading"
             :data="forumTopicList"
             stripe
             style="width: 100%">
@@ -54,7 +55,8 @@
               label="作者"
               width="150">
               <template slot-scope="scope">
-                <el-button type="text">用户昵称</el-button>
+                <img :src="scope.row.userInfo.headimg">
+                <el-button type="text">{{ scope.row.userInfo.nickname }}</el-button>
                 <a>id : {{ scope.row.user_id }}</a>
                 <p>{{ scope.row.date }}</p>
               </template>
@@ -68,7 +70,7 @@
                     <p>{{ scope.row.last_time }}</p>
                     <el-row>
                       <i class="el-icon-service"></i>
-                      <el-button type="text">回复者昵称</el-button>
+                      <el-button type="text">{{ scope.row.lastUserInfo.nickname }}</el-button>
                     </el-row>
                   </el-col>
                   <el-col>
@@ -120,22 +122,16 @@
         clearable>
         <template slot="prepend">标题</template>
       </el-input>
-      <el-input
-        type="textarea"
-        :rows="8"
-        placeholder="请输入内容"
-        v-model="forumTopicPO.content">
-      </el-input>
-      <el-button type="success" plain @click="postData()">发表</el-button>
+      <QuillEditor ref="quillEditor"></QuillEditor>
+      <el-button style="margin:5px 0px;" type="success" plain @click="postData()">发表</el-button>
       <el-button type="success" plain @click="alee()">发表</el-button>
-      <router-view/>
     </el-footer>
   </el-container>
 </div>
 </template>
 
 <script>
-// import QuillEditor from '@/components/quillEditor'
+import QuillEditor from '@/components/quillEditor'
 export default {
   name: 'Blog',
   data () {
@@ -145,6 +141,7 @@ export default {
       page: 1,
       rows: 10,
       deletevisible: false,
+      loading: true,
       condition: {
         title: '',
         section_id: 1,
@@ -177,7 +174,6 @@ export default {
     // 键盘监听注册
     this.queryByCondition()
     this.querySectionList()
-    this.$router.push('/forumtopic/quilleditor')
   },
   watch: {
     page: {
@@ -191,28 +187,39 @@ export default {
       }
     }
   },
+  components: {
+    QuillEditor
+  },
   methods: {
     // 发表帖子
     postData () {
       var t = this
-      this.$axios({
-        method: 'post',
-        url: 'http://localhost:8081/forumtopic/save',
-        dataType: 'json',
-        data: {
-          section_id: this.condition.section_id,
-          user_id: this.condition.user_id,
-          content: this.forumTopicPO.content,
-          title: this.forumTopicPO.title
-        }
-      }).then(function (response) {
-        console.log(response)
-        t.successMessageSave()
-        // 提交完刷新一次数据
-        t.queryByCondition()
-      }).catch(function (error) {
-        console.log(error)
-      })
+      if (this.forumTopicPO.title === '') {
+        this.errorMessageSave()
+      } else {
+        this.$axios({
+          method: 'post',
+          url: t.$url + '/forumtopic/save',
+          dataType: 'json',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + t.$getCookie('otod_access_token')
+          },
+          data: {
+            section_id: this.condition.section_id,
+            user_id: this.condition.user_id,
+            content: this.$refs.quillEditor.content,
+            title: this.forumTopicPO.title
+          }
+        }).then(function (response) {
+          console.log(response)
+          t.successMessageSave()
+          // 提交完刷新一次数据
+          t.queryByCondition()
+        }).catch(function (error) {
+          console.log(error)
+        })
+      }
     },
 
     queryByCondition () {
@@ -221,6 +228,10 @@ export default {
         method: 'post',
         url: 'http://localhost:8081/forumtopic/findbycondition',
         dataType: 'json',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + t.$getCookie('otod_access_token')
+        },
         data: {
           section_id: this.condition.section_id,
           title: this.condition.title,
@@ -230,7 +241,8 @@ export default {
       }).then(function (response) {
         console.log(response)
         // 为主题帖赋值，为总数度赋值
-        t.forumTopicList = response.data.content
+        console.log(response)
+        t.forumTopicList = response.data.pageList.content
         t.forumTopicLength = response.data.totalElements
         // 切换日期显示
         for (var i in t.forumTopicList) {
@@ -240,8 +252,15 @@ export default {
           if (date.getFullYear() < (new Date().getFullYear())) {
             t.forumTopicList[i].date = date.getFullYear() + '年' + (date.getMonth() + 1) + '月' + date.getDate() + '日'
           } else {
-            t.forumTopicList[i].date = (date.getMonth() + 1) + '月' + date.getDate() + '日 ' + date.getHours() + ':' + date.getMinutes()
+            t.forumTopicList[i].date = (date.getMonth() + 1) + '月' + date.getDate() + '日 ' + date.getHours()
+            if (date.getMinutes() < 10) {
+              t.forumTopicList[i].date = t.forumTopicList[i].date + ':0' + date.getMinutes()
+            } else {
+              t.forumTopicList[i].date = t.forumTopicList[i].date + ':' + date.getMinutes()
+            }
           }
+          // 去除加载图案
+          t.loading = false
           // 添加删除弹框可视变量
           t.forumTopicList[i].deletevisible = false
         }
@@ -293,7 +312,7 @@ export default {
     },
 
     alee () {
-      alert(this.$refs.myTextEditor.content)
+      alert(this.$refs.quillEditor.content)
       console.log(this.mycontent)
     },
 
@@ -394,6 +413,15 @@ export default {
         showClose: true,
         message: '发表成功',
         type: 'success'
+      })
+    },
+
+    // 标题未写错误信息
+    errorMessageSave () {
+      this.$message({
+        showClose: true,
+        message: '发表失败，请填写标题',
+        type: 'error'
       })
     },
 

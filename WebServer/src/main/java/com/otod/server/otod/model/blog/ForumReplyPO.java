@@ -11,6 +11,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.otod.server.otod.model.User;
+import com.otod.server.otod.model.UserInfo;
+
 @Entity
 @Table(name="forum_reply")
 public class ForumReplyPO {
@@ -18,7 +21,7 @@ public class ForumReplyPO {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
-	private int user_id;
+//	private Long user_id;
 //	private int topic_id;
 	@Column(length=20000)
 	private String content;
@@ -30,6 +33,9 @@ public class ForumReplyPO {
 	@JoinColumn(name="topic_id")
 	private ForumTopicPO forumTopicPO;
 	
+	@ManyToOne
+	@JoinColumn(name="user_id")
+	private UserInfo userInfo;
 	
 	public int getId() {
 		return id;
@@ -37,13 +43,13 @@ public class ForumReplyPO {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getUser_id() {
+	/*public Long getUser_id() {
 		return user_id;
 	}
-	public void setUser_id(int user_id) {
+	public void setUser_id(Long user_id) {
 		this.user_id = user_id;
 	}
-	/*public int getTopic_id() {
+	public int getTopic_id() {
 		return topic_id;
 	}
 	public void setTopic_id(int topic_id) {
@@ -72,6 +78,12 @@ public class ForumReplyPO {
 	}
 	public void setInsideNum(int insideNum) {
 		this.insideNum = insideNum;
+	}
+	public UserInfo getUserInfo() {
+		return userInfo;
+	}
+	public void setUserInfo(UserInfo userInfo) {
+		this.userInfo = userInfo;
 	}
 	
 	
