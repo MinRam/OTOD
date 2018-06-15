@@ -100,14 +100,15 @@ export default {
       t.loadingOrder = true
       t.$axios({
         method: 'get',
-        url: this.$url + '/allOrders',
+        url: this.$url + '/allOrderPage?currentPage=' + t.currentPage + '&size=' + t.size,
         params: {
           access_token: this.$getCookie('otod_access_token')
         }
       })
         .then(function (response) {
           console.log(response)
-          t.message = response.data
+          t.message = response.data.content
+          t.totalPages = response.data.totalPages * t.size
           t.loadingOrder = false
         })
         .catch(function (error) {
@@ -119,13 +120,13 @@ export default {
       t.loadingOrder = true
       t.$axios({
         method: 'get',
-        url: this.$url + '/listServices?currentPage=' + t.currentPage + '&size=' + t.size,
+        url: this.$url + '/allOrderPage?currentPage=' + (currentPage - 1) + '&size=' + t.size,
         params: {
           access_token: this.$getCookie('otod_access_token')
         }
       })
         .then(function (response) {
-          console.log(t.$url + '/listServices?currentPage=' + (currentPage - 1) + '&size=' + t.size)
+          console.log(t.$url + '/allOrderPage?currentPage=' + (currentPage - 1) + '&size=' + t.size)
           t.message = response.data.content
           t.totalPages = response.data.totalPages * t.size
           t.loadingOrder = false
