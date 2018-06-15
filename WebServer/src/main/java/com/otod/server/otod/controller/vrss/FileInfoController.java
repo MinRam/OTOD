@@ -44,11 +44,6 @@ public class FileInfoController {
                          @RequestParam("file_id") Integer file_id){
         fileInfoService.loveFile(user_id,file_id);
     }
-    @RequestMapping(value = "/unlove")
-    public void unlovefile(@RequestParam("user_id") Integer user_id,
-                         @RequestParam("file_id") Integer file_id){
-        fileInfoService.unloveFile(user_id,file_id);
-    }
     @RequestMapping(value = "/lovestate")
     public Boolean lovestate(@RequestParam("user_id") Integer user_id,
                               @RequestParam("file_id") Integer file_id){
