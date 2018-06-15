@@ -198,7 +198,7 @@ export default {
             }
           }
         }
-        //为标题赋值
+        // 为标题赋值
         t.topic_title = t.pagelist[0].forumTopicPO.title
       }).catch(function (error) {
         console.log(error)

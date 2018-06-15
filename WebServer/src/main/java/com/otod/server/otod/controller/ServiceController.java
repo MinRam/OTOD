@@ -112,13 +112,15 @@ public class ServiceController {
     }
 
     @GetMapping("/waitingRequests")
-    private List<String> getwaitingRequests() {
+    private List<CommenOrder> getwaitingRequests() {
         UserInfo userInfo = userService.getUserInfo(userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName()));
         List<CommenOrder> list = serviceService.getAllOrder(userInfo);
-        List<String> result = new ArrayList<>();
-        for (CommenOrder c : list) {
-            result.add(c.getOrderState());
-
+        List<CommenOrder> result = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            if(list.get(i).getOrderState().equals("1")) {
+                CommenOrder commenOrder = list.get(i);
+                result.add(commenOrder);
+            }
         }
         return result;
     }
@@ -126,32 +128,26 @@ public class ServiceController {
     private List<CommenOrder> getRunningOrders(){
         UserInfo userInfo = userService.getUserInfo(userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName()));
         List<CommenOrder> list = serviceService.getAllOrder(userInfo);
-        List<CommenOrder> result = list;
-        for(CommenOrder c : list){
-            String state = c.getOrderState();
-            if(state.equals("2")){
-
-            } else {
-                result.remove(c);
+        List<CommenOrder> result = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            if(list.get(i).getOrderState().equals("2")) {
+                CommenOrder commenOrder = list.get(i);
+                result.add(commenOrder);
             }
         }
         return result;
-
     }
     @GetMapping("/finishedOrders")
-    private List<CommenOrder> getFinishedOrders(){
+    private List<CommenOrder> getFinishedOrders() {
         UserInfo userInfo = userService.getUserInfo(userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName()));
         List<CommenOrder> list = serviceService.getAllOrder(userInfo);
-        List<CommenOrder> result = list;
-        for(CommenOrder co : list){
-            String state = co.getOrderState();
-            if(state.equals("3")){
-
-            } else {
-                result.remove(co);
+        List<CommenOrder> result = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getOrderState().equals("3")) {
+                CommenOrder commenOrder = list.get(i);
+                result.add(commenOrder);
             }
         }
         return result;
     }
-
 }
