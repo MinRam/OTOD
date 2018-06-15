@@ -44,8 +44,6 @@ public class UserInfo {
     @Column(name = "age")
     private int age;
 
-    @OneToOne(mappedBy="userInfo")
-    Market_user mUser;
     
     public UserInfo() {
     }
@@ -150,14 +148,6 @@ public class UserInfo {
     public void setAge(int age) {
         this.age = age;
     }
-
-	public Market_user getmUser() {
-		return mUser;
-	}
-
-	public void setmUser(Market_user mUser) {
-		this.mUser = mUser;
-	}
 
     
 }

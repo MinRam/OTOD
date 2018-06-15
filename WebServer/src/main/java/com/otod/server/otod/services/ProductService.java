@@ -83,8 +83,7 @@ public class ProductService {
 		}
 
 		Product product = new Product();
-		Market_user seller = userInfo.getmUser();
-		
+		Market_user seller = muRepository.findByUserInfo(userInfo);
 		product.setProduct_catalog(catalog);
 		product.setSeller(seller);
 		product.setProduct_encoding(product_encoding);
@@ -157,4 +156,5 @@ public class ProductService {
 		record.setProduct(product);
 		recordRepository.save(record);
 	}
+	
 }

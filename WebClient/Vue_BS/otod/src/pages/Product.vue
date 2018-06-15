@@ -83,6 +83,10 @@
                   </ul>
                 </div>
                 <hr>
+                <br>
+                <br><br>
+                <br>
+                <br>
                 <div class="buttom">
                   <!--安全保障-->
                   <dl>
@@ -98,13 +102,17 @@
                     </dd>
                   </dl>
                   <hr>
+<br>
+<br>
+<br>
+<br>
 
                   <!--购买商品-->
                   <div id="add_cart" class="pull-right">
-                    <a href="product/pay?product_id=<%=p.getProduct_id() %>" class="btn btn-default">
+                    <el-button @click="changepage('/market/product/pay?product_id='+product.product_id)">
                       <span><img :src="component_img.add_cart" alt="" width="40px" height="40px"></span>
                       <span>购买商品</span>
-                    </a>
+                    </el-button>
                   </div>
                 </div>
               </el-col>
@@ -219,11 +227,10 @@ export default {
           product_id: t.$route.query.product_id
         }
       }).then(function (response) {
-        console.log(response)
         t.product = response.data
         t.show_picture = t.product.product_img_url
         t.img_url = response.data.product_imgs
-        console.log(t.img_url)
+        console.log(t.product)
       })
     },
     handleClick (tab, event) {},

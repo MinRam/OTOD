@@ -13,13 +13,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import com.otod.server.otod.model.Market_user;
 import com.otod.server.otod.model.Product;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Integer>,JpaSpecificationExecutor<Product>{
-
-	@Query("select p from Product p where p.product_name like %?1%")
-	List<Product> Findbykey(String key);
 	
 	@Query("select p from Product p where p.product_name like %:name%")
 	Page<Product> findByName(@Param("name") String name,Pageable pageable);
@@ -47,4 +45,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer>,JpaSp
 	@Modifying
 	@Query("update Product p set p.product_status = :status where p.product_id = :id")
 	int updateStatus(@Param("status") int status,@Param("id") int id);
+	
+	@Query("select p from Product p where p.seller.market_user_id = :seller_id")
+	Page<Product> findBySeller(@Param("seller_id")int seller_id,Pageable pageable);
 }

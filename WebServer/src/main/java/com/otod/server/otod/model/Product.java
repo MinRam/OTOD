@@ -175,7 +175,6 @@ public class Product {
 		this.product_status = product_status;
 	}
 
-
 	public Set<P_Order> getOrders() {
 		return orders;
 	}

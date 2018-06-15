@@ -14,6 +14,7 @@ import com.otod.server.otod.model.Market_record;
 import com.otod.server.otod.model.Market_user;
 import com.otod.server.otod.model.P_Order;
 import com.otod.server.otod.model.Product;
+import com.otod.server.otod.pojos.P_OrderPojo;
 import com.otod.server.otod.respository.MURepository;
 import com.otod.server.otod.respository.P_OrderRepository;
 import com.otod.server.otod.respository.ProductRepository;
@@ -41,28 +42,42 @@ public class OrderService {
 		return c;
 	}
 	
+	
 	@Transactional
-	public void SaveOrder(int market_user_id,int product_id,int product_num){
+	public void SaveByPojo(P_OrderPojo pojo , Market_user mUser){
 		P_Order order = new P_Order();
-		Market_user buyer = muRepository.findById(market_user_id).get();
-		Product product = productRepository.findById(product_id).get();
+		Market_user buyer = mUser;
+		Product product = productRepository.findById(pojo.getProduct_id()).get();
 		Date createtime = new Date();
+		String address = pojo.getAddress();
+		String receiver = pojo.getReceiver();
+		String phone = pojo.getPhone();
+		int product_num = pojo.getProduct_num();
+		boolean flag = false;
+		if(product.getProduct_stock() == product_num)
+		{
+			flag = true;
+		}
+		order.setAddress(address);
 		order.setBuyer(buyer);
+		order.setCreatetime(createtime);
+		order.setPhone(phone);
 		order.setProduct(product);
 		order.setProduct_num(product_num);
 		order.setStatus(1);
 		order.setUser_order_encoding(EncodingGenerater());
-		order.setCreatetime(createtime);
 		orderRepository.save(order);
-		productRepository.updateById(product.getProduct_stock() - product_num,product_id);
+		productRepository.updateById(product.getProduct_stock() - product_num, pojo.getProduct_id());
 		Market_record record = new Market_record();
 		record.setCreatetime(createtime);
 		record.setMarket_user(buyer);
 		record.setP_Order(order);
 		record.setOperation(4);
 		recordRepository.save(record);
+		if(flag){
+			productRepository.updateStatus(2, pojo.getProduct_id());
+		}
 	}
-	
 	//卖家发货 买家收货
 	public void Deliver(P_Order order){
 		int status = 2;
@@ -142,5 +157,35 @@ public class OrderService {
 		recordRepository.save(record);
 	}
 	
+	//买家取消申请取消订单
+	@Transactional
+	public void CancelCancelOrder(P_Order order){
+		int status = 1;
+		Date now = new Date();
+		orderRepository.UpdateStatus(status, order.getOrder_id());
+		int operation = 12;
+		Market_user user = order.getBuyer();
+		Market_record record = new Market_record();
+		record.setCreatetime(now);
+		record.setMarket_user(user);
+		record.setOperation(operation);
+		record.setP_Order(order);
+		recordRepository.save(record);
+	}
 	
+	//买家取消申请退货
+	@Transactional
+	public void CancelReturn(P_Order order){
+		int status = 2;
+		Date now = new Date();
+		orderRepository.UpdateStatus(status, order.getOrder_id());
+		int operation = 13;
+		Market_user user = order.getBuyer();
+		Market_record record = new Market_record();
+		record.setCreatetime(now);
+		record.setMarket_user(user);
+		record.setOperation(operation);
+		record.setP_Order(order);
+		recordRepository.save(record);
+	}
 }
