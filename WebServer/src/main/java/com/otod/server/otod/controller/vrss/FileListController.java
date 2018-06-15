@@ -40,10 +40,10 @@ public class FileListController {
                              @RequestParam("filelist_id") Integer filelist_id){
         fileListService.loveFileList(user_id,filelist_id);
     }
-    @RequestMapping(value = "/unlove")
-    public void unlovefilelist(@RequestParam("user_id") Integer user_id,
+    @RequestMapping(value = "/lovestate")
+    public Boolean lovestate(@RequestParam("user_id") Integer user_id,
                              @RequestParam("filelist_id") Integer filelist_id){
-        fileListService.unloveFileList(user_id,filelist_id);
+        return fileListService.loveState(user_id,filelist_id);
     }
     @RequestMapping(value = "/view")
     public void viewfilelist(@RequestParam("filelist_id") Integer filelist_id){

@@ -83,25 +83,29 @@ public class FileInfoService {
     }
     //收藏文件
     public void loveFile(Integer user_id,Integer file_id){
-        FileInfo file= fi_fileInfoRepository.findById(file_id).get();
-        file.setLove(file.getLove()+1);
-        VrssUser vrssUser = fi_Vrss_userRepository.findById(user_id).get();
-        List<VrssUser> l=fi_Vrss_userRepository.findByFile(file);
-        if(l.size()>0)  return;
-        vrssUser.getFile().add(file);
-        fi_fileInfoRepository.save(file);
-        fi_Vrss_userRepository.save(vrssUser);
+        if (lovaState(user_id,file_id)){
+            FileInfo file= fi_fileInfoRepository.findById(file_id).get();
+            VrssUser vrssUser = fi_Vrss_userRepository.findById(user_id).get();
+            file.setLove(file.getLove()-1);
+            vrssUser.getFile().remove(file);
+            fi_fileInfoRepository.save(file);
+            fi_Vrss_userRepository.save(vrssUser);
+        }
+        else{
+            FileInfo file= fi_fileInfoRepository.findById(file_id).get();
+            VrssUser vrssUser = fi_Vrss_userRepository.findById(user_id).get();
+            file.setLove(file.getLove()+1);
+            vrssUser.getFile().add(file);
+            fi_fileInfoRepository.save(file);
+            fi_Vrss_userRepository.save(vrssUser);
+        }
     }
-    //取消收藏文件
-    public void unloveFile(Integer user_id,Integer file_id){
+    public Boolean lovaState(Integer user_id,Integer file_id){
         FileInfo file= fi_fileInfoRepository.findById(file_id).get();
-        file.setLove(file.getLove()-1);
         VrssUser vrssUser = fi_Vrss_userRepository.findById(user_id).get();
         List<VrssUser> l=fi_Vrss_userRepository.findByFile(file);
-        if(l.size()>0)  return;
-        vrssUser.getFile().remove(file);
-        fi_fileInfoRepository.save(file);
-        fi_Vrss_userRepository.save(vrssUser);
+        if(l.size()>0)  return true;
+        return false;
     }
     //浏览文件
     public void viewFile(Integer file_id){
@@ -113,11 +117,6 @@ public class FileInfoService {
     public List<Tag> findFileTag(Integer file_id){
         FileInfo file= fi_fileInfoRepository.findById(file_id).get();
         return (List<Tag>) file.getTag();
-    }
-    //下载文件
-    public String downloadFile(Integer file_id){
-        FileInfo fileInfo= fi_fileInfoRepository.findById(file_id).get();
-        return fileInfo.getFile_url();
     }
 
     //加载文件1

@@ -58,25 +58,29 @@ public class FileListService {
     }
     //用户收藏专辑
     public void loveFileList(Integer user_id, Integer filelist_id){
-        FileList filelist= fl_fileListRepository.findById(filelist_id).get();
-        filelist.setLove(filelist.getLove()+1);
-        VrssUser vrssUser = fl_Vrss_userRepository.findById(user_id).get();
-        List<VrssUser> l=fl_Vrss_userRepository.findByFilelist(filelist);
-        if(l.size()>0)  return;
-        vrssUser.getFilelist().add(filelist);
-        fl_Vrss_userRepository.save(vrssUser);
-        fl_fileListRepository.save(filelist);
+        if (loveState(user_id,filelist_id)){
+            FileList filelist= fl_fileListRepository.findById(filelist_id).get();
+            VrssUser vrssUser = fl_Vrss_userRepository.findById(user_id).get();
+            filelist.setLove(filelist.getLove()-1);
+            vrssUser.getFilelist().remove(filelist);
+            fl_Vrss_userRepository.save(vrssUser);
+            fl_fileListRepository.save(filelist);
+        }
+        else{
+            FileList filelist= fl_fileListRepository.findById(filelist_id).get();
+            VrssUser vrssUser = fl_Vrss_userRepository.findById(user_id).get();
+            filelist.setLove(filelist.getLove()+1);
+            vrssUser.getFilelist().add(filelist);
+            fl_Vrss_userRepository.save(vrssUser);
+            fl_fileListRepository.save(filelist);
+        }
     }
-    //用户取消收藏专辑
-    public void unloveFileList(Integer user_id, Integer filelist_id){
+    public Boolean loveState(Integer user_id, Integer filelist_id){
         FileList filelist= fl_fileListRepository.findById(filelist_id).get();
-        filelist.setLove(filelist.getLove()-1);
         VrssUser vrssUser = fl_Vrss_userRepository.findById(user_id).get();
         List<VrssUser> l=fl_Vrss_userRepository.findByFilelist(filelist);
-        if(l.size()>0)  return;
-        vrssUser.getFilelist().remove(filelist);
-        fl_Vrss_userRepository.save(vrssUser);
-        fl_fileListRepository.save(filelist);
+        if(l.size()>0)  return true;
+        return false;
     }
     //浏览文件
     public void viewFileList(Integer filelist_id){
