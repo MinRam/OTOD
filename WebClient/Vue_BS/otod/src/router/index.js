@@ -8,13 +8,23 @@ import Index from '@/pages/Index'
 
 import Home from '@/pages/Home'
 import Person from '@/components/Person'
-// import Setting from '@/components/Setting'
+import Setting from '@/components/Setting'
 
 import Blog from '@/pages/Blog'
-// import BlogReply from '@/pages/BlogReply'
+import BlogReply from '@/pages/BlogReply'
 import Service from '@/pages/Service'
 import Book from '@/pages/Book'
+// file pages
 import File from '@/pages/File'
+import download from '@/pages/file/download/download.vue'
+import upload from '@/pages/file/upload/upload.vue'
+import recommend from '@/pages/file/recommend/recommend.vue'
+import myfiles from '@/pages/file/myfiles/myfiles.vue'
+import files from '@/pages/file/files/files.vue'
+import filelist from '@/pages/file/filelist/filelist.vue'
+import mydownload from '@/components/file/myfiles/mydownload.vue'
+import myupload from '@/components/file/myfiles/myupload.vue'
+import mycollection from '@/components/file/myfiles/mycollection.vue'
 // market pages
 import Market from '@/pages/MarketList'
 import Product from '@/pages/Product'
@@ -24,7 +34,6 @@ import Payfor from '@/pages/payfor'
 // server pages
 import OrderList from '@/components/OrderList'
 import PublishOrder from '@/components/PublishOrder'
-import QuillEditor from '@/components/quillEditor'
 import AllOrder from '@/components/AllOrder'
 import RunningS from '@/components/Runnings'
 import WaitingRequest from '@/components/WaitingRequest'
@@ -68,17 +77,14 @@ const routes = [
         meta: {
           requireAuth: true
         },
-        component: Blog,
-        children: [
-          {
-            path: '/forumtopic/quilleditor',
-            name: 'QuillEditor',
-            meta: {
-              requireAuth: false
-            },
-            component: QuillEditor
-          }
-        ]
+        component: Blog
+      }, {
+        path: '/blogreply',
+        name: 'BlogReply',
+        meta: {
+          requireAuth: true
+        },
+        component: BlogReply
       }, {
 
         path: '/service',
@@ -142,7 +148,48 @@ const routes = [
         meta: {
           requireAuth: false
         },
-        component: File
+        redirect: '/file/recommend',
+        component: File,
+        children: [{
+          path: '/file/recommend',
+          component: recommend
+        },
+        {
+          path: '/file/upload',
+          component: upload
+        },
+        {
+          path: '/file/download',
+          component: download
+        },
+        {
+          path: '/file/files',
+          component: files
+        },
+        {
+          path: '/file/filelist',
+          component: filelist
+        },
+        {
+          path: '/file/myfiles',
+          component: myfiles,
+          children: [{
+            path: '',
+            redirect: '/file/myfiles/mycollection'
+          },
+          {
+            path: '/file/myfiles/mydownload',
+            component: mydownload
+          },
+          {
+            path: '/file/myfiles/myupload',
+            component: myupload
+          },
+          {
+            path: '/file/myfiles/mycollection',
+            component: mycollection
+          }]
+        }]
       }, {
         path: '/market',
         name: 'Market',
@@ -171,6 +218,13 @@ const routes = [
           requireAuth: false
         },
         component: Payfor
+      }, {
+        path: '/user/setting',
+        name: 'Setting',
+        meta: {
+          requireAuth: true
+        },
+        component: Setting
       }
     ]
   }, {
@@ -179,18 +233,7 @@ const routes = [
     meta: {
       requireAuth: false
     },
-    component: ForumTopic,
-    children: [
-      {
-        path: '/forumtopic/quilleditor',
-        name: 'QuillEditor',
-        meta: {
-          requireAuth: false
-        },
-        component: QuillEditor
-      }
-    ]
-
+    component: ForumTopic
   }, {
     path: '/forumreply',
     name: 'ForumReply',

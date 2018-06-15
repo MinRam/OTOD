@@ -8,9 +8,9 @@ import cookieOpe from './utils/cookieOp'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import store from './store/index.js'
-// import VueQuillEditor from 'vue-quill-editor'
+import VueQuillEditor from 'vue-quill-editor'
 // import 'quill/dist/quill.core.css'
-// import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.snow.css'
 // import 'quill/dist/quill.bubble.css'
 
 // 采用axios代替ajax
@@ -19,7 +19,7 @@ import axios from 'axios'
 Vue.use(Vuex)
 Vue.use(ElementUI)
 Vue.use(cookieOpe)
-// Vue.use(VueQuillEditor)
+Vue.use(VueQuillEditor)
 
 Vue.prototype.$imageUrl = 'http://localhost:8081/images/'
 Vue.prototype.$url = 'http://localhost:8081'
@@ -29,13 +29,6 @@ Vue.config.productionTip = false
 
 // // http request 拦截器
 // axios.interceptors.request.use(
-//   config => {
-//     // 判断是否存在token，如果存在的话，则每个http header都加上token
-//     if (store.state.token) {
-//       config.headers.Authorization = `token ${store.state.token}`
-//     }
-//     return config
-//   },
 //   err => {
 //     return Promise.reject(err)
 //   }

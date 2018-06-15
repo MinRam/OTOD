@@ -1,29 +1,15 @@
 package com.otod.server.otod.services;
 
-
-import static org.hamcrest.CoreMatchers.nullValue;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Random;
-
-import javax.transaction.Transactional;
-
+import com.otod.server.otod.model.*;
+import com.otod.server.otod.pojos.ProductPojo;
+import com.otod.server.otod.respository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.otod.server.otod.model.Catalog;
-import com.otod.server.otod.model.Market_record;
-import com.otod.server.otod.model.Market_user;
-import com.otod.server.otod.model.Product;
-import com.otod.server.otod.model.Product_img;
-import com.otod.server.otod.model.UserInfo;
-import com.otod.server.otod.pojos.ProductPojo;
-import com.otod.server.otod.respository.CatalogRepository;
-import com.otod.server.otod.respository.MURepository;
-import com.otod.server.otod.respository.ProductImgRepository;
-import com.otod.server.otod.respository.ProductRepository;
-import com.otod.server.otod.respository.RecordRepository;
+import javax.transaction.Transactional;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Random;
 
 
 @Service("productService")
@@ -83,9 +69,14 @@ public class ProductService {
 		}
 
 		Product product = new Product();
+<<<<<<< HEAD
 		Market_user seller = muRepository.findByUserInfo(userInfo);
+=======
+//		Market_user seller = userInfo.getmUser();
+		
+>>>>>>> 254b9f2bed4a5b73b7a7cb899b04dd6327f66827
 		product.setProduct_catalog(catalog);
-		product.setSeller(seller);
+//		product.setSeller(seller);
 		product.setProduct_encoding(product_encoding);
 		product.setProduct_name(product_name);
 		product.setProduct_price(product_price);
@@ -112,7 +103,7 @@ public class ProductService {
 		
 		Market_record record = new Market_record();
 		record.setCreatetime(createtime);
-		record.setMarket_user(seller);
+//		record.setMarket_user(seller);
 		record.setOperation(1);
 		record.setProduct(product);
 		recordRepository.save(record);

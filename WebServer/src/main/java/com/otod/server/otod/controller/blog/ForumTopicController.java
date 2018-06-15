@@ -44,7 +44,7 @@ public class ForumTopicController {
 	}
 	
 	@RequestMapping("/findbycondition")
-	public Page<ForumTopicPO> findbycondition(@RequestBody Map<String, String> map){
+	public Map<String, Object> findbycondition(@RequestBody Map<String, String> map){
 		    return forumTopicService.findByConditions(map, Integer.parseInt(map.get("page")),Integer.parseInt(map.get("row")));
 	}	
 

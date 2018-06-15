@@ -1,5 +1,7 @@
 package com.otod.server.otod.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -8,6 +10,7 @@ public class UserInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "info_id")
+    @JsonIgnore
     private Long id;
 
     @OneToOne
@@ -44,6 +47,11 @@ public class UserInfo {
     @Column(name = "age")
     private int age;
 
+<<<<<<< HEAD
+=======
+//    @OneToOne(mappedBy="userInfo")
+//    Market_user mUser;
+>>>>>>> 254b9f2bed4a5b73b7a7cb899b04dd6327f66827
     
     public UserInfo() {
     }
@@ -149,5 +157,16 @@ public class UserInfo {
         this.age = age;
     }
 
+<<<<<<< HEAD
+=======
+//	public Market_user getmUser() {
+//		return mUser;
+//	}
+//
+//	public void setmUser(Market_user mUser) {
+//		this.mUser = mUser;
+//	}
+
+>>>>>>> 254b9f2bed4a5b73b7a7cb899b04dd6327f66827
     
 }

@@ -70,6 +70,7 @@ public class UserController  {
 
         return simpleInfo;
     }
+
     @GetMapping("/user/getSimpleByNickname")
     private UserSimpleInfo getSimpleByNickname(@RequestParam (value = "nickname") String nickname){
         return new UserSimpleInfo(userService.getUserInfo(nickname));
@@ -110,6 +111,11 @@ public class UserController  {
         return userService.getUserInfo(user);
     }
 
+    @GetMapping("/user/setAllInfo")
+    private String setInfo(){
+        return "success";
+    }
+
     @GetMapping("/user/Notice")
     private List<NoticePojo> notice(){
         User user = userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName());
@@ -124,5 +130,13 @@ public class UserController  {
         return noticePojosList;
         }
 
+    @GetMapping("/user/getUpdateList")
+    private List<Integer> getUpdteList(){
+        User user = userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName());
+        UserInfo userInfo =  userService.getUserInfo(user);
 
+
+
+        return null;
+    }
 }

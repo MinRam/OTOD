@@ -10,8 +10,14 @@ export default new Vuex.Store({
     telephone: ''
   },
   mutations: {
+    userSignIn (state) {
+      state.isLogin = true
+    },
+    userSignOut (state) {
+      state.isLogin = false
+    },
     initialName (state, name) {
-      state.nickname = name
+      state.nickname = ''
     },
     initialHead (state, head) {
       state.headImage = head
