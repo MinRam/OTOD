@@ -32,7 +32,7 @@ export default {
     }
   },
   created () {
-    var url = 'http://127.0.0.1:8082/vrss/FileList/listfilelist'
+    var url = 'http://127.0.0.1:8081/vrss/FileList/listfilelist'
     var params = new URLSearchParams()
     params.append('tag_id', 0)
     params.append('key', null)
