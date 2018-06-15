@@ -118,11 +118,6 @@ public class FileInfoService {
         FileInfo file= fi_fileInfoRepository.findById(file_id).get();
         return (List<Tag>) file.getTag();
     }
-    //下载文件
-    public String downloadFile(Integer file_id){
-        FileInfo fileInfo= fi_fileInfoRepository.findById(file_id).get();
-        return fileInfo.getFile_url();
-    }
 
     //加载文件1
     public List<FileInfo> findAllFile(){

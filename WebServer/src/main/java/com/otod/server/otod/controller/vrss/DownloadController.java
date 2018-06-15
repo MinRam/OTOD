@@ -17,11 +17,6 @@ public class DownloadController {
     @Autowired
     private DownloadService downloadService;
 
-    @RequestMapping(value = "/add")
-    public void add(@RequestParam("user_id") Integer user_id,
-                    @RequestParam("file_id") Integer file_id){
-        downloadService.addDownload(file_id,user_id);
-    }
     @RequestMapping(value = "/list")
     @ResponseBody
     public List<Download> list(@RequestParam("user_id") Integer user_id){
@@ -32,6 +27,9 @@ public class DownloadController {
     public void download(HttpServletRequest req,HttpServletResponse res) {
         String webroot=System.getProperty("user.dir");
         String fileName = (String) req.getParameter("file_url");
+        Integer  user_id= Integer.parseInt((String) req.getParameter("user_id"));
+        Integer  file_id= Integer.parseInt((String) req.getParameter("file_id"));
+        downloadService.addDownload(file_id,user_id);
         res.setHeader("content-type", "application/octet-stream");
         res.setContentType("application/octet-stream");
         res.setHeader("Content-Disposition", "attachment;filename=" + fileName);
