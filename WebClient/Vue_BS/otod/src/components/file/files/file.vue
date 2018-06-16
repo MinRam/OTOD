@@ -37,14 +37,38 @@ export default {
       },
       isClose: true, // 假设默认未收藏
       optionlist: [],
-      myvalue: 0 // 默认是0
+      myvalue: 0, // 默认是0
+      islike: false, // 得到原始状态
+      isLikes: false
     }
   },
   created () {
     this.getinfo()
     this.getlist()
   },
-  destroyed () {
+  updated () {
+    var url = 'http://127.0.0.1:8081/vrss/FileInfo/love'
+    var params = new URLSearchParams()
+    params.append('user_id', this.userid)
+    params.append('file_id', this.id)
+    this.$http.post(url, params).then((response) => {
+      var data = response.data
+      console.log(data)
+    }).catch((error) => {
+      console.log(error)
+    })
+    if (this.myvalue !== 0 && this.islike === true) {
+      var url1 = 'http://127.0.0.1:8081/vrss/FileList/addfile'
+      var params1 = new URLSearchParams()
+      params1.append('filelist_id', this.myvalue)
+      params1.append('file_id', this.id)
+      this.$http.post(url1, params1).then((response) => {
+        var data1 = response.data
+        console.log(data1)
+      }).catch((error) => {
+        console.log(error)
+      })
+    }
 
   },
   methods: {
@@ -58,6 +82,8 @@ export default {
         console.log(data)
         if (data === true) {
           this.isClose = false
+          this.isLikes = true
+          this.islike = true
         }
       }).catch((error) => {
         console.log(error)
@@ -84,7 +110,6 @@ export default {
       params1.append('type', 7)
       this.$http.post(url1, params1).then((response) => {
         var data = response.data
-        console.log(data)
         if (data != null) {
           for (var i = 0; i < data.length; i++) {
             this.optionlist.push({
@@ -116,6 +141,7 @@ export default {
     switcher: function () {
       // s实现开关切换
       this.isClose = !this.isClose
+      this.islike = !this.islike
     }
   }
 }
