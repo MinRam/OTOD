@@ -36,11 +36,11 @@
                             <i class="el-icon-document"></i>
                             <span slot="title">我的订单</span>
                         </template>
-                        <el-menu-item index="4-1">所有订单</el-menu-item>
-                        <el-menu-item index="4-2">已接受</el-menu-item>
-                        <el-menu-item index="4-3">待评价</el-menu-item>
-                        <el-menu-item index="4-4">已完成</el-menu-item>
-                        <el-menu-item index="4-5">失败订单</el-menu-item>
+                        <el-menu-item @click="navClick('/service/rmyallorders')" index="4-1">所有订单</el-menu-item>
+                        <el-menu-item @click="navClick('/service/rrecivedorders')" index="4-2">已接受</el-menu-item>
+                        <el-menu-item @click="navClick('/service/rwaitingcommentorders')" index="4-3">待评价</el-menu-item>
+                        <el-menu-item @click="navClick('/service/rdoneorders')" index="4-4">已完成</el-menu-item>
+                        <el-menu-item @click="navClick('/service/rfailedorders')" index="4-5">失败订单</el-menu-item>
                     </el-submenu>
                 </el-menu>
             </div>

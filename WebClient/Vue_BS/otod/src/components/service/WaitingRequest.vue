@@ -16,12 +16,12 @@
                                 <el-aside class="aside-container" width="200px">
                                     <div>
                                         <div class="user-img">
-                                            <i v-if="m.userinfo_s == null" class="el-icon-menu" style="font-size: 60px;color: #409EFF"></i>
-                                            <img v-if="m.userinfo_s != null" class="user-img" :src="$url + '/images/' + m.userinfo_s.headImage"/>
+                                            <i v-if="m.userinfoS == null" class="el-icon-menu" style="font-size: 60px;color: #409EFF"></i>
+                                            <img v-if="m.userinfoS != null" class="user-img" :src="$url + '/images/' + m.userinfoS.headImage"/>
                                         </div>
                                         <div class="user-info">
                                           <!-- {{ }} 是一种输出，就像printf一样，把里面的内容输出来 -->
-                                            <p v-if="m.userinfo_s != null">{{ m.userinfo_s.nickname }}</p>
+                                            <p v-if="m.userinfoS != null">{{ m.userinfoS.nickname }}</p>
                                             <!-- <p>Nothing</p> -->
                                         </div>
                                         <div style="clear: both"></div>
@@ -54,10 +54,10 @@
                     </el-col>
                 </el-row>
             </li>
-            <el-card v-show="message.length == 0" shadow="hover" class="center-container-card">
-              <p>没有任何信息哦</p>
-            </el-card>
         </ul>
+          <el-card v-show="message.length == 0" shadow="hover" class="center-container-card">
+            <p>没有任何信息哦</p>
+          </el-card>
         <el-row v-show="message.length != 0" type="flex" justify="center">
             <el-col :span="14">
                 <div>
@@ -95,14 +95,14 @@ export default {
     }
   },
   mounted () {
-    this.getAllRunningsOrders()
+    this.getWaitingRequest()
   },
   methods: {
-    getAllRunningsOrders () {
+    getWaitingRequest () {
       var t = this
       t.loadingOrder = true
       this.$axios({
-        url: t.$url + '/runningOrders',
+        url: t.$url + '/waitingRequests',
         method: 'get',
         params: {
           access_token: this.$getCookie('otod_access_token')
@@ -111,7 +111,6 @@ export default {
         .then(function (response) {
           console.log(response)
           t.message = response.data
-          console.log(t.message)
           t.loadingOrder = false
           console.log(t.totalPages)
         })
@@ -139,5 +138,5 @@ export default {
 </script>
 
 <style>
-    @import '../assets/css/OrderList.css'
+    @import '../../assets/css/OrderList.css'
 </style>

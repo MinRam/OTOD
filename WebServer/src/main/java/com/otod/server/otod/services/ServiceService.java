@@ -66,4 +66,16 @@ public class ServiceService {
             }
         },pageable);
     }
+
+    public List<CommenOrder> getRMyAllOrders(UserInfo userInfo){
+        String sql = "select from commen_order_userinfor where userinfo_info_id=" + userInfo.getId();
+        return commenOrderRespository.findByUserinfoR(userInfo);
+    }
+
+    public CommenOrder getOrderById(Long id){
+        Optional<CommenOrder> optional =  commenOrderRespository.findById(id);
+        if(optional.isPresent()){
+            return null;
+        } else return optional.get();
+    }
 }
