@@ -6,6 +6,7 @@
         <li v-bind="listdefault">
           {{listdefault.name}}<br>
           {{listdefault.description}}
+          <router-link class="card-link" :to="{path: '/file/filelist', query: {listname: JSON.stringify(listdefault)}}" target="_blank">查看</router-link>
         </li>
       </div>
       <div>
