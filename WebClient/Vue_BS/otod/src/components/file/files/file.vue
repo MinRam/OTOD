@@ -64,7 +64,7 @@ export default {
       })
     },
     getinfo () {
-      var url = 'http://127.0.0.1:8082/vrss/FileInfo/get'
+      var url = 'http://127.0.0.1:8081/vrss/FileInfo/get'
       var params = new URLSearchParams()
       params.append('file_id', this.id)
       this.$http.post(url, params).then((response) => {
@@ -76,7 +76,7 @@ export default {
       })
     },
     getlist () {
-      var url1 = 'http://127.0.0.1:8082/vrss/FileList/listfilelist'
+      var url1 = 'http://127.0.0.1:8081/vrss/FileList/listfilelist'
       var params1 = new URLSearchParams()
       params1.append('user_id', this.userid)
       params1.append('tag_id', 0)
@@ -103,7 +103,7 @@ export default {
       })
     },
     adddownload () {
-      var url = 'http://127.0.0.1:8082/vrss/Download/add'
+      var url = 'http://127.0.0.1:8081/vrss/Download/add'
       var params = new URLSearchParams()
       params.append('user_id', this.userid)
       params.append('file_id', this.id)

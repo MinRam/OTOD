@@ -51,7 +51,7 @@ export default {
   methods: {
     getdownload () {
       this.filelist = []
-      var url = 'http://127.0.0.1:8082/vrss/FileInfo/list'
+      var url = 'http://127.0.0.1:8081/vrss/FileInfo/list'
       var params = new URLSearchParams()
       params.append('tag_id', 0)
       params.append('key', null)
@@ -68,7 +68,7 @@ export default {
     },
     getsearch () {
       this.filelist = []
-      var url = 'http://127.0.0.1:8082/vrss/FileInfo/list'
+      var url = 'http://127.0.0.1:8081/vrss/FileInfo/list'
       var params = new URLSearchParams()
       params.append('tag_id', 0)
       params.append('key', this.str)

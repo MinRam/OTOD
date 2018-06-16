@@ -104,7 +104,10 @@ public class FileInfoService {
         FileInfo file= fi_fileInfoRepository.findById(file_id).get();
         VrssUser vrssUser = fi_Vrss_userRepository.findById(user_id).get();
         List<VrssUser> l=fi_Vrss_userRepository.findByFile(file);
-        if(l.size()>0)  return true;
+        if(l.size()==0)  return false;
+        for (VrssUser v:l){
+           if(v.getUser_id().equals(vrssUser.getUser_id())) return true;
+        }
         return false;
     }
     //浏览文件

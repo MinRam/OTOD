@@ -65,7 +65,7 @@ export default {
       params.append('file_id', this.id)
       params.append('filelist_id', 0)
       params.append('score', 1)
-      var url = 'http://127.0.0.1:8082/vrss/Comment/add'
+      var url = 'http://127.0.0.1:8081/vrss/Comment/add'
       this.$http.post(url, params).then((response) => {
         console.log(response.data)
         this.comments.push({

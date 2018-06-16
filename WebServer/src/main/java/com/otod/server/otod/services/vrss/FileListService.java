@@ -76,10 +76,13 @@ public class FileListService {
         }
     }
     public Boolean loveState(Integer user_id, Integer filelist_id){
-        FileList filelist= fl_fileListRepository.findById(filelist_id).get();
+        FileList fileList= fl_fileListRepository.findById(filelist_id).get();
         VrssUser vrssUser = fl_Vrss_userRepository.findById(user_id).get();
-        List<VrssUser> l=fl_Vrss_userRepository.findByFilelist(filelist);
-        if(l.size()>0)  return true;
+        List<VrssUser> l=fl_Vrss_userRepository.findByFilelist(fileList);
+        if(l.size()==0)  return false;
+        for (VrssUser v:l){
+            if(v.getUser_id().equals(vrssUser.getUser_id())) return true;
+        }
         return false;
     }
     //浏览文件
