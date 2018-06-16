@@ -83,7 +83,7 @@ export default{
           'Content-Type': 'multipart/form-data'
         }
       }
-      this.$http.post('http://127.0.0.1:8082/vrss/FileInfo/upload', formData, config).then((response) => {
+      this.$http.post('http://127.0.0.1:8081/vrss/FileInfo/upload', formData, config).then((response) => {
         /* 这里做处理 */
         this.fileid = response.data
         console.log('id' + this.fileid)
@@ -107,7 +107,7 @@ export default{
           tags.push(this.tags[i].id)
         }
       }
-      var url = 'http://127.0.0.1:8082/vrss/Tag/addfiletag'
+      var url = 'http://127.0.0.1:8081/vrss/Tag/addfiletag'
       var params = new URLSearchParams()
       params.append('file_id', this.fileid)
       params.append('tag_id', tags)
