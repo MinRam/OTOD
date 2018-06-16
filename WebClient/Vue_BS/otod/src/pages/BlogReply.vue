@@ -4,8 +4,8 @@
       <el-header>
         <el-breadcrumb separator-class="el-icon-arrow-right">
           <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-          <el-breadcrumb-item>活动管理</el-breadcrumb-item>
-          <el-breadcrumb-item>活动列表</el-breadcrumb-item>
+          <el-breadcrumb-item>博客</el-breadcrumb-item>
+          <el-breadcrumb-item>{{ section_name }}</el-breadcrumb-item>
           <el-breadcrumb-item>{{ topic_title }}</el-breadcrumb-item>
         </el-breadcrumb>
       </el-header>
@@ -14,6 +14,7 @@
           <div class="block">
             <el-table
               :data="pagelist"
+              v-loading="loading"
               stripe
               border
               style="width: 100%">
@@ -80,6 +81,8 @@ export default {
       page: 1,
       rows: 10,
       forumReplyLength: 0,
+      loading: true,
+      section_name: '',
       topic_title: '',
       forumReplyPO: {
         topic_id: this.$route.query.id,
@@ -143,6 +146,8 @@ export default {
           t.successMessageSave()
           // 提交完刷新一次数据
           t.queryByConditions()
+          // 内容清空
+          t.$refs.quillEditor.content = ''
           t.$refs.quillEditor.content = ''
         }).catch(function (error) {
           console.log(error)
@@ -198,8 +203,14 @@ export default {
             }
           }
         }
-        //为标题赋值
-        t.topic_title = t.pagelist[0].forumTopicPO.title
+        // 为标题赋值
+        if (t.section_name === '') {
+          t.section_name = t.pagelist[0].forumTopicPO.sectionInfoPO.name
+        }
+        if (t.topic_title === '') {
+          t.topic_title = t.pagelist[0].forumTopicPO.title
+        }
+        t.loading = false
       }).catch(function (error) {
         console.log(error)
       })

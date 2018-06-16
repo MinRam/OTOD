@@ -2,6 +2,11 @@
 <div>
   <el-container style="width:80%;margin:auto;">
     <el-header>
+      <el-breadcrumb separator-class="el-icon-arrow-right">
+          <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
+          <el-breadcrumb-item >博客</el-breadcrumb-item>
+          <el-breadcrumb-item>{{ section_name }}</el-breadcrumb-item>
+      </el-breadcrumb>
     </el-header>
     <el-main>
       <el-row type="flex" class="row-bg" justify="center">
@@ -134,7 +139,6 @@
       </el-input>
       <QuillEditor ref="quillEditor"></QuillEditor>
       <el-button style="margin:5px 0px;" type="success" plain @click="postData()">发表</el-button>
-      <el-button type="success" plain @click="alee()">发表</el-button>
     </el-footer>
   </el-container>
 </div>
@@ -146,6 +150,7 @@ export default {
   name: 'Blog',
   data () {
     return {
+      section_name: '公共',
       conditionSelect: '',
       forumTopicLength: 0,
       page: 1,
@@ -181,16 +186,17 @@ export default {
     }
   },
   mounted: function () {
-    // 键盘监听注册
     this.queryByCondition()
     this.querySectionList()
   },
   watch: {
+    // 监听当前页面
     page: {
       handler: function (val, oldval) {
         this.queryByCondition()
       }
     },
+    // 监听页面大小
     rows: {
       handler: function (val, oldval) {
         this.queryByCondition()
@@ -204,7 +210,7 @@ export default {
     // 发表帖子
     postData () {
       var t = this
-      if (this.forumTopicPO.title === '') {
+      if (this.forumTopicPO.title === '' || this.$refs.quillEditor.content === '') {
         this.errorMessageSave()
       } else {
         this.$axios({
@@ -226,6 +232,9 @@ export default {
           t.successMessageSave()
           // 提交完刷新一次数据
           t.queryByCondition()
+          // 清空标题和内容
+          t.$refs.quillEditor.content = ''
+          t.forumTopicPO.title = ''
         }).catch(function (error) {
           console.log(error)
         })
@@ -251,9 +260,8 @@ export default {
       }).then(function (response) {
         console.log(response)
         // 为主题帖赋值，为总数度赋值
-        console.log(response)
         t.forumTopicList = response.data.pageList.content
-        t.forumTopicLength = response.data.totalElements
+        t.forumTopicLength = response.data.pageList.totalElements
         // 切换日期显示
         for (var i in t.forumTopicList) {
           // 获得距今时间
@@ -269,6 +277,7 @@ export default {
               t.forumTopicList[i].date = t.forumTopicList[i].date + ':' + date.getMinutes()
             }
           }
+          t.section_name = t.forumTopicList[0].sectionInfoPO.name
           // 去除加载图案
           t.loading = false
           // 添加删除弹框可视变量
@@ -313,10 +322,6 @@ export default {
             t.forumTopicList[i].date = date.getMonth() + '月' + date.getDate() + '日'
           }
         }
-
-        var a = new Date(t.forumTopicList[0].date).getTime()
-        console.log(a)
-        console.log(t.forumTopicList)
       }).catch(function (error) {
         console.log(error)
       })
@@ -398,6 +403,7 @@ export default {
     changerows (val) {
       this.rows = val
     },
+    // 改变版块名称
 
     // 改变当前版块
     changesection_id (val) {
@@ -434,7 +440,7 @@ export default {
     errorMessageSave () {
       this.$message({
         showClose: true,
-        message: '发表失败，请填写标题',
+        message: '发表失败，请填写标题和内容',
         type: 'error'
       })
     },
