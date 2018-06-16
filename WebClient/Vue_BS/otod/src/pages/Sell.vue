@@ -32,7 +32,6 @@
             </div>
 
             <el-form :model="ruleForm" :rules="rules" ref="ruleForm">
-
               <el-row>
                 <el-col :span="12" :push="4">
                   <el-form-item label="商品分类" prop="product_catalog">

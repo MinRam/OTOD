@@ -51,7 +51,7 @@ export default{
     }
   },
   created () {
-    var url = 'http://127.0.0.1:8082/vrss/Tag/listtag'
+    var url = 'http://127.0.0.1:8081/vrss/Tag/listtag'
     var params = new URLSearchParams()
     this.$http.post(url, params).then((response) => {
       var data = response.data

@@ -8,7 +8,7 @@
               {{ file.id }}<br>
               {{ file.name }}<br>
               {{ file.description }}<br>
-              <a v-bind:href="'http://127.0.0.1:8082/vrss/Download/download?file_url=' + file.file_url" v-bind:download="file.name">下载</a>
+              <a v-bind:href="'http://127.0.0.1:8082/vrss/Download/download?file_url=' + file.file_url + '&user_id=' + userid" v-bind:download="file.name">下载</a>
               <span class="switcher" v-bind:class="{'left': isClose, 'right': !isClose}" @click="switcher()">
                 <p v-if="isClose == true">未收藏（点击收藏）</p>
                 <p v-else>
@@ -49,7 +49,7 @@ export default {
   },
   methods: {
     isLike () {
-      var url = 'http://127.0.0.1:8082/vrss/FileInfo/lovestate'
+      var url = 'http://127.0.0.1:8081/vrss/FileInfo/lovestate'
       var params = new URLSearchParams()
       params.append('user_id', this.userid)
       params.append('file_id', this.id)

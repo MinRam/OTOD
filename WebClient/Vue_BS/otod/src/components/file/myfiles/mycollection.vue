@@ -1,15 +1,53 @@
 <template>
   <div id="mycollection">
     <ul id="list-ul">
-      <li v-for="file in files" :key="file.id">
-        <div class="card" style="width: 10rem;">
-          <div class="card-block card-float">
-            <h4 class="card-title">{{file.name}}</h4>
-            <p class="card-text">{{file.description}}</p>
-            <router-link class="card-link" :to="{path: '/file/files', query: {listname: JSON.stringify(filelist)}}" target="_blank">查看</router-link>
-          </div>
+      <div>
+        默认项
+        <li v-bind="listdefault">
+          {{listdefault.name}}<br>
+          {{listdefault.description}}
+        </li>
+      </div>
+      <div>
+        我创建的专辑
+        <div v-if="collectlist.length !== 0">
+          <li v-for="collect in collectlist" :key="collect.id">
+            <div class="card" style="width: 10rem;">
+              <div class="card-block card-float">
+                <h4 class="card-title">{{collect.name}}</h4>
+                <p class="card-text">浏览数：{{collect.views}}</p>
+                <p class="card-text">评数：{{collect.score}}</p>
+                <router-link class="card-link" :to="{path: '/file/filelist', query: {listname: JSON.stringify(collectlist)}}" target="_blank">查看</router-link>
+              </div>
+            </div>
+          </li>
         </div>
-      </li>
+        <div v-else>
+          <li>
+            还没有创建过的专辑
+          </li>
+        </div>
+      </div>
+      <div>
+        我收藏的专辑
+        <div v-if="createdlist.length !== 0">
+          <li v-for="create in createdlist" :key="create.id">
+            <div class="card" style="width: 10rem;">
+              <div class="card-block card-float">
+                <h4 class="card-title">{{create.name}}</h4>
+                <p class="card-text">浏览数：{{create.views}}</p>
+                <p class="card-text">评数：{{create.score}}</p>
+                <router-link class="card-link" :to="{path: '/file/filelist', query: {listname: JSON.stringify(createlist)}}" target="_blank">查看</router-link>
+              </div>
+            </div>
+          </li>
+        </div>
+        <div v-else>
+          <li>
+            还没有收藏过的专辑
+          </li>
+        </div>
+      </div>
     </ul>
   </div>
 </template>
@@ -20,38 +58,58 @@ import Vue from 'vue'
 Vue.prototype.$http = axios
 export default {
   name: 'mycollection',
+  props: ['userid'],
   data () {
     return {
-      files: [],
-      file: {
-        type: Object
+      createdlist: [],
+      collectlist: [],
+      listdefault: {
+        id: 0,
+        name: '默认列表',
+        description: '未收藏至专辑的文件'
       }
     }
   },
   created () {
-    this.getfile()
+    this.getcreate()
+    this.getcollect()
   },
   methods: {
-    getfile () {
-      this.$http.get('').then((response) => {
-        response = response.body
-        console.log(response)
-        for (var i = 0; (response.data).lenth; i++) {
-          this.file.id = response.data[i].id
-          this.file.name = response.data[i].name
-          this.file.url = response.data[i].URL
-          this.files.push(this.file)
-          for (var key in this.file) {
-            delete this.file[key]
-          }
-        }
+    getcreate () {
+      var url = 'http://127.0.0.1:8081/vrss/FileList/listfilelist'
+      var params = new URLSearchParams()
+      params.append('user_id', 1)
+      params.append('tag_id', 0)
+      params.append('key', null)
+      params.append('type', 7)
+      this.$http.post(url, params).then((response) => {
+        var data = response.data
+        console.log(data)
+        this.createlist = data
+      }).catch((error) => {
+        console.log(error)
+      })
+    },
+    getcollect () {
+      var url = 'http://127.0.0.1:8081/vrss/FileList/listfilelist'
+      var params = new URLSearchParams()
+      params.append('user_id', 1)
+      params.append('tag_id', 0)
+      params.append('key', null)
+      params.append('type', 8)
+      this.$http.post(url, params).then((response) => {
+        var data = response.data
+        console.log(data)
+        this.collectlist = data
+      }).catch((error) => {
+        console.log(error)
       })
     }
   }
 }
 </script>
 
-<style>
+<style scoped>
   @import '../../../assets/css/bootstrap.css'
   .card-float {
     position: relative;;

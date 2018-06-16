@@ -31,7 +31,7 @@ export default {
   },
   created () {
     this.filelist = []
-    var url = 'http://127.0.0.1:8082/vrss/Download/list'
+    var url = 'http://127.0.0.1:8081/vrss/Download/list'
     var params = new URLSearchParams()
     params.append('user_id', this.userid)
     this.$http.post(url, params).then((response) => {

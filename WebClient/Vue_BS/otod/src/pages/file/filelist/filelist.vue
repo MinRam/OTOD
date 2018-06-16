@@ -23,7 +23,7 @@ export default {
     let str = this.$route.query.listname
     this.listinfo = JSON.parse(str)
     // console.log(this.listinfo)
-    var url = 'http://127.0.0.1:8082/vrss/FileList/listfile'
+    var url = 'http://127.0.0.1:8081/vrss/FileList/listfile'
     var params = new URLSearchParams()
     params.append('filelist_id', this.listinfo.id)
     this.$http.post(url, params).then((response) => {

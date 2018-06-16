@@ -1,4 +1,15 @@
 
 WebClient/Vue_BS/otod/package.json
 WebServer/src/main/resources/application.properties
+<<<<<<< HEAD
+WebServer/src/main/resources/application.properties
+WebServer/src/main/resources/application.properties
+WebServer/src/main/resources/application.properties
+*.properties
+*.properties
+WebServer/src/main/resources/application.properties
+WebServer/src/main/resources/application.properties
+WebServer/src/main/resources/application.properties
+=======
 WebServer/null/vrss/userfile/1/1/路径对应的接口3.0.txt
+>>>>>>> 254b9f2bed4a5b73b7a7cb899b04dd6327f66827

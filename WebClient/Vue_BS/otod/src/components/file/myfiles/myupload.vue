@@ -25,7 +25,7 @@ export default {
   },
   created () {
     this.filelist = []
-    var url = 'http://127.0.0.1:8082/vrss/FileInfo/list'
+    var url = 'http://127.0.0.1:8081/vrss/FileInfo/list'
     var params = new URLSearchParams()
     params.append('user_id', this.userid)
     params.append('tag_id', 0)
