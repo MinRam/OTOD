@@ -85,32 +85,32 @@
                   </el-tab-pane>
 
                   <el-tab-pane label="我的商品" v-if="islogin">
-                    <el-table :data="sell_list" style="width: 100%" v-loading="my_loading">
+                    <el-table :data="update_form.sell_list" style="width: 100%" v-loading="my_loading">
                       <el-table-column type="expand">
                         <template slot-scope="scope">
-                          <el-form  label-position="left"  class="demo-table-expand">
+                          <el-form  label-position="left"  class="demo-table-expand" :model="update_form" ref="update_form">
                             <el-row>
-                              <el-col :span=12>
+                              <el-col :span=11>
                                 <el-form-item label="商品名称">
-                                  <span>{{scope.row.product_name}}</span>
+                                  <el-input v-model="scope.row.product_name"></el-input>
                                 </el-form-item>
                               </el-col>
                             </el-row>
                             <el-row>
-                              <el-col :span=12>
+                              <el-col :span=11>
                                 <el-form-item label="商品价格">
-                                  <span>{{scope.row.product_price}}</span>
+                                  <el-input v-model="scope.row.product_price"></el-input>
                                 </el-form-item>
                               </el-col>
-                              <el-col :span=12>
+                              <el-col :span=11 :offset=1>
                                 <el-form-item label="商品库存">
-                                  <span>{{scope.row.product_stock}}</span>
+                                  <el-input v-model="scope.row.product_stock"></el-input>
                                 </el-form-item>
                               </el-col>
                             </el-row>
                             <el-row>
                               <el-form-item label="商品详情">
-                                <span>{{scope.row.product_description}}</span>
+                                <el-input type="textarea" v-model="scope.row.product_description"></el-input>
                               </el-form-item>
                             </el-row>
                             <el-row>
@@ -121,24 +121,95 @@
                               </el-col>
                               <el-col :span=12>
                                 <el-form-item label="商品有效期">
-                                  <span>{{scope.row.product_life}}</span>
+                                  <el-select v-model="scope.row.product_life">
+                                    <el-option label="1天" value=1></el-option>
+                                    <el-option label="2天" value=2></el-option>
+                                    <el-option label="3天" value=3></el-option>
+                                    <el-option label="4天" value=4></el-option>
+                                    <el-option label="5天" value=5></el-option>
+                                    <el-option label="6天" value=6></el-option>
+                                    <el-option label="7天" value=7></el-option>
+                                    <el-option label="8天" value=8></el-option>
+                                    <el-option label="9天" value=9></el-option>
+                                    <el-option label="10天" value=10></el-option>
+                                    <el-option label="11天" value=11></el-option>
+                                    <el-option label="12天" value=12></el-option>
+                                    <el-option label="13天" value=13></el-option>
+                                    <el-option label="14天" value=14></el-option>
+                                    <el-option label="15天" value=15></el-option>
+                                  </el-select>
                                 </el-form-item>
                               </el-col>
                             </el-row>
                             <el-row>
-                              <el-col :span=6>
+                              <el-col :span="8">
                                 <el-form-item label="方便交易时间">
-                                  <span>{{scope.row.product_day_from}}:00</span>
+                                  <el-select v-model="scope.row.product_day_from">
+                                    <el-option label="00:00" value=0></el-option>
+                                    <el-option label="01:00" value=1></el-option>
+                                    <el-option label="02:00" value=2></el-option>
+                                    <el-option label="03:00" value=3></el-option>
+                                    <el-option label="04:00" value=4></el-option>
+                                    <el-option label="05:00" value=5></el-option>
+                                    <el-option label="06:00" value=6></el-option>
+                                    <el-option label="07:00" value=7></el-option>
+                                    <el-option label="08:00" value=8></el-option>
+                                    <el-option label="09:00" value=9></el-option>
+                                    <el-option label="10:00" value=10></el-option>
+                                    <el-option label="11:00" value=11></el-option>
+                                    <el-option label="12:00" value=12></el-option>
+                                    <el-option label="13:00" value=13></el-option>
+                                    <el-option label="14:00" value=14></el-option>
+                                    <el-option label="15:00" value=15></el-option>
+                                    <el-option label="16:00" value=16></el-option>
+                                    <el-option label="17:00" value=17></el-option>
+                                    <el-option label="18:00" value=18></el-option>
+                                    <el-option label="19:00" value=19></el-option>
+                                    <el-option label="20:00" value=20></el-option>
+                                    <el-option label="21:00" value=21></el-option>
+                                    <el-option label="22:00" value=22></el-option>
+                                    <el-option label="23:00" value=23></el-option>
+                                    <el-option label="24:00" value=24></el-option>
+                                  </el-select>
                                 </el-form-item>
                               </el-col>
-                              <el-col :span=6>
+                              <el-col :span="6">
                                 <el-form-item label="到">
-                                  <span>{{scope.row.product_day_to}}:00</span>
+                                  <el-select v-model="scope.row.product_day_to">
+                                    <el-option label="00:00" value=0></el-option>
+                                    <el-option label="01:00" value=1></el-option>
+                                    <el-option label="02:00" value=2></el-option>
+                                    <el-option label="03:00" value=3></el-option>
+                                    <el-option label="04:00" value=4></el-option>
+                                    <el-option label="05:00" value=5></el-option>
+                                    <el-option label="06:00" value=6></el-option>
+                                    <el-option label="07:00" value=7></el-option>
+                                    <el-option label="08:00" value=8></el-option>
+                                    <el-option label="09:00" value=9></el-option>
+                                    <el-option label="10:00" value=10></el-option>
+                                    <el-option label="11:00" value=11></el-option>
+                                    <el-option label="12:00" value=12></el-option>
+                                    <el-option label="13:00" value=13></el-option>
+                                    <el-option label="14:00" value=14></el-option>
+                                    <el-option label="15:00" value=15></el-option>
+                                    <el-option label="16:00" value=16></el-option>
+                                    <el-option label="17:00" value=17></el-option>
+                                    <el-option label="18:00" value=18></el-option>
+                                    <el-option label="19:00" value=19></el-option>
+                                    <el-option label="20:00" value=20></el-option>
+                                    <el-option label="21:00" value=21></el-option>
+                                    <el-option label="22:00" value=22></el-option>
+                                    <el-option label="23:00" value=23></el-option>
+                                    <el-option label="24:00" value=24></el-option>
+                                  </el-select>
                                 </el-form-item>
                               </el-col>
-                              <el-col :span=12>
+                              <el-col :span=9>
                                 <el-form-item label="商品状态">
-                                  <span>{{getstatus(scope.row.product_status)}}</span>
+                                  <el-select v-model="scope.row.product_status">
+                                    <el-option label="上架" value=1></el-option>
+                                    <el-option label="下架" value=2></el-option>
+                                  </el-select>
                                 </el-form-item>
                               </el-col>
                             </el-row>
@@ -153,6 +224,11 @@
                                   </el-card>
                                 </el-col>
                               </el-form-item>
+                            </el-row>
+                            <el-row>
+                              <el-col :span=4 :push="10">
+                                <el-button type="success" @click="UpdateProduct(scope.row.product_id)">确认保存</el-button>
+                              </el-col>
                             </el-row>
                           </el-form>
                         </template>
@@ -351,7 +427,9 @@ export default {
       islogin: false,
       muid: 0,
       show_list: [],
-      sell_list: [],
+      update_form: {
+        sell_list: []
+      },
       pay_list: [],
       sell_orders: []
     }
@@ -359,6 +437,8 @@ export default {
   methods: {
     search () {
       var t = this
+      t.show_list = []
+      t.loading = true
       this.$axios({
         method: 'get',
         url: 'http://localhost:8081/market/search',
@@ -368,12 +448,9 @@ export default {
           page_num: t.page_num
         }
       }).then(function (response) {
-        t.product_list = response.data.content
-        for (var i in t.product_list) {
-          if (t.product_list[i].product_status === 1) {
-            t.show_list.push(t.product_list[i])
-          }
-        }
+        console.log(response)
+        t.product_list = response.data.products
+        t.show_list = t.product_list
         t.total_product_num = response.data.totalElements
         t.total_page_num = response.data.totalPages
         t.loading = false
@@ -415,9 +492,9 @@ export default {
             page_num: t.page_num
           }
         }).then(function (response) {
-          t.sell_list = response.data.content
+          t.update_form.sell_list = response.data.content
           t.my_loading = false
-          console.log(t.sell_list)
+          console.log(t.update_form.sell_list)
         })
       } else if (tab.label === '我买的') {
         t.$axios({
@@ -452,17 +529,7 @@ export default {
           console.log(response)
           t.sell_orders = response.data
           t.sell_loading = false
-          console.log(t.sell_orders)
         })
-      }
-    },
-    getstatus (status) {
-      if (status === 1) {
-        return '上架中'
-      } else if (status === 2) {
-        return '下架中'
-      } else if (status === 3) {
-        return '正在交易'
       }
     },
     handlePictureCardPreview () {
@@ -488,6 +555,30 @@ export default {
           order_id: oid,
           operation: operation
         }
+      })
+    },
+    UpdateProduct (pid) {
+      var t = this
+      var obj
+      for (let i = 0; i < t.update_form.sell_list.length; i++) {
+        if (t.update_form.sell_list[i].product_id === pid) {
+          obj = t.update_form.sell_list[i]
+        }
+      }
+      Object.keys(obj).forEach(function (key) {
+        if (typeof obj[key] === 'number') {
+          obj[key] = obj[key].toString()
+        }
+      })
+      this.$axios({
+        method: 'post',
+        url: 'http://localhost:8081/market/UpdateProduct',
+        dataType: 'json',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + t.$getCookie('otod_access_token')
+        },
+        data: obj
       })
     }
   }

@@ -34,6 +34,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.otod.server.otod.model.Market_user;
 import com.otod.server.otod.model.P_Order;
+import com.otod.server.otod.model.PageModel;
 import com.otod.server.otod.model.Product;
 import com.otod.server.otod.model.UserInfo;
 import com.otod.server.otod.pojos.P_OrderPojo;
@@ -95,16 +96,21 @@ public class MarketController {
 	
 	@RequestMapping("/search")
 	@ResponseBody
-	public Page<Product> search(@RequestParam Map<String, String> map){
+	public Map<String, Object> search(@RequestParam Map<String, String> map){
 		String key = "";
 		if(map.containsKey("product_key")){
 			key = map.get("product_key");
 		}
 		String page_num = map.get("page_num");
-		Pageable pageable = new PageRequest(Integer.parseInt(page_num) - 1 , 15 , Sort.Direction.DESC,"product_createtime");
-		Page<Product> page= repository.findByName(key, pageable);
-		System.out.println("page : "+page.toString());
-		return page;
+		List<Product> list = repository.FindByName(key);
+		list = productService.ManageList(list);
+		PageModel pm = new PageModel(list, 10);
+		List<Product> products = pm.getObjects(Integer.parseInt(page_num));
+		Map<String, Object> map2 = new HashMap<String, Object>();
+		map2.put("products", products);
+		map2.put("totalElements", pm.getTotalRows());
+		map2.put("totalPages", pm.getTotalPages());
+		return map2;
 	}
 	
 	
@@ -174,7 +180,7 @@ public class MarketController {
 		UserInfo userInfo = userService.getUserInfo(userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName()));
 		Market_user mUser = mURepository.findByUserInfo(userInfo);
 		String page_num = map.get("page_num");
-		Pageable pageable = new PageRequest(Integer.parseInt(page_num) - 1 , 15 , Sort.Direction.DESC,"product_createtime");
+		Pageable pageable = new PageRequest(Integer.parseInt(page_num) - 1 , 10 , Sort.Direction.DESC,"product_createtime");
 		return repository.findBySeller(mUser.getMarket_user_id(), pageable);
 	}
 	
@@ -184,7 +190,7 @@ public class MarketController {
 		UserInfo userInfo = userService.getUserInfo(userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName()));
 		Market_user mUser = mURepository.findByUserInfo(userInfo);
 		String page_num = map.get("page_num");
-		Pageable pageable = new PageRequest(Integer.parseInt(page_num) - 1 , 15 , Sort.Direction.DESC,"createtime");
+		Pageable pageable = new PageRequest(Integer.parseInt(page_num) - 1 , 10 , Sort.Direction.DESC,"createtime");
 		Page<P_Order> orders = orderRepository.findByBuyer(mUser,pageable);
 		List<PayPojo> list = new ArrayList<PayPojo>();
 		
@@ -210,30 +216,31 @@ public class MarketController {
 	public String BuyerOrderMange(@RequestParam Map<String, String> map){
 		String order_id = map.get("order_id");
 		String operation = map.get("operation");
+		System.out.println(operation);
 		P_Order order = orderRepository.findById(Integer.parseInt(order_id)).get();
 		
 		//申请取消订单 10
-		if (operation == "10") {
+		if (operation.equals("10")) {
 			orderService.CancelOrder(order);
 		}
 		
 		//确认收货 9
-		if (operation == "9") {
+		if (operation.equals("9")) {
 			orderService.Deliver(order);
 		}
 		
 		//申请退货
-		if (operation == "7") {
+		if (operation.equals("7")) {
 			orderService.Return(order);
 		}
 		
 		//取消申请取消订单 12
-		if (operation == "12") {
+		if (operation.equals("12") ) {
 			orderService.CancelCancelOrder(order);
 		}
 		
 		//取消申请退货
-		if (operation == "13") {
+		if (operation.equals("13")) {
 			orderService.CancelReturn(order);
 		}
 		
@@ -246,7 +253,7 @@ public class MarketController {
 		UserInfo userInfo = userService.getUserInfo(userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName()));
 		Market_user mUser = mURepository.findByUserInfo(userInfo);
 		String page_num = map.get("page_num");
-		Pageable pageable = new PageRequest(Integer.parseInt(page_num) - 1 , 15 , Sort.Direction.DESC,"product_createtime");
+		Pageable pageable = new PageRequest(Integer.parseInt(page_num) - 1 , 10 , Sort.Direction.DESC,"product_createtime");
 		Page<Product> products = repository.findBySeller(mUser.getMarket_user_id(), pageable);
 		List<PayPojo> list = new ArrayList<PayPojo>();
 		for(int i = 0; i < products.getContent().size(); i++){
@@ -277,24 +284,33 @@ public class MarketController {
 		P_Order order = orderRepository.findById(Integer.parseInt(order_id)).get();
 		
 		//发货完成
-		if (operation == "5") {
+		if (operation.equals("5")) {
 			orderService.Deliver(order);
 		}
 		
 		//同意取消订单
-		if (operation == "11") {
+		if (operation.equals("11")) {
 			orderService.CancelOrder(order);
 		}
 		
 		//同意退货
-		if (operation == "8") {
+		if (operation.equals("8")) {
 			orderService.Return(order);
 		}
 		
 		//确认退货
-		if (operation == "9") {
+		if (operation.equals("9")) {
 			orderService.Return(order);
 		}
+		return "success";
+	}
+	
+	@RequestMapping(value="/UpdateProduct",method=RequestMethod.POST)
+	@ResponseBody
+	public String UpdateProduct(@RequestBody Map<String, Object>map){
+		UserInfo userInfo = userService.getUserInfo(userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName()));
+		Market_user mUser = mURepository.findByUserInfo(userInfo);
+		productService.UpdateByMap(map,mUser);
 		return "success";
 	}
 }

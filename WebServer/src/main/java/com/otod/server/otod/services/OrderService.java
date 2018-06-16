@@ -79,6 +79,7 @@ public class OrderService {
 		}
 	}
 	//卖家发货 买家收货
+	@Transactional
 	public void Deliver(P_Order order){
 		int status = 2;
 		if (order.getStatus() == 2) {
