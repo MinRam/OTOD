@@ -26,11 +26,10 @@ import java.util.Optional;
 /*
 0 待支付
 1 待接单
-2 已接单/已接受
-3 进行中
-4 待评价
-5 已完成
-6 失败订单
+2 进行中/已接单
+3 待评价
+4 已完成
+5 失败订单
  */
 
 @RestController
@@ -112,6 +111,7 @@ public class ServiceController {
         commenOrder.setOrderState("2");
         return serviceService.reciveOrder(commenOrder, userInfo)? "yeah":"false";
     }
+
     @GetMapping("/allOrders")
     private List<CommenOrder> getAllOrders(){
         UserInfo userInfo = userService.getUserInfo(userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName()));
@@ -150,13 +150,42 @@ public class ServiceController {
         }
         return result;
     }
-    @GetMapping("/finishedOrders")
-    private List<CommenOrder> getFinishedOrders() {
+
+    @GetMapping("/waitingEvaluateS")
+    private  List<CommenOrder> getWaitingEvaluateS(){
         UserInfo userInfo = userService.getUserInfo(userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName()));
         List<CommenOrder> list = serviceService.getAllOrder(userInfo);
         List<CommenOrder> result = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).getOrderState().equals("3")) {
+                CommenOrder commenOrder = list.get(i);
+                result.add(commenOrder);
+            }
+        }
+        return result;
+    }
+
+    @GetMapping("/finishedOrderS")
+    private List<CommenOrder> getFinishedOrderS() {
+        UserInfo userInfo = userService.getUserInfo(userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName()));
+        List<CommenOrder> list = serviceService.getAllOrder(userInfo);
+        List<CommenOrder> result = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getOrderState().equals("4")) {
+                CommenOrder commenOrder = list.get(i);
+                result.add(commenOrder);
+            }
+        }
+        return result;
+    }
+
+    @GetMapping("/failedOrderS")
+    private  List<CommenOrder> getFailedOrderS(){
+        UserInfo userInfo = userService.getUserInfo(userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName()));
+        List<CommenOrder> list = serviceService.getAllOrder(userInfo);
+        List<CommenOrder> result = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getOrderState().equals("5")) {
                 CommenOrder commenOrder = list.get(i);
                 result.add(commenOrder);
             }
@@ -190,7 +219,7 @@ public class ServiceController {
         List<CommenOrder> list = serviceService.getRMyAllOrders(userInfo);
         List<CommenOrder> result = new ArrayList<>();
         for(int i = 0; i < list.size(); i++){
-            if(list.get(i).getOrderState().equals("4")) {
+            if(list.get(i).getOrderState().equals("3")) {
                 CommenOrder commenOrder = list.get(i);
                 result.add(commenOrder);
             }
@@ -204,7 +233,7 @@ public class ServiceController {
         List<CommenOrder> list = serviceService.getRMyAllOrders(userInfo);
         List<CommenOrder> result = new ArrayList<>();
         for(int i = 0; i < list.size(); i++){
-            if(list.get(i).getOrderState().equals("5")) {
+            if(list.get(i).getOrderState().equals("4")) {
                 CommenOrder commenOrder = list.get(i);
                 result.add(commenOrder);
             }
@@ -218,7 +247,7 @@ public class ServiceController {
         List<CommenOrder> list = serviceService.getRMyAllOrders(userInfo);
         List<CommenOrder> result = new ArrayList<>();
         for(int i = 0; i < list.size(); i++){
-            if(list.get(i).getOrderState().equals("6")) {
+            if(list.get(i).getOrderState().equals("5")) {
                 CommenOrder commenOrder = list.get(i);
                 result.add(commenOrder);
             }

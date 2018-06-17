@@ -140,7 +140,7 @@ public class FileListService {
     }
     //用户创建的专辑7
     public List<FileList> findFileListByUser(Integer user_id){
-        return fl_fileListRepository.findAllByVrssUser(fl_Vrss_userRepository.findById(user_id).get());
+        return fl_Vrss_userRepository.findById(user_id).get().getFilelist();
     }
     //用户收藏的专辑8
     public List<FileList> findLove(Integer user_id){
