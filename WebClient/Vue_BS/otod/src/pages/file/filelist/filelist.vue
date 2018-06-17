@@ -1,9 +1,14 @@
 <template>
   <div id="filelists">
     <ul>
-      <li v-for="file in filelist" :key="file.id">
-        <router-link :to="{path: '/file/files', query: {filename: JSON.stringify(file)}}" target="_blank">{{ file.id }}</router-link>
-      </li>
+      <div v-if="filelist.length !== 0">
+        <li v-for="file in filelist" :key="file.id">
+          <router-link :to="{path: '/file/files', query: {filename: JSON.stringify(file)}}" target="_blank">{{ file.id }}</router-link>
+        </li>
+      </div>
+      <div v-else>
+        还没有上传过文件
+      </div>
     </ul>
   </div>
 </template>

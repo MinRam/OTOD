@@ -5,10 +5,9 @@
         <li>
           <div class="card-block">
             <p class="card-text">
-              {{ file.id }}<br>
-              {{ file.name }}<br>
-              {{ file.description }}<br>
-              <a v-bind:href="'http://127.0.0.1:8082/vrss/Download/download?file_url=' + file.file_url + '&user_id=' + userid" v-bind:download="file.name">下载</a>
+              文件名：{{ file.name }}<br>
+              描  述：{{ file.description }}<br>
+              <a v-bind:href="'http://127.0.0.1:8081/vrss/Download/download?file_url=' + file.file_url + '&user_id=' + userid + '&file_id=' + file.id" v-bind:download="file.name">下载</a>
               <span class="switcher" v-bind:class="{'left': isClose, 'right': !isClose}" @click="switcher()">
                 <p v-if="isClose == true">未收藏（点击收藏）</p>
                 <p v-else>
@@ -47,29 +46,27 @@ export default {
     this.getlist()
   },
   updated () {
-    var url = 'http://127.0.0.1:8081/vrss/FileInfo/love'
-    var params = new URLSearchParams()
-    params.append('user_id', this.userid)
-    params.append('file_id', this.id)
-    this.$http.post(url, params).then((response) => {
-      var data = response.data
-      console.log(data)
-    }).catch((error) => {
-      console.log(error)
-    })
+    if (this.islike !== this.isLikes) {
+      var url = 'http://127.0.0.1:8081/vrss/FileInfo/love'
+      var params = new URLSearchParams()
+      params.append('user_id', this.userid)
+      params.append('file_id', this.id)
+      this.$http.post(url, params).then(() => {
+        this.isLikes = !this.isLikes
+      }).catch((error) => {
+        console.log(error)
+      })
+    }
     if (this.myvalue !== 0 && this.islike === true) {
       var url1 = 'http://127.0.0.1:8081/vrss/FileList/addfile'
       var params1 = new URLSearchParams()
       params1.append('filelist_id', this.myvalue)
       params1.append('file_id', this.id)
-      this.$http.post(url1, params1).then((response) => {
-        var data1 = response.data
-        console.log(data1)
+      this.$http.post(url1, params1).then(() => {
       }).catch((error) => {
         console.log(error)
       })
     }
-
   },
   methods: {
     isLike () {
