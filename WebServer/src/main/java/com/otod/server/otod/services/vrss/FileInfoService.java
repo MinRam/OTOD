@@ -85,7 +85,7 @@ public class FileInfoService {
     public void loveFile(Integer user_id,Integer file_id){
         FileInfo file= fi_fileInfoRepository.findById(file_id).get();
         VrssUser vrssUser = fi_Vrss_userRepository.findById(user_id).get();
-        if (lovaState(user_id,file_id)){
+        if (loveState(user_id,file_id)){
             file.setLove(file.getLove()-1);
             vrssUser.getFile().remove(file);
         }
@@ -96,7 +96,7 @@ public class FileInfoService {
         fi_fileInfoRepository.save(file);
         fi_Vrss_userRepository.save(vrssUser);
     }
-    public Boolean lovaState(Integer user_id,Integer file_id){
+    public Boolean loveState(Integer user_id, Integer file_id){
         FileInfo file= fi_fileInfoRepository.findById(file_id).get();
         VrssUser vrssUser = fi_Vrss_userRepository.findById(user_id).get();
         List<FileInfo> l=vrssUser.getFile();

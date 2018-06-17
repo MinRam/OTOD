@@ -26,7 +26,14 @@ public class DownloadController {
     @GetMapping(value = "/download")
     public void download(HttpServletRequest req,HttpServletResponse res) {
         String webroot=System.getProperty("user.dir");
-        String fileName = (String) req.getParameter("file_url");
+        String fileName=new String();
+        try {
+            fileName = new String(req.getParameter("file_url").getBytes("iso8859-1"),"utf-8");
+        }
+        catch (Exception e){
+            return;
+        }
+        System.out.println(fileName);
         Integer  user_id= Integer.parseInt((String) req.getParameter("user_id"));
         Integer  file_id= Integer.parseInt((String) req.getParameter("file_id"));
         downloadService.addDownload(file_id,user_id);
