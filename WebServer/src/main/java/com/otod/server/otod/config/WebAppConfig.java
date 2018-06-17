@@ -18,6 +18,7 @@ public class WebAppConfig  implements WebMvcConfigurer {
     // 临时使用springboot 自带图片服务器
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        mImagesPath = "file:/"+mImagesPath;
         if(mImagesPath.equals("") || mImagesPath.equals("${cbs.imagesPath}")){
             String imagesPath = WebAppConfig.class.getClassLoader().getResource("").getPath();
             if(imagesPath.indexOf(".jar")>0){
