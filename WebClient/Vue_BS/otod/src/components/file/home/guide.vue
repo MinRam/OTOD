@@ -11,22 +11,13 @@
 
       <div class="collapse navbar-collapse div-float" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-             <router-link class="navbar-brand" to="/file/recommend">推荐资源</router-link>
-          </li>
-          <li class="nav-item active">
-             <router-link class="navbar-brand" to="/file/myfiles">我的资源</router-link>
-          </li>
-          <li class="nav-item active">
-             <router-link class="navbar-brand" to="/file/download">下载资源</router-link>
-          </li>
-          <li class="nav-item active">
-             <router-link class="navbar-brand" to="/file/upload">上传资源</router-link>
+          <li class="nav-item active" v-for="brand in brands" :key="brand.index">
+             <router-link :class="{'navbar-brand-focus': index == brand.index}" class="navbar-brand" :to="brand.path" @click.native="changeindex(brand.index)">{{brand.name}}</router-link>
           </li>
         </ul>
         <form class="form-inline my-2 my-lg-0 form-float">
           <input class="form-control mr-sm-2" type="text" placeholder="搜索" v-model="searchtext">
-          <router-link class="btn btn-outline-success my-2 my-sm-0" :to="{ path: '/file/download', query: { search: this.searchtext } }" @click.native="strnull">
+          <router-link class="btn btn-outline-success my-2 my-sm-0" :to="{ path: '/file/download', query: { search: this.searchtext } }" @click.native="strnull()">
             <b>搜索</b>
           </router-link>
         </form>
@@ -40,12 +31,37 @@ export default {
   name: 'guide',
   data () {
     return {
-      searchtext: ''
+      searchtext: '',
+      index: 0,
+      brands: [{
+        path: '/file/recommend',
+        name: '推荐资源',
+        index: 1
+      }, {
+        path: '/file/myfiles',
+        name: '我的资源',
+        index: 2
+      }, {
+        path: '/file/download',
+        name: '下载资源',
+        index: 3
+      }, {
+        path: '/file/upload',
+        name: '上传资源',
+        index: 4
+      }]
     }
   },
   methods: {
     strnull () {
       this.searchtext = ''
+      this.searchindex()
+    },
+    changeindex (index) {
+      this.index = index
+    },
+    searchindex () {
+      this.index = 3
     }
   }
 }
@@ -59,6 +75,10 @@ export default {
   }
   .form-float{
     position: relative;;
-    right:3%;
+  }
+  .navbar-brand-focus{
+    text-decoration: none;
+    border-bottom:3px solid blue; /* #ccc换成链接的颜色 */
+    padding-bottom:3px;  /*这里设置你要空的距离*/
   }
 </style>

@@ -111,9 +111,8 @@ export default{
       var params = new URLSearchParams()
       params.append('file_id', this.fileid)
       params.append('tag_id', tags)
-      console.log(params + ' 参数')
       this.$http.post(url, params).then((response) => {
-        console.log('sattus' + response.status)
+        console.log(response.status)
       })
     }
   }
