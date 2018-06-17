@@ -5,8 +5,22 @@
         <li>
           <div class="card-block">
             <p class="card-text">
-              文件名：{{ file.name }}<br>
-              描  述：{{ file.description }}<br>
+              文件名：<input type="text" v-model="file.name" :readonly="read"><br>
+              描  述：<input type="text" v-model="file.description" :readonly="read"><br>
+              标  签：<div>
+                <ul>
+                  <li v-for="tag in tags" :key="tag.id"><label class="form-check-label">
+                    <input class="form-check-input" type="checkbox" @change="getstate(tag)" :checked="tag.right" :readonly="read"> {{ tag.content }}
+                  </label>
+                </li>
+              </ul>
+              </div>
+              <div v-show="upload === true">
+                <button @click="changeread">修改文件信息</button>
+                <div v-show="!read">
+                  <button>确定</button><button>取消</button>
+                </div>
+              </div>
               <a v-bind:href="encodeURI('http://127.0.0.1:8081/vrss/Download/download?' + '&user_id=' + userid + '&file_id=' + file.id)" v-bind:download="file.name">下载</a>
               <span class="switcher" v-bind:class="{'left': isClose, 'right': !isClose}" @click="switcher()">
                 <p v-if="isClose == true">未收藏（点击收藏）</p>
@@ -28,7 +42,7 @@
 <script>
 export default {
   name: 'file',
-  props: ['id', 'userid'],
+  props: ['id', 'userid', 'upload'],
   data () {
     return {
       file: {
@@ -38,12 +52,15 @@ export default {
       optionlist: [],
       myvalue: 0, // 默认是0
       islike: false, // 得到原始状态
-      isLikes: false
+      isLikes: false,
+      read: true, // 只读
+      tags: []
     }
   },
   created () {
     this.getinfo()
     this.getlist()
+    this.gettags()
   },
   updated () {
     if (this.islike !== this.isLikes) {
@@ -69,6 +86,43 @@ export default {
     }
   },
   methods: {
+    gettag () {
+      var url = 'http://127.0.0.1:8081/vrss/FileInfo/filetag'
+      var params = new URLSearchParams()
+      params.append('file_id', this.id)
+      this.$http.post(url, params).then((response) => {
+        var data = response.data
+        for (var i = 0; i < data.length; i++) {
+          for (var j = i; j < this.tags.length; j++) {
+            if (data[i].id === this.tags[j].id) {
+              this.tags[j].right = true
+              break
+            }
+          }
+        }
+      }).catch((error) => {
+        console.log(error)
+      })
+    },
+    getstate (tag) {
+      tag.right = !tag.right
+    },
+    gettags () {
+      var url = 'http://127.0.0.1:8081/vrss/Tag/listtag'
+      var params = new URLSearchParams()
+      this.$http.post(url, params).then((response) => {
+        var data = response.data
+        this.tags = data
+        for (var i = 0; i < this.tags.length; i++) {
+          this.$set(this.tags[i], 'right', false)
+        }
+      }).catch((error) => {
+        console.log(error)
+      }).then(this.gettag())
+    },
+    changeread () {
+      this.read = !this.read
+    },
     isLike () {
       var url = 'http://127.0.0.1:8081/vrss/FileInfo/lovestate'
       var params = new URLSearchParams()

@@ -40,7 +40,8 @@
                 <h4 class="card-title">{{create.name}}</h4>
                 <p class="card-text">浏览数：{{create.views}}</p>
                 <p class="card-text">评分：{{create.score}}</p>
-                <router-link class="card-link" :to="{path: '/file/filelist', query: {listname: JSON.stringify(createdlist)}}" target="_blank">查看</router-link>
+                <router-link class="card-link" :to="{path: '/file/filelist', query: {listname: JSON.stringify(createdlist), create: 'create'}}" target="_blank">查看</router-link>
+                <button @click="del(create.id)">删除</button>
               </div>
             </div>
           </li>
@@ -102,6 +103,15 @@ export default {
     this.gettags()
   },
   methods: {
+    del (id) {
+      var url = 'http://127.0.0.1:8081/vrss/FileList/delete'
+      var params = new URLSearchParams()
+      params.append('filelist_id', id)
+      this.$http.post(url, params).then(() => {
+        // 删除该文件
+        this.filelists.splice(id, id)
+      }).then(alert('删除成功'))
+    },
     confirm () {
       var url = 'http://127.0.0.1:8081/vrss/FileList/add'
       var params = new URLSearchParams()

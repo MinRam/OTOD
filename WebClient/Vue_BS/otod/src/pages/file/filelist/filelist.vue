@@ -1,5 +1,13 @@
 <template>
   <div id="filelists">
+    文件名：<input type="text" v-model="listinfo.name" :readonly="read"><br>
+    描  述：<input type="text" v-model="listinfo.description" :readonly="read"><br>
+    <div v-show="create === true">
+      <button @click="changeread">修改列表信息</button>
+      <div v-show="!read">
+        <button>确定</button><button>取消</button>
+      </div>
+    </div>
     <span class="switcher" v-bind:class="{'left': isClose, 'right': !isClose}" @click="switcher()">
       <p v-if="isClose == true">未收藏（点击收藏）</p>
       <p v-else>
@@ -38,7 +46,9 @@ export default {
       userid: 1,
       isClose: true, // 假设默认未收藏
       islike: false, // 得到原始状态
-      isLikes: false
+      isLikes: false,
+      create: false,
+      read: true
     }
   },
   watch: {
@@ -54,6 +64,9 @@ export default {
   },
   created () {
     this.getstate()
+    if (this.$route.query.create === 'create') {
+      this.create = true
+    }
     let str = this.$route.query.listname
     this.listinfo = JSON.parse(str)
     this.id = this.listinfo.id
@@ -74,6 +87,9 @@ export default {
     }
   },
   methods: {
+    changeread () {
+      this.read = !this.read
+    },
     getstate () {
       var url = 'http://127.0.0.1:8081/vrss/FileList/lovestate'
       var params = new URLSearchParams()

@@ -1,6 +1,6 @@
 <template>
   <div id='files'>
-    <file v-bind:id="id" v-bind:userid="userid"></file>
+    <file v-bind:id="id" v-bind:userid="userid" :upload="upload"></file>
     <comment v-bind:id="id" v-bind:userid="userid"></comment>
   </div>
 </template>
@@ -18,12 +18,16 @@ export default {
     return {
       type: 0,
       id: 0,
-      userid: 1
+      userid: 1,
+      upload: false
     }
   },
   created () {
     let str = JSON.parse(this.$route.query.filename)
     this.id = str.id
+    if (this.$route.query.type === 'upload') {
+      this.upload = true
+    }
   }
 }
 </script>
