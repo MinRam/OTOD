@@ -30,7 +30,7 @@ public class FileListService {
         return fl_fileListRepository.findById(filelist_id).get();
     }
     //用户新建专辑
-    public Integer addFileList(String name,Integer creator_id,String description){
+    public FileList addFileList(String name,Integer creator_id,String description){
         FileList filelist=new FileList();
         filelist.setName(name);
         VrssUser vrssUser = fl_Vrss_userRepository.findById(creator_id).get();
@@ -41,7 +41,7 @@ public class FileListService {
         filelist.setScore(0.);
         filelist.setViews(0);
         filelist.setLove(0);
-        return fl_fileListRepository.save(filelist).getId();
+        return fl_fileListRepository.save(filelist);
     }
     //用户删除专辑
     public void deleteFileList(Integer filelist_id){
