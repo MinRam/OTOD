@@ -26,7 +26,7 @@
             <div id="position">
               <el-row>
                 <el-col :span="10" :push="6">
-                  <p>您当前的位置是：二手市场</p>
+                  <p>您当前的位置是：<el-button type="text" @click="changepage('/market')">二手市场</el-button> -> 商品发布</p>
                 </el-col>
               </el-row>
             </div>
@@ -210,6 +210,15 @@
               </el-row>
 
             </el-form>
+            <el-dialog
+              title="提示"
+              :visible.sync="isOK"
+              width="30%">
+              <span style="text-align:center;">发布成功</span>
+              <span slot="footer" class="dialog-footer">
+                <el-button type="primary" @click="isOK = false , changepage('/market')">确 定</el-button>
+              </span>
+            </el-dialog>
           </div>
         </section>
   </div>
@@ -218,6 +227,7 @@
 export default {
   data () {
     return {
+      isOK: false,
       loading: true,
       product_key: '',
       dialogVisible: false,
@@ -324,6 +334,10 @@ export default {
               'Authorization': 'Bearer ' + t.$getCookie('otod_access_token')
             },
             data: t.ruleForm
+          }).then(function (response) {
+            if (response.data === 'success') {
+              t.isOK = true
+            }
           })
         } else {
           console.log(t.ruleForm)
