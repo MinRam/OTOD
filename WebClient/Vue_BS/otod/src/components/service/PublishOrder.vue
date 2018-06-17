@@ -200,5 +200,5 @@ export default {
 }
 </script>
 <style>
-    @import '../assets/css/PublishOrderPage.css';
+    @import '../../assets/css/PublishOrderPage.css';
 </style>

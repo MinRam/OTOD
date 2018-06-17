@@ -1,8 +1,8 @@
-<template>
+userinfoStemplate>
     <el-col :xs="12" :sm="12" :md="12" :xl="12" :offset="4">
         <ul v-loading="loadingOrder">
           <!-- 这个是element的特有写法 v-for 就是一个循环 循环输出<li>里面的html message是一个数组，里面存着order 相当于for(m in message){ <li>里面的代码</li>} -->
-            <li v-for="m in message" :key="m.id">
+            <li v-show="message.length != 0" v-for="m in message" :key="m.id">
                 <el-row class="message-bottom" type="flex" justify="center">
                     <el-col :span="24">
                         <el-card shadow="hover" class="center-container-card">
@@ -16,12 +16,12 @@
                                 <el-aside class="aside-container" width="200px">
                                     <div>
                                         <div class="user-img">
-                                            <i v-if="m.userinfo_s == null" class="el-icon-menu" style="font-size: 60px;color: #409EFF"></i>
-                                            <img v-if="m.userinfo_s != null" class="user-img" :src="$url + '/images/' + m.userinfo_s.headImage"/>
+                                            <i v-if="m.userinfoS == null" class="el-icon-menu" style="font-size: 60px;color: #409EFF"></i>
+                                            <img v-if="m.userinfoS != null" class="user-img" :src="$url + '/images/' + m.userinfoS.headImage"/>
                                         </div>
                                         <div class="user-info">
                                           <!-- {{ }} 是一种输出，就像printf一样，把里面的内容输出来 -->
-                                            <p v-if="m.userinfo_s != null">{{ m.userinfo_s.nickname }}</p>
+                                            <p v-if="m.userinfoS != null">{{ m.userinfoS.nickname }}</p>
                                             <!-- <p>Nothing</p> -->
                                         </div>
                                         <div style="clear: both"></div>
@@ -55,7 +55,10 @@
                 </el-row>
             </li>
         </ul>
-        <el-row type="flex" justify="center">
+          <el-card v-show="message.length == 0" shadow="hover" class="center-container-card">
+            <p>没有任何信息哦</p>
+          </el-card>
+        <el-row v-show="message.length != 0" type="flex" justify="center">
             <el-col :span="14">
                 <div>
                   <!-- 这个也是独特的用法 可以在网站shang看到 -->
@@ -92,32 +95,22 @@ export default {
     }
   },
   mounted () {
-    this.getAllServices()
+    this.getRecivedOrders()
   },
   methods: {
-    getAllServices () {
+    getRecivedOrders () {
       var t = this
       t.loadingOrder = true
-      t.$axios.get(this.$url + '/listServices?currentPage=' + t.currentPage + '&size=' + t.size)
+      this.$axios({
+        url: t.$url + '/rRecivedOrders',
+        method: 'get',
+        params: {
+          access_token: this.$getCookie('otod_access_token')
+        }
+      })
         .then(function (response) {
           console.log(response)
-          t.message = response.data.content
-          t.totalPages = response.data.totalPages * t.size
-          t.loadingOrder = false
-          console.log(t.totalPages)
-        })
-        .catch(function (error) {
-          console.log(error.message)
-        })
-    },
-    getServicePage (currentPage) {
-      var t = this
-      t.loadingOrder = true
-      t.$axios.get(t.$url + '/listServices?currentPage=' + (currentPage - 1) + '&size=' + t.size)
-        .then(function (response) {
-          console.log(t.$url + '/listServices?currentPage=' + (currentPage - 1) + '&size=' + t.size)
-          t.message = response.data.content
-          t.totalPages = response.data.totalPages * t.size
+          t.message = response.data
           t.loadingOrder = false
           console.log(t.totalPages)
         })
@@ -125,10 +118,25 @@ export default {
           console.log(error.message)
         })
     }
+    // getServicePage (currentPage) {
+    //   var t = this
+    //   t.loadingOrder = true
+    //   t.$axios.get(t.$url + '/listServices?currentPage=' + (currentPage - 1) + '&size=' + t.size)
+    //     .then(function (response) {
+    //       console.log(t.$url + '/listServices?currentPage=' + (currentPage - 1) + '&size=' + t.size)
+    //       t.message = response.data.content
+    //       t.totalPages = response.data.totalPages * t.size
+    //       t.loadingOrder = false
+    //       console.log(t.totalPages)
+    //     })
+    //     .catch(function (error) {
+    //       console.log(error.message)
+    //     })
+    // }
   }
 }
 </script>
 
 <style>
-    @import '../assets/css/OrderList.css';
+    @import '../../assets/css/OrderList.css'
 </style>
