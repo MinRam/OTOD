@@ -58,30 +58,26 @@ public class FileListService {
     }
     //用户收藏专辑
     public void loveFileList(Integer user_id, Integer filelist_id){
+        FileList filelist= fl_fileListRepository.findById(filelist_id).get();
+        VrssUser vrssUser = fl_Vrss_userRepository.findById(user_id).get();
         if (loveState(user_id,filelist_id)){
-            FileList filelist= fl_fileListRepository.findById(filelist_id).get();
-            VrssUser vrssUser = fl_Vrss_userRepository.findById(user_id).get();
             filelist.setLove(filelist.getLove()-1);
             vrssUser.getFilelist().remove(filelist);
-            fl_Vrss_userRepository.save(vrssUser);
-            fl_fileListRepository.save(filelist);
         }
         else{
-            FileList filelist= fl_fileListRepository.findById(filelist_id).get();
-            VrssUser vrssUser = fl_Vrss_userRepository.findById(user_id).get();
             filelist.setLove(filelist.getLove()+1);
             vrssUser.getFilelist().add(filelist);
-            fl_Vrss_userRepository.save(vrssUser);
-            fl_fileListRepository.save(filelist);
         }
+        fl_Vrss_userRepository.save(vrssUser);
+        fl_fileListRepository.save(filelist);
     }
     public Boolean loveState(Integer user_id, Integer filelist_id){
         FileList fileList= fl_fileListRepository.findById(filelist_id).get();
         VrssUser vrssUser = fl_Vrss_userRepository.findById(user_id).get();
-        List<VrssUser> l=fl_Vrss_userRepository.findByFilelist(fileList);
+        List<FileList> l=vrssUser.getFilelist();
         if(l.size()==0)  return false;
-        for (VrssUser v:l){
-            if(v.getUser_id().equals(vrssUser.getUser_id())) return true;
+        for (FileList f:l){
+            if(f.equals(fileList)) return true;
         }
         return false;
     }

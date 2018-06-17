@@ -10,6 +10,4 @@ import java.util.List;
 
 @Repository
 public interface VrssUserRepository extends JpaRepository<VrssUser,Integer> {
-    List<VrssUser> findByFile(FileInfo fileInfo);
-    List<VrssUser> findByFilelist(FileList fileList);
 }
