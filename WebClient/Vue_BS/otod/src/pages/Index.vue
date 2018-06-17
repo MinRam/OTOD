@@ -99,6 +99,7 @@ export default {
           this.$store.commit('initialName', response.data.nickname)
           this.$store.commit('initialHead', response.data.headImage)
           this.$store.commit('initialTel', response.data.telephone)
+          console.log('simpleInfo')
         }.bind(this))
       }
     },
