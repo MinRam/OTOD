@@ -44,7 +44,7 @@ export default {
           id: data[i].id,
           comment: data[i].comment,
           create_time: data[i].create_time,
-          user_id: data[i].user.user_id,
+          user_id: data[i].vrssUser.user_id,
           reply_id: replyid
         })
       }
@@ -72,7 +72,7 @@ export default {
           id: response.data.id,
           comment: response.data.comment,
           create_time: response.data.create_time,
-          user_id: response.data.user.user_id,
+          user_id: response.data.vrssUser.user_id,
           reply_id: response.data.reply == null ? 0 : response.data.reply.user_id
         })
       }).catch((error) => {
