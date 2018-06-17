@@ -49,6 +49,11 @@ public class SectionInfoController {
 		return sectionInfoService.findbypage(page, row);
 	}
 	
+	@RequestMapping("/checkusertype")
+	public int checkusertype(int section_id){
+		return sectionInfoService.checkUserType(section_id);
+	}
+	
 	@ResponseBody
 	@RequestMapping(value="/saveimg",method=RequestMethod.POST)
 	public ResultVo saveimg(@RequestParam MultipartFile file,HttpServletRequest request,HttpServletResponse response)throws Exception

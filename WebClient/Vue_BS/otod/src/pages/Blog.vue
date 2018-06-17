@@ -1,6 +1,6 @@
 <template>
 <div>
-  <el-container style="width:80%;margin:auto;">
+  <el-container style="width:100%;margin:auto;">
     <el-header>
       <el-breadcrumb separator-class="el-icon-arrow-right">
           <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
@@ -8,7 +8,7 @@
           <el-breadcrumb-item>{{ section_name }}</el-breadcrumb-item>
       </el-breadcrumb>
     </el-header>
-    <el-main>
+    <el-main >
       <el-row type="flex" class="row-bg" justify="center">
         <div style="margin:3px;max-width:200px" v-for="(x,index) in sectionList" :key="index">
           <el-popover
@@ -150,6 +150,7 @@ export default {
   name: 'Blog',
   data () {
     return {
+      user_type: 0,
       section_name: '公共',
       conditionSelect: '',
       forumTopicLength: 0,
@@ -188,6 +189,7 @@ export default {
   mounted: function () {
     this.queryByCondition()
     this.querySectionList()
+    this.checkusertype()
   },
   watch: {
     // 监听当前页面
@@ -245,7 +247,7 @@ export default {
       var t = this
       this.$axios({
         method: 'post',
-        url: 'http://localhost:8081/forumtopic/findbycondition',
+        url: this.$url + '/forumtopic/findbycondition',
         dataType: 'json',
         headers: {
           'Content-Type': 'application/json',
@@ -290,7 +292,7 @@ export default {
 
     // 根据id查找主题帖
     test () {
-      this.$axios.get('http://localhost:8081/forumtopic/findbyid?id=1').then(function (response) {
+      this.$axios.get(this.$url + '/forumtopic/findbyid?id=1').then(function (response) {
         console.log(response)
       }).catch(function (error) {
         console.log(error)
@@ -302,7 +304,7 @@ export default {
       var t = this
       this.$axios({
         method: 'get',
-        url: 'http://localhost:8081/forumtopic/findbypage',
+        url: this.$url + '/forumtopic/findbypage',
         dataType: 'jsonp',
         params: {
           page: t.page,
@@ -328,15 +330,14 @@ export default {
     },
 
     alee () {
-      alert(this.$refs.quillEditor.content)
-      console.log(this.mycontent)
+      alert(this.user_type)
     },
 
     querySectionList () {
       var t = this
       this.$axios({
         method: 'get',
-        url: 'http://localhost:8081/sectioninfo/findbypage',
+        url: this.$url + '/sectioninfo/findbypage',
         dataType: 'jsonp',
         params: {
           page: t.page - 1,
@@ -413,10 +414,32 @@ export default {
     // 删除主题帖
     deletebyid (id) {
       var t = this
-      this.$axios.get('http://localhost:8081/forumtopic/deletebyid?id=' + id).then(function (response) {
+      this.$axios.get(this.$url + '/forumtopic/deletebyid?id=' + id).then(function (response) {
         console.log(response)
         t.successMessageDelete()
         t.queryByCondition()
+      }).catch(function (error) {
+        console.log(error)
+      })
+    },
+
+    // 检查用户类型
+    checkusertype () {
+      var t = this
+      this.$axios({
+        method: 'get',
+        url: this.$url + '/sectioninfo/checkusertype',
+        dataType: 'jsonp',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + t.$getCookie('otod_access_token')
+        },
+        params: {
+          section_id: t.condition.section_id
+        }
+      }).then(function (response) {
+        console.log(response)
+        t.user_type = response.data
       }).catch(function (error) {
         console.log(error)
       })
