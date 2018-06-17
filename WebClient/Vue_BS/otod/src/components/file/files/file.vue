@@ -7,7 +7,7 @@
             <p class="card-text">
               文件名：{{ file.name }}<br>
               描  述：{{ file.description }}<br>
-              <a v-bind:href="encodeURI('http://127.0.0.1:8081/vrss/Download/download?file_url=' + file.file_url + '&user_id=' + userid + '&file_id=' + file.id)" v-bind:download="file.name">下载</a>
+              <a v-bind:href="encodeURI('http://127.0.0.1:8081/vrss/Download/download?' + '&user_id=' + userid + '&file_id=' + file.id)" v-bind:download="file.name">下载</a>
               <span class="switcher" v-bind:class="{'left': isClose, 'right': !isClose}" @click="switcher()">
                 <p v-if="isClose == true">未收藏（点击收藏）</p>
                 <p v-else>
