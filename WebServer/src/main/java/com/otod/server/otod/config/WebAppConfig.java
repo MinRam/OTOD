@@ -1,11 +1,7 @@
 package com.otod.server.otod.config;
 
-import javax.servlet.MultipartConfigElement;
-
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.web.servlet.MultipartConfigFactory;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -18,7 +14,11 @@ public class WebAppConfig  implements WebMvcConfigurer {
     // 临时使用springboot 自带图片服务器
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
+<<<<<<< HEAD
         mImagesPath = "file:/"+mImagesPath;
+=======
+        mImagesPath = "file:/" + mImagesPath;
+>>>>>>> d1ac3957abfb0099f36d42af33d6f2220b9978cd
         if(mImagesPath.equals("") || mImagesPath.equals("${cbs.imagesPath}")){
             String imagesPath = WebAppConfig.class.getClassLoader().getResource("").getPath();
             if(imagesPath.indexOf(".jar")>0){
@@ -29,7 +29,7 @@ public class WebAppConfig  implements WebMvcConfigurer {
             imagesPath = imagesPath.substring(0, imagesPath.lastIndexOf("/"))+"/images/";
             mImagesPath = imagesPath;
         }
-        LoggerFactory.getLogger(WebAppConfig.class).info("imagesPath="+mImagesPath);
+        LoggerFactory.getLogger(WebAppConfig.class).info("imagesPath=" + mImagesPath);
         registry.addResourceHandler("/images/**").addResourceLocations(mImagesPath);
     }
     

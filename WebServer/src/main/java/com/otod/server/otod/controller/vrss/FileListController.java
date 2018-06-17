@@ -20,10 +20,10 @@ public class FileListController {
         return fileListService.getFileList(filelist_id);
     }
     @RequestMapping(value = "/add")
-    public void addfilelist(@RequestParam("name") String name,
+    public Integer addfilelist(@RequestParam("name") String name,
                             @RequestParam("creator_id") Integer creator_id,
                             @RequestParam("description") String description){
-        fileListService.addFileList(name,creator_id,description);
+        return fileListService.addFileList(name,creator_id,description);
     }
     @RequestMapping(value = "/delete")
     public void deletefilelist(@RequestParam("filelist_id") Integer filelist_id){

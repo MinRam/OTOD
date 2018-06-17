@@ -30,7 +30,7 @@ public class FileListService {
         return fl_fileListRepository.findById(filelist_id).get();
     }
     //用户新建专辑
-    public void addFileList(String name,Integer creator_id,String description){
+    public Integer addFileList(String name,Integer creator_id,String description){
         FileList filelist=new FileList();
         filelist.setName(name);
         VrssUser vrssUser = fl_Vrss_userRepository.findById(creator_id).get();
@@ -41,7 +41,7 @@ public class FileListService {
         filelist.setScore(0.);
         filelist.setViews(0);
         filelist.setLove(0);
-        fl_fileListRepository.save(filelist);
+        return fl_fileListRepository.save(filelist).getId();
     }
     //用户删除专辑
     public void deleteFileList(Integer filelist_id){
@@ -91,8 +91,11 @@ public class FileListService {
     public void addFile(Integer filelist_id,Integer file_id){
         FileList filelist= fl_fileListRepository.findById(filelist_id).get();
         FileInfo file= fl_fileInfoRepository.findById(file_id).get();
-        List<FileList> l=fl_fileListRepository.findByFile(file);
-        if(l.size()>0)  return;
+        List<FileInfo> l=filelist.getFile();
+        if(l.size()==0)  return;
+        for (FileInfo f:l){
+            if(f.equals(file))  return;
+        }
         filelist.getFile().add(file);
         fl_fileListRepository.save(filelist);
     }
@@ -100,13 +103,20 @@ public class FileListService {
     public void deleteFile(Integer filelist_id,Integer file_id){
         FileList filelist= fl_fileListRepository.findById(filelist_id).get();
         FileInfo file= fl_fileInfoRepository.findById(file_id).get();
-        filelist.getFile().remove(file);
-        fl_fileListRepository.save(filelist);
+        List<FileInfo> l=filelist.getFile();
+        if(l.size()==0)  return;
+        for (FileInfo f:l){
+            if(f.equals(file)){
+                filelist.getFile().remove(file);
+                fl_fileListRepository.save(filelist);
+                return;
+            }
+        }
     }
     //查找专辑中的文件
     public List<FileInfo> findFileInList(Integer filelist_id){
         FileList filelist= fl_fileListRepository.findById(filelist_id).get();
-        return (List<FileInfo>) filelist.getFile();
+        return filelist.getFile();
     }
     //加载专辑的标签
     public List<Tag> findFileListTag(Integer filelist_id){
@@ -140,7 +150,7 @@ public class FileListService {
     }
     //用户创建的专辑7
     public List<FileList> findFileListByUser(Integer user_id){
-        return fl_fileListRepository.findAllByVrssUser(fl_Vrss_userRepository.findById(user_id).get());
+        return fl_fileListRepository.findByVrssUser(fl_Vrss_userRepository.findById(user_id).get());
     }
     //用户收藏的专辑8
     public List<FileList> findLove(Integer user_id){

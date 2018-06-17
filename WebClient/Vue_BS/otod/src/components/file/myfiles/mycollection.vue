@@ -1,24 +1,39 @@
 <template>
   <div id="mycollection">
+    <div>
+            创建新专辑
+            <form>
+              <div>
+                名称：<input type="text" v-model="newname" placeholder="输入新专辑名称">
+                描述：<input type="text" v-model="newdescription" placeholder="输入新专辑描述">
+                <button>确定</button><button @click="cancle()">取消</button>
+              </div>
+            </form>
+          </div>
     <ul id="list-ul">
       <div>
-        默认项
         <li v-bind="listdefault">
-          {{listdefault.name}}<br>
-          {{listdefault.description}}
-          <router-link class="card-link" :to="{path: '/file/filelist', query: {listname: JSON.stringify(listdefault)}}" target="_blank">查看</router-link>
+          <div class="card" style="width: 10rem;">
+            <div class="card-block card-float">
+              <h4 class="card-title">{{listdefault.name}}</h4>
+              <h4 class="card-title">{{listdefault.description}}</h4>
+              <router-link class="card-link" :to="{path: '/file/filelist', query: {listname: JSON.stringify(listdefault)}}" target="_blank">查看</router-link>
+            </div>
+          </div>
         </li>
       </div>
       <div>
         我创建的专辑
-        <div v-if="collectlist.length !== 0">
-          <li v-for="collect in collectlist" :key="collect.id">
+        <div>
+        </div>
+        <div v-if="createdlist.length !== 0">
+          <li v-for="create in createdlist" :key="create.id">
             <div class="card" style="width: 10rem;">
               <div class="card-block card-float">
-                <h4 class="card-title">{{collect.name}}</h4>
-                <p class="card-text">浏览数：{{collect.views}}</p>
-                <p class="card-text">评数：{{collect.score}}</p>
-                <router-link class="card-link" :to="{path: '/file/filelist', query: {listname: JSON.stringify(collectlist)}}" target="_blank">查看</router-link>
+                <h4 class="card-title">{{create.name}}</h4>
+                <p class="card-text">浏览数：{{create.views}}</p>
+                <p class="card-text">评分：{{create.score}}</p>
+                <router-link class="card-link" :to="{path: '/file/filelist', query: {listname: JSON.stringify(createdlist)}}" target="_blank">查看</router-link>
               </div>
             </div>
           </li>
@@ -31,14 +46,14 @@
       </div>
       <div>
         我收藏的专辑
-        <div v-if="createdlist.length !== 0">
-          <li v-for="create in createdlist" :key="create.id">
+        <div v-if="collectlist.length !== 0">
+          <li v-for="collect in collectlist" :key="collect.id">
             <div class="card" style="width: 10rem;">
               <div class="card-block card-float">
-                <h4 class="card-title">{{create.name}}</h4>
-                <p class="card-text">浏览数：{{create.views}}</p>
-                <p class="card-text">评数：{{create.score}}</p>
-                <router-link class="card-link" :to="{path: '/file/filelist', query: {listname: JSON.stringify(createlist)}}" target="_blank">查看</router-link>
+                <h4 class="card-title">{{collect.name}}</h4>
+                <p class="card-text">浏览数：{{collect.views}}</p>
+                <p class="card-text">评分：{{collect.score}}</p>
+                <router-link class="card-link" :to="{path: '/file/filelist', query: {listname: JSON.stringify(collectlist)}}" target="_blank">查看</router-link>
               </div>
             </div>
           </li>
@@ -67,8 +82,10 @@ export default {
       listdefault: {
         id: 0,
         name: '默认列表',
-        description: '未收藏至专辑的文件'
-      }
+        description: '所有文件'
+      },
+      newdescription: '',
+      newname: ''
     }
   },
   created () {
@@ -76,17 +93,19 @@ export default {
     this.getcollect()
   },
   methods: {
+    cancle () {
+      this.newname = ''
+      this.newdescription = ''
+    },
     getcreate () {
       var url = 'http://127.0.0.1:8081/vrss/FileList/listfilelist'
       var params = new URLSearchParams()
       params.append('user_id', 1)
-      params.append('tag_id', 0)
-      params.append('key', null)
       params.append('type', 7)
       this.$http.post(url, params).then((response) => {
         var data = response.data
         console.log(data)
-        this.createlist = data
+        this.createdlist = data
       }).catch((error) => {
         console.log(error)
       })
@@ -95,8 +114,6 @@ export default {
       var url = 'http://127.0.0.1:8081/vrss/FileList/listfilelist'
       var params = new URLSearchParams()
       params.append('user_id', 1)
-      params.append('tag_id', 0)
-      params.append('key', null)
       params.append('type', 8)
       this.$http.post(url, params).then((response) => {
         var data = response.data

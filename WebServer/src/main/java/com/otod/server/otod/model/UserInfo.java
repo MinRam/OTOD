@@ -48,6 +48,9 @@ public class UserInfo {
     private int age;
 
 
+<<<<<<< HEAD
+    
+=======
 //    @OneToOne(mappedBy="userInfo")
 //    Market_user mUser;
 
@@ -63,6 +66,7 @@ public class UserInfo {
 //    Market_user mUser;
 
 
+>>>>>>> e24314cc3c7c90f4dccec096b9c68c4f9af6c665
     public UserInfo() {
     }
 
@@ -171,6 +175,9 @@ public class UserInfo {
 
 
 
+<<<<<<< HEAD
+}
+=======
 //	public Market_user getmUser() {
 //		return mUser;
 //	}
@@ -179,3 +186,4 @@ public class UserInfo {
 //		this.mUser = mUser;
 //	}
 
+>>>>>>> e24314cc3c7c90f4dccec096b9c68c4f9af6c665
