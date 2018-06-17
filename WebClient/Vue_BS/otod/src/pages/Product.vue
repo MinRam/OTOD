@@ -208,7 +208,7 @@ export default {
           page_num: t.page_num
         }
       }).then(function (response) {
-        t.product_list = response.data.content
+        t.product_list = response.data.products
         t.total_product_num = response.data.totalElements
         t.total_page_num = response.data.totalPages
         t.loading = false

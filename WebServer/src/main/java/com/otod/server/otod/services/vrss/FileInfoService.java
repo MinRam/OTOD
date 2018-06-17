@@ -83,28 +83,27 @@ public class FileInfoService {
     }
     //收藏文件
     public void loveFile(Integer user_id,Integer file_id){
+        FileInfo file= fi_fileInfoRepository.findById(file_id).get();
+        VrssUser vrssUser = fi_Vrss_userRepository.findById(user_id).get();
         if (lovaState(user_id,file_id)){
-            FileInfo file= fi_fileInfoRepository.findById(file_id).get();
-            VrssUser vrssUser = fi_Vrss_userRepository.findById(user_id).get();
             file.setLove(file.getLove()-1);
             vrssUser.getFile().remove(file);
-            fi_fileInfoRepository.save(file);
-            fi_Vrss_userRepository.save(vrssUser);
         }
         else{
-            FileInfo file= fi_fileInfoRepository.findById(file_id).get();
-            VrssUser vrssUser = fi_Vrss_userRepository.findById(user_id).get();
             file.setLove(file.getLove()+1);
             vrssUser.getFile().add(file);
-            fi_fileInfoRepository.save(file);
-            fi_Vrss_userRepository.save(vrssUser);
         }
+        fi_fileInfoRepository.save(file);
+        fi_Vrss_userRepository.save(vrssUser);
     }
     public Boolean lovaState(Integer user_id,Integer file_id){
         FileInfo file= fi_fileInfoRepository.findById(file_id).get();
         VrssUser vrssUser = fi_Vrss_userRepository.findById(user_id).get();
-        List<VrssUser> l=fi_Vrss_userRepository.findByFile(file);
-        if(l.size()>0)  return true;
+        List<FileInfo> l=vrssUser.getFile();
+        if(l.size()==0)  return false;
+        for (FileInfo f:l){
+           if(f.equals(file)) return true;
+        }
         return false;
     }
     //浏览文件
