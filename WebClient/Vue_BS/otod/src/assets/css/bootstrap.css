@@ -1,18 +1,18 @@
-toggleable-md/*!
+/*!
  * Bootstrap v4.0.0-alpha.6 (https://getbootstrap.com)
  * Copyright 2011-2017 The Bootstrap Authors
  * Copyright 2011-2017 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 /*! normalize.css v5.0.0 | MIT License | github.com/necolas/normalize.css */
-html {
+.container-fluid html {
   font-family: sans-serif;
   line-height: 1.15;
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
 }
 
-body {
+.container-fluid body {
   margin: 0;
 }
 
@@ -20,7 +20,7 @@ article,
 aside,
 footer,
 header,
-nav,
+.container-fluid nav,
 section {
   display: block;
 }
@@ -52,13 +52,13 @@ pre {
   font-size: 1em;
 }
 
-a {
+.container-fluid a {
   background-color: transparent;
   -webkit-text-decoration-skip: objects;
 }
 
-a:active,
-a:hover {
+.container-fluid a:active,
+.container-fluid a:hover {
   outline-width: 0;
 }
 
@@ -124,7 +124,7 @@ audio:not([controls]) {
   height: 0;
 }
 
-img {
+.container-fluid img {
   border-style: none;
 }
 
@@ -132,8 +132,8 @@ svg:not(:root) {
   overflow: hidden;
 }
 
-button,
-input,
+.container-fluid button,
+.container-fluid input,
 optgroup,
 select,
 textarea {
@@ -143,24 +143,24 @@ textarea {
   margin: 0;
 }
 
-button,
+.container-fluid button,
 input {
   overflow: visible;
 }
 
-button,
+.container-fluid button,
 select {
   text-transform: none;
 }
 
-button,
-html [type="button"],
+.container-fluid button,
+.container-fluid html [type="button"],
 [type="reset"],
 [type="submit"] {
   -webkit-appearance: button;
 }
 
-button::-moz-focus-inner,
+.container-fluid button::-moz-focus-inner,
 [type="button"]::-moz-focus-inner,
 [type="reset"]::-moz-focus-inner,
 [type="submit"]::-moz-focus-inner {
@@ -168,7 +168,7 @@ button::-moz-focus-inner,
   padding: 0;
 }
 
-button:-moz-focusring,
+.container-fluid button:-moz-focusring,
 [type="button"]:-moz-focusring,
 [type="reset"]:-moz-focusring,
 [type="submit"]:-moz-focusring {
@@ -264,8 +264,8 @@ template {
     -webkit-box-shadow: none !important;
             box-shadow: none !important;
   }
-  a,
-  a:visited {
+  .container-fluid a,
+  .container-fluid a:visited {
     text-decoration: underline;
   }
   abbr[title]::after {
@@ -283,7 +283,7 @@ template {
     display: table-header-group;
   }
   tr,
-  img {
+  .container-fluid img {
     page-break-inside: avoid;
   }
   p,
@@ -315,7 +315,7 @@ template {
   }
 }
 
-html {
+.container-fluid html {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
 }
@@ -336,7 +336,7 @@ html {
   -webkit-tap-highlight-color: transparent;
 }
 
-body {
+.container-fluid body {
   font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 1rem;
   font-weight: normal;
@@ -397,27 +397,27 @@ blockquote {
   margin: 0 0 1rem;
 }
 
-a {
+.container-fluid a {
   color: #0275d8;
   text-decoration: none;
 }
 
-a:focus, a:hover {
+.container-fluid a:focus, a:hover {
   color: #014c8c;
   text-decoration: underline;
 }
 
-a:not([href]):not([tabindex]) {
+.container-fluid a:not([href]):not([tabindex]) {
   color: inherit;
   text-decoration: none;
 }
 
-a:not([href]):not([tabindex]):focus, a:not([href]):not([tabindex]):hover {
+.container-fluid a:not([href]):not([tabindex]):focus, a:not([href]):not([tabindex]):hover {
   color: inherit;
   text-decoration: none;
 }
 
-a:not([href]):not([tabindex]):focus {
+.container-fluid a:not([href]):not([tabindex]):focus {
   outline: 0;
 }
 
@@ -431,7 +431,7 @@ figure {
   margin: 0 0 1rem;
 }
 
-img {
+.container-fluid img {
   vertical-align: middle;
 }
 
@@ -439,9 +439,9 @@ img {
   cursor: pointer;
 }
 
-a,
+.container-fluid a,
 area,
-button,
+.container-fluid button,
 [role="button"],
 input,
 label,
@@ -474,27 +474,27 @@ label {
   margin-bottom: .5rem;
 }
 
-button:focus {
+.container-fluid button:focus {
   outline: 1px dotted;
   outline: 5px auto -webkit-focus-ring-color;
 }
 
 input,
-button,
+.container-fluid button,
 select,
 textarea {
   line-height: inherit;
 }
 
-input[type="radio"]:disabled,
-input[type="checkbox"]:disabled {
+.container-fluid input[type="radio"]:disabled,
+.container-fluid input[type="checkbox"]:disabled {
   cursor: not-allowed;
 }
 
-input[type="date"],
-input[type="time"],
-input[type="datetime-local"],
-input[type="month"] {
+.container-fluid input[type="date"],
+.container-fluid input[type="time"],
+.container-fluid input[type="datetime-local"],
+.container-fluid input[type="month"] {
   -webkit-appearance: listbox;
 }
 
@@ -3090,9 +3090,9 @@ fieldset[disabled] a.btn {
   margin-top: 0.5rem;
 }
 
-input[type="submit"].btn-block,
-input[type="reset"].btn-block,
-input[type="button"].btn-block {
+.container-fluid input[type="submit"].btn-block,
+.container-fluid input[type="reset"].btn-block,
+.container-fluid input[type="button"].btn-block {
   width: 100%;
 }
 
@@ -5225,24 +5225,24 @@ a.badge:focus, a.badge:hover {
 }
 
 a.list-group-item-success,
-button.list-group-item-success {
+.container-fluid button.list-group-item-success {
   color: #3c763d;
 }
 
 a.list-group-item-success .list-group-item-heading,
-button.list-group-item-success .list-group-item-heading {
+.container-fluid button.list-group-item-success .list-group-item-heading {
   color: inherit;
 }
 
 a.list-group-item-success:focus, a.list-group-item-success:hover,
-button.list-group-item-success:focus,
-button.list-group-item-success:hover {
+.container-fluid button.list-group-item-success:focus,
+.container-fluid button.list-group-item-success:hover {
   color: #3c763d;
   background-color: #d0e9c6;
 }
 
 a.list-group-item-success.active,
-button.list-group-item-success.active {
+.container-fluid button.list-group-item-success.active {
   color: #fff;
   background-color: #3c763d;
   border-color: #3c763d;
@@ -5254,24 +5254,24 @@ button.list-group-item-success.active {
 }
 
 a.list-group-item-info,
-button.list-group-item-info {
+.container-fluid button.list-group-item-info {
   color: #31708f;
 }
 
 a.list-group-item-info .list-group-item-heading,
-button.list-group-item-info .list-group-item-heading {
+.container-fluid button.list-group-item-info .list-group-item-heading {
   color: inherit;
 }
 
 a.list-group-item-info:focus, a.list-group-item-info:hover,
-button.list-group-item-info:focus,
-button.list-group-item-info:hover {
+.container-fluid button.list-group-item-info:focus,
+.container-fluid button.list-group-item-info:hover {
   color: #31708f;
   background-color: #c4e3f3;
 }
 
 a.list-group-item-info.active,
-button.list-group-item-info.active {
+.container-fluid button.list-group-item-info.active {
   color: #fff;
   background-color: #31708f;
   border-color: #31708f;
@@ -5283,24 +5283,24 @@ button.list-group-item-info.active {
 }
 
 a.list-group-item-warning,
-button.list-group-item-warning {
+.container-fluid button.list-group-item-warning {
   color: #8a6d3b;
 }
 
 a.list-group-item-warning .list-group-item-heading,
-button.list-group-item-warning .list-group-item-heading {
+.container-fluid button.list-group-item-warning .list-group-item-heading {
   color: inherit;
 }
 
 a.list-group-item-warning:focus, a.list-group-item-warning:hover,
-button.list-group-item-warning:focus,
-button.list-group-item-warning:hover {
+.container-fluid button.list-group-item-warning:focus,
+.container-fluid button.list-group-item-warning:hover {
   color: #8a6d3b;
   background-color: #faf2cc;
 }
 
 a.list-group-item-warning.active,
-button.list-group-item-warning.active {
+.container-fluid button.list-group-item-warning.active {
   color: #fff;
   background-color: #8a6d3b;
   border-color: #8a6d3b;
@@ -5312,24 +5312,24 @@ button.list-group-item-warning.active {
 }
 
 a.list-group-item-danger,
-button.list-group-item-danger {
+.container-fluid button.list-group-item-danger {
   color: #a94442;
 }
 
 a.list-group-item-danger .list-group-item-heading,
-button.list-group-item-danger .list-group-item-heading {
+.container-fluid button.list-group-item-danger .list-group-item-heading {
   color: inherit;
 }
 
 a.list-group-item-danger:focus, a.list-group-item-danger:hover,
-button.list-group-item-danger:focus,
-button.list-group-item-danger:hover {
+.container-fluid button.list-group-item-danger:focus,
+.container-fluid button.list-group-item-danger:hover {
   color: #a94442;
   background-color: #ebcccc;
 }
 
 a.list-group-item-danger.active,
-button.list-group-item-danger.active {
+.container-fluid button.list-group-item-danger.active {
   color: #fff;
   background-color: #a94442;
   border-color: #a94442;
@@ -5395,7 +5395,7 @@ button.list-group-item-danger.active {
   opacity: .75;
 }
 
-button.close {
+.container-fluid button.close {
   padding: 0;
   cursor: pointer;
   background: transparent;

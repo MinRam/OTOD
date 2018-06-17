@@ -17,6 +17,6 @@ export default {
   }
 }
 </script>
-
 <style scoped>
+  @import '../../../assets/css/bootstrap.css'
 </style>
