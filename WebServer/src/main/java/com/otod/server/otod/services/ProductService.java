@@ -123,16 +123,15 @@ public class ProductService {
 		}
 
 		Product product = new Product();
-<<<<<<< HEAD
+
 
 		Market_user seller = muRepository.findByUserInfo(userInfo);
 
 //		Market_user seller = userInfo.getmUser();
 		
-=======
-		Market_user seller = muRepository.findByUserInfo(userInfo);
-//		Market_user seller = userInfo.getmUser();
->>>>>>> e03d1b6f634e51749dba949ccb5b15be18b1a5c3
+
+
+
 
 		product.setProduct_catalog(catalog);
 		product.setSeller(seller);
