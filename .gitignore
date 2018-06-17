@@ -17,3 +17,4 @@ WebServer/src/main/java/com/otod/server/otod/services/ProductService.java
 WebServer/src/main/java/com/otod/server/otod/services/ProductService.java
 WebServer/src/main/java/com/otod/server/otod/model/UserInfo.java
 WebServer/src/main/resources/application.properties
+WebServer/src/main/resources/application.properties
