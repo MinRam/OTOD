@@ -130,6 +130,12 @@ public class ProductService {
 //		Market_user seller = userInfo.getmUser();
 		
 
+<<<<<<< HEAD
+=======
+
+
+
+>>>>>>> e24314cc3c7c90f4dccec096b9c68c4f9af6c665
 		product.setProduct_catalog(catalog);
 		product.setSeller(seller);
 		product.setProduct_encoding(product_encoding);

@@ -7,7 +7,7 @@
           <div class="card-block card-float">
             <h4 class="card-title">{{filelist.name}}</h4>
             <p class="card-text">浏览数：{{filelist.views}}</p>
-            <p class="card-text">评数：{{filelist.score}}</p>
+            <p class="card-text">评分：{{filelist.score}}</p>
             <router-link class="card-link" :to="{path: '/file/filelist', query: {listname: JSON.stringify(filelist)}}" target="_blank">查看</router-link>
           </div>
         </div>
@@ -54,11 +54,15 @@ export default {
   },
   methods: {
     getlist (id) {
-      var url = 'http://127.0.0.1:8082/vrss/FileList/listfilelist'
+      var url = 'http://127.0.0.1:8081/vrss/FileList/listfilelist'
       var params = new URLSearchParams()
       params.append('tag_id', id)
       params.append('key', null)
-      params.append('type', 5)
+      if (id !== 0) {
+        params.append('type', 5)
+      } else {
+        params.append('type', 1)
+      }
       this.$http.post(url, params).then((response) => {
         var data = response.data
         this.filelists = []

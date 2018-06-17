@@ -14,7 +14,7 @@
 import Content1 from './content.vue'
 import commentarea from './commentarea.vue'
 export default {
-  name: 'comment',
+  name: 'listcom',
   components: {
     Content1,
     commentarea
@@ -24,11 +24,11 @@ export default {
     return {
       type: 0,
       comments: [],
-      replyid: ''
+      replyid: 0
     }
   },
   created () {
-    var url = 'http://127.0.0.1:8081/vrss/Comment/filecomment'
+    var url = 'http://127.0.0.1:8081/vrss/Comment/filelistcomment'
     var params = new URLSearchParams()
     params.append('id', this.id)
     this.$http.post(url, params).then((response) => {
@@ -62,8 +62,8 @@ export default {
       } else {
         params.append('reply_id', this.replyid)
       }
-      params.append('file_id', this.id)
-      params.append('filelist_id', 0)
+      params.append('file_id', 0)
+      params.append('filelist_id', this.id)
       params.append('score', 1)
       var url = 'http://127.0.0.1:8081/vrss/Comment/add'
       this.$http.post(url, params).then((response) => {

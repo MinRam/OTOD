@@ -41,14 +41,32 @@ public class UserInfo {
     @Column(name = "email")
     private String email;
 
-    @Column(name ="address")
+    @Column(name = "address")
     private String address;
 
     @Column(name = "age")
     private int age;
 
 
+<<<<<<< HEAD
     
+=======
+//    @OneToOne(mappedBy="userInfo")
+//    Market_user mUser;
+
+
+//    @OneToOne(mappedBy="userInfo")
+//    Market_user mUser;
+
+
+//    @OneToOne(mappedBy="userInfo")
+//    Market_user mUser;
+
+//    @OneToOne(mappedBy="userInfo")
+//    Market_user mUser;
+
+
+>>>>>>> e24314cc3c7c90f4dccec096b9c68c4f9af6c665
     public UserInfo() {
     }
 
@@ -152,8 +170,20 @@ public class UserInfo {
     public void setAge(int age) {
         this.age = age;
     }
-
-
-
-
 }
+
+
+
+
+<<<<<<< HEAD
+}
+=======
+//	public Market_user getmUser() {
+//		return mUser;
+//	}
+//
+//	public void setmUser(Market_user mUser) {
+//		this.mUser = mUser;
+//	}
+
+>>>>>>> e24314cc3c7c90f4dccec096b9c68c4f9af6c665

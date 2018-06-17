@@ -42,7 +42,9 @@ import RRecivedOrders from '@/components/service/RRecivedOrders'
 import RWaitingCommentOrders from '@/components/service/RWaitingCommentOrders'
 import RDoneOrders from '@/components/service/RDoneOrders'
 import RFailedOrders from '@/components/service/RFailedOrders'
-
+import WaitingEvaluateS from '@/components/service/WaitingEvaluateS'
+import FailedOrderS from '@/components/service/FailedOrderS'
+import FinishedOrderS from '@/components/service/FinishedOrderS'
 
 Vue.use(Router)
 
@@ -139,6 +141,30 @@ const routes = [
               requireAuth: false
             },
             component: RunningS
+          },
+          {
+            path: '/service/waitingevaluates',
+            name: 'WaitingEvaluateS',
+            meta: {
+              requireAuth: false
+            },
+            component: WaitingEvaluateS
+          },
+          {
+            path: '/service/finishedorders',
+            name: 'FinishedOrderS',
+            meta: {
+              requireAuth: false
+            },
+            component: FinishedOrderS
+          },
+          {
+            path: '/service/failedorders',
+            name: 'FailedOrderS',
+            meta: {
+              requireAuth: false
+            },
+            component: FailedOrderS
           },
           {
             path: '/service/RMyAllOrders',

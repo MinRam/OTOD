@@ -2,7 +2,14 @@
   <div id="list">
     <ul>
        <li v-for="file in filelist" :key="file.id">
-        <router-link :to="{path: '/file/files', query: {filename: JSON.stringify(file)}}" target="_blank">{{ file.id }}</router-link>
+        <div class="card" style="width: 10rem;">
+          <div class="card-block card-float">
+            <h4 class="card-title">{{file.name}}</h4>
+            <p class="card-text">浏览数：{{file.views}}</p>
+            <p class="card-text">评分：{{file.score}}</p>
+            <router-link :to="{path: '/file/files', query: {filename: JSON.stringify(file)}}" target="_blank">查看</router-link>
+          </div>
+        </div>
       </li>
     </ul>
   </div>
@@ -61,7 +68,10 @@ export default {
         console.log(response.data)
         for (var i = 0; i < data.length; i++) {
           this.filelist.push({
-            id: data[i].id
+            id: data[i].id,
+            name: data[i].name,
+            score: data[i].score,
+            views: data[i].views
           })
         }
       })
@@ -93,3 +103,7 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+  @import '../../../assets/css/bootstrap.css'
+</style>

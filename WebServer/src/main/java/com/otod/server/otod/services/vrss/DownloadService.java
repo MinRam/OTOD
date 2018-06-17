@@ -28,6 +28,7 @@ public class DownloadService {
         Download download=null;
         download=d_downloadRepository.findByVrssUserAndFile(vrssUser,fileInfo);
         if(download==null){
+            download=new Download();
             download.setFile(d_fileInfoRepository.findById(file_id).get());
             download.setVrssUser(d_Vrss_userRepository.findById(user_id).get());
             Date date=new java.sql.Date(new Date().getTime());
