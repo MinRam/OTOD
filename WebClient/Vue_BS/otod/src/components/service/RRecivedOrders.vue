@@ -1,4 +1,4 @@
-userinfoStemplate>
+<template>
     <el-col :xs="12" :sm="12" :md="12" :xl="12" :offset="4">
         <ul v-loading="loadingOrder">
           <!-- 这个是element的特有写法 v-for 就是一个循环 循环输出<li>里面的html message是一个数组，里面存着order 相当于for(m in message){ <li>里面的代码</li>} -->

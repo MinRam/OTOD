@@ -99,6 +99,7 @@ export default {
 </script>
 
 <style scoped>
+  @import '../../../assets/css/bootstrap.css'
   .switcher {
     transition: left 0.8s;
   }

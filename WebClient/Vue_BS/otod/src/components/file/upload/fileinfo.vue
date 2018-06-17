@@ -86,7 +86,7 @@ export default{
       this.$http.post('http://127.0.0.1:8081/vrss/FileInfo/upload', formData, config).then((response) => {
         /* 这里做处理 */
         this.fileid = response.data
-        console.log('id' + this.fileid)
+        console.log(this.fileid)
         alert('上传成功')
       }).then((response) => {
         // 添加标签

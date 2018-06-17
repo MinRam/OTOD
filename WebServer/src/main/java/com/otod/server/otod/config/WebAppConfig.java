@@ -15,6 +15,7 @@ public class WebAppConfig  implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         mImagesPath = "file:/" + mImagesPath;
+
         if(mImagesPath.equals("") || mImagesPath.equals("${cbs.imagesPath}")){
             String imagesPath = WebAppConfig.class.getClassLoader().getResource("").getPath();
             if(imagesPath.indexOf(".jar")>0){
