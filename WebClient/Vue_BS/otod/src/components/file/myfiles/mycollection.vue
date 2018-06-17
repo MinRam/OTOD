@@ -1,15 +1,22 @@
 <template>
   <div id="mycollection">
     <div>
-            创建新专辑
-            <form>
-              <div>
-                名称：<input type="text" v-model="newname" placeholder="输入新专辑名称">
-                描述：<input type="text" v-model="newdescription" placeholder="输入新专辑描述">
-                <button>确定</button><button @click="cancle()">取消</button>
-              </div>
-            </form>
+      创建新专辑
+      <div>
+        名称：<input type="text" v-model="newname" placeholder="输入新专辑名称">
+        描述：<input type="text" v-model="newdescription" placeholder="输入新专辑描述">
+        <ul>
+          <div>
+            <li v-for="tag in tags" :key="tag.id">
+              <label class="form-check-label">
+                <input class="form-check-input" type="checkbox" @click="getstate(tag)" :checked="tag.right"> {{ tag.content }}
+              </label>
+            </li>
           </div>
+        </ul>
+        <button @click="confirm()">确定</button> <button @click="cancle()">取消</button>
+      </div>
+    </div>
     <ul id="list-ul">
       <div>
         <li v-bind="listdefault">
@@ -77,6 +84,7 @@ export default {
   props: ['userid'],
   data () {
     return {
+      tags: [],
       createdlist: [],
       collectlist: [],
       listdefault: {
@@ -91,11 +99,59 @@ export default {
   created () {
     this.getcreate()
     this.getcollect()
+    this.gettags()
   },
   methods: {
+    confirm () {
+      var url = 'http://127.0.0.1:8081/vrss/FileList/add'
+      var params = new URLSearchParams()
+      params.append('name', this.newname)
+      params.append('creator_id', this.userid)
+      params.append('description', this.newdescription)
+      this.$http.post(url, params).then((response) => {
+        var data = response.data
+        this.createdlist.unshift(data)
+        var tags = []
+        for (var i = 0; i < this.tags.length; i++) {
+          if (this.tags[i].right === true) {
+            tags.push(this.tags[i].id)
+          }
+        }
+        this.cancle()
+        var url1 = 'http://127.0.0.1:8081/vrss/Tag/addfilelisttag'
+        var params1 = new URLSearchParams()
+        params1.append('filelist_id', data.id)
+        params1.append('tag_id', tags)
+        this.$http.post(url1, params1).then((response) => {
+          console.log(response)
+        })
+      }).catch((error) => {
+        console.log(error)
+      })
+    },
+    getstate (tag) {
+      tag.right = !tag.right
+    },
     cancle () {
       this.newname = ''
       this.newdescription = ''
+      for (var i = 0; i < this.tags.length; i++) {
+        this.tags[i].right = false
+      }
+    },
+    gettags () {
+      var url = 'http://127.0.0.1:8081/vrss/Tag/listtag'
+      var params = new URLSearchParams()
+      this.$http.post(url, params).then((response) => {
+        var data = response.data
+        console.log(data)
+        this.tags = data
+        for (var i = 0; i < this.tags.length; i++) {
+          this.$set(this.tags[i], 'right', false)
+        }
+      }).catch((error) => {
+        console.log(error)
+      })
     },
     getcreate () {
       var url = 'http://127.0.0.1:8081/vrss/FileList/listfilelist'
@@ -133,4 +189,7 @@ export default {
     position: relative;;
     float: left
   }
+  [v-clock] {
+                display: none;
+            }
 </style>
