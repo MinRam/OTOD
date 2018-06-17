@@ -1,8 +1,8 @@
 <template>
   <div id="myfiles">
-    <mynavbar></mynavbar>
+    <mynavbar ></mynavbar>
     <myinfo></myinfo>
-    <router-view></router-view>
+    <router-view v-bind:userid="userid"></router-view>
   </div>
 </template>
 
@@ -17,7 +17,9 @@ export default {
     mynavbar
   },
   data () {
-    return {}
+    return {
+      userid: 1
+    }
   },
   created () {
   }
