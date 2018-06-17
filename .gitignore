@@ -16,3 +16,4 @@ WebServer/null/vrss/userfile/1/1/路径对应的接口3.0.txt
 WebServer/src/main/java/com/otod/server/otod/services/ProductService.java
 WebServer/src/main/java/com/otod/server/otod/services/ProductService.java
 WebServer/src/main/java/com/otod/server/otod/model/UserInfo.java
+WebServer/src/main/resources/application.properties

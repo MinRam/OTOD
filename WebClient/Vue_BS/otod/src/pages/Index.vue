@@ -38,7 +38,7 @@ export default {
         title: '首页'
       }, {
         active: false,
-        link: 'QuillEditor',
+        link: 'Blog',
         name: 'blog',
         title: '博客'
       }, {
