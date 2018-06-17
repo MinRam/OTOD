@@ -10,6 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 
 @Entity
 @Table(name="catalog")
@@ -25,6 +28,7 @@ public class Catalog {
 	private String catalog_name;
 	
 	@OneToMany(mappedBy="product_catalog")
+	@Cascade(value={CascadeType.REMOVE})
 	private Set<Product>product = new HashSet<Product>();
 	
 	
