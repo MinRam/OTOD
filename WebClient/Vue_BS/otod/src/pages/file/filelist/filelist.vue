@@ -7,26 +7,35 @@
         </li>
       </div>
       <div v-else>
-        还没有上传过文件
+        还没有文件
       </div>
     </ul>
+    <listcom v-bind:id="id" v-bind:userid="userid"></listcom>
   </div>
 </template>
 
 <script>
+import listcom from '../../../components/file/listcom/comment.vue'
 export default {
+  components: {
+    listcom
+  },
   name: 'filelists',
   data () {
     return {
       filelist: [],
       listinfo: {
         type: Object
-      }
+      },
+      type: 0,
+      id: 0,
+      userid: 1
     }
   },
   created () {
     let str = this.$route.query.listname
     this.listinfo = JSON.parse(str)
+    this.id = this.listinfo.id
     // console.log(this.listinfo)
     if (this.listinfo.id !== 0) {
       var url = 'http://127.0.0.1:8081/vrss/FileList/listfile'

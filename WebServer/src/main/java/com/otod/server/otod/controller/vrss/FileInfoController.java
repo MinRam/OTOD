@@ -47,7 +47,7 @@ public class FileInfoController {
     @RequestMapping(value = "/lovestate")
     public Boolean lovestate(@RequestParam("user_id") Integer user_id,
                               @RequestParam("file_id") Integer file_id){
-        return fileInfoService.lovaState(user_id,file_id);
+        return fileInfoService.loveState(user_id,file_id);
     }
     @RequestMapping(value = "/view")
     public void viewfile(@RequestParam("file_id") Integer file_id){
