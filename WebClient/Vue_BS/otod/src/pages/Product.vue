@@ -26,7 +26,7 @@
         <div id="position">
           <el-row>
             <el-col :span=10 :push="6">
-              <p>您当前的位置是：二手市场</p>
+              <p>您当前的位置是：<el-button type="text" @click="changepage('/market')">二手市场</el-button> -> 商品信息</p>
             </el-col>
           </el-row>
         </div>
@@ -119,7 +119,7 @@
             </div>
 
             <!--卖家信息-->
-              <div id="seller_message">
+            <!--  <div id="seller_message">
                 <el-col :span=3 :push="8">
                   <ul class="list-group">
                     <li class="list-group-item">
@@ -138,7 +138,7 @@
                     </li>
                   </ul>
                 </el-col>
-              </div>
+              </div>-->
             </el-row>
           </div>
 

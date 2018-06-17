@@ -313,4 +313,11 @@ public class MarketController {
 		productService.UpdateByMap(map,mUser);
 		return "success";
 	}
+	
+	@RequestMapping(value="/DeleteProduct",method=RequestMethod.POST)
+	@ResponseBody
+	public String DeleteProduct(@RequestParam int product_id){
+		productService.DeleteProduct(product_id);
+		return "success";
+	}
 }

@@ -37,4 +37,5 @@ public interface ProductRepository extends JpaRepository<Product, Integer>,JpaSp
 	
 	@Query("select p from Product p where p.seller.market_user_id = :seller_id")
 	Page<Product> findBySeller(@Param("seller_id")int seller_id,Pageable pageable);
+	
 }
