@@ -5,8 +5,8 @@
         <li>
           <div class="card-block">
             <p class="card-text">
-              文件名：<input type="text" v-model="file.name" :readonly="read"><br>
-              描  述：<input type="text" v-model="file.description" :readonly="read"><br>
+              文件名：<input type="text" v-model="name" :readonly="read"><br>
+              描  述：<input type="text" v-model="description" :readonly="read"><br>
               标  签：<div>
                 <ul>
                   <li v-for="tag in tags" :key="tag.id"><label class="form-check-label">
@@ -18,7 +18,7 @@
               <div v-show="upload === true">
                 <button @click="changeread">修改文件信息</button>
                 <div v-show="!read">
-                  <button>确定</button><button>取消</button>
+                  <button @click="confirm">确定</button> <button @click="cancle">取消</button>
                 </div>
               </div>
               <a v-bind:href="encodeURI('http://127.0.0.1:8081/vrss/Download/download?' + '&user_id=' + userid + '&file_id=' + file.id)" v-bind:download="file.name">下载</a>
@@ -54,7 +54,10 @@ export default {
       islike: false, // 得到原始状态
       isLikes: false,
       read: true, // 只读
-      tags: []
+      tags: [],
+      name: '',
+      description: '',
+      tagstate: []
     }
   },
   created () {
@@ -86,6 +89,70 @@ export default {
     }
   },
   methods: {
+    chtag () {
+      var tag1 = []
+      var tag2 = []
+      for (var i = 0; i < this.tags.length; i++) {
+        if (this.tags[i].right !== this.tagstate[i].right) {
+          if (this.tagstate[i].right === true) {
+            tag1.push(this.tagstate[i].id)
+          } else {
+            tag2.push(this.tagstate[i].id)
+          }
+        }
+      }
+      this.deltag(tag1)
+      this.addtag(tag2)
+    },
+    deltag (tag) {
+      var url = 'http://127.0.0.1:8081/vrss/Tag/deletefiletag'
+      var params = new URLSearchParams()
+      params.append('file_id', this.id)
+      params.append('tag_id', tag)
+      this.$http.post(url, params).then((response) => {
+        console.log(response.status)
+      })
+    },
+    addtag (tag) {
+      var url = 'http://127.0.0.1:8081/vrss/Tag/addfiletag'
+      var params = new URLSearchParams()
+      params.append('file_id', this.id)
+      params.append('tag_id', tag)
+      this.$http.post(url, params).then((response) => {
+        console.log(response.status)
+      })
+    },
+    chfile () {
+      this.file.name = this.name
+      this.file.description = this.description
+      var url = 'http://127.0.0.1:8081/vrss/FileInfo/update'
+      var params = new URLSearchParams()
+      params.append('name', this.name)
+      params.append('description', this.description)
+      params.append('file_id', this.id)
+      this.$http.post(url, params).catch((error) => {
+        console.log(error)
+      })
+      this.read = true
+    },
+    confirm () {
+      this.chfile()
+      this.chtag()
+    },
+    cancle () {
+      this.name = this.file.name
+      this.description = this.file.description
+      for (var i = 0; i < this.tags.length; i++) {
+        this.tags[i].right = false
+        for (var j = 0; j < this.tagstate.length; j++) {
+          if (this.tagstate[j].id === this.tags[i].id) {
+            this.tags[i].right = true
+            break
+          }
+        }
+      }
+      this.read = true
+    },
     gettag () {
       var url = 'http://127.0.0.1:8081/vrss/FileInfo/filetag'
       var params = new URLSearchParams()
@@ -93,9 +160,10 @@ export default {
       this.$http.post(url, params).then((response) => {
         var data = response.data
         for (var i = 0; i < data.length; i++) {
-          for (var j = i; j < this.tags.length; j++) {
+          for (var j = 0; j < this.tags.length; j++) {
             if (data[i].id === this.tags[j].id) {
               this.tags[j].right = true
+              this.tagstate[j].right = true
               break
             }
           }
@@ -115,6 +183,7 @@ export default {
         this.tags = data
         for (var i = 0; i < this.tags.length; i++) {
           this.$set(this.tags[i], 'right', false)
+          this.tagstate.push({'id': this.tags[i].id, 'right': false})
         }
       }).catch((error) => {
         console.log(error)
@@ -148,6 +217,8 @@ export default {
         var data = response.data
         console.log(data)
         this.file = data
+        this.name = data.name
+        this.description = data.description
       }).catch((error) => {
         console.log(error)
       })
