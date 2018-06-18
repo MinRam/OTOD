@@ -17,7 +17,7 @@ public interface FileListRepository extends JpaRepository<FileList,Integer> {
     List<FileList> findAllByOrderByViews();
     List<FileList> findAllByOrderByScore();
     List<FileList> findAllByTag(Tag tag);
+    List<FileList> findByVrssUser(VrssUser vrssUser);
     @Query(value="select f from FileList f where f.name like %:p% or f.description like %:p%")
     List<FileList> findBykey(@Param("p") String key);
-    List<FileList> findByVrssUser(VrssUser vrssUser);
 }
