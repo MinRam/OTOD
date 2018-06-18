@@ -1,7 +1,7 @@
 <template>
   <div id="filelists">
-    列表名：<input type="text" v-model="listinfo.name" :readonly="read"><br>
-    描  述：<input type="text" v-model="listinfo.description" :readonly="read"><br>
+    列表名：<input type="text" v-model="name" :readonly="read"><br>
+    描  述：<input type="text" v-model="description" :readonly="read"><br>
     <div v-show="id !== 0">标  签：
                 <ul>
                   <li v-for="tag in tags" :key="tag.id"><label class="form-check-label">
