@@ -40,10 +40,11 @@ body{
     font-size: 16px;
     margin: 7px 0 0 24px;
     text-decoration: none;
+    cursor: pointer;
 }
 
 .setting-title a:hover{
-    color: #fff;
+    color: #888;
 }
 
 
@@ -91,6 +92,14 @@ body{
     color: #5a8dcd;
     background-image: url(../images/icon2-8.png);
     background-position: right -479px;
+}
+
+.telephone-content .telephone-Num {
+    float:left;
+    margin-left: 10px;
+    margin-top: -2px;
+    color: #888;
+    font-size: 14px;
 }
 
 /*第三方认证*/
@@ -151,7 +160,18 @@ body{
 }
 
 .info-head .user-uploader{
-    float: left;
+    position: absolute;
+    z-index: 3;
+}
+
+.info-head .el-upload{
+    width: 100px;
+    height: 100px;
+}
+
+.info-head .avatar{
+    width: 100px;
+    height: 100px
 }
 
 /*兴趣设置*/

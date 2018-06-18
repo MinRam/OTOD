@@ -74,8 +74,8 @@ export default {
   },
 
   mounted () {
-    this.restaurants = this.loadAll()
-    // this.$router.push('/home')
+    // this.restaurants = this.loadAll()
+
     this._changeHead()
 
     this.initialUserInfo()
@@ -96,10 +96,10 @@ export default {
             access_token: this.$getCookie('otod_access_token')
           }
         }).then(function (response) {
+          console.log(response.data.nickname)
           this.$store.commit('initialName', response.data.nickname)
           this.$store.commit('initialHead', response.data.headImage)
           this.$store.commit('initialTel', response.data.telephone)
-          console.log('simpleInfo')
         }.bind(this))
       }
     },

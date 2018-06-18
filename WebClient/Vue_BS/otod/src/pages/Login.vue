@@ -521,7 +521,7 @@ export default {
                 if (response.data.access_token) {
                   this.$setCookie('otod_access_token', response.data.access_token)
                   this.$store.commit('userSignIn')
-                  this.$router.push('/')
+                  this.$router.push('/index')
                 } else {
                   this._showErrors('请检查网络！')
                 }
