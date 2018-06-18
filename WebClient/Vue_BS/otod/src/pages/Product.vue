@@ -26,7 +26,7 @@
         <div id="position">
           <el-row>
             <el-col :span=10 :push="6">
-              <p>您当前的位置是：二手市场</p>
+              <p>您当前的位置是：<el-button type="text" @click="changepage('/market')">二手市场</el-button> -> 商品信息</p>
             </el-col>
           </el-row>
         </div>
@@ -83,6 +83,10 @@
                   </ul>
                 </div>
                 <hr>
+                <br>
+                <br><br>
+                <br>
+                <br>
                 <div class="buttom">
                   <!--安全保障-->
                   <dl>
@@ -98,20 +102,24 @@
                     </dd>
                   </dl>
                   <hr>
+<br>
+<br>
+<br>
+<br>
 
                   <!--购买商品-->
                   <div id="add_cart" class="pull-right">
-                    <a href="product/pay?product_id=<%=p.getProduct_id() %>" class="btn btn-default">
+                    <el-button @click="changepage('/market/product/pay?product_id='+product.product_id)">
                       <span><img :src="component_img.add_cart" alt="" width="40px" height="40px"></span>
                       <span>购买商品</span>
-                    </a>
+                    </el-button>
                   </div>
                 </div>
               </el-col>
             </div>
 
             <!--卖家信息-->
-              <div id="seller_message">
+            <!--  <div id="seller_message">
                 <el-col :span=3 :push="8">
                   <ul class="list-group">
                     <li class="list-group-item">
@@ -130,7 +138,7 @@
                     </li>
                   </ul>
                 </el-col>
-              </div>
+              </div>-->
             </el-row>
           </div>
 
@@ -200,7 +208,7 @@ export default {
           page_num: t.page_num
         }
       }).then(function (response) {
-        t.product_list = response.data.content
+        t.product_list = response.data.products
         t.total_product_num = response.data.totalElements
         t.total_page_num = response.data.totalPages
         t.loading = false
@@ -219,11 +227,10 @@ export default {
           product_id: t.$route.query.product_id
         }
       }).then(function (response) {
-        console.log(response)
         t.product = response.data
         t.show_picture = t.product.product_img_url
         t.img_url = response.data.product_imgs
-        console.log(t.img_url)
+        console.log(t.product)
       })
     },
     handleClick (tab, event) {},

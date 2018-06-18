@@ -13,24 +13,29 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name="p_order")
 public class P_Order {
-/*CREATE TABLE `order` (
+/*CREATE TABLE `p_order` (
   `order_id` int(11) NOT NULL AUTO_INCREMENT,
   `buyer_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
   `product_num` int(11) NOT NULL,
   `user_order_encoding` varchar(32) NOT NULL COMMENT '订单编码',
   `status` int(11) NOT NULL COMMENT '订单状态',
+  `createtime` datetime NOT NULL,
+  `phone` varchar(32) NOT NULL,
+  `address` varchar(255) NOT NULL,
   PRIMARY KEY (`order_id`),
   KEY `o_mu_bid` (`buyer_id`),
   KEY `o_p_pid` (`product_id`),
   CONSTRAINT `o_mu_bid` FOREIGN KEY (`buyer_id`) REFERENCES `market_user` (`market_user_id`),
   CONSTRAINT `o_p_pid` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`)
-)
 )*/
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,19 +43,25 @@ public class P_Order {
 	
 	@ManyToOne
 	@JoinColumn(name="buyer_id")
+	@Cascade(value={CascadeType.MERGE})
 	private Market_user buyer;
 	
 	@ManyToOne
 	@JoinColumn(name="product_id")
+	@Cascade(value={CascadeType.MERGE})
 	private Product product;
 	
 	@OneToMany(mappedBy="p_Order")
+	@Cascade(value={CascadeType.REMOVE})
 	private Set<Market_record>records = new HashSet<Market_record>();
 	
 	private int product_num;
 	private String user_order_encoding;
 	int status;//1：待付款，2：未发货，3：未收货，4：已收货
 	Date createtime;
+	String phone;
+	String address;
+	
 	
 	public int getOrder_id() {
 		return order_id;
@@ -58,7 +69,7 @@ public class P_Order {
 	public void setOrder_id(int order_id) {
 		this.order_id = order_id;
 	}
-	@JsonBackReference
+	
 	public Market_user getBuyer() {
 		return buyer;
 	}
@@ -66,7 +77,7 @@ public class P_Order {
 	public void setBuyer(Market_user buyer) {
 		this.buyer = buyer;
 	}
-	@JsonBackReference
+	
 	public Product getProduct() {
 		return product;
 	}
@@ -103,6 +114,18 @@ public class P_Order {
 	}
 	public void setCreatetime(Date createtime) {
 		this.createtime = createtime;
+	}
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
 	}
 	
 	

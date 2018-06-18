@@ -16,12 +16,12 @@
                                 <el-aside class="aside-container" width="200px">
                                     <div>
                                         <div class="user-img">
-                                            <i v-if="m.userinfo_s == null" class="el-icon-menu" style="font-size: 60px;color: #409EFF"></i>
-                                            <img v-if="m.userinfo_s != null" class="user-img" :src="$url + '/images/' + m.userinfo_s.headImage"/>
+                                            <i v-if="m.userinfoS == null" class="el-icon-menu" style="font-size: 60px;color: #409EFF"></i>
+                                            <img v-if="m.userinfoS != null" class="user-img" :src="$url + '/images/' + m.userinfoS.headImage"/>
                                         </div>
                                         <div class="user-info">
                                           <!-- {{ }} 是一种输出，就像printf一样，把里面的内容输出来 -->
-                                            <p v-if="m.userinfo_s != null">{{ m.userinfo_s.nickname }}</p>
+                                            <p v-if="m.userinfoS != null">{{ m.userinfoS.nickname }}</p>
                                             <!-- <p>Nothing</p> -->
                                         </div>
                                         <div style="clear: both"></div>
@@ -30,7 +30,7 @@
                                         <div style="margin-bottom: 10px;">
                                             <el-button type="success" icon="el-icon-check" circle @click="sstatic = !sstatic" @mouseover.native="show = !show" @mouseout.native="show = !show"></el-button>
                                             <transition name="el-zoom-in-left">
-                                                <div v-show="show || sstatic" class="commit-button-box bg-success"></div>
+                                                <div v-show="show || sstatic" class="commit-button-box bg-success">接单！</div>
                                             </transition>
                                             <div style="clear: both"></div>
                                         </div>
@@ -54,13 +54,16 @@
                     </el-col>
                 </el-row>
             </li>
+             <el-card v-show="message.length == 0" shadow="hover" class="center-container-card">
+              <p>没有任何信息哦</p>
+            </el-card>
         </ul>
         <el-row type="flex" justify="center">
             <el-col :span="14">
                 <div>
                   <!-- 这个也是独特的用法 可以在网站shang看到 -->
                     <el-pagination
-                      @current-change="getServicePage"
+                      @current-change="getOrderPage"
                       background
                       layout="prev, pager, next"
                       :current-page="currentPage"
@@ -92,30 +95,41 @@ export default {
     }
   },
   mounted () {
-    this.getAllServices()
+    this.getAllOrders()
   },
   methods: {
-    getAllServices () {
+    getAllOrders () {
       var t = this
       t.loadingOrder = true
-      t.$axios.get(this.$url + '/listServices?currentPage=' + t.currentPage + '&size=' + t.size)
+      t.$axios({
+        method: 'get',
+        url: this.$url + '/failedOrderS',
+        params: {
+          access_token: this.$getCookie('otod_access_token')
+        }
+      })
         .then(function (response) {
           console.log(response)
           t.message = response.data.content
           t.totalPages = response.data.totalPages * t.size
           t.loadingOrder = false
-          console.log(t.totalPages)
         })
         .catch(function (error) {
           console.log(error.message)
         })
     },
-    getServicePage (currentPage) {
+    getOrderPage (currentPage) {
       var t = this
       t.loadingOrder = true
-      t.$axios.get(t.$url + '/listServices?currentPage=' + (currentPage - 1) + '&size=' + t.size)
+      t.$axios({
+        method: 'get',
+        url: this.$url + '/allOrderPage?currentPage=' + (currentPage - 1) + '&size=' + t.size,
+        params: {
+          access_token: this.$getCookie('otod_access_token')
+        }
+      })
         .then(function (response) {
-          console.log(t.$url + '/listServices?currentPage=' + (currentPage - 1) + '&size=' + t.size)
+          console.log(t.$url + '/allOrderPage?currentPage=' + (currentPage - 1) + '&size=' + t.size)
           t.message = response.data.content
           t.totalPages = response.data.totalPages * t.size
           t.loadingOrder = false
@@ -130,5 +144,5 @@ export default {
 </script>
 
 <style>
-    @import '../assets/css/OrderList.css';
+    @import '../../assets/css/OrderList.css'
 </style>

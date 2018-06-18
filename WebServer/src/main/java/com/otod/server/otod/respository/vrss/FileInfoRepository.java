@@ -18,7 +18,7 @@ public interface FileInfoRepository extends JpaRepository<FileInfo,Integer> {
     List<FileInfo> findAllByOrderByDownloadCnt();
     List<FileInfo> findAllByOrderByUploadTime();
     List<FileInfo> findAllByTag(Tag tag);
+    List<FileInfo> findByVrssUser(VrssUser vrssUser);
     @Query(value="select f from FileInfo f where f.name like %:p% or f.description like %:p% or f.type like %:p%")
     List<FileInfo> findBykey(@Param("p") String key);
-    List<FileInfo> findByVrssUser(VrssUser vrssUser);
 }

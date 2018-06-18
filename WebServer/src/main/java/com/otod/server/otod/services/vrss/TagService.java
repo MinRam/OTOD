@@ -22,12 +22,13 @@ public class TagService {
     private FileListRepository t_fileListRepository;
     //添加文件标签
     public void addFileTag(Integer file_id,Integer[] tag_id){
+        deleteFileTag(file_id,tag_id);
         FileInfo file=t_fileInfoRepository.findById(file_id).get();
         for (Integer t:tag_id){
             Tag tag= t_tagRepository.findById(t).get();
             file.getTag().add(tag);
-            t_fileInfoRepository.save(file);
         }
+        t_fileInfoRepository.save(file);
     }
     //删除文件标签
     public void deleteFileTag(Integer file_id,Integer[] tag_id){
@@ -35,29 +36,30 @@ public class TagService {
         for (Integer t:tag_id){
             Tag tag= t_tagRepository.findById(t).get();
             file.getTag().remove(tag);
-            t_fileInfoRepository.save(file);
         }
+        t_fileInfoRepository.save(file);
     }
     //添加专辑标签
     public void addFileListTag(Integer filelist_id,Integer[] tag_id){
-        FileList filelist= t_fileListRepository.findById(filelist_id).get();
+        deleteFileListTag(filelist_id,tag_id);
+        FileList filelist=t_fileListRepository.findById(filelist_id).get();
         for (Integer t:tag_id){
             Tag tag= t_tagRepository.findById(t).get();
             filelist.getTag().add(tag);
-            t_fileListRepository.save(filelist);
         }
+        t_fileListRepository.save(filelist);
     }
     //删除专辑标签
     public void deleteFileListTag(Integer filelist_id,Integer[] tag_id){
-        FileList filelist= t_fileListRepository.findById(filelist_id).get();
+        FileList filelist=t_fileListRepository.findById(filelist_id).get();
         for (Integer t:tag_id){
             Tag tag= t_tagRepository.findById(t).get();
-            filelist.getTag().add(tag);
-            t_fileListRepository.save(filelist);
+            filelist.getTag().remove(tag);
         }
+        t_fileListRepository.save(filelist);
     }
     //加载所有标签
     public List<Tag> findAllTag(){
-        return (List<Tag>) t_tagRepository.findAll();
+        return t_tagRepository.findAll();
     }
 }

@@ -23,6 +23,15 @@ import java.util.Optional;
  * Created by zhang on 2018/6/6.
  */
 
+/*
+0 待支付
+1 待接单
+2 进行中/已接单
+3 待评价
+4 已完成
+5 失败订单
+ */
+
 @RestController
 @CrossOrigin
 public class ServiceController {
@@ -79,7 +88,7 @@ public class ServiceController {
         return "fun";
     }
 
-    //
+    //订单列表 -》 接单！
     @GetMapping("/reciveOrder")
     private String reciveOrder(@RequestParam (value = "OrderId") Long id){
         Optional<CommenOrder> c = serviceService.getCommenOrderById(id);
@@ -91,14 +100,18 @@ public class ServiceController {
         List<UserInfo> list = commenOrder.getUserinfoR();
         for(UserInfo temp: list){
             if(temp.getId() == userInfo.getId()){
-                return "false";
+                return "already recived..";
             }
+        }
+        if(!commenOrder.getOrderState().equals("1")){
+            return "state wrong";
         }
         list.add(userInfo);
         commenOrder.setUserinfoR(list);
         commenOrder.setOrderState("2");
         return serviceService.reciveOrder(commenOrder, userInfo)? "yeah":"false";
     }
+
     @GetMapping("/allOrders")
     private List<CommenOrder> getAllOrders(){
         UserInfo userInfo = userService.getUserInfo(userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName()));
@@ -112,13 +125,15 @@ public class ServiceController {
     }
 
     @GetMapping("/waitingRequests")
-    private List<String> getwaitingRequests() {
+    private List<CommenOrder> getwaitingRequests() {
         UserInfo userInfo = userService.getUserInfo(userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName()));
         List<CommenOrder> list = serviceService.getAllOrder(userInfo);
-        List<String> result = new ArrayList<>();
-        for (CommenOrder c : list) {
-            result.add(c.getOrderState());
-
+        List<CommenOrder> result = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            if(list.get(i).getOrderState().equals("1")) {
+                CommenOrder commenOrder = list.get(i);
+                result.add(commenOrder);
+            }
         }
         return result;
     }
@@ -126,32 +141,117 @@ public class ServiceController {
     private List<CommenOrder> getRunningOrders(){
         UserInfo userInfo = userService.getUserInfo(userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName()));
         List<CommenOrder> list = serviceService.getAllOrder(userInfo);
-        List<CommenOrder> result = list;
-        for(CommenOrder c : list){
-            String state = c.getOrderState();
-            if(state.equals("2")){
-
-            } else {
-                result.remove(c);
+        List<CommenOrder> result = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            if(list.get(i).getOrderState().equals("2")) {
+                CommenOrder commenOrder = list.get(i);
+                result.add(commenOrder);
             }
         }
         return result;
-
     }
-    @GetMapping("/finishedOrders")
-    private List<CommenOrder> getFinishedOrders(){
+
+    @GetMapping("/waitingEvaluateS")
+    private  List<CommenOrder> getWaitingEvaluateS(){
         UserInfo userInfo = userService.getUserInfo(userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName()));
         List<CommenOrder> list = serviceService.getAllOrder(userInfo);
-        List<CommenOrder> result = list;
-        for(CommenOrder co : list){
-            String state = co.getOrderState();
-            if(state.equals("3")){
-
-            } else {
-                result.remove(co);
+        List<CommenOrder> result = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getOrderState().equals("3")) {
+                CommenOrder commenOrder = list.get(i);
+                result.add(commenOrder);
             }
         }
         return result;
     }
 
+    @GetMapping("/finishedOrderS")
+    private List<CommenOrder> getFinishedOrderS() {
+        UserInfo userInfo = userService.getUserInfo(userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName()));
+        List<CommenOrder> list = serviceService.getAllOrder(userInfo);
+        List<CommenOrder> result = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getOrderState().equals("4")) {
+                CommenOrder commenOrder = list.get(i);
+                result.add(commenOrder);
+            }
+        }
+        return result;
+    }
+
+    @GetMapping("/failedOrderS")
+    private  List<CommenOrder> getFailedOrderS(){
+        UserInfo userInfo = userService.getUserInfo(userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName()));
+        List<CommenOrder> list = serviceService.getAllOrder(userInfo);
+        List<CommenOrder> result = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getOrderState().equals("5")) {
+                CommenOrder commenOrder = list.get(i);
+                result.add(commenOrder);
+            }
+        }
+        return result;
+    }
+    //我的订单 -》 所有订单
+    @GetMapping("/rmyAllOrders")
+    private List<CommenOrder> getRMyAllOrders(){
+        UserInfo userInfo = userService.getUserInfo(userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName()));
+        return serviceService.getRMyAllOrders(userInfo);
+    }
+    //我的订单 -》 已接受
+    @GetMapping("/rRecivedOrders")
+    private List<CommenOrder> getRRecivedOrders(){
+        UserInfo userInfo = userService.getUserInfo(userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName()));
+        List<CommenOrder> list = serviceService.getRMyAllOrders(userInfo);
+        List<CommenOrder> result = new ArrayList<>();
+        for(int i = 0; i < list.size(); i++){
+            if(list.get(i).getOrderState().equals("2")) {
+                CommenOrder commenOrder = list.get(i);
+                result.add(commenOrder);
+            }
+        }
+        return result;
+    }
+    //我的订单 -》 待评价
+    @GetMapping("/rWaitingCommentOrders")
+    private List<CommenOrder> getRWaitingCommentOrders(){
+        UserInfo userInfo = userService.getUserInfo(userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName()));
+        List<CommenOrder> list = serviceService.getRMyAllOrders(userInfo);
+        List<CommenOrder> result = new ArrayList<>();
+        for(int i = 0; i < list.size(); i++){
+            if(list.get(i).getOrderState().equals("3")) {
+                CommenOrder commenOrder = list.get(i);
+                result.add(commenOrder);
+            }
+        }
+        return result;
+    }
+    //我的订单 -》 已完成
+    @GetMapping("/rDoneOrder")
+    private List<CommenOrder> getDoneOrders(){
+        UserInfo userInfo = userService.getUserInfo(userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName()));
+        List<CommenOrder> list = serviceService.getRMyAllOrders(userInfo);
+        List<CommenOrder> result = new ArrayList<>();
+        for(int i = 0; i < list.size(); i++){
+            if(list.get(i).getOrderState().equals("4")) {
+                CommenOrder commenOrder = list.get(i);
+                result.add(commenOrder);
+            }
+        }
+        return result;
+    }
+    //我的订单 —》 失败订单
+    @GetMapping("/rFailedOrders")
+    private List<CommenOrder> getRFailedOrders(){
+        UserInfo userInfo = userService.getUserInfo(userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName()));
+        List<CommenOrder> list = serviceService.getRMyAllOrders(userInfo);
+        List<CommenOrder> result = new ArrayList<>();
+        for(int i = 0; i < list.size(); i++){
+            if(list.get(i).getOrderState().equals("5")) {
+                CommenOrder commenOrder = list.get(i);
+                result.add(commenOrder);
+            }
+        }
+        return result;
+    }
 }

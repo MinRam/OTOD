@@ -20,10 +20,10 @@ public class FileListController {
         return fileListService.getFileList(filelist_id);
     }
     @RequestMapping(value = "/add")
-    public void addfilelist(@RequestParam("name") String name,
+    public FileList addfilelist(@RequestParam("name") String name,
                             @RequestParam("creator_id") Integer creator_id,
                             @RequestParam("description") String description){
-        fileListService.addFileList(name,creator_id,description);
+        return fileListService.addFileList(name,creator_id,description);
     }
     @RequestMapping(value = "/delete")
     public void deletefilelist(@RequestParam("filelist_id") Integer filelist_id){
@@ -40,10 +40,10 @@ public class FileListController {
                              @RequestParam("filelist_id") Integer filelist_id){
         fileListService.loveFileList(user_id,filelist_id);
     }
-    @RequestMapping(value = "/unlove")
-    public void unlovefilelist(@RequestParam("user_id") Integer user_id,
+    @RequestMapping(value = "/lovestate")
+    public Boolean lovestate(@RequestParam("user_id") Integer user_id,
                              @RequestParam("filelist_id") Integer filelist_id){
-        fileListService.unloveFileList(user_id,filelist_id);
+        return fileListService.loveState(user_id,filelist_id);
     }
     @RequestMapping(value = "/view")
     public void viewfilelist(@RequestParam("filelist_id") Integer filelist_id){

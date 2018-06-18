@@ -14,12 +14,6 @@ export default {
   name: 'information'
 }
 </script>
-
-<style scoped="">
-  .file {
-
-  }
-  .comment {
-    
-  }
+<style scoped>
+  @import '../../../assets/css/bootstrap.css'
 </style>

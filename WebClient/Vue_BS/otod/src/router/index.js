@@ -32,11 +32,19 @@ import Sell from '@/pages/Sell'
 import Payfor from '@/pages/payfor'
 // import store from '../store'
 // server pages
-import OrderList from '@/components/OrderList'
-import PublishOrder from '@/components/PublishOrder'
-import AllOrder from '@/components/AllOrder'
-import RunningS from '@/components/Runnings'
-import WaitingRequest from '@/components/WaitingRequest'
+import OrderList from '@/components/service/OrderList'
+import PublishOrder from '@/components/service/PublishOrder'
+import AllOrder from '@/components/service/AllOrder'
+import RunningS from '@/components/service/Runnings'
+import WaitingRequest from '@/components/service/WaitingRequest'
+import RMyAllOrders from '@/components/service/RMyAllOrders'
+import RRecivedOrders from '@/components/service/RRecivedOrders'
+import RWaitingCommentOrders from '@/components/service/RWaitingCommentOrders'
+import RDoneOrders from '@/components/service/RDoneOrders'
+import RFailedOrders from '@/components/service/RFailedOrders'
+import WaitingEvaluateS from '@/components/service/WaitingEvaluateS'
+import FailedOrderS from '@/components/service/FailedOrderS'
+import FinishedOrderS from '@/components/service/FinishedOrderS'
 
 Vue.use(Router)
 
@@ -133,6 +141,70 @@ const routes = [
               requireAuth: false
             },
             component: RunningS
+          },
+          {
+            path: '/service/waitingevaluates',
+            name: 'WaitingEvaluateS',
+            meta: {
+              requireAuth: false
+            },
+            component: WaitingEvaluateS
+          },
+          {
+            path: '/service/finishedorders',
+            name: 'FinishedOrderS',
+            meta: {
+              requireAuth: false
+            },
+            component: FinishedOrderS
+          },
+          {
+            path: '/service/failedorders',
+            name: 'FailedOrderS',
+            meta: {
+              requireAuth: false
+            },
+            component: FailedOrderS
+          },
+          {
+            path: '/service/RMyAllOrders',
+            name: 'RMyAllOrders',
+            meta: {
+              requireAuth: false
+            },
+            component: RMyAllOrders
+          },
+          {
+            path: '/service/RRecivedOrders',
+            name: 'RRecivedOrders',
+            meta: {
+              requireAuth: false
+            },
+            component: RRecivedOrders
+          },
+          {
+            path: '/service/RWaitingCommentOrders',
+            name: 'RWaitingCommentOrders',
+            meta: {
+              requireAuth: false
+            },
+            component: RWaitingCommentOrders
+          },
+          {
+            path: '/service/RDoneOrders',
+            name: 'RDoneOrders',
+            meta: {
+              requireAuth: false
+            },
+            component: RDoneOrders
+          },
+          {
+            path: '/service/rfailedorders',
+            name: 'RFailedOrders',
+            meta: {
+              requireAuth: false
+            },
+            component: RFailedOrders
           }
         ]
       }, {

@@ -2,7 +2,7 @@
     <el-col :xs="12" :sm="12" :md="12" :xl="12" :offset="4">
         <ul v-loading="loadingOrder">
           <!-- 这个是element的特有写法 v-for 就是一个循环 循环输出<li>里面的html message是一个数组，里面存着order 相当于for(m in message){ <li>里面的代码</li>} -->
-            <li v-for="m in message" :key="m.id">
+            <li v-show="message.length != 0" v-for="m in message" :key="m.id">
                 <el-row class="message-bottom" type="flex" justify="center">
                     <el-col :span="24">
                         <el-card shadow="hover" class="center-container-card">
@@ -54,8 +54,11 @@
                     </el-col>
                 </el-row>
             </li>
+            <el-card v-show="message.length == 0" shadow="hover" class="center-container-card">
+              <p>没有任何信息哦</p>
+            </el-card>
         </ul>
-        <el-row type="flex" justify="center">
+        <el-row v-show="message.length != 0" type="flex" justify="center">
             <el-col :span="14">
                 <div>
                   <!-- 这个也是独特的用法 可以在网站shang看到 -->
@@ -92,17 +95,23 @@ export default {
     }
   },
   mounted () {
-    this.getAllServices()
+    this.getAllRunningsOrders()
   },
   methods: {
-    getAllServices () {
+    getAllRunningsOrders () {
       var t = this
       t.loadingOrder = true
-      t.$axios.get(this.$url + '/runningOrders')
+      this.$axios({
+        url: t.$url + '/runningOrders',
+        method: 'get',
+        params: {
+          access_token: this.$getCookie('otod_access_token')
+        }
+      })
         .then(function (response) {
           console.log(response)
-          t.message = response.data.content
-          t.totalPages = response.data.totalPages * t.size
+          t.message = response.data
+          console.log(t.message)
           t.loadingOrder = false
           console.log(t.totalPages)
         })

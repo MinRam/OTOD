@@ -28,7 +28,7 @@ export default {
     }
   },
   created () {
-    var url = 'http://127.0.0.1:8082/vrss/Comment/filecomment'
+    var url = 'http://127.0.0.1:8081/vrss/Comment/filecomment'
     var params = new URLSearchParams()
     params.append('id', this.id)
     this.$http.post(url, params).then((response) => {
@@ -44,7 +44,7 @@ export default {
           id: data[i].id,
           comment: data[i].comment,
           create_time: data[i].create_time,
-          user_id: data[i].user.user_id,
+          user_id: data[i].vrssUser.user_id,
           reply_id: replyid
         })
       }
@@ -65,14 +65,14 @@ export default {
       params.append('file_id', this.id)
       params.append('filelist_id', 0)
       params.append('score', 1)
-      var url = 'http://127.0.0.1:8082/vrss/Comment/add'
+      var url = 'http://127.0.0.1:8081/vrss/Comment/add'
       this.$http.post(url, params).then((response) => {
         console.log(response.data)
         this.comments.push({
           id: response.data.id,
           comment: response.data.comment,
           create_time: response.data.create_time,
-          user_id: response.data.user.user_id,
+          user_id: response.data.vrssUser.user_id,
           reply_id: response.data.reply == null ? 0 : response.data.reply.user_id
         })
       }).catch((error) => {

@@ -51,7 +51,7 @@ export default{
     }
   },
   created () {
-    var url = 'http://127.0.0.1:8082/vrss/Tag/listtag'
+    var url = 'http://127.0.0.1:8081/vrss/Tag/listtag'
     var params = new URLSearchParams()
     this.$http.post(url, params).then((response) => {
       var data = response.data
@@ -83,10 +83,10 @@ export default{
           'Content-Type': 'multipart/form-data'
         }
       }
-      this.$http.post('http://127.0.0.1:8082/vrss/FileInfo/upload', formData, config).then((response) => {
+      this.$http.post('http://127.0.0.1:8081/vrss/FileInfo/upload', formData, config).then((response) => {
         /* 这里做处理 */
         this.fileid = response.data
-        console.log('id' + this.fileid)
+        console.log(this.fileid)
         alert('上传成功')
       }).then((response) => {
         // 添加标签
@@ -107,13 +107,12 @@ export default{
           tags.push(this.tags[i].id)
         }
       }
-      var url = 'http://127.0.0.1:8082/vrss/Tag/addfiletag'
+      var url = 'http://127.0.0.1:8081/vrss/Tag/addfiletag'
       var params = new URLSearchParams()
       params.append('file_id', this.fileid)
       params.append('tag_id', tags)
-      console.log(params + ' 参数')
       this.$http.post(url, params).then((response) => {
-        console.log('sattus' + response.status)
+        console.log(response.status)
       })
     }
   }

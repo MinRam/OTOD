@@ -52,7 +52,7 @@ public class SectionInfoServiceImpl implements SectionInfoService{
 	public int checkUserType(int section_id) {
 		// TODO Auto-generated method stub
 		User user = userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName());
-		if(userService.getUserInfo(user).getId() == 0)
+		if(userService.getUserInfo(user).getId() == 1)
 			return 1;
 		else if(sectionInfoDao.findById(section_id).get().getAdmin_id() == userService.getUserInfo(user).getId())
 			return 2;

@@ -3,7 +3,6 @@ package com.otod.server.otod.model;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,6 +11,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 
 
 @Entity
@@ -33,12 +36,15 @@ public class Market_user {
 	private UserInfo userInfo ;
 	
 	@OneToMany(mappedBy="buyer")
+	@Cascade(value={CascadeType.REMOVE})
 	private Set<P_Order> orders = new HashSet<P_Order>();
 	
 	@OneToMany(mappedBy="seller")
+	@Cascade(value={CascadeType.REMOVE})
 	private Set<Product>products = new HashSet<Product>();
 	
 	@OneToMany(mappedBy="market_user")
+	@Cascade(value={CascadeType.REMOVE})
 	private Set<Market_record>records = new HashSet<Market_record>();
 	
 	public int getMarket_user_id() {

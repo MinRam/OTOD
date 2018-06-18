@@ -16,21 +16,21 @@
                                 <el-aside class="aside-container" width="200px">
                                     <div>
                                         <div class="user-img">
-                                            <i v-if="m.userinfo_s == null" class="el-icon-menu" style="font-size: 60px;color: #409EFF"></i>
-                                            <img v-if="m.userinfo_s != null" class="user-img" :src="$url + '/images/' + m.userinfo_s.headImage"/>
+                                            <i v-if="m.userinfoS == null" class="el-icon-menu" style="font-size: 60px;color: #409EFF"></i>
+                                            <img v-if="m.userinfoS != null" class="user-img" :src="$url + '/images/' + m.userinfoS.headImage"/>
                                         </div>
                                         <div class="user-info">
                                           <!-- {{ }} 是一种输出，就像printf一样，把里面的内容输出来 -->
-                                            <p v-if="m.userinfo_s != null">{{ m.userinfo_s.nickname }}</p>
+                                            <p v-if="m.userinfoS != null">{{ m.userinfoS.nickname }}</p>
                                             <!-- <p>Nothing</p> -->
                                         </div>
                                         <div style="clear: both"></div>
                                     </div>
                                     <div class="button-group">
                                         <div style="margin-bottom: 10px;">
-                                            <el-button type="success" icon="el-icon-check" circle @click="sstatic = !sstatic" @mouseover.native="show = !show" @mouseout.native="show = !show"></el-button>
+                                            <el-button type="success" icon="el-icon-check" circle @click="reciveOrder(m.id)" @mouseover.native="show = !show" @mouseout.native="show = !show"></el-button>
                                             <transition name="el-zoom-in-left">
-                                                <div v-show="show || sstatic" class="commit-button-box bg-success"></div>
+                                                <div v-show="show || sstatic" class="commit-button-box bg-success">接单！</div>
                                             </transition>
                                             <div style="clear: both"></div>
                                         </div>
@@ -60,7 +60,7 @@
                 <div>
                   <!-- 这个也是独特的用法 可以在网站shang看到 -->
                     <el-pagination
-                      @current-change="getOrderPage"
+                      @current-change="getServicePage"
                       background
                       layout="prev, pager, next"
                       :current-page="currentPage"
@@ -92,38 +92,28 @@ export default {
     }
   },
   mounted () {
-    this.getAllOrders()
+    this.getAllServices()
   },
   methods: {
-    getAllOrders () {
+    getAllServices () {
       var t = this
       t.loadingOrder = true
-      t.$axios({
-        method: 'get',
-        url: this.$url + '/allOrders',
-        params: {
-          access_token: this.$getCookie('otod_access_token')
-        }
-      })
+      t.$axios.get(this.$url + '/listServices?currentPage=' + t.currentPage + '&size=' + t.size)
         .then(function (response) {
           console.log(response)
-          t.message = response.data
+          t.message = response.data.content
+          t.totalPages = response.data.totalPages * t.size
           t.loadingOrder = false
+          console.log(t.totalPages)
         })
         .catch(function (error) {
           console.log(error.message)
         })
     },
-    getOrderPage (currentPage) {
+    getServicePage (currentPage) {
       var t = this
       t.loadingOrder = true
-      t.$axios({
-        method: 'get',
-        url: this.$url + '/listServices?currentPage=' + t.currentPage + '&size=' + t.size,
-        params: {
-          access_token: this.$getCookie('otod_access_token')
-        }
-      })
+      t.$axios.get(t.$url + '/listServices?currentPage=' + (currentPage - 1) + '&size=' + t.size)
         .then(function (response) {
           console.log(t.$url + '/listServices?currentPage=' + (currentPage - 1) + '&size=' + t.size)
           t.message = response.data.content
@@ -134,11 +124,70 @@ export default {
         .catch(function (error) {
           console.log(error.message)
         })
+    },
+    reciveOrder (id) {
+      // console.log(id)
+      var t = this
+      t.$axios({
+        method: 'get',
+        url: t.$url + '/reciveOrder',
+        params: {
+          OrderId: id,
+          access_token: this.$getCookie('otod_access_token')
+        }
+      })
+        .then(function (response) {
+          console.log(response)
+          if (response.data === 'the publisher..') {
+            t.$message({
+              showClose: true,
+              message: '警告哦，无法接自己的单',
+              type: 'warning'
+            })
+          }
+          if (response.data === 'state wrong') {
+            t.$message({
+              showClose: true,
+              message: '警告哦，该订单不为可接单状态',
+              type: 'warning'
+            })
+          }
+          if (response.data === 'already recived..') {
+            t.$message({
+              showClose: true,
+              message: '警告哦，你已经接过单了！',
+              type: 'warning'
+            })
+          }
+          if (response.data === 'yeah') {
+            t.$message({
+              showClose: true,
+              message: '接单成功！',
+              type: 'success'
+            })
+          }
+          if (response.data === 'false') {
+            t.$message({
+              showClose: true,
+              message: '接单失败！',
+              type: 'warning'
+            })
+            console.log('未知出错 save出错')
+          }
+        })
+        .catch(function (error) {
+          console.log(error)
+          t.$message({
+            showClose: true,
+            message: '未登录！',
+            type: 'warning'
+          })
+        })
     }
   }
 }
 </script>
 
 <style>
-    @import '../assets/css/OrderList.css'
+    @import '../../assets/css/OrderList.css';
 </style>

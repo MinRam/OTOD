@@ -211,6 +211,7 @@ export default {
           t.topic_title = t.pagelist[0].forumTopicPO.title
         }
         t.loading = false
+        t.topic_title = t.pagelist[0].forumTopicPO.title
       }).catch(function (error) {
         console.log(error)
       })

@@ -6,7 +6,8 @@
           <div class="card-block card-float">
             <h4 class="card-title">{{file.id}}</h4>
             <p class="card-text">{{file.name}}</p>
-            <router-link class="card-link" :to="{path: '/file/files', query: {filename: JSON.stringify(file)}}" target="_blank">查看</router-link>
+            <router-link class="card-link" :to="{path: '/file/files', query: {filename: JSON.stringify(file), type: 'upload'}}" target="_blank">查看</router-link>
+            <button @click="del(file.id)">删除</button>
           </div>
         </div>
       </li>
@@ -25,7 +26,7 @@ export default {
   },
   created () {
     this.filelist = []
-    var url = 'http://127.0.0.1:8082/vrss/FileInfo/list'
+    var url = 'http://127.0.0.1:8081/vrss/FileInfo/list'
     var params = new URLSearchParams()
     params.append('user_id', this.userid)
     params.append('tag_id', 0)
@@ -48,11 +49,20 @@ export default {
     })
   },
   methods: {
+    del (id) {
+      var url = 'http://127.0.0.1:8081/vrss/FileInfo/delete'
+      var params = new URLSearchParams()
+      params.append('file_id', id)
+      this.$http.post(url, params).then(() => {
+        // 删除该文件
+        this.filelists.splice(id, id)
+      }).then(alert('删除成功'))
+    }
   }
 }
 </script>
 
-<style>
+<style scoped>
   @import '../../../assets/css/bootstrap.css'
   .card-float {
     position: relative;;

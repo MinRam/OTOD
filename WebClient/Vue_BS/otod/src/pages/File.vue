@@ -1,5 +1,5 @@
 <template>
-  <div id="home">
+  <div id="file" class="container-fluid">
     <Header1></Header1>
     <router-view></router-view>
   </div>
@@ -8,7 +8,7 @@
 <script>
 import Header1 from '../components/file/Header1.vue'
 export default {
-  name: 'Home',
+  name: 'File',
   components: {
     Header1
   },
@@ -18,7 +18,6 @@ export default {
   }
 }
 </script>
-
 <style>
-  @import '../assets/css/bootstrap.css';
+  @import '../assets/css/bootstrap.css'
 </style>
