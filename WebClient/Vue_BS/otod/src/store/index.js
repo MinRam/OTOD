@@ -5,7 +5,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     isLogin: false,
-    nickname: 'name',
+    nickname: '',
     headImage: '',
     telephone: ''
   },
@@ -17,13 +17,19 @@ export default new Vuex.Store({
       state.isLogin = false
     },
     initialName (state, name) {
-      state.nickname = ''
+      state.nickname = name
     },
     initialHead (state, head) {
       state.headImage = head
     },
     initialTel (state, tel) {
       state.telephone = tel
+    },
+    loginOut (state) {
+      state.isLogin = false
+      state.nickname = ''
+      state.headImage = ''
+      state.telephone = ''
     }
   }
 })

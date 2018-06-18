@@ -3,7 +3,7 @@
         <div class="setting-main">
             <div class="setting-item setting-title">
                 <h2>
-                    <a>返回</a>
+                    <a @click="backIndex()">返回</a>
                     账号设置
                 </h2>
              </div>
@@ -16,7 +16,7 @@
                     <div class="telephone-content">
                         <p class="txt">为您的账号绑定一个手机号，绑定后可开放更多功能。</p>
                         <a class="link">绑定手机号</a>
-                        <span>{{$store.state}}</span>
+                        <span class="telephone-Num">{{$store.state.telephone}}</span>
                      </div>
                  </div>
              </div>
@@ -79,7 +79,6 @@
                               :on-success="handleAvatarSuccess"
                               :before-upload="beforeAvatarUpload">
                                 <img v-if="imageUrl" :src="imageUrl" class="avatar">
-                                <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                             </el-upload>
                          </div>
                      </div>
@@ -171,6 +170,10 @@ export default {
           }
         })
       }
+    },
+
+    backIndex () {
+      this.$router.push({ name: 'Person', params: { page: 'home' } })
     }
   }
 }

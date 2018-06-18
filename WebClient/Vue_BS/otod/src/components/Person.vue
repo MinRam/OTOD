@@ -89,13 +89,13 @@ export default{
       // 发布按钮
       publishPosts: [{
         title: 'blog',
-        link: 'QuillEditor'
+        link: 'Blog'
       }, {
         title: 'market',
         link: 'Sell'
       }, {
         title: 'file',
-        link: ''
+        link: 'FileUpload'
       }, {
         title: 'service',
         link: 'PublishOrder'
@@ -181,11 +181,30 @@ export default{
 
     // route link
     goRouter (index) {
+      console.log(index)
       this.$router.push({ name: this.publishPosts[index].link, params: { page: this.publishPosts[index].title } })
     },
 
     // 通知栏关闭
     noticeClose () {
+      var noticeIdList = []
+
+      for (var i = 0; i < this.noticeList.length; ++i) {
+        noticeIdList.push(this.noticeList[i].noticeId)
+      }
+
+      this.$axios({
+        method: 'post',
+        url: this.$url + '/user/readNotice',
+        head: {
+          'Authorization': 'Bearer ' + this.$getCookie('otod_access_token')
+        },
+        data: {
+          'idList': noticeIdList
+        },
+        dataType: 'json'
+      })
+
       this.noticeList = []
     }
   }

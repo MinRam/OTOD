@@ -1,12 +1,14 @@
 package com.otod.server.otod.controller;
 
 import com.otod.server.otod.model.Notice;
+import com.otod.server.otod.model.NoticeList;
 import com.otod.server.otod.model.User;
 import com.otod.server.otod.model.UserInfo;
 import com.otod.server.otod.pojos.NoticePojo;
 import com.otod.server.otod.pojos.UserFollowList;
 import com.otod.server.otod.pojos.UserRegisteration;
 import com.otod.server.otod.pojos.UserSimpleInfo;
+import com.otod.server.otod.services.NoticeService;
 import com.otod.server.otod.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -23,6 +25,9 @@ import java.util.List;
 public class UserController  {
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private NoticeService noticeService;
 
     @Qualifier("getTokenStore")
     @Autowired
@@ -119,7 +124,7 @@ public class UserController  {
     @GetMapping("/user/Notice")
     private List<NoticePojo> notice(){
         User user = userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName());
-        List<Notice> noticeList =  userService.getAllNotices(user);
+        List<Notice> noticeList =  noticeService.getAllNewNotices(user);
         List<NoticePojo> noticePojosList = new ArrayList<>();
 
         for(Notice notice : noticeList){
@@ -129,6 +134,12 @@ public class UserController  {
 
         return noticePojosList;
         }
+
+    @PostMapping("/user/readNotice")
+    private void readNotice(@RequestBody NoticeList noticeList){
+        System.out.println("yes");
+        noticeService.readNotices(noticeList.getIdList());
+    }
 
     @GetMapping("/user/getUpdateList")
     private List<Integer> getUpdteList(){
