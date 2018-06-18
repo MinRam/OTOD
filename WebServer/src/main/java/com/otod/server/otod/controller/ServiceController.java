@@ -227,7 +227,7 @@ public class ServiceController {
         return result;
     }
     //我的订单 -》 已完成
-    @GetMapping("/rDoneOrders")
+    @GetMapping("/rDoneOrder")
     private List<CommenOrder> getDoneOrders(){
         UserInfo userInfo = userService.getUserInfo(userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName()));
         List<CommenOrder> list = serviceService.getRMyAllOrders(userInfo);

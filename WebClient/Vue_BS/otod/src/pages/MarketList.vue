@@ -230,6 +230,15 @@
                                 <el-button type="success" @click="UpdateProduct(scope.row.product_id)">确认保存</el-button>
                               </el-col>
                             </el-row>
+                            <el-dialog
+                              title="提示"
+                              :visible.sync="delete_ok"
+                              width="30%">
+                              <span style="text-align: center;">删除成功</span>
+                              <span slot="footer" class="dialog-footer">
+                                <el-button type="primary" @click="delete_ok = false , changepage('/market?product_key='+product_key),search()">确 定</el-button>
+                              </span>
+                            </el-dialog>
                           </el-form>
                         </template>
                       </el-table-column>
@@ -242,7 +251,7 @@
                       <el-table-column label="商品价格" prop="product_price"></el-table-column>
                       <el-table-column label="操作">
                         <template slot-scope="scope">
-                          <el-button type="info" icon="el-icon-delete" circle></el-button>
+                          <el-button type="info" icon="el-icon-delete" @click="DeleteProduct(scope.row.product_id)" circle></el-button>
                         </template>
                       </el-table-column>
                     </el-table>
@@ -414,6 +423,7 @@ export default {
   },
   data () {
     return {
+      delete_ok: false,
       dialogVisible: false,
       loading: true,
       my_loading: true,
@@ -579,6 +589,25 @@ export default {
           'Authorization': 'Bearer ' + t.$getCookie('otod_access_token')
         },
         data: obj
+      })
+    },
+    DeleteProduct (pid) {
+      var t = this
+      this.$axios({
+        method: 'post',
+        url: 'http://localhost:8081/market/DeleteProduct',
+        dataType: 'json',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + t.$getCookie('otod_access_token')
+        },
+        params: {
+          product_id: pid
+        }
+      }).then(function (response) {
+        if (response.data === 'success') {
+          t.delete_ok = true
+        }
       })
     }
   }

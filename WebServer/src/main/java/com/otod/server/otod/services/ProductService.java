@@ -130,9 +130,6 @@ public class ProductService {
 //		Market_user seller = userInfo.getmUser();
 		
 
-
-
-
 		product.setProduct_catalog(catalog);
 		product.setSeller(seller);
 		product.setProduct_encoding(product_encoding);
@@ -209,9 +206,14 @@ public class ProductService {
 		Market_record record = new Market_record();
 		record.setCreatetime(createtime);
 		record.setMarket_user(product.getSeller());
-		record.setOperation(status);
+		record.setOperation(3);
 		record.setProduct(product);
 		recordRepository.save(record);
 	}
 	
+	@Transactional
+	public void DeleteProduct(int product_id) {
+		Product product = repository.findById(product_id).get();
+		repository.deleteById(product.getProduct_id());
+	}
 }

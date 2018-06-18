@@ -54,8 +54,11 @@
                     </el-col>
                 </el-row>
             </li>
+             <el-card v-show="message.length == 0" shadow="hover" class="center-container-card">
+              <p>没有任何信息哦</p>
+            </el-card>
         </ul>
-        <el-row type="flex" justify="center">
+        <el-row  v-show="message.length != 0" type="flex" justify="center">
             <el-col :span="14">
                 <div>
                   <!-- 这个也是独特的用法 可以在网站shang看到 -->

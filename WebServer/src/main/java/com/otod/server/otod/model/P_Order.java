@@ -13,6 +13,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
@@ -40,13 +43,16 @@ public class P_Order {
 	
 	@ManyToOne
 	@JoinColumn(name="buyer_id")
+	@Cascade(value={CascadeType.MERGE})
 	private Market_user buyer;
 	
 	@ManyToOne
 	@JoinColumn(name="product_id")
+	@Cascade(value={CascadeType.MERGE})
 	private Product product;
 	
 	@OneToMany(mappedBy="p_Order")
+	@Cascade(value={CascadeType.REMOVE})
 	private Set<Market_record>records = new HashSet<Market_record>();
 	
 	private int product_num;

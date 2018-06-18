@@ -4,7 +4,7 @@
         <!--搜索栏-->
           <div class="search">
             <el-row>
-              <el-col :span=8 :push="16">
+              <el-col :span=8 :push="14">
                 <div class="search_form">
                   <el-form :inline="true"  class="demo-form-inline">
                     <el-form-item label="商品查询">
@@ -22,7 +22,7 @@
           <div id="position">
             <el-row>
               <el-col :span=10 :push="4">
-                <p>您当前的位置是：二手市场</p>
+                <p>您当前的位置是：<el-button type="text" @click="changepage('/market')">二手市场</el-button> -> 商品购买</p>
               </el-col>
             </el-row>
           </div>
@@ -92,6 +92,15 @@
               </el-card>
             </el-col>
           </el-form>
+          <el-dialog
+            title="提示"
+            :visible.sync="isOK"
+            width="30%">
+            <span style="text-align:center;">购买成功</span>
+            <span slot="footer" class="dialog-footer">
+              <el-button type="primary" @click="isOK = false , changepage('/market')">确 定</el-button>
+            </span>
+          </el-dialog>
   </div>
 </template>
 
@@ -99,6 +108,7 @@
 export default {
   data () {
     return {
+      isOK: false,
       product_key: '',
       product: [],
       component_img: {
@@ -165,6 +175,10 @@ export default {
           address: t.OrderForm.address,
           receiver: t.OrderForm.receiver,
           phone: t.OrderForm.phone
+        }
+      }).then(function (response) {
+        if (response.data === 'success') {
+          t.isOK = true
         }
       })
     }
