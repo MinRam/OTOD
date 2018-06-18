@@ -28,9 +28,6 @@
                   已收藏
                 </p>
               </span>
-              <select v-model="myvalue">
-                <option v-for="item in optionlist" :key="item.id" :value="item.id">{{item.name}}</option>
-              </select>
             </p>
           </div>
         </li>
@@ -49,10 +46,7 @@ export default {
         type: Object
       },
       isClose: true, // 假设默认未收藏
-      optionlist: [],
-      myvalue: 0, // 默认是0
       islike: false, // 得到原始状态
-      isLikes: false,
       read: true, // 只读
       tags: [],
       name: '',
@@ -62,28 +56,16 @@ export default {
   },
   created () {
     this.getinfo()
-    this.getlist()
     this.gettags()
+    this.isLike()
   },
-  updated () {
-    if (this.islike !== this.isLikes) {
+  watch: {
+    islike () {
       var url = 'http://127.0.0.1:8081/vrss/FileInfo/love'
       var params = new URLSearchParams()
       params.append('user_id', this.userid)
       params.append('file_id', this.id)
-      this.$http.post(url, params).then(() => {
-        this.isLikes = !this.isLikes
-      }).catch((error) => {
-        console.log(error)
-      })
-    }
-    if (this.myvalue !== 0 && this.islike === true) {
-      var url1 = 'http://127.0.0.1:8081/vrss/FileList/addfile'
-      var params1 = new URLSearchParams()
-      params1.append('filelist_id', this.myvalue)
-      params1.append('file_id', this.id)
-      this.$http.post(url1, params1).then(() => {
-      }).catch((error) => {
+      this.$http.post(url, params).catch((error) => {
         console.log(error)
       })
     }
@@ -202,7 +184,6 @@ export default {
         console.log(data)
         if (data === true) {
           this.isClose = false
-          this.isLikes = true
           this.islike = true
         }
       }).catch((error) => {
@@ -221,32 +202,6 @@ export default {
         this.description = data.description
       }).catch((error) => {
         console.log(error)
-      })
-    },
-    getlist () {
-      var url1 = 'http://127.0.0.1:8081/vrss/FileList/listfilelist'
-      var params1 = new URLSearchParams()
-      params1.append('user_id', this.userid)
-      params1.append('tag_id', 0)
-      params1.append('key', null)
-      params1.append('type', 7)
-      this.$http.post(url1, params1).then((response) => {
-        var data = response.data
-        if (data != null) {
-          for (var i = 0; i < data.length; i++) {
-            this.optionlist.push({
-              id: data[i].id,
-              name: data[i].name
-            })
-          }
-        }
-      }).catch((error) => {
-        console.log(error)
-      }).then(() => {
-        this.optionlist.unshift({
-          id: 0,
-          name: '默认收藏夹'
-        })
       })
     },
     adddownload () {
