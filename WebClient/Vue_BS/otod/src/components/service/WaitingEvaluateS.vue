@@ -95,10 +95,10 @@ export default {
     }
   },
   mounted () {
-    this.getAllOrders()
+    this.getWaitingEvaluteS()
   },
   methods: {
-    getAllOrders () {
+    getWaitingEvaluteS () {
       var t = this
       t.loadingOrder = true
       t.$axios({

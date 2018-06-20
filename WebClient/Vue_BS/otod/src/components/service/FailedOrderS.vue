@@ -95,10 +95,10 @@ export default {
     }
   },
   mounted () {
-    this.getAllOrders()
+    this.getFailedOrderS()
   },
   methods: {
-    getAllOrders () {
+    getFailedOrderS () {
       var t = this
       t.loadingOrder = true
       t.$axios({
