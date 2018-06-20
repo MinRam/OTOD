@@ -148,6 +148,7 @@ export default {
               message: '完成订单！',
               type: 'success'
             })
+            document.getElementById('rwaitingcommentorders').click()
           } else if (response.data === 'false') {
             t.$message({
               showClose: true,
@@ -210,6 +211,7 @@ export default {
               message: '订单已取消！',
               type: 'success'
             })
+            document.getElementById('rfailedorders').click()
           } else if (response.data === 'false') {
             t.$message({
               showClose: true,

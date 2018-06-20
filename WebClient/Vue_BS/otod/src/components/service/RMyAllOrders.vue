@@ -28,14 +28,14 @@
                                     </div>
                                     <div v-show="m.orderState === '2'" class="button-group">
                                         <div style="margin-bottom: 10px;">
-                                            <el-button type="success" icon="el-icon-check" circle @click="sstatic = !sstatic;finishOrder(m.id)" @mouseover.native="show = !show" @mouseout.native="show = !show"></el-button>
+                                            <el-button type="success" icon="el-icon-check" circle @click="gotoRRO()" @mouseover.native="show = !show" @mouseout.native="show = !show"></el-button>
                                             <transition name="el-zoom-in-left">
                                                 <div v-show="show || sstatic" class="commit-button-box bg-success">完成订单！</div>
                                             </transition>
                                             <div style="clear: both"></div>
                                         </div>
                                         <div style="margin-bottom: 10px;">
-                                            <el-button type="danger" icon="el-icon-close" circle @click="sstatic1 = !sstatic1;open(m.id)" @mouseover.native="show1 = !show1" @mouseout.native="show1 = !show1"></el-button>
+                                            <el-button type="danger" icon="el-icon-close" circle @click="gotoRRO()" @mouseover.native="show1 = !show1" @mouseout.native="show1 = !show1"></el-button>
                                             <transition name="el-zoom-in-left">
                                                 <div v-show="show1 || sstatic1" class="commit-button-box bg-danger">
                                                     <span>取消订单</span>
@@ -46,14 +46,14 @@
                                     </div>
                                     <div v-show="m.orderState === '3'" class="button-group">
                                         <div style="margin-bottom: 10px;">
-                                            <el-button type="primary" icon="el-icon-more" circle @click="sstatic = !sstatic" @mouseover.native="show = !show" @mouseout.native="show = !show"></el-button>
+                                            <el-button type="primary" icon="el-icon-more" circle @click="gotoRWCO()" @mouseover.native="show = !show" @mouseout.native="show = !show"></el-button>
                                             <transition name="el-zoom-in-left">
                                                 <div v-show="show || sstatic" class="commit-button-box bg-primary">评价订单！</div>
                                             </transition>
                                             <div style="clear: both"></div>
                                         </div>
                                         <div style="margin-bottom: 10px;">
-                                            <el-button type="warning" icon="el-icon-arrow-right" circle @click="sstatic1 = !sstatic1" @mouseover.native="show1 = !show1" @mouseout.native="show1 = !show1"></el-button>
+                                            <el-button type="warning" icon="el-icon-arrow-right" circle @click="gotoRWCO()" @mouseover.native="show1 = !show1" @mouseout.native="show1 = !show1"></el-button>
                                             <transition name="el-zoom-in-left">
                                                 <div v-show="show1 || sstatic1" class="commit-button-box bg-warning">
                                                     <span>我需要{{ m.contributers }}个人</span>
@@ -121,7 +121,7 @@ export default {
         .catch(function (error) {
           console.log(error.message)
         })
-    }
+    },
     // getServicePage (currentPage) {
     //   var t = this
     //   t.loadingOrder = true
@@ -137,6 +137,14 @@ export default {
     //       console.log(error.message)
     //     })
     // }
+    gotoRWCO () {
+      console.log('gotoRWCO')
+      document.getElementById('rwaitingcommentorders').click()
+    },
+    gotoRRO () {
+      console.log('gotoRRO')
+      document.getElementById('rrecivedorders').click()
+    }
   }
 }
 </script>

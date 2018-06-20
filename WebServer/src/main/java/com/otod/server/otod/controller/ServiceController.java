@@ -1,12 +1,15 @@
 package com.otod.server.otod.controller;
 
+import com.otod.server.otod.model.OrderEval;
 import com.otod.server.otod.model.UserInfo;
 import com.otod.server.otod.pojos.CommenOrdersPOJO;
 import com.otod.server.otod.model.CommenOrder;
 import com.otod.server.otod.model.User;
+import com.otod.server.otod.pojos.OrderEvalPOJO;
 import com.otod.server.otod.pojos.PublishOrder;
 import com.otod.server.otod.services.ServiceService;
 import com.otod.server.otod.services.UserService;
+import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -336,10 +339,30 @@ public class ServiceController {
             if(i == total){
                 return "no such userinfo";
             }
-            list.remove(i);
-            commenOrder.setOrderState("1");
+//            list.remove(i);
+            commenOrder.setOrderState("5");
             serviceService.saveOrder(commenOrder);
             return "order canceled!";
+        }
+        return "false";
+    }
+
+    //我的订单 -》 待评价 -》 评价订单
+    @PostMapping("/rCommentOrder")
+    private String rCommentOrder(@RequestBody OrderEvalPOJO orderEvalPOJO){
+        Optional<CommenOrder> c = serviceService.getCommenOrderById(orderEvalPOJO.getOrderId());
+        CommenOrder commenOrder = c.get();
+        if(commenOrder.getOrderEval() != null){
+            return "already";
+        }
+        OrderEval orderEval = new OrderEval();
+        orderEval.setrContent(orderEvalPOJO.getrContent());
+        orderEval.setrTitle(orderEvalPOJO.getrTitle());
+        orderEval.setrNum(orderEvalPOJO.getrNum());
+        orderEval.setrDate(new Date());
+        commenOrder.setOrderState("4");
+        if(serviceService.saveComment(commenOrder,orderEval)){
+            return "comment saved!";
         }
         return "false";
     }

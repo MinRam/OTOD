@@ -1,8 +1,10 @@
 package com.otod.server.otod.services;
 
 import com.otod.server.otod.model.CommenOrder;
+import com.otod.server.otod.model.OrderEval;
 import com.otod.server.otod.model.UserInfo;
 import com.otod.server.otod.respository.CommenOrderRespository;
+import com.otod.server.otod.respository.OrderEvalRespository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -23,7 +25,8 @@ import java.util.Optional;
 public class ServiceService {
     @Autowired
     private CommenOrderRespository commenOrderRespository;
-
+    @Autowired
+    private OrderEvalRespository orderEvalRespository;
 
     public List<CommenOrder> getAllCommenOrders(){
 //        String sql = "select * from commenorder where order_state=1";
@@ -82,6 +85,13 @@ public class ServiceService {
     //我的求助 -》 删除订单
     public boolean sDeleteOrder(CommenOrder commenOrder){
         commenOrderRespository.delete(commenOrder);
+        return true;
+    }
+    //OrderEval save
+    public boolean saveComment(CommenOrder commenOrder, OrderEval orderEval){
+        orderEvalRespository.save(orderEval);
+        commenOrder.setOrderEval(orderEval);
+        commenOrderRespository.save(commenOrder);
         return true;
     }
 

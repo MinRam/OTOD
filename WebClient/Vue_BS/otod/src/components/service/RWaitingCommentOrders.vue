@@ -28,7 +28,7 @@
                                     </div>
                                     <div class="button-group">
                                         <div style="margin-bottom: 10px;">
-                                            <el-button type="primary" icon="el-icon-more" circle @click="sstatic = !sstatic" @mouseover.native="show = !show" @mouseout.native="show = !show"></el-button>
+                                            <el-button type="primary" icon="el-icon-more" circle @click="sstatic = !sstatic;openDialog(m.id)" @mouseover.native="show = !show" @mouseout.native="show = !show"></el-button>
                                             <transition name="el-zoom-in-left">
                                                 <div v-show="show || sstatic" class="commit-button-box bg-primary">评价订单！</div>
                                             </transition>
@@ -58,6 +58,36 @@
           <el-card v-show="message.length == 0" shadow="hover" class="center-container-card">
             <p>没有任何信息哦</p>
           </el-card>
+        <el-dialog :visible.sync="showFlag">
+            <el-container>
+                <el-header class="po-header-container">评价订单！</el-header>
+                <el-main>
+                    <el-form :model="form">
+                        <el-form-item label="标题" label-width="80px">
+                            <el-input type="text" v-model="form.ctitle"></el-input>
+                        </el-form-item>
+                        <el-form-item label="内容" label-width="80px">
+                            <el-input type="textarea" :autosize="{ minRows: 4}" v-model="form.content"></el-input>
+                        </el-form-item>
+                        <el-form-item label="评级" label-width="80px">
+                            <el-select v-model="form.score" clearable placeholder="打个等级吧！">
+                                <el-option
+                                    v-for="item in form.score_op"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                                </el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-form>
+                </el-main>
+                <el-footer class="po-footer-container">
+                    <el-col :span="24">
+                        <el-button type="primary" style="width: 100%;" @click="submit()">完成评价</el-button>
+                    </el-col>
+                </el-footer>
+            </el-container>
+        </el-dialog>
     </el-col>
 </template>
 
@@ -76,7 +106,30 @@ export default {
       totalPages: 0,
       currentPage: 0,
       loadingOrder: 'true',
-      size: 5
+      size: 5,
+      showFlag: false,
+      ssId: '',
+      form: {
+        ctitle: '',
+        content: '',
+        score: '',
+        score_op: [{
+          value: '5',
+          label: '超棒的！'
+        }, {
+          value: '4',
+          label: '还可以'
+        }, {
+          value: '3',
+          label: '一般般'
+        }, {
+          value: '2',
+          label: '比较差'
+        }, {
+          value: '1',
+          label: '太差了！'
+        }]
+      }
     }
   },
   mounted () {
@@ -102,7 +155,7 @@ export default {
         .catch(function (error) {
           console.log(error.message)
         })
-    }
+    },
     // getServicePage (currentPage) {
     //   var t = this
     //   t.loadingOrder = true
@@ -118,6 +171,73 @@ export default {
     //       console.log(error.message)
     //     })
     // }
+    openDialog (id) {
+      this.ssId = id
+      this.showFlag = true
+    },
+    submit () {
+      if (this.form.ctitle === '') {
+        this.$message({
+          showClose: true,
+          message: '警告哦，你的标题没有写',
+          type: 'warning'
+        })
+      } else if (this.form.content === '') {
+        this.$message({
+          showClose: true,
+          message: '警告哦，你的内容没有写',
+          type: 'warning'
+        })
+      } else if (this.form.score === '') {
+        this.$message({
+          showClose: true,
+          message: '警告哦，你的评级没有写',
+          type: 'warning'
+        })
+      } else {
+        var t = this
+        t.$axios({
+          method: 'post',
+          url: t.$url + '/rCommentOrder',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + t.$getCookie('otod_access_token')
+          },
+          data: {
+            orderId: t.ssId,
+            rTitle: t.form.ctitle,
+            rContent: t.form.content,
+            rNum: t.form.score
+          }
+        })
+          .then(function (response) {
+            t.showFlag = false
+            if (response.data === 'comment saved!') {
+              t.$message({
+                showClose: true,
+                message: '评论成功！',
+                type: 'success'
+              })
+              document.getElementById('rdoneorders').click()
+            } else if (response.data === 'false') {
+              t.message({
+                showClose: true,
+                message: '评论失败！',
+                type: 'danger'
+              })
+            } else if (response.data === 'already') {
+              t.$message({
+                showClose: true,
+                message: '已经评论！',
+                type: 'warning'
+              })
+            }
+          })
+          .catch(function (error) {
+            console.log(error)
+          })
+      }
+    }
   }
 }
 </script>

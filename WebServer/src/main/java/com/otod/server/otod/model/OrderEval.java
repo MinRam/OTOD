@@ -15,15 +15,28 @@ public class OrderEval {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "order_eval_id")
     private Long orderEvalId;
-    //评价对应的订单
-    @Column(name = "order_id")
-    private Long evdOrder;
-
-    @Column(name = "content")
-    private String content;
+    @Column(name = "r_title")
+    private String rTitle;
+    @Column(name = "r_content")
+    private String rContent;
+    @Column(name = "s_title")
+    private String sTitle;
+    @Column(name = "s_content")
+    private String sContent;
     //求助方的分数
+    @Column(name = "s_num")
+    private int sNum;
+    //接收方的分数
+    @Column(name = "r_num")
+    private int rNum;
+    //求助方评价日期
+    @Column(name = "s_date")
+    private Date sDate;
+    //接收方评价日期
+    @Column(name = "r_date")
+    private Date rDate;
 
-
+    public OrderEval(){}
 
     public Long getOrderEvalId() {
         return orderEvalId;
@@ -33,20 +46,36 @@ public class OrderEval {
         this.orderEvalId = orderEvalId;
     }
 
-    public Long getEvdOrder() {
-        return evdOrder;
+    public String getrTitle() {
+        return rTitle;
     }
 
-    public void setEvdOrder(Long evdOrder) {
-        this.evdOrder = evdOrder;
+    public void setrTitle(String rTitle) {
+        this.rTitle = rTitle;
     }
 
-    public String getContent() {
-        return content;
+    public String getrContent() {
+        return rContent;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setrContent(String rContent) {
+        this.rContent = rContent;
+    }
+
+    public String getsTitle() {
+        return sTitle;
+    }
+
+    public void setsTitle(String sTitle) {
+        this.sTitle = sTitle;
+    }
+
+    public String getsContent() {
+        return sContent;
+    }
+
+    public void setsContent(String sContent) {
+        this.sContent = sContent;
     }
 
     public int getsNum() {
@@ -80,18 +109,4 @@ public class OrderEval {
     public void setrDate(Date rDate) {
         this.rDate = rDate;
     }
-
-    @Column(name = "s_num")
-    private int sNum;
-    //接收方的分数
-    @Column(name = "r_num")
-    private int rNum;
-    //求助方评价日期
-    @Column(name = "s_date")
-    private Date sDate;
-    //接收方评价日期
-    @Column(name = "r_date")
-    private Date rDate;
-
-
 }
