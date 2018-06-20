@@ -10,7 +10,7 @@
     </el-header>
     <el-main >
       <el-row type="flex" class="row-bg" justify="center">
-        <div style="margin:3px;max-width:200px" v-for="(x,index) in sectionList" :key="index">
+        <div class="section-div" v-for="(x,index) in sectionList" :key="index">
           <el-popover
             placement="top"
             :title="x.name"
@@ -18,7 +18,7 @@
             trigger="hover">
             <p>{{ x.statement }}</p>
             <span>主题贴数:{{x.post_num}}</span>
-            <el-button type="warning" plain style="height:60px;width:150px;" slot="reference" @click="changepage(1),changesection_id(x.id),queryByCondition()">
+            <el-button type="warning" plain class="section-button" slot="reference" @click="changepage(1),changesection_id(x.id),queryByCondition()">
               <i class="el-icon-caret-bottom"></i>{{ x.name }}
             </el-button>
           </el-popover>
@@ -28,11 +28,6 @@
       <el-row type="flex" class="row-bg" justify="end">
         <div style="margin: 15px 100px;">
           <el-input placeholder="请输入内容" v-model="condition.title" class="input-with-select">
-            <el-select v-model="conditionSelect" slot="prepend" placeholder="请选择">
-              <el-option label="餐厅名" value="1"></el-option>
-              <el-option label="订单号" value="2"></el-option>
-              <el-option label="用户电话" value="3"></el-option>
-            </el-select>
             <el-button slot="append" icon="el-icon-search" @click="queryByCondition()"></el-button>
           </el-input>
         </div>
@@ -70,9 +65,9 @@
               align="center"
               width="150">
               <template slot-scope="scope">
-                <img :src="scope.row.userInfo.headimg">
+                <img class="head-img" v-if="scope.row.userInfo.headImage != null" :src="$url + '/images/' + scope.row.userInfo.headImage"/>
                 <el-button type="text">{{ scope.row.userInfo.nickname }}</el-button>
-                <a>id : {{ scope.row.user_id }}</a>
+            <!--    <a>id : {{ scope.row.user_id }}</a> -->
                 <p>{{ scope.row.date }}</p>
               </template>
             </el-table-column>
@@ -249,10 +244,6 @@ export default {
         method: 'post',
         url: this.$url + '/forumtopic/findbycondition',
         dataType: 'json',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + t.$getCookie('otod_access_token')
-        },
         data: {
           section_id: this.condition.section_id,
           title: this.condition.title,
@@ -483,3 +474,7 @@ export default {
   }
 }
 </script>
+
+<style>
+    @import '../assets/css/Blog.css';
+</style>
