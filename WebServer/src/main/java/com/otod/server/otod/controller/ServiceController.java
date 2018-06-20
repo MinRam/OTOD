@@ -67,7 +67,10 @@ public class ServiceController {
             if(commenOrder == null){
                 return "null order!";
             }
-            System.out.println("editOrder------------------->" + commenOrder.getTitle() + "---------id------------->" + commenOrder.getId());
+            if(!commenOrder.getOrderState().equals("1")){
+                return "wrong state!";
+            }
+//            System.out.println("editOrder------------------->" + commenOrder.getTitle() + "---------id------------->" + commenOrder.getId());
         } else {
             commenOrder = new CommenOrder();
         }
@@ -308,5 +311,36 @@ public class ServiceController {
         Optional<CommenOrder> c = serviceService.getCommenOrderById(id);
         CommenOrder commenOrder = c.get();
         return commenOrder;
+    }
+    //我的订单 -》 已接受 -》 取消订单
+    @GetMapping("/rCancelOrder")
+    private String rCancelOrder(@RequestParam (value = "OrderId") Long id){
+        UserInfo userInfo = userService.getUserInfo(userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName()));
+        Optional<CommenOrder> c = serviceService.getCommenOrderById(id);
+        CommenOrder commenOrder = c.get();
+        if(commenOrder == null){
+            return "null order";
+        }
+        if(!commenOrder.getOrderState().equals("2")){
+            return "not the running order";
+        }
+        if(commenOrder.getOrderState().equals("2")){
+            int i = 0;
+            List<UserInfo> list = commenOrder.getUserinfoR();
+            int total = list.size();
+            for(i = 0; i < list.size(); i++){
+                if(list.get(i).getId() == userInfo.getId()){
+                    break;
+                }
+            }
+            if(i == total){
+                return "no such userinfo";
+            }
+            list.remove(i);
+            commenOrder.setOrderState("1");
+            serviceService.saveOrder(commenOrder);
+            return "order canceled!";
+        }
+        return "false";
     }
 }

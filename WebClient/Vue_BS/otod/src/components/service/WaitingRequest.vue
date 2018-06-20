@@ -260,6 +260,12 @@ export default {
               message: '求助已被接收！',
               type: 'danger'
             })
+          } else if (response.data === 'wrong state!') {
+            t.$message({
+              showClose: true,
+              message: '求助已被接收！',
+              type: 'danger'
+            })
           }
           t.getWaitingRequest()
         })
