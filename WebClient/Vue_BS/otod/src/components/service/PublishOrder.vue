@@ -14,7 +14,7 @@
                             <el-input type="textarea" :autosize="{ minRows: 4}" v-model="form.content"></el-input>
                         </el-form-item>
                         <el-form-item label="时间" label-width="80px">
-                            <el-date-picker type="date" placeholder="选择结束日期" v-model="form.e_date"></el-date-picker>
+                            <el-date-picker type="date" placeholder="选择结束日期" v-model="form.deadline" :pickerOptions="pickerOptions0"></el-date-picker>
                         </el-form-item>
                         <el-form-item label="人数需求" label-width="80px">
                             <el-select v-model="form.contributer" clearable placeholder="需要多少人？">
@@ -107,9 +107,14 @@ export default {
         }],
         urgency: '',
         s_date: '',
-        e_date: ''
+        deadline: ''
       },
-      labelPosition: 'left'
+      labelPosition: 'left',
+      pickerOptions0: {
+        disabledDate (time) {
+          return time.getTime() < Date.now() - 8.64e7
+        }
+      }
     }
   },
   methods: {
@@ -127,7 +132,7 @@ export default {
           message: '警告哦，你的内容没有写',
           type: 'warning'
         })
-      } else if (this.form.e_date === '') {
+      } else if (this.form.deadline === '') {
         this.$message({
           showClose: true,
           message: '警告哦，你的结束日期没有写',
@@ -151,7 +156,7 @@ export default {
         //   content: 'this.form.content',
         //   type: '',
         //   sDate: '',
-        //   deadline: 'this.form.e_date',
+        //   deadline: 'this.form.deadline',
         //   orderState: '',
         //   receiveTime: '',
         //   user_s: '',
@@ -174,7 +179,7 @@ export default {
           data: {
             title: t.form.title,
             content: t.form.content,
-            deadline: t.form.e_date,
+            deadline: t.form.deadline,
             urgency: t.form.urgency,
             contributers: t.form.contributer
           }
@@ -196,6 +201,9 @@ export default {
         // console.log(orderPOJO)
       }
     }
+    // submit () {
+    //   console.log(this.form.deadline)
+    // }
   }
 }
 </script>

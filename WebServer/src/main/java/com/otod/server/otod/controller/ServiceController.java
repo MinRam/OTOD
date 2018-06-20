@@ -60,14 +60,24 @@ public class ServiceController {
 //    String title, String content, String deadline, String urgency, int contributers
     @PostMapping("/saveOrder")
     private String saveOrder(@RequestBody PublishOrder publishOrder){
-        CommenOrder commenOrder = new CommenOrder();
+        CommenOrder commenOrder;
+        if(publishOrder.getId() != null){
+            Optional<CommenOrder> c = serviceService.getCommenOrderById(publishOrder.getId());
+            commenOrder = c.get();
+            if(commenOrder == null){
+                return "null order!";
+            }
+            System.out.println("editOrder------------------->" + commenOrder.getTitle() + "---------id------------->" + commenOrder.getId());
+        } else {
+            commenOrder = new CommenOrder();
+        }
         commenOrder.setTitle(publishOrder.getTitle());
         commenOrder.setContent(publishOrder.getContent());
         commenOrder.setOrderState("1");
         System.out.println(publishOrder.getDeadline());
-        DateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        DateFormat dateFormat1 = new SimpleDateFormat("yyyy-MM-dd");
-        String edateStr = publishOrder.getDeadline().substring(0,10);
+//        DateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        DateFormat dateFormat1 = new SimpleDateFormat("yyyy-MM-dd");
+//        String edateStr = publishOrder.getDeadline().substring(0,10);
         Date sdate = new Date();
         commenOrder.setsDate(sdate);
 
@@ -75,9 +85,10 @@ public class ServiceController {
 
         commenOrder.setUserinfoS(userService.getUserInfo(user));
         try{
-            Date edate = dateFormat1.parse(edateStr);
-            commenOrder.setsDate(edate);
-//            System.out.println(sdate + " -- "+ edateStr);
+//            Date edate = dateFormat1.parse(edateStr);
+//            Date edate = new Date(edateStr);
+            commenOrder.setDeadline(publishOrder.getDeadline());
+            System.out.println(sdate + " -- "+ publishOrder.getDeadline());
         }
         catch (Exception e) {
             System.out.println(e);
@@ -253,5 +264,49 @@ public class ServiceController {
             }
         }
         return result;
+    }
+    //我的订单 -》 删除订单
+    @GetMapping("/sDeleteOrder")
+    private String sDeleteOrder(@RequestParam (value = "OrderId") Long id){
+        Optional<CommenOrder> c = serviceService.getCommenOrderById(id);
+        CommenOrder commenOrder = c.get();
+        if(commenOrder == null){
+            return "null order";
+        }
+        if(commenOrder.getOrderState().equals("1")){
+            if(serviceService.sDeleteOrder(commenOrder)){
+                return "delete!";
+            }
+            else {
+                return "can not delete!";
+            }
+        } else {
+            return "state failed!";
+        }
+    }
+    //我的订单 -》 完成订单
+    @GetMapping("/rFinishOrder")
+    private String rFinishOrder(@RequestParam (value = "OrderId") Long id){
+        Optional<CommenOrder> c = serviceService.getCommenOrderById(id);
+        CommenOrder commenOrder = c.get();
+        if(commenOrder == null){
+            return "null order";
+        }
+        if(!commenOrder.getOrderState().equals("2")){
+            return "not the running order";
+        }
+        if(commenOrder.getOrderState().equals("2")){
+            commenOrder.setOrderState("3");
+            serviceService.saveOrder(commenOrder);
+            return "order finished!";
+        }
+        return "false";
+    }
+    //获得订单
+    @GetMapping("/getCommenOrder")
+    private CommenOrder getCommenOrder(@RequestParam (value = "OrderId") Long id){
+        Optional<CommenOrder> c = serviceService.getCommenOrderById(id);
+        CommenOrder commenOrder = c.get();
+        return commenOrder;
     }
 }

@@ -28,9 +28,9 @@
                                     </div>
                                     <div class="button-group">
                                         <div style="margin-bottom: 10px;">
-                                            <el-button type="success" icon="el-icon-check" circle @click="sstatic = !sstatic" @mouseover.native="show = !show" @mouseout.native="show = !show"></el-button>
+                                            <el-button type="primary" icon="el-icon-more" circle @click="sstatic = !sstatic" @mouseover.native="show = !show" @mouseout.native="show = !show"></el-button>
                                             <transition name="el-zoom-in-left">
-                                                <div v-show="show || sstatic" class="commit-button-box bg-success"></div>
+                                                <div v-show="show || sstatic" class="commit-button-box bg-primary">评价订单！</div>
                                             </transition>
                                             <div style="clear: both"></div>
                                         </div>

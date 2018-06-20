@@ -28,9 +28,9 @@
                                     </div>
                                     <div class="button-group">
                                         <div style="margin-bottom: 10px;">
-                                            <el-button type="success" icon="el-icon-check" circle @click="sstatic = !sstatic" @mouseover.native="show = !show" @mouseout.native="show = !show"></el-button>
+                                            <el-button type="success" icon="el-icon-check" circle @click="sstatic = !sstatic;finishOrder(m.id)" @mouseover.native="show = !show" @mouseout.native="show = !show"></el-button>
                                             <transition name="el-zoom-in-left">
-                                                <div v-show="show || sstatic" class="commit-button-box bg-success"></div>
+                                                <div v-show="show || sstatic" class="commit-button-box bg-success">完成订单！</div>
                                             </transition>
                                             <div style="clear: both"></div>
                                         </div>
@@ -117,7 +117,7 @@ export default {
         .catch(function (error) {
           console.log(error.message)
         })
-    }
+    },
     // getServicePage (currentPage) {
     //   var t = this
     //   t.loadingOrder = true
@@ -133,6 +133,48 @@ export default {
     //       console.log(error.message)
     //     })
     // }
+    finishOrder (id) {
+      var t = this
+      t.$axios({
+        method: 'get',
+        url: t.$url + '/rFinishOrder',
+        params: {
+          OrderId: id
+        }
+      })
+        .then(function (response) {
+          console.log(response)
+          if (response.data === 'null order') {
+            t.$message({
+              showClose: true,
+              message: '没有此订单',
+              type: 'danger'
+            })
+          } else if (response.data === 'not the running order') {
+            t.$message({
+              showClose: true,
+              message: '该订单状态不为已接受',
+              type: 'danger'
+            })
+          } else if (response.data === 'order finished!') {
+            t.$message({
+              showClose: true,
+              message: '完成订单！',
+              type: 'success'
+            })
+          } else if (response.data === 'false') {
+            t.$message({
+              showClose: true,
+              message: '未知错误',
+              type: 'danger'
+            })
+          }
+          t.getRecivedOrders()
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    }
   }
 }
 </script>

@@ -1,16 +1,27 @@
 package com.otod.server.otod.pojos;
 
+import java.util.Date;
+
 /**
  * Created by zhang on 2018/6/9.
  */
 public class PublishOrder {
+    private Long id;
     private String title;
     private String content;
-    private String deadline;
+    private Date deadline;
     private String urgency;
     private int contributers;
 
     public PublishOrder(){}
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getTitle() {
         return title;
@@ -28,11 +39,11 @@ public class PublishOrder {
         this.content = content;
     }
 
-    public String getDeadline() {
+    public Date getDeadline() {
         return deadline;
     }
 
-    public void setDeadline(String deadline) {
+    public void setDeadline(Date deadline) {
         this.deadline = deadline;
     }
 

@@ -72,10 +72,17 @@ public class ServiceService {
         return commenOrderRespository.findByUserinfoR(userInfo);
     }
 
-    public CommenOrder getOrderById(Long id){
-        Optional<CommenOrder> optional =  commenOrderRespository.findById(id);
-        if(optional.isPresent()){
-            return null;
-        } else return optional.get();
+//    public CommenOrder getOrderById(Long id){
+//        Optional<CommenOrder> optional =  commenOrderRespository.findById(id);
+//        if(optional.isPresent()){
+//            return null;
+//        } else return optional.get();
+//    }
+
+    //我的求助 -》 删除订单
+    public boolean sDeleteOrder(CommenOrder commenOrder){
+        commenOrderRespository.delete(commenOrder);
+        return true;
     }
+
 }
