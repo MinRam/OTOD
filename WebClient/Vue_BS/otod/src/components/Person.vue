@@ -8,7 +8,7 @@
                          </a>
                      </li>
                     <li class="publish-link" v-for="(publish,index) in publishPosts" :class="publish.title" :key="index">
-                        <a href="">{{publish.title}}</a>
+                        <a @click="goRouter(index)">{{publish.title}}</a>
                      </li>
                  </ul>
              </div>
@@ -35,12 +35,13 @@
                             </li>
                          </ul>
                     </div>
+
                  </div>
              </div>
             <div v-for="(update,index) in updatings" :key="index" class="update-item">
                 <div class="update-userHead">
                     <a>
-                        <img :src="update.author.headPhoto"/>
+                        <img :src="$imageUrl + update.author.headPhoto"/>
                     </a>
                 </div>
                 <div class="update-content">
@@ -54,7 +55,7 @@
                         <div class="message-content">
                             <div class="content-img">
                                 <a>
-                                  <img :src="update.images[0].url" :title="update.images[0].title"/>
+                                  <img :src="$imageUrl + update.images[0].url" :title="update.images[0].title"/>
                                 </a>
                             </div>
                             <div class="content-txt"></div>
@@ -71,6 +72,7 @@
                              </div>
                          </div>
                      </div>
+                    <div class="update-bottom"/>
                 </div>
              </div>
             <div class="load-bar" v-if="loading">
@@ -86,15 +88,20 @@ export default{
     return {
       // 发布按钮
       publishPosts: [{
-        title: 'blog'
+        title: 'blog',
+        link: 'Blog'
       }, {
-        title: 'market'
+        title: 'market',
+        link: 'Sell'
       }, {
-        title: 'service'
+        title: 'file',
+        link: 'FileUpload'
       }, {
-        title: 'book'
+        title: 'service',
+        link: 'PublishOrder'
       }, {
-        title: 'file'
+        title: 'book',
+        link: ''
       }],
 
       // 通知信息
@@ -103,7 +110,7 @@ export default{
       // 动态信息列表
       updatings: [{
         author: {
-          headPhoto: 'http://localhost:8081/images/hp/6630576284002729390.jpg',
+          headPhoto: 'hp/6630576284002729390.jpg',
           username: 'TianChengLiu',
           telephone: ''
         },
@@ -113,7 +120,7 @@ export default{
           name: '揍你'
         }],
         images: [{
-          url: 'http://localhost:8081/images/Images/1.jpg',
+          url: 'Images/1.jpg',
           title: '早上好'
         }],
         Content: '怕上火爆王老菊',
@@ -122,7 +129,7 @@ export default{
         }
       }, {
         author: {
-          headPhoto: 'http://localhost:8081/images/hp/6630576284002729390.jpg',
+          headPhoto: 'hp/6630576284002729390.jpg',
           username: 'TianChengLiu',
           telephone: ''
         },
@@ -132,7 +139,7 @@ export default{
           name: '揍你'
         }],
         images: [{
-          url: 'http://localhost:8081/images/Images/1.jpg',
+          url: 'Images/1.jpg',
           title: '早上好'
         }],
         Content: '怕上火爆王老菊',
@@ -154,7 +161,7 @@ export default{
       // get notice list
       this.$axios({
         method: 'get',
-        url: this.$url + '/Notice',
+        url: this.$url + '/user/Notice',
         params: {
           access_token: this.$getCookie('otod_access_token')
         }
@@ -162,13 +169,42 @@ export default{
         this.noticeList = response.data
       }.bind(this))
 
+      // get Update List
+      // this.$axios({
+      //   method: 'get',
+      //   url: this.$url + '/user/get'
+      // })
 
+      this.loading = false
+      // console.log('finished')
+    },
 
-      console.log('finished')
+    // route link
+    goRouter (index) {
+      console.log(index)
+      this.$router.push({ name: this.publishPosts[index].link, params: { page: this.publishPosts[index].title } })
     },
 
     // 通知栏关闭
     noticeClose () {
+      var noticeIdList = []
+
+      for (var i = 0; i < this.noticeList.length; ++i) {
+        noticeIdList.push(this.noticeList[i].noticeId)
+      }
+
+      this.$axios({
+        method: 'post',
+        url: this.$url + '/user/readNotice',
+        head: {
+          'Authorization': 'Bearer ' + this.$getCookie('otod_access_token')
+        },
+        data: {
+          'idList': noticeIdList
+        },
+        dataType: 'json'
+      })
+
       this.noticeList = []
     }
   }

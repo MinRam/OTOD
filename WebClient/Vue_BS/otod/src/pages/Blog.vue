@@ -1,9 +1,14 @@
 <template>
 <div>
-  <el-container style="width:80%;margin:auto;">
+  <el-container style="width:100%;margin:auto;">
     <el-header>
+      <el-breadcrumb separator-class="el-icon-arrow-right">
+          <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
+          <el-breadcrumb-item >博客</el-breadcrumb-item>
+          <el-breadcrumb-item>{{ section_name }}</el-breadcrumb-item>
+      </el-breadcrumb>
     </el-header>
-    <el-main>
+    <el-main >
       <el-row type="flex" class="row-bg" justify="center">
         <div style="margin:3px;max-width:200px" v-for="(x,index) in sectionList" :key="index">
           <el-popover
@@ -35,13 +40,23 @@
       <el-row type="flex" class="row-bg" justify="center">
         <div class="block">
           <el-table
+            v-loading="loading"
             :data="forumTopicList"
             stripe
             style="width: 100%">
             <el-table-column
-              prop="reply_num"
               label="回复数"
+              align="center"
               width="100">
+              <template slot-scope="scope">
+                <el-row type="flex" class="row-bg" justify="center">
+                  <el-card :body-style="{ padding: '0px 20px'  }">
+                    <span>
+                      {{ scope.row.reply_num }}
+                    </span>
+                  </el-card>
+                </el-row>
+              </template>
             </el-table-column>
             <el-table-column
               label="标题"
@@ -52,9 +67,11 @@
             </el-table-column>
             <el-table-column
               label="作者"
+              align="center"
               width="150">
               <template slot-scope="scope">
-                <el-button type="text">用户昵称</el-button>
+                <img :src="scope.row.userInfo.headimg">
+                <el-button type="text">{{ scope.row.userInfo.nickname }}</el-button>
                 <a>id : {{ scope.row.user_id }}</a>
                 <p>{{ scope.row.date }}</p>
               </template>
@@ -68,7 +85,7 @@
                     <p>{{ scope.row.last_time }}</p>
                     <el-row>
                       <i class="el-icon-service"></i>
-                      <el-button type="text">回复者昵称</el-button>
+                      <el-button type="text">{{ scope.row.lastUserInfo.nickname }}</el-button>
                     </el-row>
                   </el-col>
                   <el-col>
@@ -120,15 +137,8 @@
         clearable>
         <template slot="prepend">标题</template>
       </el-input>
-      <el-input
-        type="textarea"
-        :rows="8"
-        placeholder="请输入内容"
-        v-model="forumTopicPO.content">
-      </el-input>
-      <el-button type="success" plain @click="postData()">发表</el-button>
-      <el-button type="success" plain @click="alee()">发表</el-button>
-      <router-view/>
+      <QuillEditor ref="quillEditor"></QuillEditor>
+      <el-button style="margin:5px 0px;" type="success" plain @click="postData()">发表</el-button>
     </el-footer>
   </el-container>
 </div>
@@ -140,11 +150,14 @@ export default {
   name: 'Blog',
   data () {
     return {
+      user_type: 0,
+      section_name: '公共',
       conditionSelect: '',
       forumTopicLength: 0,
       page: 1,
       rows: 10,
       deletevisible: false,
+      loading: true,
       condition: {
         title: '',
         section_id: 1,
@@ -174,54 +187,72 @@ export default {
     }
   },
   mounted: function () {
-    // 键盘监听注册
     this.queryByCondition()
     this.querySectionList()
-    this.$router.push('/forumtopic/quilleditor')
+    this.checkusertype()
   },
   watch: {
+    // 监听当前页面
     page: {
       handler: function (val, oldval) {
         this.queryByCondition()
       }
     },
+    // 监听页面大小
     rows: {
       handler: function (val, oldval) {
         this.queryByCondition()
       }
     }
   },
-  
+  components: {
+    QuillEditor
+  },
   methods: {
     // 发表帖子
     postData () {
       var t = this
-      this.$axios({
-        method: 'post',
-        url: 'http://localhost:8081/forumtopic/save',
-        dataType: 'json',
-        data: {
-          section_id: this.condition.section_id,
-          user_id: this.condition.user_id,
-          content: this.forumTopicPO.content,
-          title: this.forumTopicPO.title
-        }
-      }).then(function (response) {
-        console.log(response)
-        t.successMessageSave()
-        // 提交完刷新一次数据
-        t.queryByCondition()
-      }).catch(function (error) {
-        console.log(error)
-      })
+      if (this.forumTopicPO.title === '' || this.$refs.quillEditor.content === '') {
+        this.errorMessageSave()
+      } else {
+        this.$axios({
+          method: 'post',
+          url: t.$url + '/forumtopic/save',
+          dataType: 'json',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + t.$getCookie('otod_access_token')
+          },
+          data: {
+            section_id: this.condition.section_id,
+            user_id: this.condition.user_id,
+            content: this.$refs.quillEditor.content,
+            title: this.forumTopicPO.title
+          }
+        }).then(function (response) {
+          console.log(response)
+          t.successMessageSave()
+          // 提交完刷新一次数据
+          t.queryByCondition()
+          // 清空标题和内容
+          t.$refs.quillEditor.content = ''
+          t.forumTopicPO.title = ''
+        }).catch(function (error) {
+          console.log(error)
+        })
+      }
     },
 
     queryByCondition () {
       var t = this
       this.$axios({
         method: 'post',
-        url: 'http://localhost:8081/forumtopic/findbycondition',
+        url: this.$url + '/forumtopic/findbycondition',
         dataType: 'json',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + t.$getCookie('otod_access_token')
+        },
         data: {
           section_id: this.condition.section_id,
           title: this.condition.title,
@@ -231,8 +262,8 @@ export default {
       }).then(function (response) {
         console.log(response)
         // 为主题帖赋值，为总数度赋值
-        t.forumTopicList = response.data.content
-        t.forumTopicLength = response.data.totalElements
+        t.forumTopicList = response.data.pageList.content
+        t.forumTopicLength = response.data.pageList.totalElements
         // 切换日期显示
         for (var i in t.forumTopicList) {
           // 获得距今时间
@@ -241,8 +272,16 @@ export default {
           if (date.getFullYear() < (new Date().getFullYear())) {
             t.forumTopicList[i].date = date.getFullYear() + '年' + (date.getMonth() + 1) + '月' + date.getDate() + '日'
           } else {
-            t.forumTopicList[i].date = (date.getMonth() + 1) + '月' + date.getDate() + '日 ' + date.getHours() + ':' + date.getMinutes()
+            t.forumTopicList[i].date = (date.getMonth() + 1) + '月' + date.getDate() + '日 ' + date.getHours()
+            if (date.getMinutes() < 10) {
+              t.forumTopicList[i].date = t.forumTopicList[i].date + ':0' + date.getMinutes()
+            } else {
+              t.forumTopicList[i].date = t.forumTopicList[i].date + ':' + date.getMinutes()
+            }
           }
+          t.section_name = t.forumTopicList[0].sectionInfoPO.name
+          // 去除加载图案
+          t.loading = false
           // 添加删除弹框可视变量
           t.forumTopicList[i].deletevisible = false
         }
@@ -251,8 +290,9 @@ export default {
       })
     },
 
+    // 根据id查找主题帖
     test () {
-      this.$axios.get('http://localhost:8081/forumtopic/findbyid?id=1').then(function (response) {
+      this.$axios.get(this.$url + '/forumtopic/findbyid?id=1').then(function (response) {
         console.log(response)
       }).catch(function (error) {
         console.log(error)
@@ -264,7 +304,7 @@ export default {
       var t = this
       this.$axios({
         method: 'get',
-        url: 'http://localhost:8081/forumtopic/findbypage',
+        url: this.$url + '/forumtopic/findbypage',
         dataType: 'jsonp',
         params: {
           page: t.page,
@@ -284,31 +324,29 @@ export default {
             t.forumTopicList[i].date = date.getMonth() + '月' + date.getDate() + '日'
           }
         }
-
-        var a = new Date(t.forumTopicList[0].date).getTime()
-        console.log(a)
-        console.log(t.forumTopicList)
       }).catch(function (error) {
         console.log(error)
       })
     },
 
     alee () {
-      alert(this.$refs.myTextEditor.content)
-      console.log(this.mycontent)
+      alert(this.user_type)
     },
 
     querySectionList () {
       var t = this
       this.$axios({
         method: 'get',
-        url: 'http://localhost:8081/sectioninfo/findbypage',
+        url: this.$url + '/sectioninfo/findbypage',
         dataType: 'jsonp',
         params: {
           page: t.page - 1,
           row: t.rows
         }
       }).then(function (response) {
+        if (t.$route.query.section_id) {
+          t.condition.section_id = t.$route.query.section_id
+        }
         console.log(response)
         t.sectionList = response.data.content
       }).catch(function (error) {
@@ -366,6 +404,7 @@ export default {
     changerows (val) {
       this.rows = val
     },
+    // 改变版块名称
 
     // 改变当前版块
     changesection_id (val) {
@@ -375,10 +414,32 @@ export default {
     // 删除主题帖
     deletebyid (id) {
       var t = this
-      this.$axios.get('http://localhost:8081/forumtopic/deletebyid?id=' + id).then(function (response) {
+      this.$axios.get(this.$url + '/forumtopic/deletebyid?id=' + id).then(function (response) {
         console.log(response)
         t.successMessageDelete()
         t.queryByCondition()
+      }).catch(function (error) {
+        console.log(error)
+      })
+    },
+
+    // 检查用户类型
+    checkusertype () {
+      var t = this
+      this.$axios({
+        method: 'get',
+        url: this.$url + '/sectioninfo/checkusertype',
+        dataType: 'jsonp',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + t.$getCookie('otod_access_token')
+        },
+        params: {
+          section_id: t.condition.section_id
+        }
+      }).then(function (response) {
+        console.log(response)
+        t.user_type = response.data
       }).catch(function (error) {
         console.log(error)
       })
@@ -398,6 +459,15 @@ export default {
       })
     },
 
+    // 标题未写错误信息
+    errorMessageSave () {
+      this.$message({
+        showClose: true,
+        message: '发表失败，请填写标题和内容',
+        type: 'error'
+      })
+    },
+
     // 删除成功信息弹出
     successMessageDelete () {
       this.$message({
@@ -413,6 +483,3 @@ export default {
   }
 }
 </script>
-
-<style>
-</style>

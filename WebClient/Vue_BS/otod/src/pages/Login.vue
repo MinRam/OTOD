@@ -277,11 +277,14 @@
                             <h1 class="section-title">独特多样的二手市场</h1>
                             <p>"OTOD提供发布和交易的二手市场，可以让您在大学简单的发布自己的多余物品，以及购买便宜的二手物品。无需再纠结多余物品的去处，无需再为自己的钱包担心。"</p>
                         </div>
-                        <div class="section-wrapper">
-                            <div class="shop-graphic">
-                                <div v-for="(shopItem,index) in shops" class="shop-post-item" :key="index">
-
-                                 </div>
+                        <div class="shop-graphic">
+                            <div v-for="(shopItem,index) in shops" class="shop-post-item" :key="index">
+                                <div class="item-head">
+                                    <span>{{shopItem.title}}</span>
+                                </div>
+                                <div class="item-content">
+                                    <img :src="$imageUrl + shopItem.goodImage"/>
+                                </div>
                              </div>
                          </div>
                     </div>
@@ -428,7 +431,16 @@ export default {
       // shops section
       shops: [{
         username: 'user1',
-        goodImage: ''
+        goodImage: 'Images/1.jpg',
+        title: '123'
+      }, {
+        username: 'user1',
+        goodImage: 'Images/2.jpg',
+        title: '123'
+      }, {
+        username: 'user1',
+        goodImage: 'Images/3.jpg',
+        title: '123'
       }],
       // servers section
       servers: [{
@@ -498,6 +510,7 @@ export default {
               params.append('username', this.username)
               params.append('password', md5(this.password))
 
+              // 注册后登录
               this.$axios({
                 method: 'post',
                 url: this.$url + '/oauth/token',
@@ -507,10 +520,11 @@ export default {
               }).then(function (response) {
                 if (response.data.access_token) {
                   this.$setCookie('otod_access_token', response.data.access_token)
+                  this.$store.commit('userSignIn')
+                  this.$router.push('/index')
                 } else {
                   this._showErrors('请检查网络！')
                 }
-                this.$router.push('/home/person')
               }.bind(this)).catch(function (error) {
                 if (error.response) {
                   this._showErrors(error.response.data.error)
@@ -554,7 +568,8 @@ export default {
             } else {
               this._showErrors('请检查网络！')
             }
-            this.$router.push('/')
+            this.$store.commit('userSignIn')
+            this.$router.push({ name: 'Person', params: { page: 'home' } })
           }.bind(this)).catch(function (error) {
             if (error.response) {
               this._showErrors(error.response.data.error)
@@ -587,7 +602,7 @@ export default {
     keyDownEvent: function (event) {
       event = event || window.event
       switch (event.keyCode) {
-        case 74:
+        case 40:
           this.nextShowcase()
           break
         case 38:

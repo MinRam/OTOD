@@ -1,12 +1,14 @@
 package com.otod.server.otod.controller;
 
 import com.otod.server.otod.model.Notice;
+import com.otod.server.otod.model.NoticeList;
 import com.otod.server.otod.model.User;
 import com.otod.server.otod.model.UserInfo;
 import com.otod.server.otod.pojos.NoticePojo;
 import com.otod.server.otod.pojos.UserFollowList;
 import com.otod.server.otod.pojos.UserRegisteration;
 import com.otod.server.otod.pojos.UserSimpleInfo;
+import com.otod.server.otod.services.NoticeService;
 import com.otod.server.otod.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -24,14 +26,18 @@ public class UserController  {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/users")
-    private List<User> testMappring(){
-        return userService.getAllUsers();
-    }
+    @Autowired
+    private NoticeService noticeService;
 
     @Qualifier("getTokenStore")
     @Autowired
     private TokenStore tokenStore;
+
+    // test
+    @GetMapping("/users")
+    private List<User> testMappring(){
+        return userService.getAllUsers();
+    }
 
     @GetMapping("/logouts")
     private void logout(@RequestParam (value = "access_token") String accessToken){
@@ -58,7 +64,7 @@ public class UserController  {
         return "success";
     }
 
-    @GetMapping("/getSimpleInfo")
+    @GetMapping("/user/getSimpleInfo")
     private UserSimpleInfo getUserSimpleInfo(){
 
         User user = userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName());
@@ -70,7 +76,12 @@ public class UserController  {
         return simpleInfo;
     }
 
-    @GetMapping("/getfollowInfo")
+    @GetMapping("/user/getSimpleByNickname")
+    private UserSimpleInfo getSimpleByNickname(@RequestParam (value = "nickname") String nickname){
+        return new UserSimpleInfo(userService.getUserInfo(nickname));
+    }
+
+    @GetMapping("/user/getfollowInfo")
     private UserFollowList getFollowInfo(){
         User user = userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName());
 
@@ -93,22 +104,27 @@ public class UserController  {
         return new UserFollowList(userFollowInfoList,userFollowedInfoList);
     }
 
-    @GetMapping("/followUser")
+    @GetMapping("/user/followUser")
     private String followUser(@RequestParam (value = "nickname") String nickname){
         User user = userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName());
         return userService.followUser(user,nickname)?"true":"false";
     }
 
-    @GetMapping("/getAllInfo")
+    @GetMapping("/user/getAllInfo")
     private UserInfo allInfo(){
         User user = userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName());
         return userService.getUserInfo(user);
     }
 
-    @GetMapping("/Notice")
+    @GetMapping("/user/setAllInfo")
+    private String setInfo(){
+        return "success";
+    }
+
+    @GetMapping("/user/Notice")
     private List<NoticePojo> notice(){
         User user = userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName());
-        List<Notice> noticeList =  userService.getAllNotices(user);
+        List<Notice> noticeList =  noticeService.getAllNewNotices(user);
         List<NoticePojo> noticePojosList = new ArrayList<>();
 
         for(Notice notice : noticeList){
@@ -118,4 +134,20 @@ public class UserController  {
 
         return noticePojosList;
         }
+
+    @PostMapping("/user/readNotice")
+    private void readNotice(@RequestBody NoticeList noticeList){
+        System.out.println("yes");
+        noticeService.readNotices(noticeList.getIdList());
+    }
+
+    @GetMapping("/user/getUpdateList")
+    private List<Integer> getUpdteList(){
+        User user = userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName());
+        UserInfo userInfo =  userService.getUserInfo(user);
+
+
+
+        return null;
+    }
 }

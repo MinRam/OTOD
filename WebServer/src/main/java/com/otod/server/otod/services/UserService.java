@@ -2,7 +2,6 @@ package com.otod.server.otod.services;
 
 import com.otod.server.otod.model.*;
 import com.otod.server.otod.respository.*;
-import org.springframework.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
@@ -24,9 +23,9 @@ public class UserService {
 
     @Autowired
     private UserFollowRespository userFollowRespository;
-
+    
     @Autowired
-    private NoticeRespository noticeRespository;
+    private MURepository mURepository;
 
 //    @Bean
 //    public PasswordEncoder passwordEncoder(){
@@ -47,7 +46,7 @@ public class UserService {
         return (NoOpPasswordEncoder) NoOpPasswordEncoder.getInstance();
     }
 
-    // 获取 User
+    // 获取 VrssUser
 
     public User getUser(String username){
         return userRepository.findByUsername(username);
@@ -64,10 +63,6 @@ public class UserService {
 
     public UserInfo getUserInfo(String nickname) {
         return userInfoRespository.findByNickname(nickname);
-    }
-
-    public List<Notice> getAllNotices(User user){
-        return noticeRespository.findAllByUserOwn(user);
     }
 
     // 注册新用户
@@ -89,6 +84,11 @@ public class UserService {
         userInfo.setSex("男");
         userInfo.setUser(user);
         userInfoRespository.save(userInfo);
+
+        // 设置mUser
+        Market_user mUser = new Market_user();
+        mUser.setUserInfo(userInfo);
+        mURepository.save(mUser);
     }
 
     // 获取自己关注的用户列表

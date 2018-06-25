@@ -2,6 +2,7 @@ package com.otod.server.otod.model;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by zhang on 2018/6/5.
@@ -17,20 +18,25 @@ public class UserComplain {
     private Long userEvalId;
     //投诉用户id（外键）
     @Column(name = "complainer_id")
-    private Long complainer;
+    private Long complainerId;
     //投诉内容
     @Column(name = "content")
     private String content;
     //被投诉用户（外键）
     @Column(name = "complained_id")
-    private Long complained;
+    private Long complainedId;
     //投诉日期
     @Column(name = "c_date")
     private Date cDate;
+    //投诉订单
+    @ManyToOne
+    @JoinColumn(name = "complained_order")
+    private CommenOrder commenOrder;
     //受理状态
     @Column(name = "c_state")
     private int cState;
 
+    public UserComplain(){}
 
     public Long getUserEvalId() {
         return userEvalId;
@@ -40,20 +46,12 @@ public class UserComplain {
         this.userEvalId = userEvalId;
     }
 
-    public Long getComplainer() {
-        return complainer;
+    public Long getComplainerId() {
+        return complainerId;
     }
 
-    public void setComplainer(Long complainer) {
-        this.complainer = complainer;
-    }
-
-    public Long getComplained() {
-        return complained;
-    }
-
-    public void setComplained(Long complained) {
-        this.complained = complained;
+    public void setComplainerId(Long complainerId) {
+        this.complainerId = complainerId;
     }
 
     public String getContent() {
@@ -64,6 +62,14 @@ public class UserComplain {
         this.content = content;
     }
 
+    public Long getComplainedId() {
+        return complainedId;
+    }
+
+    public void setComplainedId(Long complainedId) {
+        this.complainedId = complainedId;
+    }
+
     public Date getcDate() {
         return cDate;
     }
@@ -72,14 +78,19 @@ public class UserComplain {
         this.cDate = cDate;
     }
 
+    public CommenOrder getCommenOrder() {
+        return commenOrder;
+    }
+
+    public void setCommenOrder(CommenOrder commenOrder) {
+        this.commenOrder = commenOrder;
+    }
+
     public int getcState() {
         return cState;
     }
 
     public void setcState(int cState) {
         this.cState = cState;
-    }
-
-    public UserComplain() {
     }
 }

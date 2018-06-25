@@ -37,12 +37,12 @@ public class CommenOrder {
     //发布用户（外键）
     @ManyToOne
     @JoinColumn(name = "userinfo_s_id")
-    private UserInfo userinfo_s;
+    private UserInfo userinfoS;
 //    @Column(name = "user_s_id")
 //    private String userSId;
     //接受用户（外键）
-    @ManyToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
-    private List<UserInfo> userinfo_r;
+    @ManyToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+    private List<UserInfo> userinfoR;
 //    @Column(name = "user_r_id")
 //    private String userRId;
     //订单完成时间
@@ -64,19 +64,20 @@ public class CommenOrder {
     @Column(name = "contributers")
     private int contributers;
 
+    //已有人数
+    @Column(name = "contributers_recive")
+    private int contributersRecive;
+    //订单评价
     @OneToOne
+    @JoinColumn(name = "order_eval_id")
     private OrderEval orderEval;
+    //订单投诉
+    @OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+    @JoinColumn(name = "order_complain_id")
+    private List<UserComplain> userComplains;
 
 
     public CommenOrder(){
-    }
-
-    public int getContributers() {
-        return contributers;
-    }
-
-    public void setContributers(int contributers) {
-        this.contributers = contributers;
     }
 
     public Long getId() {
@@ -135,20 +136,20 @@ public class CommenOrder {
         this.receiveTime = receiveTime;
     }
 
-    public UserInfo getUserinfo_s() {
-        return userinfo_s;
+    public UserInfo getUserinfoS() {
+        return userinfoS;
     }
 
-    public void setUserinfo_s(UserInfo userinfo_s) {
-        this.userinfo_s = userinfo_s;
+    public void setUserinfoS(UserInfo userinfoS) {
+        this.userinfoS = userinfoS;
     }
 
-    public List<UserInfo> getUserinfo_r() {
-        return userinfo_r;
+    public List<UserInfo> getUserinfoR() {
+        return userinfoR;
     }
 
-    public void setUserinfo_r(List<UserInfo> userinfo_r) {
-        this.userinfo_r = userinfo_r;
+    public void setUserinfoR(List<UserInfo> userinfoR) {
+        this.userinfoR = userinfoR;
     }
 
     public Date getCompleteTime() {
@@ -191,11 +192,35 @@ public class CommenOrder {
         this.reason = reason;
     }
 
+    public int getContributers() {
+        return contributers;
+    }
+
+    public void setContributers(int contributers) {
+        this.contributers = contributers;
+    }
+
+    public int getContributersRecive() {
+        return contributersRecive;
+    }
+
+    public void setContributersRecive(int contributersRecive) {
+        this.contributersRecive = contributersRecive;
+    }
+
     public OrderEval getOrderEval() {
         return orderEval;
     }
 
     public void setOrderEval(OrderEval orderEval) {
         this.orderEval = orderEval;
+    }
+
+    public List<UserComplain> getUserComplains() {
+        return userComplains;
+    }
+
+    public void setUserComplains(List<UserComplain> userComplains) {
+        this.userComplains = userComplains;
     }
 }
