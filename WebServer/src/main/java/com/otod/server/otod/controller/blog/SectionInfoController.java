@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -52,6 +53,12 @@ public class SectionInfoController {
 	@RequestMapping("/checkusertype")
 	public int checkusertype(int section_id){
 		return sectionInfoService.checkUserType(section_id);
+	}
+	
+	@RequestMapping("/update")
+	public String update(@RequestBody Map<String, String> map){
+		sectionInfoService.update(map);
+		return "success";
 	}
 	
 	@ResponseBody

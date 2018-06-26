@@ -2,6 +2,7 @@ package com.otod.server.otod.model.blog;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -57,7 +58,7 @@ public class ForumTopicPO {
 	//一主题贴对应多个回复贴
 	@OneToMany(mappedBy="forumTopicPO")
 	@Cascade(value = {CascadeType.SAVE_UPDATE,  CascadeType.DELETE_ORPHAN,CascadeType.ALL})  
-	private Set<ForumReplyPO> forumReplyPOs;
+	private List<ForumReplyPO> forumReplyPOs;
 	
 	//多对一
 	//多主题帖对应一个版块
@@ -119,10 +120,10 @@ public class ForumTopicPO {
 	public void setLastReplyDate(Date last_reply_date) {
 		this.lastReplyDate = last_reply_date;
 	}
-	public Set<ForumReplyPO> getForumReplyPOs() {
+	public List<ForumReplyPO> getForumReplyPOs() {
 		return forumReplyPOs;
 	}
-	public void setForumReplyPOs(Set<ForumReplyPO> forumReplyPOs) {
+	public void setForumReplyPOs(List<ForumReplyPO> forumReplyPOs) {
 		this.forumReplyPOs = forumReplyPOs;
 	}
 	public SectionInfoPO getSectionInfoPO() {
