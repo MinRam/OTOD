@@ -8,11 +8,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+
+import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 
 
 @Service("productService")
@@ -212,8 +216,18 @@ public class ProductService {
 	}
 	
 	@Transactional
-	public void DeleteProduct(int product_id) {
+	public String DeleteProduct(int product_id) {
 		Product product = repository.findById(product_id).get();
-		repository.deleteById(product.getProduct_id());
+		Set<P_Order>orders = product.getOrders();
+		Iterator<P_Order> iterator = orders.iterator();
+		while(iterator.hasNext()){
+			P_Order order = iterator.next();
+			if (order.getStatus() != 3 && order.getStatus() != 5 && order.getStatus() != 8) {
+				return "failure";
+			}
+		}
+		repository.deleteById(product_id);
+		return "success";
 	}
+	
 }
