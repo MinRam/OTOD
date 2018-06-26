@@ -23,9 +23,6 @@ public class UserService {
 
     @Autowired
     private UserFollowRespository userFollowRespository;
-
-    @Autowired
-    private NoticeRespository noticeRespository;
     
     @Autowired
     private MURepository mURepository;
@@ -66,10 +63,6 @@ public class UserService {
 
     public UserInfo getUserInfo(String nickname) {
         return userInfoRespository.findByNickname(nickname);
-    }
-
-    public List<Notice> getAllNotices(User user){
-        return noticeRespository.findAllByUserOwn(user);
     }
 
     // 注册新用户

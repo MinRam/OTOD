@@ -5,16 +5,16 @@
     <div v-else>
       <div class="comment" v-for="item in comments" v-bind:key="item.id" >
         <div v-if="item.reply_id!=0">
-          <b>from&nbsp;{{item.user_id}}&nbsp;to&nbsp;{{item.reply_id}}
+          <b>&nbsp;{{item.user_id}}&nbsp;
             <span>
-              {{item.create_time}}
+              {{item.create_time}}&nbsp;回复&nbsp;{{item.reply_id}}
             </span>
           </b>
         </div>
         <div v-else>
-          <b>from&nbsp;{{item.user_id}}
+          <b>&nbsp;{{item.user_id}}&nbsp;
             <span>
-              {{item.create_time}}
+              {{item.create_time}}&nbsp;评论此文件
             </span>
           </b>
         </div>

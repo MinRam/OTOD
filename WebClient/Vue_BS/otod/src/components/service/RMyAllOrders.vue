@@ -26,16 +26,34 @@
                                         </div>
                                         <div style="clear: both"></div>
                                     </div>
-                                    <div class="button-group">
+                                    <div v-show="m.orderState === '2'" class="button-group">
                                         <div style="margin-bottom: 10px;">
-                                            <el-button type="success" icon="el-icon-check" circle @click="sstatic = !sstatic" @mouseover.native="show = !show" @mouseout.native="show = !show"></el-button>
+                                            <el-button type="success" icon="el-icon-check" circle @click="gotoRRO()" @mouseover.native="show = !show" @mouseout.native="show = !show"></el-button>
                                             <transition name="el-zoom-in-left">
-                                                <div v-show="show || sstatic" class="commit-button-box bg-success"></div>
+                                                <div v-show="show || sstatic" class="commit-button-box bg-success">完成订单！</div>
                                             </transition>
                                             <div style="clear: both"></div>
                                         </div>
                                         <div style="margin-bottom: 10px;">
-                                            <el-button type="warning" icon="el-icon-arrow-right" circle @click="sstatic1 = !sstatic1" @mouseover.native="show1 = !show1" @mouseout.native="show1 = !show1"></el-button>
+                                            <el-button type="danger" icon="el-icon-close" circle @click="gotoRRO()" @mouseover.native="show1 = !show1" @mouseout.native="show1 = !show1"></el-button>
+                                            <transition name="el-zoom-in-left">
+                                                <div v-show="show1 || sstatic1" class="commit-button-box bg-danger">
+                                                    <span>取消订单</span>
+                                                </div>
+                                            </transition>
+                                            <div style="clear: both"></div>
+                                        </div>
+                                    </div>
+                                    <div v-show="m.orderState === '3'" class="button-group">
+                                        <div style="margin-bottom: 10px;">
+                                            <el-button type="primary" icon="el-icon-more" circle @click="gotoRWCO()" @mouseover.native="show = !show" @mouseout.native="show = !show"></el-button>
+                                            <transition name="el-zoom-in-left">
+                                                <div v-show="show || sstatic" class="commit-button-box bg-primary">评价订单！</div>
+                                            </transition>
+                                            <div style="clear: both"></div>
+                                        </div>
+                                        <div style="margin-bottom: 10px;">
+                                            <el-button type="warning" icon="el-icon-arrow-right" circle @click="gotoRWCO()" @mouseover.native="show1 = !show1" @mouseout.native="show1 = !show1"></el-button>
                                             <transition name="el-zoom-in-left">
                                                 <div v-show="show1 || sstatic1" class="commit-button-box bg-warning">
                                                     <span>我需要{{ m.contributers }}个人</span>
@@ -58,21 +76,6 @@
               <p>没有任何信息哦</p>
             </el-card>
         </ul>
-        <el-row v-show="message.length != 0" type="flex" justify="center">
-            <el-col :span="14">
-                <div>
-                  <!-- 这个也是独特的用法 可以在网站shang看到 -->
-                    <el-pagination
-                      @current-change="getServicePage"
-                      background
-                      layout="prev, pager, next"
-                      :current-page="currentPage"
-                      :page-size="size"
-                      :total="totalPages">
-                    </el-pagination>
-                </div>
-            </el-col>
-        </el-row>
     </el-col>
 </template>
 
@@ -118,7 +121,7 @@ export default {
         .catch(function (error) {
           console.log(error.message)
         })
-    }
+    },
     // getServicePage (currentPage) {
     //   var t = this
     //   t.loadingOrder = true
@@ -134,6 +137,14 @@ export default {
     //       console.log(error.message)
     //     })
     // }
+    gotoRWCO () {
+      console.log('gotoRWCO')
+      document.getElementById('rwaitingcommentorders').click()
+    },
+    gotoRRO () {
+      console.log('gotoRRO')
+      document.getElementById('rrecivedorders').click()
+    }
   }
 }
 </script>

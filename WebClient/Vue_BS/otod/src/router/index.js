@@ -17,7 +17,7 @@ import Book from '@/pages/Book'
 // file pages
 import File from '@/pages/File'
 import download from '@/pages/file/download/download.vue'
-import upload from '@/pages/file/upload/upload.vue'
+import FileUpload from '@/pages/file/upload/upload.vue'
 import recommend from '@/pages/file/recommend/recommend.vue'
 import myfiles from '@/pages/file/myfiles/myfiles.vue'
 import files from '@/pages/file/files/files.vue'
@@ -228,7 +228,8 @@ const routes = [
         },
         {
           path: '/file/upload',
-          component: upload
+          name: 'FileUpload',
+          component: FileUpload
         },
         {
           path: '/file/download',

@@ -54,6 +54,9 @@
                     </el-col>
                 </el-row>
             </li>
+          <el-card v-show="message.length == 0" shadow="hover" class="center-container-card">
+            <p>没有任何信息哦</p>
+          </el-card>
         </ul>
         <el-row type="flex" justify="center">
             <el-col :span="14">
@@ -165,6 +168,7 @@ export default {
               message: '接单成功！',
               type: 'success'
             })
+            document.getElementById('rrecivedorders').click()
           }
           if (response.data === 'false') {
             t.$message({
