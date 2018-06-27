@@ -27,22 +27,7 @@
                                         <div style="clear: both"></div>
                                     </div>
                                     <div class="button-group">
-                                        <div style="margin-bottom: 10px;">
-                                            <el-button type="success" icon="el-icon-check" circle @click="sstatic = !sstatic" @mouseover.native="show = !show" @mouseout.native="show = !show"></el-button>
-                                            <transition name="el-zoom-in-left">
-                                                <div v-show="show || sstatic" class="commit-button-box bg-success"></div>
-                                            </transition>
-                                            <div style="clear: both"></div>
-                                        </div>
-                                        <div style="margin-bottom: 10px;">
-                                            <el-button type="warning" icon="el-icon-arrow-right" circle @click="sstatic1 = !sstatic1" @mouseover.native="show1 = !show1" @mouseout.native="show1 = !show1"></el-button>
-                                            <transition name="el-zoom-in-left">
-                                                <div v-show="show1 || sstatic1" class="commit-button-box bg-warning">
-                                                    <span>我需要{{ m.contributers }}个人</span>
-                                                </div>
-                                            </transition>
-                                            <div style="clear: both"></div>
-                                        </div>
+                                        <p><span style="color: #e6a23c">原因：</span>{{m.reason}}</p>
                                     </div>
                                 </el-aside>
                                 <el-container>

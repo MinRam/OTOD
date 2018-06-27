@@ -38,7 +38,7 @@
                                             <el-button type="warning" icon="el-icon-arrow-right" circle @click="sstatic1 = !sstatic1" @mouseover.native="show1 = !show1" @mouseout.native="show1 = !show1"></el-button>
                                             <transition name="el-zoom-in-left">
                                                 <div v-show="show1 || sstatic1" class="commit-button-box bg-warning">
-                                                    <span>我需要{{ m.contributers }}个人</span>
+                                                    <span>我还需要{{ m.contributers - m.contributersRecive }}个人</span>
                                                 </div>
                                             </transition>
                                             <div style="clear: both"></div>
@@ -47,7 +47,10 @@
                                 </el-aside>
                                 <el-container>
                                     <el-header class="header-container"><strong>{{ m.title }}</strong></el-header>
-                                    <el-main><p class="order-content">{{ m.content }}</p></el-main>
+                                    <el-main>
+                                      <p class="order-content">{{ m.content }}</p>
+                                      <div style="clear: both;margin-top: 40px;"><span style="float: right;font-size: 12px;">/元</span><span style="float: right;font-size: 36px;color: #FFD700;line-height: 36px;">{{m.profits}}</span></div>
+                                    </el-main>
                                 </el-container>
                             </el-container>
                         </el-card>

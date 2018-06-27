@@ -12,6 +12,7 @@ public class PublishOrder {
     private Date deadline;
     private String urgency;
     private int contributers;
+    private int profit;
 
     public PublishOrder(){}
 
@@ -61,5 +62,13 @@ public class PublishOrder {
 
     public void setContributers(int contributers) {
         this.contributers = contributers;
+    }
+
+    public int getProfit() {
+        return profit;
+    }
+
+    public void setProfit(int profit) {
+        this.profit = profit;
     }
 }

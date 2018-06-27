@@ -116,7 +116,7 @@ export default {
       var t = this
       t.loadingOrder = true
       this.$axios({
-        url: t.$url + '/rDoneOrder',
+        url: t.$url + '/finishedOrderS',
         method: 'get',
         params: {
           access_token: this.$getCookie('otod_access_token')

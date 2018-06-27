@@ -27,6 +27,7 @@
                                         <div style="clear: both"></div>
                                     </div>
                                     <div v-show="m.orderState === '2'" class="button-group">
+                                      <p>已接收</p>
                                         <div style="margin-bottom: 10px;">
                                             <el-button type="success" icon="el-icon-check" circle @click="gotoRRO()" @mouseover.native="show = !show" @mouseout.native="show = !show"></el-button>
                                             <transition name="el-zoom-in-left">
@@ -45,6 +46,7 @@
                                         </div>
                                     </div>
                                     <div v-show="m.orderState === '3'" class="button-group">
+                                      <p>待评价</p>
                                         <div style="margin-bottom: 10px;">
                                             <el-button type="primary" icon="el-icon-more" circle @click="gotoRWCO()" @mouseover.native="show = !show" @mouseout.native="show = !show"></el-button>
                                             <transition name="el-zoom-in-left">
@@ -61,6 +63,36 @@
                                             </transition>
                                             <div style="clear: both"></div>
                                         </div>
+                                    </div>
+                                    <div v-show="m.orderState === '4'">
+                                      <p>已完成</p>
+                                      <div v-if="m.orderEval !== null">
+                                      <div v-show="m.orderEval.rTitle !== null">
+                                        <p style="color: #67c23a">接收方评价：</p>
+                                        <p><span>标题：</span>{{ m.orderEval.rTitle }}</p>
+                                        <p><span>内容：</span>{{ m.orderEval.rContent }}</p>
+                                        <p><span>评级：</span>{{ level[m.orderEval.rNum] }}</p>
+                                      </div>
+                                      <div v-show="m.orderEval.rTitle === null">
+                                        <p style="color: #e6a23c">接收方未作出评价</p>
+                                      </div>
+                                      <div style="height: 1px;width: 100%;background-color: #f5f5f5;margin: 10px 0;"></div>
+                                      <div v-show="m.orderEval.sTitle !== null">
+                                        <p style="color: #67c23a">求助方评价：</p>
+                                        <p><span>标题：</span>{{ m.orderEval.sTitle }}</p>
+                                        <p><span>内容：</span>{{ m.orderEval.sContent }}</p>
+                                        <p><span>评级：</span>{{ level[m.orderEval.sNum] }}</p>
+                                      </div>
+                                      <div v-show="m.orderEval.sTitle === null">
+                                        <p style="color: #e6a23c">求助方未作出评价</p>
+                                      </div>
+                                    </div>
+                                    </div>
+                                    <div v-show="m.orderState === '5'">
+                                      <p>失败订单</p>
+                                      <div class="button-group">
+                                          <p><span style="color: #e6a23c">原因：</span>{{m.reason}}</p>
+                                      </div>
                                     </div>
                                 </el-aside>
                                 <el-container>
@@ -94,7 +126,15 @@ export default {
       totalPages: 0,
       currentPage: 0,
       loadingOrder: 'true',
-      size: 5
+      size: 5,
+      level: [
+        '',
+        '太差了！',
+        '比较差',
+        '一般般',
+        '还可以',
+        '超棒的！'
+      ]
     }
   },
   mounted () {
