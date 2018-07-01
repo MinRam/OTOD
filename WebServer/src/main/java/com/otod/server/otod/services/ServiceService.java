@@ -42,7 +42,13 @@ public class ServiceService {
     //size 每页的数量
     public Page<CommenOrder> getListPage(int currentPage, int size){
         Pageable pageable = PageRequest.of(currentPage, size, Sort.DEFAULT_DIRECTION, "sDate");
-        return commenOrderRespository.findAll(pageable);
+        return commenOrderRespository.findAll(new Specification<CommenOrder>() {
+            @Override
+            public Predicate toPredicate(Root<CommenOrder> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+                criteriaQuery.where(criteriaBuilder.equal(root.get("orderState").as(String.class),"1"));
+                return null;
+            }
+        },pageable);
     }
 
     public void saveOrder(CommenOrder commenOrder){

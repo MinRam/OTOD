@@ -73,6 +73,7 @@
                     <el-upload
                       ref="upload"
                       action="http://localhost:8081/market/saveimg"
+                      accept="image/jpeg,image/gif,image/png"
                       list-type="picture-card"
                       :file-list="img"
                       :on-success="filllist"

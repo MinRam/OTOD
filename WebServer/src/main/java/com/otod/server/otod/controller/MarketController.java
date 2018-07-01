@@ -181,7 +181,8 @@ public class MarketController {
 		Market_user mUser = mURepository.findByUserInfo(userInfo);
 		String page_num = map.get("page_num");
 		Pageable pageable = new PageRequest(Integer.parseInt(page_num) - 1 , 10 , Sort.Direction.DESC,"product_createtime");
-		return repository.findBySeller(mUser.getMarket_user_id(), pageable);
+		Page<Product>products = repository.findBySeller(mUser.getMarket_user_id(), pageable);
+		return products;
 	}
 	
 	@RequestMapping(value="/getObyMU",method=RequestMethod.POST)
@@ -317,7 +318,7 @@ public class MarketController {
 	@RequestMapping(value="/DeleteProduct",method=RequestMethod.POST)
 	@ResponseBody
 	public String DeleteProduct(@RequestParam int product_id){
-		productService.DeleteProduct(product_id);
-		return "success";
+		return productService.DeleteProduct(product_id);
 	}
+	
 }
