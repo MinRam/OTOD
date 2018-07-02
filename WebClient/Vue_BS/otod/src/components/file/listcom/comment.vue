@@ -19,7 +19,7 @@ export default {
     Content1,
     commentarea
   },
-  props: ['id', 'useid'],
+  props: ['id', 'userid'],
   data () {
     return {
       type: 0,
@@ -56,7 +56,7 @@ export default {
     addComment (data) {
       var params = new URLSearchParams()
       params.append('comment', data)
-      params.append('user', 1)
+      params.append('user', this.userid)
       if (this.type === 0) {
         params.append('reply_id', 0)
       } else {

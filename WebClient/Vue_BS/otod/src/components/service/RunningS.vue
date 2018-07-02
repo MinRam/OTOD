@@ -27,18 +27,13 @@
                                         <div style="clear: both"></div>
                                     </div>
                                     <div class="button-group">
+                                      <p>对方已经接单，请耐心等待</p>
+                                      <div style="height: 1px;background-color: #f5f5f5;margin-top: 10px;margin-bottom: 10px;"></div>
                                         <div style="margin-bottom: 10px;">
-                                            <el-button type="success" icon="el-icon-check" circle @click="sstatic = !sstatic" @mouseover.native="show = !show" @mouseout.native="show = !show"></el-button>
+                                            <el-button type="danger" icon="el-icon-close" circle @click="openDialog(m.id)" @mouseover.native="show1 = !show1" @mouseout.native="show1 = !show1"></el-button>
                                             <transition name="el-zoom-in-left">
-                                                <div v-show="show || sstatic" class="commit-button-box bg-success"></div>
-                                            </transition>
-                                            <div style="clear: both"></div>
-                                        </div>
-                                        <div style="margin-bottom: 10px;">
-                                            <el-button type="warning" icon="el-icon-arrow-right" circle @click="sstatic1 = !sstatic1" @mouseover.native="show1 = !show1" @mouseout.native="show1 = !show1"></el-button>
-                                            <transition name="el-zoom-in-left">
-                                                <div v-show="show1 || sstatic1" class="commit-button-box bg-warning">
-                                                    <span>我需要{{ m.contributers }}个人</span>
+                                                <div v-show="show1 || sstatic1" class="commit-button-box bg-danger">
+                                                    <span>取消订单</span>
                                                 </div>
                                             </transition>
                                             <div style="clear: both"></div>
@@ -58,21 +53,22 @@
               <p>没有任何信息哦</p>
             </el-card>
         </ul>
-        <el-row v-show="message.length != 0" type="flex" justify="center">
-            <el-col :span="14">
-                <div>
-                  <!-- 这个也是独特的用法 可以在网站shang看到 -->
-                    <el-pagination
-                      @current-change="getServicePage"
-                      background
-                      layout="prev, pager, next"
-                      :current-page="currentPage"
-                      :page-size="size"
-                      :total="totalPages">
-                    </el-pagination>
-                </div>
-            </el-col>
-        </el-row>
+        <el-dialog :visible.sync="showFlag">
+          <el-container>
+            <el-header class="po-header-container">取消订单？</el-header>
+            <el-main>
+              <el-form :model="form">
+                <el-form-item label="取消原因" label-width="80px">
+                    <el-input type="textarea" :autosize="{ minRows: 4}" v-model="form.reason" required></el-input>
+                </el-form-item>
+                <el-form-item label="" label-width="10px">
+                    <div>是否需要举报？<el-button type="danger" size="medium" plain>举报</el-button></div>
+                </el-form-item>
+                <el-button type="danger" style="width: 100%;" size="medium" @click="open()">取消订单</el-button>
+              </el-form>
+            </el-main>
+          </el-container>
+        </el-dialog>
     </el-col>
 </template>
 
@@ -91,11 +87,20 @@ export default {
       totalPages: 0,
       currentPage: 0,
       loadingOrder: 'true',
-      size: 5
+      size: 5,
+      showFlag: false,
+      ssId: '',
+      form: {
+        'reason': ''
+      }
     }
   },
   mounted () {
-    this.getAllRunningsOrders()
+    var t = this
+    this.get('/runningOrders', {access_token: this.$getCookie('otod_access_token')}, function (response) {
+      t.message = response.data
+      t.loadingOrder = false
+    })
   },
   methods: {
     getAllRunningsOrders () {
@@ -119,20 +124,63 @@ export default {
           console.log(error.message)
         })
     },
-    getServicePage (currentPage) {
+    openDialog (id) {
+      this.ssId = id
+      this.showFlag = true
+    },
+    get (url, data, callback) {
       var t = this
-      t.loadingOrder = true
-      t.$axios.get(t.$url + '/listServices?currentPage=' + (currentPage - 1) + '&size=' + t.size)
-        .then(function (response) {
-          console.log(t.$url + '/listServices?currentPage=' + (currentPage - 1) + '&size=' + t.size)
-          t.message = response.data.content
-          t.totalPages = response.data.totalPages * t.size
-          t.loadingOrder = false
-          console.log(t.totalPages)
+      t.$axios({
+        method: 'get',
+        url: t.$url + url,
+        params: data || ''
+      })
+        .then(callback)
+    },
+    open () {
+      var t = this
+      if (t.form.reason === '') {
+        t.$message({
+          showClose: true,
+          message: '原因不能为空！',
+          type: 'warning'
         })
-        .catch(function (error) {
-          console.log(error.message)
+        return
+      }
+      this.$confirm('此操作将取消订单并作记录, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+        roundButton: true,
+        center: true
+      }).then(function () {
+        console.log(t.ssId)
+        t.get('/cancelOrderS', {
+          OrderId: t.ssId,
+          reason: t.form.reason,
+          access_token: t.$getCookie('otod_access_token')
+        }, function (response) {
+          console.log(response)
+          if (response.data === 'order canceled') {
+            t.$message({
+              showClose: true,
+              message: '取消成功',
+              type: 'success'
+            })
+          } else if (response.data === 'null Order') {
+            t.$message({
+              showClose: true,
+              message: '空订单',
+              type: 'warning'
+            })
+          }
         })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
+      })
     }
   }
 }

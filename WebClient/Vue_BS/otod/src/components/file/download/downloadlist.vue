@@ -88,7 +88,10 @@ export default {
         console.log(response.data)
         for (var i = 0; i < data.length; i++) {
           this.filelist.push({
-            id: data[i].id
+            id: data[i].id,
+            name: data[i].name,
+            score: data[i].score,
+            views: data[i].views
           })
         }
       })
