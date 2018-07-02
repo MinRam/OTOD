@@ -18,13 +18,13 @@
                             <div id="signup_forms_panel" class="signup_forms_panel clearfix" :class="formType">
                                     <div id="signup_account" class="signup_view" :class="{'active':formsActive}">
                                         <div class="form_row form_row_username">
-                                            <input id="signup_username" type="text" placeholder="用户名" v-model="username"/>
+                                            <input id="signup_username" type="text" placeholder="用户名" v-model="username" @blur="usernameCheck()"/>
                                          </div>
                                         <div class="form_row form_row_password">
                                             <input id="signup_password" type="password" placeholder="用户密码" v-model="password"/>
                                          </div>
                                         <div class="form_row form_row_phone">
-                                            <input id="signup_phone" type="text"  placeholder="手机号" v-model="telephone"/>
+                                            <input id="signup_phone" type="text" onkeypress="return event.keyCode>=48&&event.keyCode<=57" ng-pattern="/[^a-zA-Z]/" maxlength="11" placeholder="手机号" v-model="telephone" @blur="telephoneCheck"/>
                                          </div>
                                     </div>
                              </div>
@@ -349,7 +349,7 @@ export default {
       // 表单类型 'signup_view' / 'signin_view'
       showForms: false, // 展示表单状态
       formsActive: false, // 表单激活
-      formType: '', // 表单类型 signup/signin
+      formType: '', // 表单类型 signup/signin_view
       signupBtnActive: true, // 注册按钮
       signinBtnActive: true, // 登录按钮
       forgotPassword: false, // 忘记密码样式
@@ -493,47 +493,47 @@ export default {
     signupBtnClick () {
       if (this.showForms) {
         if (this.username !== '' && this.password !== '' && this.telephone !== '') {
-          console.log('name:' + this.username + ',pass:' + this.password + ',phone:' + this.telephone)
+          if (this.hasErrors === false) {
+            this.$axios({
+              method: 'post',
+              url: this.$url + '/register',
+              data: {
+                username: this.username,
+                password: md5(this.password),
+                telephone: this.telephone
+              }
+            }).then(function (response) {
+              if (response.data === 'success') {
+                var params = new URLSearchParams()
+                params.append('grant_type', 'password')
+                params.append('username', this.username)
+                params.append('password', md5(this.password))
 
-          this.$axios({
-            method: 'post',
-            url: this.$url + '/register',
-            data: {
-              username: this.username,
-              password: md5(this.password),
-              telephone: this.telephone
-            }
-          }).then(function (response) {
-            if (response.data === 'success') {
-              var params = new URLSearchParams()
-              params.append('grant_type', 'password')
-              params.append('username', this.username)
-              params.append('password', md5(this.password))
-
-              // 注册后登录
-              this.$axios({
-                method: 'post',
-                url: this.$url + '/oauth/token',
-                auth: {username: 'test', password: '123456'},
-                headers: {'Content-type': 'application/x-www-form-urlencoded; charset=utf-8'},
-                data: params
-              }).then(function (response) {
-                if (response.data.access_token) {
-                  this.$setCookie('otod_access_token', response.data.access_token)
-                  this.$store.commit('userSignIn')
-                  this.$router.push('/index')
-                } else {
-                  this._showErrors('请检查网络！')
-                }
-              }.bind(this)).catch(function (error) {
-                if (error.response) {
-                  this._showErrors(error.response.data.error)
-                }
-              }.bind(this))
-            } else {
-              this._showErrors(response.data)
-            }
-          }.bind(this))
+                // 注册后登录
+                this.$axios({
+                  method: 'post',
+                  url: this.$url + '/oauth/token',
+                  auth: {username: 'test', password: '123456'},
+                  headers: {'Content-type': 'application/x-www-form-urlencoded; charset=utf-8'},
+                  data: params
+                }).then(function (response) {
+                  if (response.data.access_token) {
+                    this.$setCookie('otod_access_token', response.data.access_token)
+                    this.$store.commit('userSignIn')
+                    this.$router.push({ name: 'Person', params: { page: 'home' } })
+                  } else {
+                    this._showErrors('请检查网络！')
+                  }
+                }.bind(this)).catch(function (error) {
+                  if (error.response) {
+                    this._showErrors(error.response.data.error)
+                  }
+                }.bind(this))
+              } else {
+                this._showErrors(response.data)
+              }
+            }.bind(this))
+          }
         } else {
           this._showErrors('信息不全,请补全信息！')
         }
@@ -549,8 +549,6 @@ export default {
     signinBtnClick () {
       if (this.showForms) {
         if (this.username !== '' && this.password !== '') {
-          console.log('username' + this.username + ',password:' + this.password)
-
           var params = new URLSearchParams()
           params.append('grant_type', 'password')
           params.append('username', this.username)
@@ -589,6 +587,46 @@ export default {
       }
     },
 
+    usernameCheck () {
+      if (!/^[a-zA-Z]([-_a-zA-Z0-9]{5,19})+$/.test(this.username)) {
+        this._showErrors('非法用户名：长度应大于等于8，且字符，数字组成')
+      } else if (this.formType === 'signup') {
+        this.$axios({
+          method: 'get',
+          url: this.$url + '/user/getSimpleByNickname',
+          params: {
+            nickname: this.username
+          }
+        }).then(function (response) {
+          if (response.data.nickname !== null) {
+            this._showErrors('用户名已存在')
+            this.hasErrors = true
+          } else {
+            this._showErrors('')
+          }
+        }.bind(this))
+      }
+    },
+    telephoneCheck () {
+      console.log(this.telephone)
+      if (!/^((1[3,5,8][0-9])|(14[5,7])|(17[0,6,7,8])|(19[7]))\d{8}$/.test(this.telephone)) {
+        this._showErrors('无效手机号')
+      } else if (this.formType === 'signup') {
+        this.$axios({
+          method: 'get',
+          url: this.$url + '/user/telephone',
+          params: {
+            telephone: this.telephone
+          }
+        }).then(function (response) {
+          if (response.data === 'exit') {
+            this._showErrors('手机号已经被绑定')
+          } else {
+            this._showErrors('')
+          }
+        }.bind(this))
+      }
+    },
     // 滚轮实现轮播
     handleScroll: function (event) {
       event = event || window.event
@@ -659,13 +697,14 @@ export default {
 
     // 显示错误提示
     _showErrors (errorname) {
-      if (this.errorList.length === 1) {
-        return false
-      }
-      if (this.hasErrors === false) {
+      if (errorname !== '') {
         this.hasErrors = true
+        this.errorList = []
+        this.errorList.push({ name: errorname })
+      } else {
+        this.hasErrors = false
+        this.errorList = []
       }
-      errorname !== '' && this.errorList.push({ name: errorname })
     }
   }
 }

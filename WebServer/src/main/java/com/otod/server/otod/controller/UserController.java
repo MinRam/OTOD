@@ -78,7 +78,21 @@ public class UserController  {
 
     @GetMapping("/user/getSimpleByNickname")
     private UserSimpleInfo getSimpleByNickname(@RequestParam (value = "nickname") String nickname){
-        return new UserSimpleInfo(userService.getUserInfo(nickname));
+        UserInfo userInfo = userService.getUserInfo(nickname);
+        if(userInfo != null){
+            return new UserSimpleInfo(userInfo);
+        }else{
+            return new UserSimpleInfo();
+        }
+    }
+
+    @GetMapping("/user/telephone")
+    private String getUserTelephone(@RequestParam (value="telephone") String telephone){
+        if(userService.getTelephone(telephone)){
+            return "exit";
+        } else {
+            return "noexit";
+        }
     }
 
     @GetMapping("/user/getfollowInfo")
@@ -129,7 +143,6 @@ public class UserController  {
 
         for(Notice notice : noticeList){
             UserInfo userInfo = userService.getUserInfo(notice.getUserOut());
-            System.out.println(userInfo.getNickname());
             noticePojosList.add(new NoticePojo(notice,userInfo));
         }
 

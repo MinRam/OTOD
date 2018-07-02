@@ -126,4 +126,8 @@ public class UserService {
             return true;
         }else return false;
     }
+    // 检索手机号
+    public boolean getTelephone(String telephone) {
+       return userInfoRespository.findByTelphone(telephone)!= null;
+    }
 }
