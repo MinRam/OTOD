@@ -1,7 +1,7 @@
 package com.otod.server.otod.services;
 
-import com.otod.server.otod.model.Notice;
-import com.otod.server.otod.model.User;
+import com.otod.server.otod.model.user.Notice;
+import com.otod.server.otod.model.user.User;
 import com.otod.server.otod.respository.NoticeRespository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,8 +23,16 @@ public class NoticeService {
         return noticeRespository.findAllByUserOwnAndRead(user,1);
     }
 
+    public List<Notice> getAllNotices(User user) {
+        return noticeRespository.findAllByUserOwn(user);
+    }
+
     @Transactional
     public void readNotices(List<Long> noticeId){
          noticeRespository.updateNoticeStatus(0,noticeId);
+    }
+
+    public void addNotice(Notice n){
+        noticeRespository.save(n);
     }
 }

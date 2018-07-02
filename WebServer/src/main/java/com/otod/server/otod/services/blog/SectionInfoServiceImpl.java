@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.otod.server.otod.respository.blog.SectionInfoDao;
 import com.otod.server.otod.services.UserService;
-import com.otod.server.otod.model.User;
+import com.otod.server.otod.model.user.User;
 import com.otod.server.otod.model.blog.SectionInfoPO;
 
 @Service("sectionInfoService")

@@ -1,6 +1,10 @@
 package com.otod.server.otod.services;
 
 import com.otod.server.otod.model.*;
+import com.otod.server.otod.model.user.Role;
+import com.otod.server.otod.model.user.User;
+import com.otod.server.otod.model.user.UserFollow;
+import com.otod.server.otod.model.user.UserInfo;
 import com.otod.server.otod.respository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -46,8 +50,6 @@ public class UserService {
         return (NoOpPasswordEncoder) NoOpPasswordEncoder.getInstance();
     }
 
-    // 获取 VrssUser
-
     public User getUser(String username){
         return userRepository.findByUsername(username);
     }
@@ -57,7 +59,7 @@ public class UserService {
     }
 
     // 获取 UserInfo
-    public UserInfo  getUserInfo(User user){
+    public UserInfo getUserInfo(User user){
         return userInfoRespository.findByUser(user);
     }
 

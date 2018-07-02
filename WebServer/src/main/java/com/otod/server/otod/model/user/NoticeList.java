@@ -1,4 +1,4 @@
-package com.otod.server.otod.model;
+package com.otod.server.otod.model.user;
 
 import java.util.List;
 

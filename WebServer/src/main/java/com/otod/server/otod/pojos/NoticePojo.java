@@ -1,7 +1,7 @@
 package com.otod.server.otod.pojos;
 
-import com.otod.server.otod.model.Notice;
-import com.otod.server.otod.model.UserInfo;
+import com.otod.server.otod.model.user.Notice;
+import com.otod.server.otod.model.user.UserInfo;
 
 import java.util.Date;
 

@@ -1,9 +1,9 @@
 package com.otod.server.otod.controller;
 
-import com.otod.server.otod.model.UserInfo;
+import com.otod.server.otod.model.user.UserInfo;
 import com.otod.server.otod.pojos.CommenOrdersPOJO;
 import com.otod.server.otod.model.CommenOrder;
-import com.otod.server.otod.model.User;
+import com.otod.server.otod.model.user.User;
 import com.otod.server.otod.pojos.PublishOrder;
 import com.otod.server.otod.services.ServiceService;
 import com.otod.server.otod.services.UserService;

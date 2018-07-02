@@ -21,6 +21,8 @@ a {
 
 
 .w-top{
+    opacity: 0;
+    background-color: black;
     position: fixed;
     _position: absolute;
     right: 30px;
@@ -32,6 +34,10 @@ a {
     text-indent: -2000px;
     background-position: 0 -934px;
     transition: opacity 0.3s;
+}
+
+.w-top.active{
+    opacity: 1;
 }
 /*main css*/
 .otod-home .otod-content .main{
@@ -253,6 +259,7 @@ a {
 
 .update-message .message-user{
     color: #888;
+    font-size: 14px;
 }
 
 .update-message .message-user:hover{
@@ -267,14 +274,25 @@ a {
     overflow: hidden;
 }
 
-.message-content .content-img img{
-    width: 100%;
+.message-content .content-img {
+    float: left;
 }
+
+.message-content .content-img img{
+    width: 200px;
+}
+
 
 .message-content .content-txt{
-
+    float: right;
+    width: 270px;
 }
 
+.message-content .content-txt p{
+    margin: 0 0 10px;
+    font-size: 14px;
+    color: #444;
+}
 
 /*message footer*/
 .update-message .message-footer{

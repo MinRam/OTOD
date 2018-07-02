@@ -1,9 +1,9 @@
 package com.otod.server.otod.controller;
 
-import com.otod.server.otod.model.Notice;
-import com.otod.server.otod.model.NoticeList;
-import com.otod.server.otod.model.User;
-import com.otod.server.otod.model.UserInfo;
+import com.otod.server.otod.model.user.Notice;
+import com.otod.server.otod.model.user.NoticeList;
+import com.otod.server.otod.model.user.User;
+import com.otod.server.otod.model.user.UserInfo;
 import com.otod.server.otod.pojos.NoticePojo;
 import com.otod.server.otod.pojos.UserFollowList;
 import com.otod.server.otod.pojos.UserRegisteration;
@@ -129,11 +129,26 @@ public class UserController  {
 
         for(Notice notice : noticeList){
             UserInfo userInfo = userService.getUserInfo(notice.getUserOut());
+            System.out.println(userInfo.getNickname());
             noticePojosList.add(new NoticePojo(notice,userInfo));
         }
 
         return noticePojosList;
+    }
+
+    @GetMapping("/user/getAllNotice")
+    private List<NoticePojo> getAllNotice(){
+        User user = userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName());
+        List<Notice> noticeList =  noticeService.getAllNotices(user);
+        List<NoticePojo> noticePojosList = new ArrayList<>();
+
+        for(Notice notice : noticeList){
+            UserInfo userInfo = userService.getUserInfo(notice.getUserOut());
+            noticePojosList.add(new NoticePojo(notice,userInfo));
         }
+
+        return noticePojosList;
+    }
 
     @PostMapping("/user/readNotice")
     private void readNotice(@RequestBody NoticeList noticeList){

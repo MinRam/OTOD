@@ -1,7 +1,7 @@
 package com.otod.server.otod.services;
 
 import com.otod.server.otod.model.CommenOrder;
-import com.otod.server.otod.model.UserInfo;
+import com.otod.server.otod.model.user.UserInfo;
 import com.otod.server.otod.respository.CommenOrderRespository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

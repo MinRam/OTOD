@@ -22,7 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.otod.server.otod.respository.blog.ForumReplyDao;
 import com.otod.server.otod.respository.blog.ForumTopicDao;
 import com.otod.server.otod.services.UserService;
-import com.otod.server.otod.model.User;
+import com.otod.server.otod.model.user.User;
 import com.otod.server.otod.model.blog.ForumReplyPO;
 import com.otod.server.otod.model.blog.ForumTopicPO;
 
