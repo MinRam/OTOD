@@ -30,6 +30,18 @@
                      </ul>
                  </div>
              </div>
+            <div v-if="activityImage!=''" class="activity-box">
+                <div class="main-item">
+                    <a class="image-trans">
+                        <img :src="activityImage"/>
+                    </a>
+                 </div>
+                <div class="main-btn">
+                    <a class="btn-trans" href="www.baidu.com">
+                        更多活动
+                     </a>
+                </div>
+             </div>
          </div>
      </div>
     <a title="回到顶部" class="w-top" href="javascript:scrollTo(0,0);" :class="{'active': goTop}" hidefocus="true">回到顶部</a>
@@ -76,7 +88,9 @@ export default {
       },
 
       // go top
-      goTop: false
+      goTop: false,
+
+      activityImage: ''
     }
   },
   created () {
@@ -101,6 +115,14 @@ export default {
 
         this.menuList[3].number = this.followInfo.followList.length
         this.menuList[2].number = this.followInfo.followedList.length
+      }.bind(this))
+
+      // get activities
+      this.$axios({
+        method: 'get',
+        url: this.$url + '/activity'
+      }).then(function (response) {
+        this.activityImage = this.$imageUrl + response.data
       }.bind(this))
     },
 

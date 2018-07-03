@@ -605,6 +605,8 @@ export default {
             this._showErrors('')
           }
         }.bind(this))
+      } else {
+        this._showErrors('')
       }
     },
     telephoneCheck () {

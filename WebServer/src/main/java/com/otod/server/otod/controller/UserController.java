@@ -165,7 +165,6 @@ public class UserController  {
 
     @PostMapping("/user/readNotice")
     private void readNotice(@RequestBody NoticeList noticeList){
-        System.out.println("yes");
         noticeService.readNotices(noticeList.getIdList());
     }
 

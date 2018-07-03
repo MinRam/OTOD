@@ -84,11 +84,11 @@ export default {
     '$route': '_changeHead'
   },
   created () {
-    // if (this.$getCookie('otod_access_token') !== null) {
-    //   this.$router.push({ name: 'Person', params: { page: 'home' } })
-    // } else {
-    //   this.$router.replace('/login')
-    // }
+    if (this.$getCookie('otod_access_token') !== null) {
+      this.$router.push({ name: 'Person', params: { page: 'home' } })
+    } else {
+      this.$router.replace('/login')
+    }
   },
   methods: {
     // initial userInfo
