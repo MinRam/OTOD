@@ -431,16 +431,16 @@ export default {
       // shops section
       shops: [{
         username: 'user1',
-        goodImage: 'Images/1.jpg',
-        title: '123'
+        goodImage: 'market/1528780753552.jpg',
+        title: 'T-shirt'
       }, {
         username: 'user1',
-        goodImage: 'Images/2.jpg',
-        title: '123'
+        goodImage: 'market/1528780841204.jpg',
+        title: 'red shoes'
       }, {
         username: 'user1',
-        goodImage: 'Images/3.jpg',
-        title: '123'
+        goodImage: 'market/1529999479384.jpg',
+        title: 'black shoet'
       }],
       // servers section
       servers: [{
@@ -561,16 +561,15 @@ export default {
             headers: {'Content-type': 'application/x-www-form-urlencoded; charset=utf-8'},
             data: params
           }).then(function (response) {
-            if (response.data.access_token) {
+            if (response.data && response.data.access_token) {
               this.$setCookie('otod_access_token', response.data.access_token)
-            } else {
-              this._showErrors('请检查网络！')
+              this.$store.commit('userSignIn')
+              this.$router.push({ name: 'Person', params: { page: 'home' } })
             }
-            this.$store.commit('userSignIn')
-            this.$router.push({ name: 'Person', params: { page: 'home' } })
           }.bind(this)).catch(function (error) {
-            if (error.response) {
-              this._showErrors(error.response.data.error)
+            if (error.response.data.error === 'invalid_grant') {
+              console.log(error.response.data.error)
+              this._showErrors('密码错误')
             }
           }.bind(this))
         } else {
@@ -596,14 +595,33 @@ export default {
           url: this.$url + '/user/getSimpleByNickname',
           params: {
             nickname: this.username
-          }
+          },
+          timeout: 1000
         }).then(function (response) {
           if (response.data.nickname !== null) {
             this._showErrors('用户名已存在')
-            this.hasErrors = true
           } else {
             this._showErrors('')
           }
+        }.bind(this)).catch(function () {
+          this._showErrors('请检查网络！')
+        })
+      } else if (this.formType === 'signin') {
+        this.$axios({
+          method: 'get',
+          url: this.$url + '/user/getSimpleByNickname',
+          params: {
+            nickname: this.username
+          },
+          timeout: 1000
+        }).then(function (response) {
+          if (response.data.nickname === null) {
+            this._showErrors('用户名不存在')
+          } else {
+            this._showErrors('')
+          }
+        }.bind(this)).catch(function () {
+          this._showErrors('请检查网络！')
         }.bind(this))
       } else {
         this._showErrors('')
@@ -626,7 +644,9 @@ export default {
           } else {
             this._showErrors('')
           }
-        }.bind(this))
+        }.bind(this)).catch(function () {
+          this._showErrors('请检查网络')
+        })
       }
     },
     // 滚轮实现轮播
