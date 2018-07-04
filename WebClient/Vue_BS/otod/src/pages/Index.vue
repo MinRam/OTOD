@@ -85,7 +85,9 @@ export default {
   },
   created () {
     if (this.$getCookie('otod_access_token') !== null) {
-      this.$router.push({ name: 'Person', params: { page: 'home' } })
+      if (this.$route.path === '/') {
+        this.$router.replace('/home/person')
+      }
     } else {
       this.$router.replace('/login')
     }
