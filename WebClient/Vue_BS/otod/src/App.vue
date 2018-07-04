@@ -1,9 +1,14 @@
 <template>
-    <router-view/>
-</template>
-
+<div id="app">
+   <Market/>
+   </div>
+   </template>
 <script>
-export default {
-  name: 'App'
+import Market from 'MarketList.vue';
+export default{
+  name:'app',
+  components:{
+    Market
+  }
 }
 </script>
