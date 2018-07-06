@@ -12,7 +12,7 @@
           <td></td>
           <td></td>
           <td></td>
-          <td><a>搜索电子书</a></td>
+          <td><a style="bgcolor:black;">搜索电子书</a></td>
           <td></td>
           <td></td>
           <td></td>
@@ -233,6 +233,7 @@
     margin: 0px auto 0px auto;
     clear: both;
     float: none;
+    background-color: rgb(84, 92, 100);
 
   }
 
