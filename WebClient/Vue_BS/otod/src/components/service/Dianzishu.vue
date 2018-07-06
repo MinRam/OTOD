@@ -175,23 +175,25 @@
 
   }
 
-  #main {
+ 
+   #main {
 
-    border: solid 1px #fd7e0b;
+    border: solid 1px #999;
     width: 960px;
     margin: 0px auto 0px auto;
     clear: both;
     float: none;
+    background-color: rgb(84, 92, 100);
 
   }
 
   #bg1 {
-    border: solid 1px  #fd7e0b;
+    border: solid 1px  #999;
     width: 960px;
   }
 
   #menu_white, .goodsheet {
-    border: solid 1px  #fd7e0b;
+    border: solid 1px  #999;
     width: 960px;
     margin: 0px auto 0px auto;
     clear: both;
@@ -213,7 +215,7 @@
    float: none;
 }
 .bookCover_area {
-    border: 1px solid #fd7e0b;
+    border: 1px solid #999;
     width: 260px;
     height: 330px;
     float:left;
@@ -231,9 +233,9 @@
     float:left;
 }
 .green_btn_1,.green_btn_2,.green_btn_3 {
-    border: 1px solid #ff002d;
-    color: #ff002d;
-    background-color: #ffeded;
+    border: 1px solid #999;
+    color: #fff;
+    background-color: rgb(84, 92, 100); 
     width: 100px;
 height: 36px;
 display: block;
@@ -257,13 +259,13 @@ font-size: 16px;
 .new_title{
 
     display: inline-block;
-    background: #a;
+    background: #999;
     border-radius: 0 5px 0 0;
     text-align: center;
     float:left;
 }
 #biaoti{
-   border-bottom: 1px solid #fd7e0b;
+   border-bottom: 1px solid #999;
     width: 960px;
 
     float:left;

@@ -150,7 +150,7 @@
 
   #main {
 
-    border: solid 1px #fd7e0b;
+    border: solid 1px #999;
     width: 960px;
     margin: 0px auto 0px auto;
     clear: both;
@@ -159,12 +159,12 @@
   }
 
   #bg1 {
-    border: solid 1px #fd7e0b;
+    border: solid 1px #999;
     width: 960px;
   }
 
   #menu_white, #box, .goodsheet {
-    border: solid 1px #fd7e0b;
+    border: solid 1px #999;
     width: 960px;
     margin: 0px auto 0px auto;
     clear: both;

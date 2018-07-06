@@ -136,21 +136,21 @@
 
   #main {
 
-    border: solid 1px #fd7e0b;
+    border: solid 1px #999;
     width: 960px;
     margin: 0px auto 0px auto;
     clear: both;
     float: none;
-
+ background-color: rgb(84, 92, 100);
   }
 
   #bg1 {
-    border: solid 1px #fd7e0b;
+    border: solid 1px #999;
     width: 960px;
   }
 
   #menu_white, #box, .goodsheet {
-    border: solid 1px #fd7e0b;
+    border: solid 1px #999;
     width: 960px;
     margin: 0px auto 0px auto;
     clear: both;

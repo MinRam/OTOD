@@ -1,4 +1,4 @@
-<template>
+ <template>
   <div id="fabu">
     <div id="main">
       <table id="bg1">
@@ -83,13 +83,12 @@
     </div>
     <div style="width:960px; height:30px;"></div>
      <div id="box">
-      
-                    <div class="bookCover_area">
-                        <!-- 左侧图 -->
-                        <div class="bookCover_area1">
-                        </div>
+       <div class="bookCover_area">
+                       
+                        <textarea style="width:160px;height:100px;"></textarea>
                         <button>添加图片</button>
                      </div>
+                   
                     <div class="newbook_centera">
 			          书名：<input type="text"></br></br>
                      
@@ -134,21 +133,21 @@
 
   #main {
 
-    border: solid 1px #fd7e0b;
+    border: solid 1px #999;
     width: 960px;
     margin: 0px auto 0px auto;
     clear: both;
     float: none;
-
+  background-color: rgb(84, 92, 100);
   }
 
   #bg1 {
-    border: solid 1px  #fd7e0b;
+    border: solid 1px  #999;
     width: 960px;
   }
 
   #menu_white, .goodsheet {
-    border: solid 1px  #fd7e0b;
+    border: solid 1px  #999;
     width: 960px;
     margin: 0px auto 0px auto;
     clear: both;
@@ -168,18 +167,13 @@
     
     width: 160px;
     height: 330px;
-    float:left;
+   float:left;
 }
-.bookCover_area1{
-    border: 1px solid ;
-    width: 160px;
-     height: 180px;
-     float:left;
-}
+
 
  
 .newbook_centera {
-    width: 350px;
+    width: 280px;
     height: 300px;
     float:left;
      text-align: right; 
