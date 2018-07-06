@@ -1,4 +1,4 @@
-import Vue from 'vue'
+﻿import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '@/pages/Login'
 import ForumTopic from '@/pages/ForumTopic'
@@ -45,6 +45,12 @@ import RFailedOrders from '@/components/service/RFailedOrders'
 import WaitingEvaluateS from '@/components/service/WaitingEvaluateS'
 import FailedOrderS from '@/components/service/FailedOrderS'
 import FinishedOrderS from '@/components/service/FinishedOrderS'
+import Gouwuche from '@/components/service/Gouwuche'
+import Bookguanli from '@/components/service/Bookguanli'
+
+
+
+
 
 Vue.use(Router)
 
@@ -219,7 +225,51 @@ const routes = [
           requireAuth: false
         },
         component: Book
-      }, {
+      }, 
+        {
+        path: '/service/Gouwuche',
+        name: 'Gouwuche',
+        meta: {
+          requireAuth: false
+        },
+        component: Gouwuche
+      }, 
+
+
+{
+        path: '/service/bookguanli',
+        name: 'Bookguanli',
+        meta: {
+          requireAuth: false
+        },
+        component: Bookguanli
+      }, 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{
         path: '/file',
         name: 'File',
         meta: {
