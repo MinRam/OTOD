@@ -23,7 +23,7 @@
                                         <div class="form_row form_row_password">
                                             <input id="signup_password" type="password" placeholder="用户密码" v-model="password"/>
                                          </div>
-                                        <div class="form_row form_row_phone">
+                                        <div class="form_row form_row_phone" v-if="formType === 'signup'">
                                             <input id="signup_phone" type="text" onkeypress="return event.keyCode>=48&&event.keyCode<=57" ng-pattern="/[^a-zA-Z]/" maxlength="11" placeholder="手机号" v-model="telephone" @blur="telephoneCheck"/>
                                          </div>
                                     </div>
@@ -589,42 +589,30 @@ export default {
     usernameCheck () {
       if (!/^[a-zA-Z]([-_a-zA-Z0-9]{5,19})+$/.test(this.username)) {
         this._showErrors('非法用户名：长度应大于等于8，且字符，数字组成')
-      } else if (this.formType === 'signup') {
+      } else {
         this.$axios({
           method: 'get',
-          url: this.$url + '/user/getSimpleByNickname',
+          url: this.$url + '/user/getSimpleByUsername',
           params: {
-            nickname: this.username
-          },
-          timeout: 1000
+            username: this.username
+          }
         }).then(function (response) {
-          if (response.data.nickname !== null) {
-            this._showErrors('用户名已存在')
-          } else {
-            this._showErrors('')
+          if (this.formType === 'signup') {
+            if (response.data.nickname !== null) {
+              this._showErrors('用户名已存在')
+            } else {
+              this._showErrors('')
+            }
+          } else if (this.formType === 'signin') {
+            if (response.data.nickname === null) {
+              this._showErrors('用户名不存在')
+            } else {
+              this._showErrors('')
+            }
           }
         }.bind(this)).catch(function () {
           this._showErrors('请检查网络！')
         })
-      } else if (this.formType === 'signin') {
-        this.$axios({
-          method: 'get',
-          url: this.$url + '/user/getSimpleByNickname',
-          params: {
-            nickname: this.username
-          },
-          timeout: 1000
-        }).then(function (response) {
-          if (response.data.nickname === null) {
-            this._showErrors('用户名不存在')
-          } else {
-            this._showErrors('')
-          }
-        }.bind(this)).catch(function () {
-          this._showErrors('请检查网络！')
-        }.bind(this))
-      } else {
-        this._showErrors('')
       }
     },
     telephoneCheck () {

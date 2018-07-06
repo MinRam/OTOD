@@ -130,4 +130,9 @@ public class UserService {
     public boolean getTelephone(String telephone) {
        return userInfoRespository.findByTelphone(telephone)!= null;
     }
+
+    // 更新用户信息
+    public void save(UserInfo userInfo) {
+        userInfoRespository.save(userInfo);
+    }
 }

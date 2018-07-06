@@ -11,7 +11,7 @@
       </el-header>
       <el-main>
         <el-row type="flex" class="row-bg" justify="center">
-          <div class="block">
+          <div class="block" style="width: 1100px;">
             <el-table
               :data="pagelist"
               v-loading="loading"

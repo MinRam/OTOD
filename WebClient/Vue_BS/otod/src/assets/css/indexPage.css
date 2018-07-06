@@ -17,6 +17,12 @@ body {
     background-color: #ededef;
 }
 
+/*信息提示框*/
+.el-notification{
+    border-radius: 2px;
+}
+
+
 .otod-header {
     width: 100%;
     height: 82px;

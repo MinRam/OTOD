@@ -14,7 +14,7 @@
                                 </span>
                              </a>
                          </li>
-                        <li v-for="(menu,index) in menuList" :key="index" class="small" @click="menuClick(index)">
+                        <li v-for="(menu,index) in menuList" :key="index" class="small" :class="{'active':menu.active}" @click="menuClick(index)">
                             <a class="menu-item">
                                 <span class="icon" :class="menu.icon"></span>
                                 <span class="txt">{{menu.title}}</span>
@@ -56,29 +56,35 @@ export default {
       // menu
       menuList: [{
         icon: 'icon-1',
-        title: '文章',
-        number: 1
+        title: '动态',
+        number: 1,
+        active: false
       }, {
         icon: 'icon-2',
         title: '喜欢',
-        number: 16
+        number: 16,
+        active: false
       }, {
         icon: 'icon-3',
         title: '粉丝',
-        number: 0
+        number: 0,
+        active: false
       }, {
         icon: 'icon-4',
         title: '关注',
-        number: 0
+        number: 0,
+        active: false
       }, {
         icon: 'icon-5',
         title: '通知',
         link: '/home/notice',
-        number: 0
+        number: 0,
+        active: false
       }, {
         icon: 'icon-6',
         title: '私信',
-        number: 0
+        number: 0,
+        active: false
       }],
 
       // 关注列表与被关注列表
@@ -99,6 +105,11 @@ export default {
   mounted () {
     // this.$router.push('/home/person')
     this._initialData()
+  },
+  watch: {
+    '$route': function (to, from) {
+      this.initialInfo()
+    }
   },
   methods: {
     _initialData () {
@@ -127,8 +138,10 @@ export default {
     },
 
     menuClick (index) {
-      console.log(index)
-      this.$router.push(this.menuList[index].link)
+      // this.$router.push(this.menuList[index].link)
+      for (var i = 0; i < this.menuList.length; ++i) {
+        this.menuList[i].active = i === index
+      }
     },
 
     // information setting
