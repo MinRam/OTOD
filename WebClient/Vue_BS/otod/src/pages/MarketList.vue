@@ -230,6 +230,15 @@
                                 <el-button type="success" @click="UpdateProduct(scope.row.product_id)">确认保存</el-button>
                               </el-col>
                             </el-row>
+                            <el-dialog
+                              title="提示"
+                              :visible.sync="update_ok"
+                              width="30%">
+                              <span style="text-align: center;">修改成功</span>
+                              <span slot="footer" class="dialog-footer">
+                                <el-button type="primary" @click="update_ok = false">确 定</el-button>
+                              </span>
+                            </el-dialog>
                           </el-form>
                         </template>
                       </el-table-column>
@@ -432,6 +441,7 @@ export default {
   },
   data () {
     return {
+      update_ok: false,
       delete_product_ok: false,
       delete_product_wrong: false,
       dialogVisible: false,
@@ -500,62 +510,80 @@ export default {
     changetab (tab, event) {
       var t = this
       if (tab.label === '我的商品') {
-        t.$axios({
-          method: 'post',
-          url: 'http://localhost:8081/market/getPbyMU',
-          dataType: 'json',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + t.$getCookie('otod_access_token')
-          },
-          params: {
-            page_num: t.page_num
-          }
-        }).then(function (response) {
-          t.update_form.sell_list = response.data.content
-          t.my_loading = false
-          console.log(t.update_form.sell_list)
-        })
+        t.myproduct()
       } else if (tab.label === '我买的') {
-        t.$axios({
-          method: 'post',
-          url: 'http://localhost:8081/market/getObyMU',
-          dataType: 'json',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + t.$getCookie('otod_access_token')
-          },
-          params: {
-            page_num: t.page_num
-          }
-        }).then(function (response) {
-          t.pay_list = response.data
-          t.pay_loading = false
-          console.log(t.pay_list)
-        })
+        t.buyorder()
       } else if (tab.label === '我卖的') {
-        t.$axios({
-          method: 'post',
-          url: 'http://localhost:8081/market/getObySeller',
-          dataType: 'json',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + t.$getCookie('otod_access_token')
-          },
-          params: {
-            page_num: t.page_num
-          }
-        }).then(function (response) {
-          console.log(response)
-          t.sell_orders = response.data
-          t.sell_loading = false
-        })
+        t.sellorder()
+      } else if (tab.label === '商品列表') {
+        t.search()
       }
+    },
+    myproduct () {
+      var t = this
+      t.my_loading = true
+      t.$axios({
+        method: 'post',
+        url: 'http://localhost:8081/market/getPbyMU',
+        dataType: 'json',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + t.$getCookie('otod_access_token')
+        },
+        params: {
+          page_num: t.page_num
+        }
+      }).then(function (response) {
+        t.update_form.sell_list = response.data.content
+        t.my_loading = false
+        console.log(t.update_form.sell_list)
+      })
+    },
+    buyorder () {
+      var t = this
+      t.pay_loading = true
+      t.$axios({
+        method: 'post',
+        url: 'http://localhost:8081/market/getObyMU',
+        dataType: 'json',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + t.$getCookie('otod_access_token')
+        },
+        params: {
+          page_num: t.page_num
+        }
+      }).then(function (response) {
+        t.pay_list = response.data
+        t.pay_loading = false
+        console.log(t.pay_list)
+      })
+    },
+    sellorder () {
+      var t = this
+      t.sell_loading = true
+      t.$axios({
+        method: 'post',
+        url: 'http://localhost:8081/market/getObySeller',
+        dataType: 'json',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + t.$getCookie('otod_access_token')
+        },
+        params: {
+          page_num: t.page_num
+        }
+      }).then(function (response) {
+        console.log(response)
+        t.sell_orders = response.data
+        t.sell_loading = false
+      })
     },
     handlePictureCardPreview () {
       this.dialogVisible = true
     },
     buyerordermanager (oid, operation) {
+      var t = this
       this.$axios({
         method: 'post',
         url: 'http://localhost:8081/market/BuyerOrderManage',
@@ -564,9 +592,12 @@ export default {
           order_id: oid,
           operation: operation
         }
+      }).then(function (response) {
+        t.buyorder()
       })
     },
     sellerordermanager (oid, operation) {
+      var t = this
       this.$axios({
         method: 'post',
         url: 'http://localhost:8081/market/SellerOrderManage',
@@ -575,6 +606,8 @@ export default {
           order_id: oid,
           operation: operation
         }
+      }).then(function (response) {
+        t.sellorder()
       })
     },
     UpdateProduct (pid) {
@@ -599,6 +632,9 @@ export default {
           'Authorization': 'Bearer ' + t.$getCookie('otod_access_token')
         },
         data: obj
+      }).then(function (response) {
+        t.update_ok = true
+        t.myproduct()
       })
     },
     DeleteProduct (pid) {
@@ -617,6 +653,7 @@ export default {
       }).then(function (response) {
         if (response.data === 'success') {
           t.delete_product_ok = true
+          t.myproduct()
         } else if (response.data === 'failure') {
           t.delete_product_wrong = true
         }
