@@ -85,7 +85,7 @@
      <div id="box">
        <div class="bookCover_area">
                        
-                        <textarea style="width:160px;height:100px;"></textarea>
+                        <textarea style="width:150px;height:150px;"></textarea>
                         <button>添加图片</button>
                      </div>
                    
@@ -97,7 +97,7 @@
                       
                        出版社：<input type="text"></br></br>
                    
-                  
+                   <button type="submit" value="发布商品">上传电子书</button>&nbsp;<input type="text">
                     <!-- 图书描述 -->
                     
                          </div>
@@ -116,7 +116,7 @@
 <script>
   
   export default {
-    name: 'Fabu'
+    name: 'zhuyao'
     
   }
 
