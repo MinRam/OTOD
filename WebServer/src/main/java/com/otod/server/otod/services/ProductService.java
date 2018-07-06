@@ -118,9 +118,9 @@ public class ProductService {
 		int product_day_to = pojo.getProduct_day_to();
 		int status = 1;
 		String product_img = null;
-		if(pojo.getProduct_img() == null)
+		if(pojo.getProduct_img().length == 0)
 		{
-			product_img = null;
+			product_img = "http://localhost:8081/market/default.png";
 		}
 		else {
 			product_img = "http://localhost:8081/" + pojo.getProduct_img()[0];

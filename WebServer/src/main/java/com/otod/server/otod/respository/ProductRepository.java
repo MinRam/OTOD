@@ -22,7 +22,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer>,JpaSp
 	@Query("select p from Product p where p.product_name like %:name%")
 	Page<Product> findByName(@Param("name") String name,Pageable pageable);
 	
-	@Query("select p from Product p where p.product_name like %:name% order by p.product_createtime DESC")
+	@Query("select p from Product p where p.product_name like %:name% and p.product_status != 2 order by p.product_createtime DESC")
 	List<Product> FindByName(@Param("name") String name);
 	
 	//更改库存
