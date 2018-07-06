@@ -2,9 +2,7 @@ package com.otod.server.otod.controller;
 
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -20,7 +18,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
@@ -36,7 +33,7 @@ import com.otod.server.otod.model.Market_user;
 import com.otod.server.otod.model.P_Order;
 import com.otod.server.otod.model.PageModel;
 import com.otod.server.otod.model.Product;
-import com.otod.server.otod.model.UserInfo;
+import com.otod.server.otod.model.user.UserInfo;
 import com.otod.server.otod.pojos.P_OrderPojo;
 import com.otod.server.otod.pojos.PayPojo;
 import com.otod.server.otod.pojos.ProductPojo;

@@ -1,8 +1,7 @@
 package com.otod.server.otod.respository;
 
 import com.otod.server.otod.model.CommenOrder;
-import com.otod.server.otod.model.User;
-import com.otod.server.otod.model.UserInfo;
+import com.otod.server.otod.model.user.UserInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;

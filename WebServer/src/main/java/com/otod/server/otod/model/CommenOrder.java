@@ -1,5 +1,7 @@
 package com.otod.server.otod.model;
 
+import com.otod.server.otod.model.user.UserInfo;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;

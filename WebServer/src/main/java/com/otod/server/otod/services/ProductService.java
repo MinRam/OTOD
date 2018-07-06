@@ -1,10 +1,10 @@
 package com.otod.server.otod.services;
 
 import com.otod.server.otod.model.*;
+import com.otod.server.otod.model.user.UserInfo;
 import com.otod.server.otod.pojos.ProductPojo;
 import com.otod.server.otod.respository.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;

@@ -70,8 +70,8 @@
                         <div class="user-head">
                             <img :src="$imageUrl + $store.state.headImage"/>
                          </div>
-                        <span class="user-point"/>
                         <div class="user-uploader">
+                            <!-- <div class="uploader-arrow"></div> -->
                             <el-upload
                               class="img-uploader"
                               action="https://jsonplaceholder.typicode.com/posts/"

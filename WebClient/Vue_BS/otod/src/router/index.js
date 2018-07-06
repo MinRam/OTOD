@@ -5,9 +5,9 @@ import ForumTopic from '@/pages/ForumTopic'
 import ForumReply from '@/pages/ForumReply'
 // index pages
 import Index from '@/pages/Index'
-
 import Home from '@/pages/Home'
 import Person from '@/components/Person'
+import Notice from '@/components/Notice'
 import Setting from '@/components/Setting'
 
 import Blog from '@/pages/Blog'
@@ -69,16 +69,21 @@ const routes = [
           requireAuth: true
         },
         component: Home,
-        children: [
-          {
-            path: '/home/person',
-            name: 'Person',
-            meta: {
-              requireAuth: true
-            },
-            component: Person
-          }
-        ]
+        children: [{
+          path: '/home/person',
+          name: 'Person',
+          meta: {
+            requireAuth: true
+          },
+          component: Person
+        }, {
+          path: '/home/notice',
+          name: 'Notice',
+          meta: {
+            requireAuth: true
+          },
+          component: Notice
+        }]
       }, {
         path: '/blog',
         name: 'Blog',

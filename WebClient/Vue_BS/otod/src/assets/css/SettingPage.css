@@ -159,12 +159,29 @@ body{
     float: left;
 }
 
+.info-head .user-head img {
+    width: 100px;
+}
+
 .info-head .user-uploader{
-    position: absolute;
+    position: relative;
+    left: 100px;
     z-index: 3;
 }
 
+.info-head .user-uploader .img-uploader{
+    background:url(../images/arrow.png) no-repeat;
+}
+
+.info-head .user-uploader .uploader-arrow{
+    position: relative;
+    width:100px;
+    height: 100px
+}
+
+
 .info-head .el-upload{
+    position: relative;
     width: 100px;
     height: 100px;
 }
@@ -172,6 +189,11 @@ body{
 .info-head .avatar{
     width: 100px;
     height: 100px
+}
+
+/*个人信息主题*/
+.info-content {
+    margin-top: 30px;
 }
 
 /*兴趣设置*/

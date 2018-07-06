@@ -1,9 +1,9 @@
 package com.otod.server.otod.controller;
 
-import com.otod.server.otod.model.Notice;
-import com.otod.server.otod.model.NoticeList;
-import com.otod.server.otod.model.User;
-import com.otod.server.otod.model.UserInfo;
+import com.otod.server.otod.model.user.Notice;
+import com.otod.server.otod.model.user.NoticeList;
+import com.otod.server.otod.model.user.User;
+import com.otod.server.otod.model.user.UserInfo;
 import com.otod.server.otod.pojos.NoticePojo;
 import com.otod.server.otod.pojos.UserFollowList;
 import com.otod.server.otod.pojos.UserRegisteration;
@@ -78,7 +78,21 @@ public class UserController  {
 
     @GetMapping("/user/getSimpleByNickname")
     private UserSimpleInfo getSimpleByNickname(@RequestParam (value = "nickname") String nickname){
-        return new UserSimpleInfo(userService.getUserInfo(nickname));
+        UserInfo userInfo = userService.getUserInfo(nickname);
+        if(userInfo != null){
+            return new UserSimpleInfo(userInfo);
+        }else{
+            return new UserSimpleInfo();
+        }
+    }
+
+    @GetMapping("/user/telephone")
+    private String getUserTelephone(@RequestParam (value="telephone") String telephone){
+        if(userService.getTelephone(telephone)){
+            return "exit";
+        } else {
+            return "noexit";
+        }
     }
 
     @GetMapping("/user/getfollowInfo")
@@ -133,11 +147,24 @@ public class UserController  {
         }
 
         return noticePojosList;
+    }
+
+    @GetMapping("/user/getAllNotice")
+    private List<NoticePojo> getAllNotice(){
+        User user = userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName());
+        List<Notice> noticeList =  noticeService.getAllNotices(user);
+        List<NoticePojo> noticePojosList = new ArrayList<>();
+
+        for(Notice notice : noticeList){
+            UserInfo userInfo = userService.getUserInfo(notice.getUserOut());
+            noticePojosList.add(new NoticePojo(notice,userInfo));
         }
+
+        return noticePojosList;
+    }
 
     @PostMapping("/user/readNotice")
     private void readNotice(@RequestBody NoticeList noticeList){
-        System.out.println("yes");
         noticeService.readNotices(noticeList.getIdList());
     }
 

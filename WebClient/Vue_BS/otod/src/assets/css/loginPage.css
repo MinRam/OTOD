@@ -472,9 +472,12 @@ img{
 }
 
 .show-shop .shop-graphic .shop-post-item .item-content {
-    height: 200px;
+    height: 400px;
 }
 
+ .shop-post-item .item-content img{
+    width: 300px;
+ }
 
 .showcase .server-section .section-content{
     margin: 30px auto;

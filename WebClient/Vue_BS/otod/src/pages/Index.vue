@@ -83,7 +83,15 @@ export default {
   watch: {
     '$route': '_changeHead'
   },
-
+  created () {
+    if (this.$getCookie('otod_access_token') !== null) {
+      if (this.$route.path === '/') {
+        this.$router.replace('/home/person')
+      }
+    } else {
+      this.$router.replace('/login')
+    }
+  },
   methods: {
     // initial userInfo
     initialUserInfo () {
