@@ -130,7 +130,7 @@
 
 
 <div class="edit_title">
-  <div id="biaoti"><span class="new_title" id="new_title" style="background:#fd7e0b;">读书简介</span></div>
+  <div id="biaoti"><span class="new_title" id="new_title" style="background-color: rgb(84, 92, 100);">读书简介</span></div>
 
   <div class="txt" >
 十个相互陌生、身份各异的人受邀前往德文郡海岸边一座孤岛上的豪宅。客人到齐后，主人却没有出现。当晚，一个神秘的声音发出指控，分别说出每个人心中罪恶的秘密。接着，一位客人离奇死亡。暴风雨让小岛与世隔绝，《十个小士兵》——这首古老的童谣成了死亡咒语。如同歌谣中所预言的，客人一个接一个死去……杀人游戏结束后，竟无一人生还！
