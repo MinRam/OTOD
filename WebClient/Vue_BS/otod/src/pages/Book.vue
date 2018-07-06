@@ -17,7 +17,7 @@
           <td></td>
           <td></td>
           <td></td>
-          <td>我的购物车</td>
+          <td><router-link to="/components/gouwuche">我的购物车</router-link></td>
           <td></td>
           <td></td>
           <td></td>
