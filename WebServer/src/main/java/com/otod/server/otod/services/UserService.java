@@ -3,6 +3,7 @@ package com.otod.server.otod.services;
 import com.otod.server.otod.model.Market_user;
 import com.otod.server.otod.model.user.*;
 import com.otod.server.otod.respository.*;
+import com.otod.server.otod.services.vrss.VrssUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Page;
@@ -35,6 +36,8 @@ public class UserService {
     @Autowired
     private UserUpdateRepository userUpdateRepository;
 
+    @Autowired
+    private VrssUserService vrssUserService;
 //    @Bean
 //    public PasswordEncoder passwordEncoder(){
 //        String idForEncode = "bcrypt";
@@ -95,6 +98,8 @@ public class UserService {
         Market_user mUser = new Market_user();
         mUser.setUserInfo(userInfo);
         mURepository.save(mUser);
+        // 设置vrssuser
+        vrssUserService.register(user);
     }
 
     // 获取自己关注的用户列表
