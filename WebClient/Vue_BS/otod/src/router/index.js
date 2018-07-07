@@ -45,12 +45,8 @@ import RFailedOrders from '@/components/service/RFailedOrders'
 import WaitingEvaluateS from '@/components/service/WaitingEvaluateS'
 import FailedOrderS from '@/components/service/FailedOrderS'
 import FinishedOrderS from '@/components/service/FinishedOrderS'
-import Gouwuche from '@/components/service/Gouwuche'
-import Bookguanli from '@/components/service/Bookguanli'
-
-
-
-
+import Gouwuche from '@/components/book/Gouwuche'
+import Bookguanli from '@/components/book/Bookguanli'
 
 Vue.use(Router)
 
@@ -225,51 +221,21 @@ const routes = [
           requireAuth: false
         },
         component: Book
-      }, 
-        {
+      }, {
         path: '/service/Gouwuche',
         name: 'Gouwuche',
         meta: {
           requireAuth: false
         },
         component: Gouwuche
-      }, 
-
-
-{
+      }, {
         path: '/service/bookguanli',
         name: 'Bookguanli',
         meta: {
           requireAuth: false
         },
         component: Bookguanli
-      }, 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-{
+      }, {
         path: '/file',
         name: 'File',
         meta: {

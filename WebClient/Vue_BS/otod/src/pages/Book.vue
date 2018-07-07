@@ -17,17 +17,17 @@
           <td></td>
           <td></td>
           <td></td>
-          <td><router-link to="../components/service/Gouwuche">我的购物车</router-link></td>
+          <td><router-link to="../components/book/Gouwuche">我的购物车</router-link></td>
           <td></td>
           <td></td>
           <td></td>
           <td></td>
-          <td><router-link to="../components/service/Shujia">我的书架</router-link></td>
+          <td><router-link to="../components/book/Shujia">我的书架</router-link></td>
           <td></td>
           <td></td>
           <td></td>
           <td></td>
-          <td><router-link to="../components/service/Zuji">浏览足迹</router-link></td>
+          <td><router-link to="../components/book/Zuji">浏览足迹</router-link></td>
           <td></td>
           <td></td>
           <td></td>
@@ -49,17 +49,17 @@
           <td></td>
           <td></td>
           <td></td>
-          <td><router-link to="../components/service/Fabu">发布电子书</router-link></td>
+          <td><router-link to="../components/book/Fabu">发布电子书</router-link></td>
           <td></td>
           <td></td>
           <td></td>
           <td></td>
-          <td><router-link to="../components/service/Bookguanli">电子书管理</router-link></td>
+          <td><router-link to="../components/book/Bookguanli">电子书管理</router-link></td>
           <td></td>
           <td></td>
           <td></td>
           <td></td>
-          <td><router-link to="../components/service/Ddguanli">订单管理</router-link></td>
+          <td><router-link to="../components/book/Ddguanli">订单管理</router-link></td>
           <td></td>
           <td></td>
           <td></td>
@@ -223,7 +223,6 @@
     padding: 0px;
     font-size: 12px;
     line-height: 20px;
-
   }
 
   #main {
