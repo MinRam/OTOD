@@ -99,7 +99,7 @@ public class UserService {
         mUser.setUserInfo(userInfo);
         mURepository.save(mUser);
         // 设置vrssuser
-        vrssUserService.register(user);
+        vrssUserService.register(userInfo);
     }
 
     // 获取自己关注的用户列表
