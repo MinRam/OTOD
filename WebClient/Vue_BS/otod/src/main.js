@@ -29,6 +29,21 @@ Vue.config.productionTip = false
 
 axios.defaults.timeout = 2000
 
+// http request 请求拦截器
+axios.interceptors.request.use(
+  config => {
+    var token = Vue.prototype.$getCookie('otod_access_token')
+    if (token === '') {
+      store.commit('loginOut')
+      router.replace('/login')
+    }
+    return config
+  },
+  err => {
+    return Promise.reject(err)
+  }
+)
+
 // http response 拦截器
 axios.interceptors.response.use(
   response => {
@@ -39,6 +54,7 @@ axios.interceptors.response.use(
     if (error.response) {
       switch (error.response.status) {
         case 401:
+        // case 500:
         // 返回 401 清除token信息并跳转到登录页面
           store.commit('loginOut')
           router.replace('/login')

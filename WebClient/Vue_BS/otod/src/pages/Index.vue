@@ -9,13 +9,13 @@
                 <ul class="nav-tab">
                   <li v-for="(nav,index) in navObjects" :class="{'active': nav.active}" :key="index" @click="navClick(index)">{{nav.title}}</li>
                   <li>
-                    <el-dropdown  trigger="click">
+                    <el-dropdown  trigger="click" @command="moreCommand">
                       <span class="el-dropdown-link more-link">
                         更多<i class="el-icon-arrow-down el-icon--right"></i>
                       </span>
                       <el-dropdown-menu slot="dropdown">
-                        <el-dropdown-item>登出</el-dropdown-item>
-                        <el-dropdown-item>联系我们</el-dropdown-item>
+                        <el-dropdown-item command="o">登出</el-dropdown-item>
+                        <el-dropdown-item command="c">联系我们</el-dropdown-item>
                       </el-dropdown-menu>
                     </el-dropdown>
                   </li>
@@ -207,6 +207,19 @@ export default {
 
     handleIconClick (ev) {
       console.log(ev)
+    },
+
+    moreCommand (command) {
+      switch (command) {
+        case 'o': this.$clearCookie('otod_access_token')
+          this.$store.commit('loginOut')
+          this.$router.replace('/login')
+          break
+        case 'c': this.$alert('2017-2018ru软工实践设计作品-OTOD小组开发', 'OTOD共享与交易平台', {
+          confirmButtonText: '确定'
+        })
+          break
+      }
     }
   }
 }
