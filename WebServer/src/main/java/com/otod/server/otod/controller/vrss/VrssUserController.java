@@ -17,8 +17,4 @@ public class VrssUserController {
     public String getName(@RequestParam("user_id") Integer user_id){
         return vrssUserService.getName(user_id);
     }
-    @RequestMapping(value = "/register")
-    public void register(@RequestParam("user_id") Integer user_id){
-        vrssUserService.register(user_id);
-    }
 }
