@@ -3,8 +3,8 @@
     <el-container style="width:80%;margin:auto;">
       <el-header>
         <el-breadcrumb separator-class="el-icon-arrow-right">
-          <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-          <el-breadcrumb-item>博客</el-breadcrumb-item>
+          <el-breadcrumb-item :to="{ path: '/home/person' }">首页</el-breadcrumb-item>
+          <el-breadcrumb-item :to="{ path: '/Blog' }">博客</el-breadcrumb-item>
           <el-breadcrumb-item>{{ section_name }}</el-breadcrumb-item>
           <el-breadcrumb-item>{{ topic_title }}</el-breadcrumb-item>
         </el-breadcrumb>

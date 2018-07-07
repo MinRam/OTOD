@@ -4,8 +4,8 @@
     <el-header>
       <!--导航栏-->
       <el-breadcrumb separator-class="el-icon-arrow-right">
-          <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
-          <el-breadcrumb-item >博客</el-breadcrumb-item>
+          <el-breadcrumb-item :to="{ path: '/home/person' }">首页</el-breadcrumb-item>
+          <el-breadcrumb-item :to="{ path: '/Blog' }">博客</el-breadcrumb-item>
           <el-breadcrumb-item>{{ section_name }}</el-breadcrumb-item>
       </el-breadcrumb>
       <!--版块修改对话框-->
