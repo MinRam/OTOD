@@ -1,240 +1,249 @@
 <template>
   <div>
-        <section>
-          <div class="container">
-
-<br/><br/>
-<br/>
-          <!--搜索栏-->
-            <div class="search">
-              <el-row>
-                <el-col :span="8" :push="14">
-                  <div class="search_form">
-                    <el-form :inline="true"  class="demo-form-inline">
-                      <el-form-item label="商品查询">
-                        <el-input v-model="product_key" placeholder="请输入商品关键字" clearable></el-input>
-                      </el-form-item>
-                      <el-form-item>
-                        <el-button type="primary" @click="changepage('/market?product_key='+product_key),search()">查询</el-button>
-                      </el-form-item>
-                    </el-form>
-                  </div>
-                </el-col><!-- /.col-lg-6 -->
-              </el-row><!-- /.row -->
-            </div>
-
-            <div id="position">
-              <el-row>
-                <el-col :span="10" :push="6">
-                  <p>您当前的位置是：<el-button type="text" @click="changepage('/market')">二手市场</el-button> -> 商品发布</p>
-                </el-col>
-              </el-row>
-            </div>
-
-            <el-form :model="ruleForm" :rules="rules" ref="ruleForm">
-              <el-row>
-                <el-col :span="12" :push="4">
-                  <el-form-item label="商品分类" prop="product_catalog">
-                    <el-select v-model="ruleForm.product_catalog" placeholder="请选择商品分类">
-                      <el-option label="书本" value="1"></el-option>
-                      <el-option label="服饰" value="2"></el-option>
-                      <el-option label="鞋" value="3"></el-option>
-                      <el-option label="其他" value="4"></el-option>
-                    </el-select>
-                  </el-form-item>
-                </el-col>
-              </el-row>
-
-              <el-row>
-                <el-col :span="10" :push="4">
-                  <el-form-item label="商品名称" prop="product_name">
-                    <el-input v-model="ruleForm.product_name"></el-input>
-                  </el-form-item>
-                </el-col>
-              </el-row>
-
-              <el-row>
-                <el-col :span="6" :push="4">
-                  <el-form-item label="商品单价" prop="product_price">
-                    <el-input v-model="ruleForm.product_price"></el-input>
-                  </el-form-item>
-                </el-col>
-
-                <el-col :span="6" :push="4" :offset="2">
-                  <el-form-item label="商品发布数量" prop="product_stock">
-                    <el-input v-model="ruleForm.product_stock"></el-input>
-                  </el-form-item>
-                </el-col>
-              </el-row>
-
-              <el-row>
-                <el-col :span="14" :push="4">
-                  <el-form-item label="商品图片" >
-                    <el-upload
-                      ref="upload"
-                      action="http://localhost:8081/market/saveimg"
-                      accept="image/jpeg,image/gif,image/png"
-                      list-type="picture-card"
-                      :file-list="img"
-                      :on-success="filllist"
-                      :on-preview="handlePictureCardPreview"
-                      :on-remove="handleRemove">
-                      <i class="el-icon-plus"></i>
-                    </el-upload>
-                    <el-dialog :visible.sync="dialogVisible">
-                      <img width="100%" :src="ruleForm.product_img" alt="">
-                    </el-dialog>
-                  </el-form-item>
-                </el-col>
-              </el-row>
-
-              <el-row>
-                <el-col :push="4" :span="8">
-                  <el-form-item label="商品详情" prop="product_description">
-                    <el-input type="textarea" v-model="ruleForm.product_description" :autosize="{ minRows: 2, maxRows: 4}"></el-input>
-                  </el-form-item>
-                </el-col>
-              </el-row>
-
-              <el-row>
-                <el-col :push="4" :span="4">
-                  <el-form-item label="联系手机" prop="seller_phone">
-                    <el-input v-model="ruleForm.seller_phone"></el-input>
-                  </el-form-item>
-                </el-col>
-                <el-col :push="6" :span="4">
-                  <el-form-item label="请选择商品有效时长" prop="product_life">
-                    <el-select v-model="ruleForm.product_life" placeholder="请选择商品有效时长">
-                      <el-option label="1天" value="1"></el-option>
-                      <el-option label="2天" value="2"></el-option>
-                      <el-option label="3天" value="3"></el-option>
-                      <el-option label="4天" value="4"></el-option>
-                      <el-option label="5天" value="5"></el-option>
-                      <el-option label="6天" value="6"></el-option>
-                      <el-option label="7天" value="7"></el-option>
-                      <el-option label="8天" value="8"></el-option>
-                      <el-option label="9天" value="9"></el-option>
-                      <el-option label="10天" value="10"></el-option>
-                      <el-option label="11天" value="11"></el-option>
-                      <el-option label="12天" value="12"></el-option>
-                      <el-option label="13天" value="13"></el-option>
-                      <el-option label="14天" value="14"></el-option>
-                      <el-option label="15天" value="15"></el-option>
-                    </el-select>
-                  </el-form-item>
-                </el-col>
-              </el-row>
-
-              <el-row>
-                <el-col :push="4" :span="6">
-                  <el-form-item label="请选择商品适合交易时间" prop="product_day_from">
-                    <el-select v-model="ruleForm.product_day_from">
-                      <el-option label="00:00" value="0"></el-option>
-                      <el-option label="01:00" value="1"></el-option>
-                      <el-option label="02:00" value="2"></el-option>
-                      <el-option label="03:00" value="3"></el-option>
-                      <el-option label="04:00" value="4"></el-option>
-                      <el-option label="05:00" value="5"></el-option>
-                      <el-option label="06:00" value="6"></el-option>
-                      <el-option label="07:00" value="7"></el-option>
-                      <el-option label="08:00" value="8"></el-option>
-                      <el-option label="09:00" value="9"></el-option>
-                      <el-option label="10:00" value="10"></el-option>
-                      <el-option label="11:00" value="11"></el-option>
-                      <el-option label="12:00" value="12"></el-option>
-                      <el-option label="13:00" value="13"></el-option>
-                      <el-option label="14:00" value="14"></el-option>
-                      <el-option label="15:00" value="15"></el-option>
-                      <el-option label="16:00" value="16"></el-option>
-                      <el-option label="17:00" value="17"></el-option>
-                      <el-option label="18:00" value="18"></el-option>
-                      <el-option label="19:00" value="19"></el-option>
-                      <el-option label="20:00" value="20"></el-option>
-                      <el-option label="21:00" value="21"></el-option>
-                      <el-option label="22:00" value="22"></el-option>
-                      <el-option label="23:00" value="23"></el-option>
-                      <el-option label="24:00" value="24"></el-option>
-                    </el-select>
-                  </el-form-item>
-                </el-col>
-
-                <el-col :push="4" :span="8">
-                  <el-form-item label="到" prop="product_day_to">
-                    <el-select v-model="ruleForm.product_day_to">
-                      <el-option label="00:00" value="0"></el-option>
-                      <el-option label="01:00" value="1"></el-option>
-                      <el-option label="02:00" value="2"></el-option>
-                      <el-option label="03:00" value="3"></el-option>
-                      <el-option label="04:00" value="4"></el-option>
-                      <el-option label="05:00" value="5"></el-option>
-                      <el-option label="06:00" value="6"></el-option>
-                      <el-option label="07:00" value="7"></el-option>
-                      <el-option label="08:00" value="8"></el-option>
-                      <el-option label="09:00" value="9"></el-option>
-                      <el-option label="10:00" value="10"></el-option>
-                      <el-option label="11:00" value="11"></el-option>
-                      <el-option label="12:00" value="12"></el-option>
-                      <el-option label="13:00" value="13"></el-option>
-                      <el-option label="14:00" value="14"></el-option>
-                      <el-option label="15:00" value="15"></el-option>
-                      <el-option label="16:00" value="16"></el-option>
-                      <el-option label="17:00" value="17"></el-option>
-                      <el-option label="18:00" value="18"></el-option>
-                      <el-option label="19:00" value="19"></el-option>
-                      <el-option label="20:00" value="20"></el-option>
-                      <el-option label="21:00" value="21"></el-option>
-                      <el-option label="22:00" value="22"></el-option>
-                      <el-option label="23:00" value="23"></el-option>
-                      <el-option label="24:00" value="24"></el-option>
-                    </el-select>
-                  </el-form-item>
-                </el-col>
-              </el-row>
-
-              <el-row>
-                <el-col :span="8" :push="10">
-                  <el-form-item label="" prop="agreement">
-                    <el-checkbox-group v-model="ruleForm.agreement">
-                      <el-checkbox label="您同意二手市场交易原则" name="agreement"></el-checkbox>
-                    </el-checkbox-group>
-                  </el-form-item>
-                </el-col>
-              </el-row>
-
-              <el-row>
-                <el-col :span="8" :push="10">
-                  <el-form-item>
-                    <el-button type="primary" @click="submitForm('ruleForm')">发布商品</el-button>
-                    <el-button @click="resetForm('ruleForm')">重置</el-button>
-                  </el-form-item>
-                </el-col>
-              </el-row>
-
-            </el-form>
-            <el-dialog
-              title="提示"
-              :visible.sync="isOK"
-              width="30%">
-              <span style="text-align:center;">发布成功</span>
-              <span slot="footer" class="dialog-footer">
-                <el-button type="primary" @click="isOK = false , changepage('/market')">确 定</el-button>
-              </span>
-            </el-dialog>
+    <el-container>
+      <el-main>
+        <!--搜索栏-->
+          <div class="search">
+            <el-row>
+              <el-col :span=10 :offset="14">
+                <div class="search_form">
+                  <el-form :inline="true"  class="demo-form-inline">
+                    <el-form-item label="商品查询">
+                      <el-input v-model="product_key" placeholder="请输入商品关键字" clearable></el-input>
+                    </el-form-item>
+                    <el-form-item>
+                      <el-button type="primary" @click="changepage('/market?product_key='+product_key)">查询</el-button>
+                    </el-form-item>
+                  </el-form>
+                </div>
+              </el-col><!-- /.col-lg-6 -->
+            </el-row><!-- /.row -->
           </div>
-        </section>
+
+          <div id="position">
+            <el-row>
+              <el-col :span=8 :push="4">
+                <p>您当前的位置是：<el-button type="text" @click="changepage('/market')">二手市场</el-button> -> 商品发布</p>
+              </el-col>
+            </el-row>
+          </div>
+<br><br>
+          <el-form :model="ruleForm" :rules="rules" ref="ruleForm">
+            <el-row>
+              <el-col :span=10 :push="4">
+                <el-card class="box-card">
+                  <div class="text item">
+                    <p>  <img :src="component_img.item" alt="" width="15px" height="15px">
+                      商品信息</p>
+                  </div>
+                  <el-row>
+                    <el-col :span=12 :push="4">
+                      <el-form-item label="商品分类" prop="product_catalog">
+                        <el-select v-model="ruleForm.product_catalog" placeholder="请选择商品分类">
+                          <el-option label="书本" value="1"></el-option>
+                          <el-option label="服饰" value="2"></el-option>
+                          <el-option label="鞋" value="3"></el-option>
+                          <el-option label="其他" value="4"></el-option>
+                        </el-select>
+                      </el-form-item>
+                    </el-col>
+                  </el-row>
+
+                  <el-row>
+                    <el-col :span=10 :push="4">
+                      <el-form-item label="商品名称" prop="product_name">
+                        <el-input v-model="ruleForm.product_name"></el-input>
+                      </el-form-item>
+                    </el-col>
+                  </el-row>
+
+                  <el-row>
+                    <el-col :span=6 :push="4">
+                      <el-form-item label="商品单价" prop="product_price">
+                        <el-input v-model="ruleForm.product_price"></el-input>
+                      </el-form-item>
+                    </el-col>
+
+                    <el-col :span=6 :push="4" :offset="2">
+                      <el-form-item label="商品发布数量" prop="product_stock">
+                        <el-input v-model="ruleForm.product_stock"></el-input>
+                      </el-form-item>
+                    </el-col>
+                  </el-row>
+
+                  <el-row>
+                    <el-col :span=14 :push="4">
+                      <el-form-item label="商品图片" >
+                        <el-upload
+                          ref="upload"
+                          action="http://localhost:8081/market/saveimg"
+                          accept="image/jpeg,image/gif,image/png"
+                          list-type="picture-card"
+                          :file-list="img"
+                          :on-success="filllist"
+                          :on-preview="handlePictureCardPreview"
+                          :on-remove="handleRemove">
+                          <i class="el-icon-plus"></i>
+                        </el-upload>
+                        <el-dialog :visible.sync="dialogVisible">
+                          <img width="100%" :src="ruleForm.product_img" alt="">
+                        </el-dialog>
+                      </el-form-item>
+                    </el-col>
+                  </el-row>
+
+                  <el-row>
+                    <el-col :push="4" :span=8>
+                      <el-form-item label="商品详情" prop="product_description">
+                        <el-input type="textarea" v-model="ruleForm.product_description" :autosize="{ minRows: 2, maxRows: 4}"></el-input>
+                      </el-form-item>
+                    </el-col>
+                  </el-row>
+
+                  <el-row>
+                    <el-col :push="4" :span=4>
+                      <el-form-item label="联系手机" prop="seller_phone">
+                        <el-input v-model="ruleForm.seller_phone"></el-input>
+                      </el-form-item>
+                    </el-col>
+                    <el-col :push="6" :span=4>
+                      <el-form-item label="请选择商品有效时长" prop="product_life">
+                        <el-select v-model="ruleForm.product_life" placeholder="请选择商品有效时长">
+                          <el-option label="1天" value="1"></el-option>
+                          <el-option label="2天" value="2"></el-option>
+                          <el-option label="3天" value="3"></el-option>
+                          <el-option label="4天" value="4"></el-option>
+                          <el-option label="5天" value="5"></el-option>
+                          <el-option label="6天" value="6"></el-option>
+                          <el-option label="7天" value="7"></el-option>
+                          <el-option label="8天" value="8"></el-option>
+                          <el-option label="9天" value="9"></el-option>
+                          <el-option label="10天" value="10"></el-option>
+                          <el-option label="11天" value="11"></el-option>
+                          <el-option label="12天" value="12"></el-option>
+                          <el-option label="13天" value="13"></el-option>
+                          <el-option label="14天" value="14"></el-option>
+                          <el-option label="15天" value="15"></el-option>
+                        </el-select>
+                      </el-form-item>
+                    </el-col>
+                  </el-row>
+
+                  <el-row>
+                    <el-col :push="4" :span=8>
+                      <el-form-item label="请选择商品适合交易时间" prop="product_day_from">
+                        <el-select v-model="ruleForm.product_day_from">
+                          <el-option label="00:00" value="0"></el-option>
+                          <el-option label="01:00" value="1"></el-option>
+                          <el-option label="02:00" value="2"></el-option>
+                          <el-option label="03:00" value="3"></el-option>
+                          <el-option label="04:00" value="4"></el-option>
+                          <el-option label="05:00" value="5"></el-option>
+                          <el-option label="06:00" value="6"></el-option>
+                          <el-option label="07:00" value="7"></el-option>
+                          <el-option label="08:00" value="8"></el-option>
+                          <el-option label="09:00" value="9"></el-option>
+                          <el-option label="10:00" value="10"></el-option>
+                          <el-option label="11:00" value="11"></el-option>
+                          <el-option label="12:00" value="12"></el-option>
+                          <el-option label="13:00" value="13"></el-option>
+                          <el-option label="14:00" value="14"></el-option>
+                          <el-option label="15:00" value="15"></el-option>
+                          <el-option label="16:00" value="16"></el-option>
+                          <el-option label="17:00" value="17"></el-option>
+                          <el-option label="18:00" value="18"></el-option>
+                          <el-option label="19:00" value="19"></el-option>
+                          <el-option label="20:00" value="20"></el-option>
+                          <el-option label="21:00" value="21"></el-option>
+                          <el-option label="22:00" value="22"></el-option>
+                          <el-option label="23:00" value="23"></el-option>
+                          <el-option label="24:00" value="24"></el-option>
+                        </el-select>
+                      </el-form-item>
+                    </el-col>
+
+                    <el-col :push="4" :span=8>
+                      <el-form-item label="到" prop="product_day_to">
+                        <el-select v-model="ruleForm.product_day_to">
+                          <el-option label="00:00" value="0"></el-option>
+                          <el-option label="01:00" value="1"></el-option>
+                          <el-option label="02:00" value="2"></el-option>
+                          <el-option label="03:00" value="3"></el-option>
+                          <el-option label="04:00" value="4"></el-option>
+                          <el-option label="05:00" value="5"></el-option>
+                          <el-option label="06:00" value="6"></el-option>
+                          <el-option label="07:00" value="7"></el-option>
+                          <el-option label="08:00" value="8"></el-option>
+                          <el-option label="09:00" value="9"></el-option>
+                          <el-option label="10:00" value="10"></el-option>
+                          <el-option label="11:00" value="11"></el-option>
+                          <el-option label="12:00" value="12"></el-option>
+                          <el-option label="13:00" value="13"></el-option>
+                          <el-option label="14:00" value="14"></el-option>
+                          <el-option label="15:00" value="15"></el-option>
+                          <el-option label="16:00" value="16"></el-option>
+                          <el-option label="17:00" value="17"></el-option>
+                          <el-option label="18:00" value="18"></el-option>
+                          <el-option label="19:00" value="19"></el-option>
+                          <el-option label="20:00" value="20"></el-option>
+                          <el-option label="21:00" value="21"></el-option>
+                          <el-option label="22:00" value="22"></el-option>
+                          <el-option label="23:00" value="23"></el-option>
+                          <el-option label="24:00" value="24"></el-option>
+                        </el-select>
+                      </el-form-item>
+                    </el-col>
+                  </el-row>
+
+                  <el-row>
+                    <el-col :span=8 :push="10">
+                      <el-form-item label="" prop="agreement">
+                        <el-checkbox-group v-model="ruleForm.agreement">
+                          <el-checkbox label="您同意二手市场交易原则" name="agreement"></el-checkbox>
+                        </el-checkbox-group>
+                      </el-form-item>
+                    </el-col>
+                  </el-row>
+
+                  <el-row>
+                    <el-col :span=8 :push="10">
+                      <el-form-item>
+                        <el-button type="primary" @click="submitForm('ruleForm')">发布商品</el-button>
+                        <el-button @click="resetForm('ruleForm')">重置</el-button>
+                      </el-form-item>
+                    </el-col>
+                  </el-row>
+                </el-card>
+              </el-col>
+            </el-row>
+          </el-form>
+          <el-dialog
+            title="提示"
+            :visible.sync="isOK"
+            width="30%">
+            <span style="text-align:center;">发布成功</span>
+            <span slot="footer" class="dialog-footer">
+              <el-button type="primary" @click="isOK = false , changepage('/market')">确 定</el-button>
+            </span>
+          </el-dialog>
+      </el-main>
+    </el-container>
   </div>
 </template>
 <script>
 export default {
   data () {
     return {
+      component_img: {
+        item: 'http://localhost:8081/component/item.ico'
+      },
       isOK: false,
       loading: true,
       product_key: '',
       dialogVisible: false,
       img: [],
       ruleForm: {
-        product_catalog: 0,
+        product_catalog: '',
         product_name: '',
         product_price: 0,
         product_stock: 0,
@@ -382,5 +391,9 @@ export default {
     width: 178px;
     height: 178px;
     display: block;
+  }
+  .box-card {
+    width: 1200px;
+    padding: 20px 0 0 0
   }
 </style>

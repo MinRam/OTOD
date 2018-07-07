@@ -177,7 +177,7 @@ public class MarketController {
 		UserInfo userInfo = userService.getUserInfo(userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName()));
 		Market_user mUser = mURepository.findByUserInfo(userInfo);
 		String page_num = map.get("page_num");
-		Pageable pageable = new PageRequest(Integer.parseInt(page_num) - 1 , 10 , Sort.Direction.DESC,"product_createtime");
+		Pageable pageable = new PageRequest(Integer.parseInt(page_num) - 1 , 5 , Sort.Direction.DESC,"product_createtime");
 		Page<Product>products = repository.findBySeller(mUser.getMarket_user_id(), pageable);
 		return products;
 	}

@@ -53,43 +53,41 @@ public class ProductService {
 	@Transactional
 	public List<Product> ManageList(List<Product> products){
 		Date now = new Date();
-		
-		
 		//有效期检测
-		for(int i=0;i < products.size();i++)
-		{
+		for(int i = 0; i < products.size(); i++){
 			if (addDate(products.get(i).getProduct_createtime(), products.get(i).getProduct_life()).after(now)) {
 				continue;
 			} else {
 				repository.updateStatus(2, products.get(i).getProduct_id());
 				products.remove(i);
-			}
-		}
-		//展示时间检测
-		int hour = Integer.parseInt(new SimpleDateFormat("HH").format(now));
-		for (int i=0; i < products.size(); i++)
-		{
-			if (hour >= products.get(i).getProduct_day_from() 
-				&& hour <= products.get(i).getProduct_day_to()){
-				if (products.get(i).getProduct_status() == 4){
-					repository.updateStatus(1, products.get(i).getProduct_id());
-				}
-				continue;
-			} else {
-				repository.updateStatus(4, products.get(i).getProduct_id());
-				products.remove(i);
-			}
-		}
-		//状态检测
-		for (int i=0;i < products.size();i++)
-		{
-			if (products.get(i).getProduct_status() == 1){
-				continue;
-			} else {
-				products.remove(i);
+				i--;
 			}
 		}
 		
+		//展示时间检测
+		int hour = Integer.parseInt(new SimpleDateFormat("HH").format(now));
+		for(int i = 0; i < products.size(); i++){
+			Product p = products.get(i);
+			if (p.getProduct_status() == 4){
+				if (hour >= p.getProduct_day_from() && hour <= p.getProduct_day_to()) {
+					repository.updateStatus(1, p.getProduct_id());
+				}
+			} else if (p.getProduct_status() == 1) {
+				if (hour < p.getProduct_day_from() || hour > p.getProduct_day_to()) {
+					repository.updateStatus(4, p.getProduct_id());
+					products.remove(i);
+					i--;
+				}
+			}
+		}
+		
+		//状态检测
+		for (int i = 0; i < products.size(); i++){
+			if (products.get(i).getProduct_status() != 1) {
+				products.remove(i);
+				i--;
+			}
+		}
 		return products;
 	}
 	

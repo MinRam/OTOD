@@ -1,17 +1,19 @@
 <template>
   <div id="pay">
     <br><br><br>
+    <el-container>
+      <el-main>
         <!--搜索栏-->
           <div class="search">
             <el-row>
-              <el-col :span=8 :push="14">
+              <el-col :span=10 :offset="14">
                 <div class="search_form">
                   <el-form :inline="true"  class="demo-form-inline">
                     <el-form-item label="商品查询">
                       <el-input v-model="product_key" placeholder="请输入商品关键字" clearable></el-input>
                     </el-form-item>
                     <el-form-item>
-                      <el-button type="primary" @click="changepage('/market?product_key='+product_key),search()">查询</el-button>
+                      <el-button type="primary" @click="changepage('/market?product_key='+product_key)">查询</el-button>
                     </el-form-item>
                   </el-form>
                 </div>
@@ -27,7 +29,7 @@
             </el-row>
           </div>
 
-          <el-form :model="OrderForm" ref="OrderForm">
+          <el-form :model="OrderForm" :rules="order_rules" ref="OrderForm">
             <el-col :span=10 :push="4">
               <el-card class="box-card">
                 <div class="text item">
@@ -75,7 +77,7 @@
                       <p>收货地址：<el-input v-model="OrderForm.address"></el-input></p>
                     </el-card>
                   </el-form-item>
-                  <el-form-item prop="receriver">
+                  <el-form-item prop="receiver">
                     <el-card class="small-item">
                       <p>收货人：<el-input v-model="OrderForm.receiver"></el-input></p>
                     </el-card>
@@ -101,6 +103,8 @@
               <el-button type="primary" @click="isOK = false , changepage('/market')">确 定</el-button>
             </span>
           </el-dialog>
+      </el-main>
+    </el-container>
   </div>
 </template>
 
@@ -115,10 +119,21 @@ export default {
         item: 'http://localhost:8081/component/item.ico'
       },
       OrderForm: {
-        product_num: 0,
+        product_num: 1,
         address: '',
         receiver: '',
         phone: ''
+      },
+      order_rules: {
+        address: [
+          {required: true, message: '请输入收货地址', trigger: 'blur'}
+        ],
+        receiver: [
+          {required: true, message: '请输入收货人', trigger: 'blur'}
+        ],
+        phone: [
+          {required: true, message: '请输入联系电话', trigger: 'blur'}
+        ]
       }
     }
   },
@@ -161,24 +176,30 @@ export default {
     },
     SubmitOrder (formName) {
       var t = this
-      this.$axios({
-        method: 'post',
-        url: 'http://localhost:8081/market/addorder',
-        dataType: 'json',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + t.$getCookie('otod_access_token')
-        },
-        data: {
-          product_id: t.product.product_id,
-          product_num: t.OrderForm.product_num,
-          address: t.OrderForm.address,
-          receiver: t.OrderForm.receiver,
-          phone: t.OrderForm.phone
-        }
-      }).then(function (response) {
-        if (response.data === 'success') {
-          t.isOK = true
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          t.$axios({
+            method: 'post',
+            url: 'http://localhost:8081/market/addorder',
+            dataType: 'json',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer ' + t.$getCookie('otod_access_token')
+            },
+            data: {
+              product_id: t.product.product_id,
+              product_num: t.OrderForm.product_num,
+              address: t.OrderForm.address,
+              receiver: t.OrderForm.receiver,
+              phone: t.OrderForm.phone
+            }
+          }).then(function (response) {
+            if (response.data === 'success') {
+              t.isOK = true
+            }
+          })
+        } else {
+          return false
         }
       })
     }
