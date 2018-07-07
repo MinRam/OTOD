@@ -27,7 +27,7 @@ public class Update {
 
     @ManyToOne
     @JoinColumn(name = "update_sender")
-    private UserInfo userInfo;
+    private UserInfo userSender;
 
     @ManyToMany
     @JoinTable(
@@ -71,12 +71,12 @@ public class Update {
         this.date = date;
     }
 
-    public UserInfo getUserInfo() {
-        return userInfo;
+    public UserInfo getUserSender() {
+        return userSender;
     }
 
-    public void setUserInfo(UserInfo userInfo) {
-        this.userInfo = userInfo;
+    public void setUserSender(UserInfo userSender) {
+        this.userSender = userSender;
     }
 
 //    public ObjectType getObjectType() {

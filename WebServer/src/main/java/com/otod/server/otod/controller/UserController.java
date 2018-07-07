@@ -1,10 +1,10 @@
 package com.otod.server.otod.controller;
 
-import com.otod.server.otod.model.user.Notice;
-import com.otod.server.otod.model.user.NoticeList;
-import com.otod.server.otod.model.user.User;
-import com.otod.server.otod.model.user.UserInfo;
-import com.otod.server.otod.pojos.*;
+import com.otod.server.otod.model.user.*;
+import com.otod.server.otod.pojos.NoticePojo;
+import com.otod.server.otod.pojos.UserFollowList;
+import com.otod.server.otod.pojos.UserRegisteration;
+import com.otod.server.otod.pojos.UserSimpleInfo;
 import com.otod.server.otod.services.NoticeService;
 import com.otod.server.otod.services.UserService;
 import org.apache.commons.lang3.StringUtils;
@@ -18,7 +18,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @RestController
 @CrossOrigin
@@ -229,14 +231,13 @@ public class UserController  {
 
     // UpdateList
     @GetMapping("/user/getUpdateList")
-    private List<Integer> getUpdteList(){
+    private List<Update> getUpdteList(@RequestParam(value = "page") Integer page){
         User user = userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName());
         UserInfo userInfo =  userService.getUserInfo(user);
 
-
-
-
-        return null;
+//        Page<Update> test =  userService.getUserUpdate(userInfo,page,5);
+//        System.out.println(test.getSize());
+        return userService.getUserUpdate(userInfo);
     }
 
     @GetMapping("/user/favorUpdate")

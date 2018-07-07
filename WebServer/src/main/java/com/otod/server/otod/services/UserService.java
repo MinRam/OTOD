@@ -1,13 +1,14 @@
 package com.otod.server.otod.services;
 
-import com.otod.server.otod.model.*;
-import com.otod.server.otod.model.user.Role;
-import com.otod.server.otod.model.user.User;
-import com.otod.server.otod.model.user.UserFollow;
-import com.otod.server.otod.model.user.UserInfo;
+import com.otod.server.otod.model.Market_user;
+import com.otod.server.otod.model.user.*;
 import com.otod.server.otod.respository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -129,6 +130,7 @@ public class UserService {
             return true;
         }else return false;
     }
+
     // 检索手机号
     public boolean getTelephone(String telephone) {
        return userInfoRespository.findByTelphone(telephone)!= null;
@@ -139,6 +141,13 @@ public class UserService {
         userInfoRespository.save(userInfo);
     }
 
-    // 获取更新动态
-    public 
+    public Page<Update> getUserUpdate(UserInfo userInfo, Integer page, Integer size) {
+        Pageable pageable = new PageRequest(page, size, Sort.Direction.ASC, "date");
+        return userUpdateRepository.findAll(pageable);
+    }
+
+    public List<Update> getUserUpdate(UserInfo userInfo){
+        System.out.println(userInfo.getId());
+        return userUpdateRepository.findAllByUserSender(userInfo);
+    }
 }

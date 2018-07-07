@@ -8,6 +8,17 @@
             <div class="menu-nav">
                 <ul class="nav-tab">
                   <li v-for="(nav,index) in navObjects" :class="{'active': nav.active}" :key="index" @click="navClick(index)">{{nav.title}}</li>
+                  <li>
+                    <el-dropdown  trigger="click">
+                      <span class="el-dropdown-link more-link">
+                        更多<i class="el-icon-arrow-down el-icon--right"></i>
+                      </span>
+                      <el-dropdown-menu slot="dropdown">
+                        <el-dropdown-item>登出</el-dropdown-item>
+                        <el-dropdown-item>联系我们</el-dropdown-item>
+                      </el-dropdown-menu>
+                    </el-dropdown>
+                  </li>
                  </ul>
                 <div class="nav-search">
                   <el-autocomplete popper-class="el-search" v-model="state3" :fetch-suggestions="querySearch" placeholder="搜索标签" @select="handleSelect">
@@ -61,10 +72,6 @@ export default {
         link: 'File',
         name: 'file',
         title: '文档库'
-      }, {
-        active: false,
-        link: '/more',
-        title: '更多'
       }],
 
       // 搜索框
