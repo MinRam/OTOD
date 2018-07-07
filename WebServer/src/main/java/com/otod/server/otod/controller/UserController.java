@@ -136,6 +136,8 @@ public class UserController  {
         return userService.followUser(user,nickname)?"true":"false";
     }
 
+    // INFO
+
     @GetMapping("/user/getAllInfo")
     private UserInfo allInfo(){
         User user = userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName());
@@ -159,6 +161,39 @@ public class UserController  {
         return "success";
     }
 
+    @PostMapping("/user/saveImg")
+    public String saveimg(@RequestParam("file") MultipartFile file) throws IOException{
+        if (!file.isEmpty()) {
+            if (file.getContentType().contains("image")) {
+                {
+                    // 头像地址
+                    String srcUrl = "hp" + File.separator;
+                    // 获取图片的扩展名
+                    String extensionName = StringUtils.substringAfter(file.getOriginalFilename(), ".");
+                    // 新的图片文件名 = 获取时间戳+"."图片扩展名
+                    String newFileName = String.valueOf(System.currentTimeMillis()) + "." + extensionName;
+                    // 数据库保存的目录
+                    String dataDirectory = srcUrl;
+                    // 文件路径
+                    String filePath = webUploadPath.concat(dataDirectory);
+                    File dest = new File(filePath, newFileName);
+                    if (!dest.getParentFile().exists()) {
+                        dest.getParentFile().mkdirs();
+                    }
+                    System.out.println("[service]:Upload-HeadImage:"+dest.getPath());
+                    file.transferTo(dest);
+                    // 将反斜杠转换为正斜杠
+                    return dataDirectory.replaceAll("\\\\", "/") + newFileName;
+                }
+            } else {
+                return "Error!";
+            }
+        } else {
+            return "Empty!";
+        }
+    }
+
+    // Notice
     @GetMapping("/user/Notice")
     private List<NoticePojo> notice(){
         User user = userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName());
@@ -192,6 +227,7 @@ public class UserController  {
         noticeService.readNotices(noticeList.getIdList());
     }
 
+    // UpdateList
     @GetMapping("/user/getUpdateList")
     private List<Integer> getUpdteList(){
         User user = userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName());
@@ -199,38 +235,23 @@ public class UserController  {
 
 
 
+
         return null;
     }
 
-    @PostMapping("/user/saveImg")
-    public String saveimg(@RequestParam("file") MultipartFile file) throws IOException{
-        if (!file.isEmpty()) {
-            if (file.getContentType().contains("image")) {
-                {
-                    // 头像地址
-                    String srcUrl = "hp" + File.separator;
-                    // 获取图片的扩展名
-                    String extensionName = StringUtils.substringAfter(file.getOriginalFilename(), ".");
-                    // 新的图片文件名 = 获取时间戳+"."图片扩展名
-                    String newFileName = String.valueOf(System.currentTimeMillis()) + "." + extensionName;
-                    // 数据库保存的目录
-                    String dataDirectory = srcUrl;
-                    // 文件路径
-                    String filePath = webUploadPath.concat(dataDirectory);
-                    File dest = new File(filePath, newFileName);
-                    if (!dest.getParentFile().exists()) {
-                        dest.getParentFile().mkdirs();
-                    }
-                    System.out.println("[service]:Upload-HeadImage:"+dest.getPath());
-                    file.transferTo(dest);
-                    // 将反斜杠转换为正斜杠
-                    return dataDirectory.replaceAll("\\\\", "/") + newFileName;
-                }
-            } else {
-                return "Error!";
-            }
-        } else {
-            return "Empty!";
-        }
+    @GetMapping("/user/favorUpdate")
+    private String favorUpdate(@RequestParam (value="update_id") Long updateId){
+        User user = userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName());
+
+
+
+        return "success";
+    }
+
+    @GetMapping("/user/noFavorUpdate")
+    private String noFavorUpdate(@RequestParam (value="udpate_id") Long updateId) {
+        User user = userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName());
+
+        return "success";
     }
 }

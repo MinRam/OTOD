@@ -104,7 +104,6 @@ export default {
             access_token: this.$getCookie('otod_access_token')
           }
         }).then(function (response) {
-          console.log(response.data.nickname)
           this.$store.commit('initialName', response.data.nickname)
           this.$store.commit('initialHead', response.data.headImage)
           this.$store.commit('initialTel', response.data.telephone)
