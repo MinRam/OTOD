@@ -164,7 +164,7 @@ public class ForumTopicServiceImpl implements ForumTopicService {
 		ForumTopicPO forumTopicPO = forumTopicDao.findById(id).get();
 		ForumRecordPO forumRecordPO = new ForumRecordPO();
 		forumRecordPO.setDate(new Date());
-		forumRecordPO.setAdminId(forumTopicPO.getSectionInfoPO().getAdmin_id());
+		forumRecordPO.setAdminId(Long.parseLong("8"));
 		forumRecordPO.setUserId(forumTopicPO.getUserInfo().getId());
 		forumRecordPO.setType("删除");
 		forumRecordPO.setName(forumTopicPO.getTitle());

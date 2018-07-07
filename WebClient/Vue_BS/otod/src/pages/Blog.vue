@@ -2,41 +2,81 @@
 <div>
   <el-container style="width:100%;margin:auto;">
     <el-header>
+      <!--导航栏-->
       <el-breadcrumb separator-class="el-icon-arrow-right">
           <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
           <el-breadcrumb-item >博客</el-breadcrumb-item>
           <el-breadcrumb-item>{{ section_name }}</el-breadcrumb-item>
       </el-breadcrumb>
+      <!--版块修改对话框-->
+      <el-row type="flex" class="row-bg" justify="center">
+        <el-button v-if="user_type > 0" @click="querySectionById(condition.section_id),dialogFormVisible = true">修改当前版块</el-button>
+      </el-row>
+      <el-dialog title="修改版块" :visible.sync="dialogFormVisible">
+        <el-form>
+          <el-form-item label="版块名称：">
+            <el-input v-model="currentSection.name"></el-input>
+          </el-form-item>
+          <el-form-item label="版块描述：">
+            <el-input v-model="currentSection.statement" auto-complete="off"></el-input>
+          </el-form-item>
+        </el-form>
+        <el-table :data="currentSection.sectionAdminPOs">
+          <el-table-column property="userInfo.nickname" label="管理员账号" width="300"></el-table-column>
+          <el-table-column
+            v-if="user_type == 1"
+            label="操作"
+            width="120">
+            <template slot-scope="scope">
+              <el-popover
+                placement="top"
+                width="160"
+                v-model="scope.row.deletevisible">
+                <p>删除不可复原，确定删除吗？</p>
+                <div style="text-align: right; margin: 0">
+                  <el-button size="mini" type="text">取消</el-button>
+                  <el-button type="primary" size="mini">确定</el-button>
+                </div>
+                <el-button slot="reference" type="danger" icon="el-icon-delete" circle size="mini"></el-button>
+              </el-popover>
+            </template>
+          </el-table-column>
+        </el-table>
+        <div slot="footer" class="dialog-footer">
+          <el-button v-if="user_type == 1">新增管理员</el-button>
+          <el-button @click="dialogFormVisible = false">取 消</el-button>
+          <el-button type="primary" @click="dialogFormVisible = false,updateSection()">确 定</el-button>
+        </div>
+      </el-dialog>
     </el-header>
     <el-main >
+      <!--版块列表-->
       <el-row type="flex" class="row-bg" justify="center">
-        <div style="margin:3px;max-width:200px" v-for="(x,index) in sectionList" :key="index">
+        <div class="section-div" v-for="(x,index) in sectionList" :key="index">
           <el-popover
             placement="top"
             :title="x.name"
             width="200"
             trigger="hover">
             <p>{{ x.statement }}</p>
+            <p v-if="x.sectionAdminPOs != null">管理员：{{ x.sectionAdminPOs[0].userInfo.nickname }}</p>
             <span>主题贴数:{{x.post_num}}</span>
-            <el-button type="warning" plain style="height:60px;width:150px;" slot="reference" @click="changepage(1),changesection_id(x.id),queryByCondition()">
+            <el-button type="warning" plain class="section-button" slot="reference" @click="changeSection(x.id)">
               <i class="el-icon-caret-bottom"></i>{{ x.name }}
             </el-button>
           </el-popover>
           </el-popover>
         </div>
       </el-row>
+      <!--标题查询-->
       <el-row type="flex" class="row-bg" justify="end">
         <div style="margin: 15px 100px;">
           <el-input placeholder="请输入内容" v-model="condition.title" class="input-with-select">
-            <el-select v-model="conditionSelect" slot="prepend" placeholder="请选择">
-              <el-option label="餐厅名" value="1"></el-option>
-              <el-option label="订单号" value="2"></el-option>
-              <el-option label="用户电话" value="3"></el-option>
-            </el-select>
             <el-button slot="append" icon="el-icon-search" @click="queryByCondition()"></el-button>
           </el-input>
         </div>
       </el-row>
+      <!--主题帖列表-->
       <el-row type="flex" class="row-bg" justify="center">
         <div class="block">
           <el-table
@@ -69,10 +109,10 @@
               label="作者"
               align="center"
               width="150">
-              <template slot-scope="scope">
-                <img :src="scope.row.userInfo.headimg">
+              <template slot-scope="scope" v-if="scope.row.userInfo != null">
+                <img class="head-img" v-if="scope.row.userInfo.headImage != null" :src="$url + '/images/' + scope.row.userInfo.headImage"/>
                 <el-button type="text">{{ scope.row.userInfo.nickname }}</el-button>
-                <a>id : {{ scope.row.user_id }}</a>
+            <!--    <a>id : {{ scope.row.user_id }}</a> -->
                 <p>{{ scope.row.date }}</p>
               </template>
             </el-table-column>
@@ -85,7 +125,7 @@
                     <p>{{ scope.row.last_time }}</p>
                     <el-row>
                       <i class="el-icon-service"></i>
-                      <el-button type="text">{{ scope.row.lastUserInfo.nickname }}</el-button>
+                      <el-button type="text" v-if="scope.row.lastUserInfo != null">{{ scope.row.lastUserInfo.nickname }}</el-button>
                     </el-row>
                   </el-col>
                   <el-col>
@@ -94,6 +134,7 @@
               </template>
             </el-table-column>
             <el-table-column
+              v-if="user_type > 0"
               label="操作"
               width="70">
               <template slot-scope="scope">
@@ -113,6 +154,7 @@
           </el-table>
         </div>
       </el-row>
+      <!--分页显示插件-->
       <el-row type="flex" class="row-bg" justify="center" style="margin: 15px;">
         <div class="block">
           <el-pagination
@@ -129,6 +171,7 @@
       </el-row>
     </el-main>
     <el-footer>
+      <!--主题贴标题和内容-->
       <el-input
         placeholder="请输入内容"
         suffix-icon="el-icon-date"
@@ -156,6 +199,8 @@ export default {
       forumTopicLength: 0,
       page: 1,
       rows: 10,
+      deleteTopicVisible: false,
+      dialogFormVisible: false,
       deletevisible: false,
       loading: true,
       condition: {
@@ -171,6 +216,7 @@ export default {
       sectionList: [
         {}
       ],
+      currentSection: {},
       forumTopicPO: {
         id: '',
         clickNum: '',
@@ -186,7 +232,7 @@ export default {
       }
     }
   },
-  mounted: function () {
+  created: function () {
     this.queryByCondition()
     this.querySectionList()
     this.checkusertype()
@@ -230,7 +276,7 @@ export default {
             title: this.forumTopicPO.title
           }
         }).then(function (response) {
-          console.log(response)
+          // console.log(response)
           t.successMessageSave()
           // 提交完刷新一次数据
           t.queryByCondition()
@@ -249,10 +295,6 @@ export default {
         method: 'post',
         url: this.$url + '/forumtopic/findbycondition',
         dataType: 'json',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + t.$getCookie('otod_access_token')
-        },
         data: {
           section_id: this.condition.section_id,
           title: this.condition.title,
@@ -260,7 +302,7 @@ export default {
           row: this.rows
         }
       }).then(function (response) {
-        console.log(response)
+        // console.log(response)
         // 为主题帖赋值，为总数度赋值
         t.forumTopicList = response.data.pageList.content
         t.forumTopicLength = response.data.pageList.totalElements
@@ -311,7 +353,7 @@ export default {
           row: t.rows
         }
       }).then(function (response) {
-        console.log(response)
+        // console.log(response)
         t.forumTopicList = response.data.content
         t.forumTopicLength = response.data.totalElements
 
@@ -319,9 +361,9 @@ export default {
           t.forumTopicList[i]['last_time'] = t.getLastTime(t.forumTopicList[i].date)
           var date = new Date(t.forumTopicList[i].date)
           if (date.getFullYear() < (new Date().getFullYear())) {
-            t.forumTopicList[i].date = date.getFullYear() + '年' + date.getMonth() + '月' + date.getDate() + '日'
+            t.forumTopicList[i].date = date.getFullYear() + '年' + (date.getMonth() + 1) + '月' + date.getDate() + '日'
           } else {
-            t.forumTopicList[i].date = date.getMonth() + '月' + date.getDate() + '日'
+            t.forumTopicList[i].date = (date.getMonth() + 1) + '月' + date.getDate() + '日'
           }
         }
       }).catch(function (error) {
@@ -333,6 +375,7 @@ export default {
       alert(this.user_type)
     },
 
+    // 版块列表查询
     querySectionList () {
       var t = this
       this.$axios({
@@ -347,8 +390,20 @@ export default {
         if (t.$route.query.section_id) {
           t.condition.section_id = t.$route.query.section_id
         }
-        console.log(response)
+        // console.log(response)
         t.sectionList = response.data.content
+        t.querySectionById(1)
+      }).catch(function (error) {
+        console.log(error)
+      })
+    },
+
+    // 版块id查询
+    querySectionById (id) {
+      var t = this
+      this.$axios.get(this.$url + '/sectioninfo/findbyid?id=' + id).then(function (response) {
+      //  console.log(response)
+        t.currentSection = response.data
       }).catch(function (error) {
         console.log(error)
       })
@@ -377,9 +432,9 @@ export default {
       if (_year >= 1) {
         result = oldtimedate.getFullYear() + '年' + oldtimedate.getMonth() + '月' + oldtimedate.getDate() + '日'
       } else if (_month >= 1) {
-        result = oldtimedate.getMonth() + '月' + oldtimedate.getDate() + '日'
+        result = (oldtimedate.getMonth() + 1) + '月' + oldtimedate.getDate() + '日'
       } else if (_week >= 1) {
-        result = oldtimedate.getMonth() + '月' + oldtimedate.getDate() + '日'
+        result = (oldtimedate.getMonth() + 1) + '月' + oldtimedate.getDate() + '日'
       } else if (_day >= 1) {
         result = '' + ~~(_day) + '天前'
       } else if (_hour >= 1) {
@@ -411,11 +466,17 @@ export default {
       this.condition.section_id = val
     },
 
+    changeSection (id) {
+      this.changepage(1)
+      this.changesection_id(id)
+      this.checkusertype()
+    //  this.queryByCondition()
+    },
     // 删除主题帖
     deletebyid (id) {
       var t = this
       this.$axios.get(this.$url + '/forumtopic/deletebyid?id=' + id).then(function (response) {
-        console.log(response)
+        // console.log(response)
         t.successMessageDelete()
         t.queryByCondition()
       }).catch(function (error) {
@@ -426,6 +487,7 @@ export default {
     // 检查用户类型
     checkusertype () {
       var t = this
+      t.loading = true
       this.$axios({
         method: 'get',
         url: this.$url + '/sectioninfo/checkusertype',
@@ -438,8 +500,10 @@ export default {
           section_id: t.condition.section_id
         }
       }).then(function (response) {
-        console.log(response)
+        // console.log(response)
         t.user_type = response.data
+        // 因为每次点击版块都要检查用户类型，为了顺序将查询放入
+        t.queryByCondition()
       }).catch(function (error) {
         console.log(error)
       })
@@ -477,9 +541,44 @@ export default {
       })
     },
 
+    updateSection () {
+      var t = this
+      this.$axios({
+        method: 'post',
+        url: this.$url + '/sectioninfo/update',
+        dataType: 'jsonp',
+        data: {
+          section_id: t.condition.section_id,
+          name: t.currentSection.name,
+          statement: t.currentSection.statement
+        }
+      }).then(function (response) {
+        console.log(response)
+      }).catch(function (error) {
+        console.log(error)
+      })
+    },
+
+    // 版块修改，管理员模块
+    removeAdmin (item) {
+      var index = this.currentSection.sectionAdminPOs.indexOf(item)
+      if (index !== 0) {
+        this.currentSection.sectionAdminPOs.splice(index, 1)
+      }
+    },
+    addAdmin () {
+      this.currentSection.sectionAdminPOs.push({
+        userInfo: '',
+        key: Date.now()
+      })
+    },
     handlePreview (file) {
       console.log(file)
     }
   }
 }
 </script>
+
+<style>
+    @import '../assets/css/Blog.css';
+</style>

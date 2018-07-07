@@ -11,7 +11,7 @@
       </el-header>
       <el-main>
         <el-row type="flex" class="row-bg" justify="center">
-          <div class="block">
+          <div class="block" style="width: 1100px;">
             <el-table
               :data="pagelist"
               v-loading="loading"
@@ -20,16 +20,18 @@
               style="width: 100%">
               <el-table-column
                 label="用户"
-                width="200">
+                align="center"
+                width="150">
                 <template slot-scope="scope">
-                  <el-button type="text">{{ scope.row.userInfo.nickname }}</el-button>
+                  <img style="height: 80px;width:80px;" v-if="scope.row.userInfo.headImage != null" :src="$url + '/images/' + scope.row.userInfo.headImage"/>
                   <br>
-                  <el-button type="text">id :{{ scope.row.user_id }}</el-button>
+                  <el-button type="text">{{ scope.row.userInfo.nickname }}</el-button>
+            <!--      <el-button type="text">id :{{ scope.row.user_id }}</el-button> -->
                 </template>
               </el-table-column>
               <el-table-column
                 label="内容"
-                width="1000">
+                width="900">
                 <template slot-scope="scope">
                   <el-row :gutter="1">
                     <el-col :span="1" :offset="19">
@@ -64,7 +66,7 @@
       </el-main>
       <el-footer>
         <QuillEditor ref="quillEditor"></QuillEditor>
-        <el-button type="success" plain @click="save()">发表</el-button>
+        <el-button type="success" plain @click="save()">回复</el-button>
       </el-footer>
     </el-container>
   </div>
@@ -239,7 +241,7 @@ export default {
     errorMessageSave () {
       this.$message({
         showClose: true,
-        message: '发表失败，请填写标题',
+        message: '回复失败，请填写内容',
         type: 'error'
       })
     }

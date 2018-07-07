@@ -31,6 +31,9 @@ public class UserService {
     @Autowired
     private MURepository mURepository;
 
+    @Autowired
+    private UserUpdateRepository userUpdateRepository;
+
 //    @Bean
 //    public PasswordEncoder passwordEncoder(){
 //        String idForEncode = "bcrypt";
@@ -130,4 +133,11 @@ public class UserService {
     public boolean getTelephone(String telephone) {
        return userInfoRespository.findByTelphone(telephone)!= null;
     }
+
+    // 更新用户信息
+    public void save(UserInfo userInfo) {
+        userInfoRespository.save(userInfo);
+    }
+
+
 }
