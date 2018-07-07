@@ -31,7 +31,7 @@
               </el-table-column>
               <el-table-column
                 label="内容"
-                width="1050">
+                width="900">
                 <template slot-scope="scope">
                   <el-row :gutter="1">
                     <el-col :span="1" :offset="19">

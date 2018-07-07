@@ -31,6 +31,9 @@ public class UserService {
     @Autowired
     private MURepository mURepository;
 
+    @Autowired
+    private UserUpdateRepository userUpdateRepository;
+
 //    @Bean
 //    public PasswordEncoder passwordEncoder(){
 //        String idForEncode = "bcrypt";

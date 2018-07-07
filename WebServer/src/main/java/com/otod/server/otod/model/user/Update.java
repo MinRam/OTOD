@@ -21,9 +21,9 @@ public class Update {
     @Column(name = "update_date")
     private Date date;
 
-    @ManyToOne
-    @JoinColumn(name = "update_type")
-    private ObjectType objectType;
+//    @ManyToOne
+//    @JoinColumn(name = "update_type")
+//    private ObjectType objectType;
 
     @ManyToOne
     @JoinColumn(name = "update_sender")
@@ -79,11 +79,12 @@ public class Update {
         this.userInfo = userInfo;
     }
 
-    public ObjectType getObjectType() {
-        return objectType;
-    }
+//    public ObjectType getObjectType() {
+//        return objectType;
+//    }
+//
+//    public void setObjectType(ObjectType objectType) {
+//        this.objectType = objectType;
+//    }
 
-    public void setObjectType(ObjectType objectType) {
-        this.objectType = objectType;
-    }
 }
