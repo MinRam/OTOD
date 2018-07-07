@@ -1,8 +1,10 @@
 package com.otod.server.otod.services;
 
 
+import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 import javax.transaction.Transactional;
@@ -15,6 +17,7 @@ import com.otod.server.otod.model.Market_user;
 import com.otod.server.otod.model.P_Order;
 import com.otod.server.otod.model.Product;
 import com.otod.server.otod.pojos.P_OrderPojo;
+import com.otod.server.otod.pojos.PayPojo;
 import com.otod.server.otod.respository.MURepository;
 import com.otod.server.otod.respository.P_OrderRepository;
 import com.otod.server.otod.respository.ProductRepository;
@@ -189,4 +192,10 @@ public class OrderService {
 		record.setP_Order(order);
 		recordRepository.save(record);
 	}
+	
+	@Transactional
+	public void DeleteOrder(int order_id) {
+		orderRepository.deleteById(order_id);
+	}
+
 }

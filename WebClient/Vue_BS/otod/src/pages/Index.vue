@@ -83,7 +83,15 @@ export default {
   watch: {
     '$route': '_changeHead'
   },
-
+  created () {
+    if (this.$getCookie('otod_access_token') !== null) {
+      if (this.$route.path === '/') {
+        this.$router.replace('/home/person')
+      }
+    } else {
+      this.$router.replace('/login')
+    }
+  },
   methods: {
     // initial userInfo
     initialUserInfo () {
@@ -96,7 +104,6 @@ export default {
             access_token: this.$getCookie('otod_access_token')
           }
         }).then(function (response) {
-          console.log(response.data.nickname)
           this.$store.commit('initialName', response.data.nickname)
           this.$store.commit('initialHead', response.data.headImage)
           this.$store.commit('initialTel', response.data.telephone)

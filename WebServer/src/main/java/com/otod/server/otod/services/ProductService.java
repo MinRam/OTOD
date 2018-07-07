@@ -1,18 +1,22 @@
 package com.otod.server.otod.services;
 
 import com.otod.server.otod.model.*;
+import com.otod.server.otod.model.user.UserInfo;
 import com.otod.server.otod.pojos.ProductPojo;
 import com.otod.server.otod.respository.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+
+import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 
 
 @Service("productService")
@@ -114,9 +118,9 @@ public class ProductService {
 		int product_day_to = pojo.getProduct_day_to();
 		int status = 1;
 		String product_img = null;
-		if(pojo.getProduct_img() == null)
+		if(pojo.getProduct_img().length == 0)
 		{
-			product_img = null;
+			product_img = "http://localhost:8081/market/default.png";
 		}
 		else {
 			product_img = "http://localhost:8081/" + pojo.getProduct_img()[0];
@@ -212,8 +216,18 @@ public class ProductService {
 	}
 	
 	@Transactional
-	public void DeleteProduct(int product_id) {
+	public String DeleteProduct(int product_id) {
 		Product product = repository.findById(product_id).get();
-		repository.deleteById(product.getProduct_id());
+		Set<P_Order>orders = product.getOrders();
+		Iterator<P_Order> iterator = orders.iterator();
+		while(iterator.hasNext()){
+			P_Order order = iterator.next();
+			if (order.getStatus() != 3 && order.getStatus() != 5 && order.getStatus() != 8) {
+				return "failure";
+			}
+		}
+		repository.deleteById(product_id);
+		return "success";
 	}
+	
 }

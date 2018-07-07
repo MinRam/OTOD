@@ -27,22 +27,27 @@
                                         <div style="clear: both"></div>
                                     </div>
                                     <div class="button-group">
-                                        <div style="margin-bottom: 10px;">
-                                            <el-button type="primary" icon="el-icon-more" circle @click="sstatic = !sstatic;openDialog(m.id)" @mouseover.native="show = !show" @mouseout.native="show = !show"></el-button>
-                                            <transition name="el-zoom-in-left">
-                                                <div v-show="show || sstatic" class="commit-button-box bg-primary">评价订单！</div>
-                                            </transition>
-                                            <div style="clear: both"></div>
+                                      <div style="margin-bottom: 10px;">
+                                          <el-button type="primary" icon="el-icon-more" circle @click="sstatic = !sstatic;openDialog(m.id)" @mouseover.native="show = !show" @mouseout.native="show = !show"></el-button>
+                                          <transition name="el-zoom-in-left">
+                                              <div v-show="show || sstatic" class="commit-button-box bg-primary">评价订单！</div>
+                                          </transition>
+                                          <div style="clear: both"></div>
+                                      </div>
+                                      <div v-if="m.orderEval !== null">
+                                        <div v-show="m.orderEval.sTitle !== null">
+                                          <p style="color: #67c23a">求助方评价：</p>
+                                          <p><span>标题：</span>{{ m.orderEval.sTitle }}</p>
+                                          <p><span>内容：</span>{{ m.orderEval.sContent }}</p>
+                                          <p><span>评级：</span>{{ level[m.orderEval.sNum] }}</p>
                                         </div>
-                                        <div style="margin-bottom: 10px;">
-                                            <el-button type="warning" icon="el-icon-arrow-right" circle @click="sstatic1 = !sstatic1" @mouseover.native="show1 = !show1" @mouseout.native="show1 = !show1"></el-button>
-                                            <transition name="el-zoom-in-left">
-                                                <div v-show="show1 || sstatic1" class="commit-button-box bg-warning">
-                                                    <span>我需要{{ m.contributers }}个人</span>
-                                                </div>
-                                            </transition>
-                                            <div style="clear: both"></div>
+                                        <div v-show="m.orderEval.sTitle === null">
+                                          <p style="color: #e6a23c">求助方未作出评价</p>
                                         </div>
+                                      </div>
+                                      <div v-show="m.orderEval === null">
+                                        <p style="color: #e6a23c">求助方未作出评价</p>
+                                      </div>
                                     </div>
                                 </el-aside>
                                 <el-container>
@@ -129,7 +134,15 @@ export default {
           value: '1',
           label: '太差了！'
         }]
-      }
+      },
+      level: [
+        '',
+        '太差了！',
+        '比较差',
+        '一般般',
+        '还可以',
+        '超棒的！'
+      ]
     }
   },
   mounted () {

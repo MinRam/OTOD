@@ -26,6 +26,9 @@
                                 </el-option>
                             </el-select>
                         </el-form-item>
+                        <el-form-item label="求助奖励" label-width="80px">
+                          <el-input-number v-model="form.profit" :min="0" :max="1000"></el-input-number>
+                        </el-form-item>
                         <el-form-item label="紧急程度" label-width="80px">
                             <el-select v-model="form.urgency" clearable placeholder="有多紧急？">
                                 <el-option
@@ -107,7 +110,8 @@ export default {
         }],
         urgency: '',
         s_date: '',
-        deadline: ''
+        deadline: '',
+        profit: ''
       },
       labelPosition: 'left',
       pickerOptions0: {
@@ -181,7 +185,8 @@ export default {
             content: t.form.content,
             deadline: t.form.deadline,
             urgency: t.form.urgency,
-            contributers: t.form.contributer
+            contributers: t.form.contributer,
+            profit: t.form.profit
           }
         })
           .then(function (response) {

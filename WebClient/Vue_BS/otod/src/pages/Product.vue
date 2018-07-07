@@ -109,10 +109,20 @@
 
                   <!--购买商品-->
                   <div id="add_cart" class="pull-right">
-                    <el-button @click="changepage('/market/product/pay?product_id='+product.product_id)">
+                    <el-button @click="payforit()">
                       <span><img :src="component_img.add_cart" alt="" width="40px" height="40px"></span>
                       <span>购买商品</span>
                     </el-button>
+                    <el-dialog
+                      title="提示"
+                      :visible.sync="payfor_wrong"
+                      width="30%"
+                      :before-close="handleClose">
+                      <span>无法购买（商品正在交易或者商品已经下架）</span>
+                      <span slot="footer" class="dialog-footer">
+                        <el-button type="primary" @click="payfor_wrong = false">确 定</el-button>
+                      </span>
+                    </el-dialog>
                   </div>
                 </div>
               </el-col>
@@ -177,6 +187,7 @@ export default {
   },
   data () {
     return {
+      payfor_wrong: false,
       dialogImageUrl: '',
       dialogVisible: false,
       loading: true,
@@ -232,6 +243,14 @@ export default {
         t.img_url = response.data.product_imgs
         console.log(t.product)
       })
+    },
+    payforit () {
+      var t = this
+      if (t.product.product_status !== 1) {
+        t.payfor_wrong = true
+      } else {
+        t.changepage('/market/product/pay?product_id=' + t.product.product_id)
+      }
     },
     handleClick (tab, event) {},
     toshow (src) {

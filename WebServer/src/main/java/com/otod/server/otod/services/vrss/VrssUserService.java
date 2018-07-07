@@ -1,10 +1,10 @@
 package com.otod.server.otod.services.vrss;
 
-import com.otod.server.otod.model.User;
-import com.otod.server.otod.model.UserInfo;
+
+import com.otod.server.otod.model.user.User;
+import com.otod.server.otod.model.user.UserInfo;
 import com.otod.server.otod.model.vrss.VrssUser;
 import com.otod.server.otod.respository.UserInfoRespository;
-import com.otod.server.otod.respository.UserRepository;
 import com.otod.server.otod.respository.vrss.VrssUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

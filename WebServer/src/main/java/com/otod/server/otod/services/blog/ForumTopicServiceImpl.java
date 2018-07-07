@@ -1,9 +1,7 @@
 package com.otod.server.otod.services.blog;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -29,8 +27,7 @@ import com.otod.server.otod.respository.blog.ForumReplyDao;
 import com.otod.server.otod.respository.blog.ForumTopicDao;
 import com.otod.server.otod.respository.blog.SectionInfoDao;
 import com.otod.server.otod.services.UserService;
-import com.otod.server.otod.model.User;
-import com.otod.server.otod.model.UserInfo;
+import com.otod.server.otod.model.user.User;
 import com.otod.server.otod.model.blog.ForumRecordPO;
 import com.otod.server.otod.model.blog.ForumReplyPO;
 import com.otod.server.otod.model.blog.ForumTopicPO;
@@ -167,7 +164,7 @@ public class ForumTopicServiceImpl implements ForumTopicService {
 		ForumTopicPO forumTopicPO = forumTopicDao.findById(id).get();
 		ForumRecordPO forumRecordPO = new ForumRecordPO();
 		forumRecordPO.setDate(new Date());
-		forumRecordPO.setAdminId(forumTopicPO.getSectionInfoPO().getAdmin_id());
+		forumRecordPO.setAdminId(Long.parseLong("8"));
 		forumRecordPO.setUserId(forumTopicPO.getUserInfo().getId());
 		forumRecordPO.setType("删除");
 		forumRecordPO.setName(forumTopicPO.getTitle());

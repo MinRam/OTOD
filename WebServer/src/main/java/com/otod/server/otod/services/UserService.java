@@ -1,6 +1,10 @@
 package com.otod.server.otod.services;
 
 import com.otod.server.otod.model.*;
+import com.otod.server.otod.model.user.Role;
+import com.otod.server.otod.model.user.User;
+import com.otod.server.otod.model.user.UserFollow;
+import com.otod.server.otod.model.user.UserInfo;
 import com.otod.server.otod.respository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -27,6 +31,9 @@ public class UserService {
     @Autowired
     private MURepository mURepository;
 
+    @Autowired
+    private UserUpdateRepository userUpdateRepository;
+
 //    @Bean
 //    public PasswordEncoder passwordEncoder(){
 //        String idForEncode = "bcrypt";
@@ -46,8 +53,6 @@ public class UserService {
         return (NoOpPasswordEncoder) NoOpPasswordEncoder.getInstance();
     }
 
-    // 获取 VrssUser
-
     public User getUser(String username){
         return userRepository.findByUsername(username);
     }
@@ -57,7 +62,7 @@ public class UserService {
     }
 
     // 获取 UserInfo
-    public UserInfo  getUserInfo(User user){
+    public UserInfo getUserInfo(User user){
         return userInfoRespository.findByUser(user);
     }
 
@@ -124,4 +129,15 @@ public class UserService {
             return true;
         }else return false;
     }
+    // 检索手机号
+    public boolean getTelephone(String telephone) {
+       return userInfoRespository.findByTelphone(telephone)!= null;
+    }
+
+    // 更新用户信息
+    public void save(UserInfo userInfo) {
+        userInfoRespository.save(userInfo);
+    }
+
+
 }

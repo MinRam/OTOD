@@ -1,6 +1,4 @@
-package com.otod.server.otod.model;
-
-import org.springframework.web.bind.annotation.GetMapping;
+package com.otod.server.otod.model.user;
 
 import javax.persistence.*;
 import java.util.Date;

@@ -1,6 +1,6 @@
 package com.otod.server.otod.pojos;
 
-import com.otod.server.otod.model.UserInfo;
+import com.otod.server.otod.model.user.UserInfo;
 
 public class UserSimpleInfo {
     private String nickname;

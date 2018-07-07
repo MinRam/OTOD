@@ -58,7 +58,9 @@
                                   <img :src="$imageUrl + update.images[0].url" :title="update.images[0].title"/>
                                 </a>
                             </div>
-                            <div class="content-txt"></div>
+                            <div class="content-txt">
+                                <p v-for="(con,index) in update.content" :key="index">{{con}}</p>
+                            </div>
                          </div>
                         <div class="message-footer">
                             <div class="message-tags">
@@ -67,7 +69,7 @@
                             <div class="message-options">
                                 <span class="opt-share">推荐</span>
                                 <span class="opt-love">
-                                    <a class="love-icon" :class="{'active':update.updateOpt.recommened}" hideFocus="true" title="喜欢">喜欢</a>
+                                    <a class="love-icon" :class="{'active':update.updateOpt.recommened}" hideFocus="true" title="喜欢" @click="recommendUpdate(update.updateId,index)">喜欢</a>
                                 </span>
                              </div>
                          </div>
@@ -114,6 +116,7 @@ export default{
           username: 'TianChengLiu',
           telephone: ''
         },
+        updateId: 1,
         updateTags: [{
           name: '皮皮虾'
         }, {
@@ -123,7 +126,7 @@ export default{
           url: 'Images/1.jpg',
           title: '早上好'
         }],
-        Content: '怕上火爆王老菊',
+        content: ['怕上火爆王老菊'],
         updateOpt: {
           recommened: false
         }
@@ -133,6 +136,7 @@ export default{
           username: 'TianChengLiu',
           telephone: ''
         },
+        updateId: 2,
         updateTags: [{
           name: '皮皮虾'
         }, {
@@ -142,15 +146,38 @@ export default{
           url: 'Images/1.jpg',
           title: '早上好'
         }],
-        Content: '怕上火爆王老菊',
+        content: ['怕上火爆王老菊', '123'],
         updateOpt: {
-          recommened: false
+          recommened: true
+        }
+      }, {
+        author: {
+          headPhoto: 'hp/6630576284002729390.jpg',
+          username: 'TianChengLiu',
+          telephone: ''
+        },
+        updateId: 3,
+        updateTags: [{
+          name: '皮皮虾'
+        }, {
+          name: '揍你'
+        }],
+        images: [{
+          url: 'Images/1.jpg',
+          title: '早上好'
+        }],
+        content: ['怕上火爆王老菊', '123'],
+        updateOpt: {
+          recommened: true
         }
       }],
 
       // 加载显示
-      loading: 'true'
+      loading: true
     }
+  },
+  created () {
+    window.onscroll = this.scrollControll
   },
   mounted () {
     this.initialData()
@@ -181,7 +208,6 @@ export default{
 
     // route link
     goRouter (index) {
-      console.log(index)
       this.$router.push({ name: this.publishPosts[index].link, params: { page: this.publishPosts[index].title } })
     },
 
@@ -206,6 +232,74 @@ export default{
       })
 
       this.noticeList = []
+    },
+
+    scrollControll () {
+      // 变量scrollTop是滚动条滚动时，距离顶部的距离
+      var scrollTop = document.documentElement.scrollTop || document.body.scrollTop
+      // 变量windowHeight是可视区的高度
+      var windowHeight = document.documentElement.clientHeight || document.body.clientHeight
+      // 变量scrollHeight是滚动条的总高度
+      var scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight
+
+      // 动态加载
+      if (!this.loading && scrollTop + windowHeight > scrollHeight - 100) {
+        // 写后台加载数据的函数
+        this.loading = true
+
+        this.updatings.push({
+          author: {
+            headPhoto: 'hp/6630576284002729390.jpg',
+            username: 'TianChengLiu',
+            telephone: ''
+          },
+          updateTags: [{
+            name: '皮皮虾'
+          }, {
+            name: '揍你'
+          }],
+          images: [{
+            url: 'Images/1.jpg',
+            title: '早上好'
+          }],
+          content: ['怕上火爆王老菊', '123'],
+          updateOpt: {
+            recommened: true
+          }
+        })
+
+        this.loading = false
+      }
+    },
+
+    recommendUpdate (id, index) {
+      if (this.updatings[index].updateOpt.recommened) {
+        this.$axios({
+          method: 'get',
+          url: this.$url + '/user/favorUpdate',
+          params: {
+            access_token: this.$getCookie('otod_access_token'),
+            update_id: id
+          }
+        }).then(function (response) {
+          if (response.data === 'success') {
+            this.updatings[index].updateOpt.recommened = false
+          }
+        })
+      } else {
+        this.$axios({
+          method: 'get',
+          url: this.$url + '/user/favorUpdate',
+          params: {
+            access_token: this.$getCookie('otod_access_token'),
+            update_id: id
+          }
+        }).then(function (response) {
+          if (response.data === 'success') {
+            this.updatings[index].updateOpt.recommened = true
+          }
+        })
+      }
     }
   }
 }

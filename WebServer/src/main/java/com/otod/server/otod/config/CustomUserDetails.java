@@ -1,7 +1,7 @@
 package com.otod.server.otod.config;
 
-import com.otod.server.otod.model.Role;
-import com.otod.server.otod.model.User;
+import com.otod.server.otod.model.user.Role;
+import com.otod.server.otod.model.user.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

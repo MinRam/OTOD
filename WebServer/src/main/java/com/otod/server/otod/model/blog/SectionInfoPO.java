@@ -1,5 +1,6 @@
 package com.otod.server.otod.model.blog;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -27,7 +28,10 @@ public class SectionInfoPO {
 	private String type;
 	
 	@OneToMany(mappedBy="sectionInfoPO")
-	private Set<ForumTopicPO> forumTopicPOs;
+	private List<ForumTopicPO> forumTopicPOs;
+	
+	@OneToMany(mappedBy="sectionInfoPO")
+	private List<SectionAdminPO> sectionAdminPOs;
 	
 	public int getId() {
 		return id;
@@ -35,10 +39,10 @@ public class SectionInfoPO {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public Long getAdmin_id() {
+	public long getAdmin_id() {
 		return admin_id;
 	}
-	public void setAdmin_id(Long admin_id) {
+	public void setAdmin_id(long admin_id) {
 		this.admin_id = admin_id;
 	}
 	public String getName() {
@@ -71,12 +75,19 @@ public class SectionInfoPO {
 	public void setType(String type) {
 		this.type = type;
 	}
-	public Set<ForumTopicPO> getForumTopicPOs() {
+	public List<ForumTopicPO> getForumTopicPOs() {
 		return forumTopicPOs;
 	}
-	public void setForumTopicPOs(Set<ForumTopicPO> forumTopicPOs) {
+	public void setForumTopicPOs(List<ForumTopicPO> forumTopicPOs) {
 		this.forumTopicPOs = forumTopicPOs;
 	}
-	
-	
+	public List<SectionAdminPO> getSectionAdminPOs() {
+		return sectionAdminPOs;
+	}
+	public void setSectionAdminPOs(List<SectionAdminPO> sectionAdminPOs) {
+		this.sectionAdminPOs = sectionAdminPOs;
+	}
+	public void setAdmin_id(Long admin_id) {
+		this.admin_id = admin_id;
+	}
 }

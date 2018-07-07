@@ -1,7 +1,7 @@
 package com.otod.server.otod.respository;
 
-import com.otod.server.otod.model.Notice;
-import com.otod.server.otod.model.User;
+import com.otod.server.otod.model.user.Notice;
+import com.otod.server.otod.model.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -11,6 +11,7 @@ import java.util.List;
 
 @Repository
 public interface NoticeRespository extends JpaRepository<Notice,Long> {
+    List<Notice> findAllByUserOwn(User user);
 
     List<Notice> findAllByUserOwnAndRead(User user,Integer read);
 

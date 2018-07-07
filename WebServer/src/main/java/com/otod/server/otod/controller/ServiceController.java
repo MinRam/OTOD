@@ -1,11 +1,12 @@
 package com.otod.server.otod.controller;
 
+import com.otod.server.otod.model.user.UserInfo;
+import com.otod.server.otod.model.user.User;
 import com.otod.server.otod.model.OrderEval;
-import com.otod.server.otod.model.UserInfo;
 import com.otod.server.otod.pojos.CommenOrdersPOJO;
 import com.otod.server.otod.model.CommenOrder;
-import com.otod.server.otod.model.User;
 import com.otod.server.otod.pojos.OrderEvalPOJO;
+
 import com.otod.server.otod.pojos.PublishOrder;
 import com.otod.server.otod.services.ServiceService;
 import com.otod.server.otod.services.UserService;
@@ -80,6 +81,7 @@ public class ServiceController {
         commenOrder.setTitle(publishOrder.getTitle());
         commenOrder.setContent(publishOrder.getContent());
         commenOrder.setOrderState("1");
+        commenOrder.setProfits(publishOrder.getProfit());
         System.out.println(publishOrder.getDeadline());
 //        DateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 //        DateFormat dateFormat1 = new SimpleDateFormat("yyyy-MM-dd");
@@ -125,7 +127,12 @@ public class ServiceController {
         }
         list.add(userInfo);
         commenOrder.setUserinfoR(list);
-        commenOrder.setOrderState("2");
+        if(commenOrder.getContributers() - commenOrder.getContributersRecive() >= 1){
+            commenOrder.setContributersRecive(commenOrder.getContributersRecive() + 1);
+        }
+        if(commenOrder.getContributersRecive() == commenOrder.getContributers()){
+            commenOrder.setOrderState("2");
+        }
         return serviceService.reciveOrder(commenOrder, userInfo)? "yeah":"false";
     }
 
@@ -167,6 +174,17 @@ public class ServiceController {
         }
         return result;
     }
+    @GetMapping("/cancelOrderS")
+    private String cancelOrderS(@RequestParam(value = "OrderId")Long id,@RequestParam(value = "reason")String reason){
+        CommenOrder commenOrder = getCommenorder(id);
+        if(commenOrder == null) {
+            return "null Order";
+        }
+        commenOrder.setReason(reason);
+        commenOrder.setOrderState("5");
+        serviceService.saveOrder(commenOrder);
+        return "order canceled";
+    }
 
     @GetMapping("/waitingEvaluateS")
     private  List<CommenOrder> getWaitingEvaluateS(){
@@ -180,6 +198,30 @@ public class ServiceController {
             }
         }
         return result;
+    }
+    //我的求助 -》 待评价 -》 评价订单
+    @PostMapping("/sCommentOrder")
+    private String sCommentOrder(@RequestBody OrderEvalPOJO orderEvalPOJO){
+        OrderEval orderEval;
+        Optional<CommenOrder> c = serviceService.getCommenOrderById(orderEvalPOJO.getOrderId());
+        CommenOrder commenOrder = c.get();
+        if(commenOrder.getOrderEval() != null){
+            orderEval = commenOrder.getOrderEval();
+        }
+        else {
+            orderEval = new OrderEval();
+        }
+        orderEval.setsContent(orderEvalPOJO.getsContent());
+        orderEval.setsTitle(orderEvalPOJO.getsTitle());
+        orderEval.setsNum(orderEvalPOJO.getsNum());
+        orderEval.setsDate(new Date());
+        if(orderEval.getrContent() != null){
+            commenOrder.setOrderState("4");
+        }
+        if(serviceService.saveComment(commenOrder,orderEval)){
+            return "comment saved!";
+        }
+        return "false";
     }
 
     @GetMapping("/finishedOrderS")
@@ -350,20 +392,34 @@ public class ServiceController {
     //我的订单 -》 待评价 -》 评价订单
     @PostMapping("/rCommentOrder")
     private String rCommentOrder(@RequestBody OrderEvalPOJO orderEvalPOJO){
+        OrderEval orderEval;
         Optional<CommenOrder> c = serviceService.getCommenOrderById(orderEvalPOJO.getOrderId());
         CommenOrder commenOrder = c.get();
         if(commenOrder.getOrderEval() != null){
-            return "already";
+            orderEval = commenOrder.getOrderEval();
         }
-        OrderEval orderEval = new OrderEval();
+        else {
+            orderEval = new OrderEval();
+        }
         orderEval.setrContent(orderEvalPOJO.getrContent());
         orderEval.setrTitle(orderEvalPOJO.getrTitle());
         orderEval.setrNum(orderEvalPOJO.getrNum());
         orderEval.setrDate(new Date());
-        commenOrder.setOrderState("4");
+        if(orderEval.getsContent() != null){
+            commenOrder.setOrderState("4");
+        }
         if(serviceService.saveComment(commenOrder,orderEval)){
             return "comment saved!";
         }
         return "false";
+    }
+
+    private CommenOrder getCommenorder(Long id){
+        Optional<CommenOrder> c = serviceService.getCommenOrderById(id);
+        CommenOrder commenOrder = c.get();
+        if(commenOrder == null){
+            return null;
+        }
+        else return commenOrder;
     }
 }

@@ -1,6 +1,5 @@
 package com.otod.server.otod.services.vrss;
 
-import com.otod.server.otod.model.User;
 import com.otod.server.otod.model.vrss.Download;
 import com.otod.server.otod.model.vrss.FileInfo;
 import com.otod.server.otod.model.vrss.VrssUser;
