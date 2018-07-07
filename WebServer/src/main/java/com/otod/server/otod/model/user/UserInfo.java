@@ -1,4 +1,4 @@
-package com.otod.server.otod.model;
+package com.otod.server.otod.model.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -15,6 +15,7 @@ public class UserInfo {
 
     @OneToOne
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     private User user;
 
     @Column(name = "nickname")

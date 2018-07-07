@@ -43,7 +43,7 @@ export default {
         this.comments.push({
           id: data[i].id,
           comment: data[i].comment,
-          create_time: data[i].create_time,
+          create_time: this.FormatDate(data[i].create_time),
           user_id: data[i].vrssUser.user_id,
           reply_id: replyid
         })
@@ -53,6 +53,10 @@ export default {
     })
   },
   methods: {
+    FormatDate (strTime) {
+      var date = new Date(strTime)
+      return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate()
+    },
     addComment (data) {
       var params = new URLSearchParams()
       params.append('comment', data)

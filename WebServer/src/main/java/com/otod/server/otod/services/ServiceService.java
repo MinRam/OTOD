@@ -1,8 +1,10 @@
 package com.otod.server.otod.services;
 
 import com.otod.server.otod.model.CommenOrder;
-import com.otod.server.otod.model.UserInfo;
+import com.otod.server.otod.model.user.UserInfo;
+import com.otod.server.otod.model.OrderEval;
 import com.otod.server.otod.respository.CommenOrderRespository;
+import com.otod.server.otod.respository.OrderEvalRespository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -23,7 +25,8 @@ import java.util.Optional;
 public class ServiceService {
     @Autowired
     private CommenOrderRespository commenOrderRespository;
-
+    @Autowired
+    private OrderEvalRespository orderEvalRespository;
 
     public List<CommenOrder> getAllCommenOrders(){
 //        String sql = "select * from commenorder where order_state=1";
@@ -39,7 +42,13 @@ public class ServiceService {
     //size 每页的数量
     public Page<CommenOrder> getListPage(int currentPage, int size){
         Pageable pageable = PageRequest.of(currentPage, size, Sort.DEFAULT_DIRECTION, "sDate");
-        return commenOrderRespository.findAll(pageable);
+        return commenOrderRespository.findAll(new Specification<CommenOrder>() {
+            @Override
+            public Predicate toPredicate(Root<CommenOrder> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+                criteriaQuery.where(criteriaBuilder.equal(root.get("orderState").as(String.class),"1"));
+                return null;
+            }
+        },pageable);
     }
 
     public void saveOrder(CommenOrder commenOrder){
@@ -72,10 +81,24 @@ public class ServiceService {
         return commenOrderRespository.findByUserinfoR(userInfo);
     }
 
-    public CommenOrder getOrderById(Long id){
-        Optional<CommenOrder> optional =  commenOrderRespository.findById(id);
-        if(optional.isPresent()){
-            return null;
-        } else return optional.get();
+//    public CommenOrder getOrderById(Long id){
+//        Optional<CommenOrder> optional =  commenOrderRespository.findById(id);
+//        if(optional.isPresent()){
+//            return null;
+//        } else return optional.get();
+//    }
+
+    //我的求助 -》 删除订单
+    public boolean sDeleteOrder(CommenOrder commenOrder){
+        commenOrderRespository.delete(commenOrder);
+        return true;
     }
+    //OrderEval save
+    public boolean saveComment(CommenOrder commenOrder, OrderEval orderEval){
+        orderEvalRespository.save(orderEval);
+        commenOrder.setOrderEval(orderEval);
+        commenOrderRespository.save(commenOrder);
+        return true;
+    }
+
 }

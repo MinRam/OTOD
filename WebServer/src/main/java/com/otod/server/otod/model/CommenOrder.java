@@ -1,5 +1,7 @@
 package com.otod.server.otod.model;
 
+import com.otod.server.otod.model.user.UserInfo;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -41,7 +43,7 @@ public class CommenOrder {
 //    @Column(name = "user_s_id")
 //    private String userSId;
     //接受用户（外键）
-    @ManyToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     private List<UserInfo> userinfoR;
 //    @Column(name = "user_r_id")
 //    private String userRId;
@@ -67,20 +69,17 @@ public class CommenOrder {
     //已有人数
     @Column(name = "contributers_recive")
     private int contributersRecive;
-
+    //订单评价
     @OneToOne
+    @JoinColumn(name = "order_eval_id")
     private OrderEval orderEval;
+    //订单投诉
+    @OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+    @JoinColumn(name = "order_complain_id")
+    private List<UserComplain> userComplains;
 
 
     public CommenOrder(){
-    }
-
-    public int getContributers() {
-        return contributers;
-    }
-
-    public void setContributers(int contributers) {
-        this.contributers = contributers;
     }
 
     public Long getId() {
@@ -195,12 +194,12 @@ public class CommenOrder {
         this.reason = reason;
     }
 
-    public OrderEval getOrderEval() {
-        return orderEval;
+    public int getContributers() {
+        return contributers;
     }
 
-    public void setOrderEval(OrderEval orderEval) {
-        this.orderEval = orderEval;
+    public void setContributers(int contributers) {
+        this.contributers = contributers;
     }
 
     public int getContributersRecive() {
@@ -209,5 +208,21 @@ public class CommenOrder {
 
     public void setContributersRecive(int contributersRecive) {
         this.contributersRecive = contributersRecive;
+    }
+
+    public OrderEval getOrderEval() {
+        return orderEval;
+    }
+
+    public void setOrderEval(OrderEval orderEval) {
+        this.orderEval = orderEval;
+    }
+
+    public List<UserComplain> getUserComplains() {
+        return userComplains;
+    }
+
+    public void setUserComplains(List<UserComplain> userComplains) {
+        this.userComplains = userComplains;
     }
 }

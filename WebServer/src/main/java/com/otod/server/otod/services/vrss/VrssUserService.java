@@ -1,6 +1,6 @@
 package com.otod.server.otod.services.vrss;
 
-import com.otod.server.otod.model.User;
+import com.otod.server.otod.model.user.User;
 import com.otod.server.otod.model.vrss.VrssUser;
 import com.otod.server.otod.respository.UserRepository;
 import com.otod.server.otod.respository.vrss.VrssUserRepository;

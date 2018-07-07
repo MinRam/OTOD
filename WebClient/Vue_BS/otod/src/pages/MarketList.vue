@@ -116,7 +116,7 @@
                             <el-row>
                               <el-col :span=12>
                                 <el-form-item label="商品更新时间">
-                                  <span>{{scope.row.product_createtime}}</span>
+                                  <span>{{formatDate(scope.row.product_createtime)}}</span>
                                 </el-form-item>
                               </el-col>
                               <el-col :span=12>
@@ -232,11 +232,11 @@
                             </el-row>
                             <el-dialog
                               title="提示"
-                              :visible.sync="delete_ok"
+                              :visible.sync="update_ok"
                               width="30%">
-                              <span style="text-align: center;">删除成功</span>
+                              <span style="text-align: center;">修改成功</span>
                               <span slot="footer" class="dialog-footer">
-                                <el-button type="primary" @click="delete_ok = false , changepage('/market?product_key='+product_key),search()">确 定</el-button>
+                                <el-button type="primary" @click="update_ok = false">确 定</el-button>
                               </span>
                             </el-dialog>
                           </el-form>
@@ -252,6 +252,24 @@
                       <el-table-column label="操作">
                         <template slot-scope="scope">
                           <el-button type="info" icon="el-icon-delete" @click="DeleteProduct(scope.row.product_id)" circle></el-button>
+                          <el-dialog
+                            title="提示"
+                            :visible.sync="delete_product_ok"
+                            width="30%">
+                            <span style="text-align: center;">删除成功</span>
+                            <span slot="footer" class="dialog-footer">
+                              <el-button type="primary" @click="delete_product_ok = false , changepage('/market?product_key='+product_key),search()">确 定</el-button>
+                            </span>
+                          </el-dialog>
+                          <el-dialog
+                            title="提示"
+                            :visible.sync="delete_product_wrong"
+                            width="30%">
+                            <span style="text-align: center;">删除失败，该商品还有未完成订单</span>
+                            <span slot="footer" class="dialog-footer">
+                              <el-button type="primary" @click="delete_product_wrong = false">确 定</el-button>
+                            </span>
+                          </el-dialog>
                         </template>
                       </el-table-column>
                     </el-table>
@@ -289,7 +307,7 @@
                             <el-row>
                               <el-col :span=12>
                                 <el-form-item label="创建时间">
-                                  <span>{{scope.row.createtime}}</span>
+                                  <span>{{formatDate(scope.row.createtime)}}</span>
                                 </el-form-item>
                               </el-col>
                             </el-row>
@@ -361,7 +379,7 @@
                             <el-row>
                               <el-col :span=12>
                                 <el-form-item label="创建时间">
-                                  <span>{{scope.row.createtime}}</span>
+                                  <span>{{formatDate(scope.row.createtime)}}</span>
                                 </el-form-item>
                               </el-col>
                             </el-row>
@@ -423,7 +441,9 @@ export default {
   },
   data () {
     return {
-      delete_ok: false,
+      update_ok: false,
+      delete_product_ok: false,
+      delete_product_wrong: false,
       dialogVisible: false,
       loading: true,
       my_loading: true,
@@ -490,62 +510,80 @@ export default {
     changetab (tab, event) {
       var t = this
       if (tab.label === '我的商品') {
-        t.$axios({
-          method: 'post',
-          url: 'http://localhost:8081/market/getPbyMU',
-          dataType: 'json',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + t.$getCookie('otod_access_token')
-          },
-          params: {
-            page_num: t.page_num
-          }
-        }).then(function (response) {
-          t.update_form.sell_list = response.data.content
-          t.my_loading = false
-          console.log(t.update_form.sell_list)
-        })
+        t.myproduct()
       } else if (tab.label === '我买的') {
-        t.$axios({
-          method: 'post',
-          url: 'http://localhost:8081/market/getObyMU',
-          dataType: 'json',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + t.$getCookie('otod_access_token')
-          },
-          params: {
-            page_num: t.page_num
-          }
-        }).then(function (response) {
-          t.pay_list = response.data
-          t.pay_loading = false
-          console.log(t.pay_list)
-        })
+        t.buyorder()
       } else if (tab.label === '我卖的') {
-        t.$axios({
-          method: 'post',
-          url: 'http://localhost:8081/market/getObySeller',
-          dataType: 'json',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + t.$getCookie('otod_access_token')
-          },
-          params: {
-            page_num: t.page_num
-          }
-        }).then(function (response) {
-          console.log(response)
-          t.sell_orders = response.data
-          t.sell_loading = false
-        })
+        t.sellorder()
+      } else if (tab.label === '商品列表') {
+        t.search()
       }
+    },
+    myproduct () {
+      var t = this
+      t.my_loading = true
+      t.$axios({
+        method: 'post',
+        url: 'http://localhost:8081/market/getPbyMU',
+        dataType: 'json',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + t.$getCookie('otod_access_token')
+        },
+        params: {
+          page_num: t.page_num
+        }
+      }).then(function (response) {
+        t.update_form.sell_list = response.data.content
+        t.my_loading = false
+        console.log(t.update_form.sell_list)
+      })
+    },
+    buyorder () {
+      var t = this
+      t.pay_loading = true
+      t.$axios({
+        method: 'post',
+        url: 'http://localhost:8081/market/getObyMU',
+        dataType: 'json',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + t.$getCookie('otod_access_token')
+        },
+        params: {
+          page_num: t.page_num
+        }
+      }).then(function (response) {
+        t.pay_list = response.data
+        t.pay_loading = false
+        console.log(t.pay_list)
+      })
+    },
+    sellorder () {
+      var t = this
+      t.sell_loading = true
+      t.$axios({
+        method: 'post',
+        url: 'http://localhost:8081/market/getObySeller',
+        dataType: 'json',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + t.$getCookie('otod_access_token')
+        },
+        params: {
+          page_num: t.page_num
+        }
+      }).then(function (response) {
+        console.log(response)
+        t.sell_orders = response.data
+        t.sell_loading = false
+      })
     },
     handlePictureCardPreview () {
       this.dialogVisible = true
     },
     buyerordermanager (oid, operation) {
+      var t = this
       this.$axios({
         method: 'post',
         url: 'http://localhost:8081/market/BuyerOrderManage',
@@ -554,9 +592,12 @@ export default {
           order_id: oid,
           operation: operation
         }
+      }).then(function (response) {
+        t.buyorder()
       })
     },
     sellerordermanager (oid, operation) {
+      var t = this
       this.$axios({
         method: 'post',
         url: 'http://localhost:8081/market/SellerOrderManage',
@@ -565,6 +606,8 @@ export default {
           order_id: oid,
           operation: operation
         }
+      }).then(function (response) {
+        t.sellorder()
       })
     },
     UpdateProduct (pid) {
@@ -589,6 +632,9 @@ export default {
           'Authorization': 'Bearer ' + t.$getCookie('otod_access_token')
         },
         data: obj
+      }).then(function (response) {
+        t.update_ok = true
+        t.myproduct()
       })
     },
     DeleteProduct (pid) {
@@ -606,9 +652,23 @@ export default {
         }
       }).then(function (response) {
         if (response.data === 'success') {
-          t.delete_ok = true
+          t.delete_product_ok = true
+          t.myproduct()
+        } else if (response.data === 'failure') {
+          t.delete_product_wrong = true
         }
       })
+    },
+    formatDate (time) {
+      var date = new Date(time)
+      var year = date.getFullYear()
+      var month = date.getMonth() + 1
+      var day = date.getDate()
+      var hour = date.getHours()
+      var min = date.getMinutes()
+      var sec = date.getSeconds()
+      var newTime = year + '-' + month + '-' + day + ' ' + hour + ':' + min + ':' + sec
+      return newTime
     }
   }
 }

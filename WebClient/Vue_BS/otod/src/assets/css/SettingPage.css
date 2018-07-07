@@ -40,10 +40,11 @@ body{
     font-size: 16px;
     margin: 7px 0 0 24px;
     text-decoration: none;
+    cursor: pointer;
 }
 
 .setting-title a:hover{
-    color: #fff;
+    color: #888;
 }
 
 
@@ -91,6 +92,15 @@ body{
     color: #5a8dcd;
     background-image: url(../images/icon2-8.png);
     background-position: right -479px;
+    cursor: pointer;
+}
+
+.telephone-content .telephone-Num {
+    float:left;
+    margin-left: 10px;
+    margin-top: -2px;
+    color: #888;
+    font-size: 14px;
 }
 
 /*第三方认证*/
@@ -148,10 +158,109 @@ body{
 
 .info-head .user-head{
     float: left;
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+}
+
+.info-head .user-head img {
+    width: 100px;
+}
+
+.info-head .user-arrow{
+    float: left;
+    width:50px;
+    height: 60px;
+    background:url(../images/icon2-8.png) no-repeat;
+    background-position: -65px -70px;
 }
 
 .info-head .user-uploader{
+    position: relative;
+    left: 100px;
+    z-index: 3;
+}
+
+.info-head .user-uploader .img-uploader{
+}
+
+.info-head .el-upload{
+    position: relative;
+    width: 100px;
+    height: 100px;
+    margin-left: -80px;
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    border-radius: 6px
+}
+
+.info-head .el-upload:hover{
+    background-color: #F0EFEF
+}
+
+.info-head .el-upload:hover i{
+    color: #fff;
+}
+
+.el-upload i{
+    font-size: 28px;
+    color: #8c939d;
+    line-height: 100px;
+}
+
+
+.info-head .avatar{
+    width: 100px;
+    height: 100px
+}
+
+/*个人信息主体*/
+.info-content {
+    margin-top: 30px;
+    padding-left: 40px;
+}
+
+.info-content li{
     float: left;
+    width: 640px;
+    padding: 15px 0;
+    margin: -1px 0 0;
+    border-top: 1px solid #f0f0f0;
+    line-height: 19px;
+}
+
+.info-content li.nes-li:after
+{
+    margin-left:20px;
+    content: "(必填)";
+    font-size: 13px;
+}
+
+.info-content li h6{
+    float: left;
+    width: 175px;
+    overflow: hidden;
+    font-size: 16px;
+    font-weight: normal;
+}
+
+.info-content li div,.info-content li input,.info-content li .input-area{
+    margin-left: 20px;
+}
+
+.info-content li input{
+    padding: 5px 15px;
+    line-height: 1.5;
+    border: 1px dashed #d9d9d9;
+    height: 30px;
+    line-height: 3px;
+    width: 300px;
+}
+
+.info-content li .input-area textarea{
+    border: 1px dashed #d9d9d9;
+    border-radius: 1px;
+    margin-left: 175px;
+    width:400px;
 }
 
 /*兴趣设置*/

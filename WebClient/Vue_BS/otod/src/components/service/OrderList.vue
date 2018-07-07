@@ -38,7 +38,7 @@
                                             <el-button type="warning" icon="el-icon-arrow-right" circle @click="sstatic1 = !sstatic1" @mouseover.native="show1 = !show1" @mouseout.native="show1 = !show1"></el-button>
                                             <transition name="el-zoom-in-left">
                                                 <div v-show="show1 || sstatic1" class="commit-button-box bg-warning">
-                                                    <span>我需要{{ m.contributers }}个人</span>
+                                                    <span>我还需要{{ m.contributers - m.contributersRecive }}个人</span>
                                                 </div>
                                             </transition>
                                             <div style="clear: both"></div>
@@ -47,13 +47,19 @@
                                 </el-aside>
                                 <el-container>
                                     <el-header class="header-container"><strong>{{ m.title }}</strong></el-header>
-                                    <el-main><p class="order-content">{{ m.content }}</p></el-main>
+                                    <el-main>
+                                      <p class="order-content">{{ m.content }}</p>
+                                      <div style="clear: both;margin-top: 40px;"><span style="float: right;font-size: 12px;">/元</span><span style="float: right;font-size: 36px;color: #FFD700;line-height: 36px;">{{m.profits}}</span></div>
+                                    </el-main>
                                 </el-container>
                             </el-container>
                         </el-card>
                     </el-col>
                 </el-row>
             </li>
+          <el-card v-show="message.length == 0" shadow="hover" class="center-container-card">
+            <p>没有任何信息哦</p>
+          </el-card>
         </ul>
         <el-row type="flex" justify="center">
             <el-col :span="14">
@@ -165,6 +171,7 @@ export default {
               message: '接单成功！',
               type: 'success'
             })
+            document.getElementById('rrecivedorders').click()
           }
           if (response.data === 'false') {
             t.$message({

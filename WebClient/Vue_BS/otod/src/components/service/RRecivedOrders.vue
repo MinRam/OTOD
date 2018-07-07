@@ -28,17 +28,17 @@
                                     </div>
                                     <div class="button-group">
                                         <div style="margin-bottom: 10px;">
-                                            <el-button type="success" icon="el-icon-check" circle @click="sstatic = !sstatic" @mouseover.native="show = !show" @mouseout.native="show = !show"></el-button>
+                                            <el-button type="success" icon="el-icon-check" circle @click="sstatic = !sstatic;finishOrder(m.id)" @mouseover.native="show = !show" @mouseout.native="show = !show"></el-button>
                                             <transition name="el-zoom-in-left">
-                                                <div v-show="show || sstatic" class="commit-button-box bg-success"></div>
+                                                <div v-show="show || sstatic" class="commit-button-box bg-success">完成订单！</div>
                                             </transition>
                                             <div style="clear: both"></div>
                                         </div>
                                         <div style="margin-bottom: 10px;">
-                                            <el-button type="warning" icon="el-icon-arrow-right" circle @click="sstatic1 = !sstatic1" @mouseover.native="show1 = !show1" @mouseout.native="show1 = !show1"></el-button>
+                                            <el-button type="danger" icon="el-icon-close" circle @click="sstatic1 = !sstatic1;open(m.id)" @mouseover.native="show1 = !show1" @mouseout.native="show1 = !show1"></el-button>
                                             <transition name="el-zoom-in-left">
-                                                <div v-show="show1 || sstatic1" class="commit-button-box bg-warning">
-                                                    <span>我需要{{ m.contributers }}个人</span>
+                                                <div v-show="show1 || sstatic1" class="commit-button-box bg-danger">
+                                                    <span>取消订单</span>
                                                 </div>
                                             </transition>
                                             <div style="clear: both"></div>
@@ -58,21 +58,6 @@
           <el-card v-show="message.length == 0" shadow="hover" class="center-container-card">
             <p>没有任何信息哦</p>
           </el-card>
-        <el-row v-show="message.length != 0" type="flex" justify="center">
-            <el-col :span="14">
-                <div>
-                  <!-- 这个也是独特的用法 可以在网站shang看到 -->
-                    <el-pagination
-                      @current-change="getServicePage"
-                      background
-                      layout="prev, pager, next"
-                      :current-page="currentPage"
-                      :page-size="size"
-                      :total="totalPages">
-                    </el-pagination>
-                </div>
-            </el-col>
-        </el-row>
     </el-col>
 </template>
 
@@ -91,7 +76,8 @@ export default {
       totalPages: 0,
       currentPage: 0,
       loadingOrder: 'true',
-      size: 5
+      size: 5,
+      ssId: ''
     }
   },
   mounted () {
@@ -117,7 +103,7 @@ export default {
         .catch(function (error) {
           console.log(error.message)
         })
-    }
+    },
     // getServicePage (currentPage) {
     //   var t = this
     //   t.loadingOrder = true
@@ -133,6 +119,118 @@ export default {
     //       console.log(error.message)
     //     })
     // }
+    finishOrder (id) {
+      var t = this
+      t.$axios({
+        method: 'get',
+        url: t.$url + '/rFinishOrder',
+        params: {
+          OrderId: id
+        }
+      })
+        .then(function (response) {
+          console.log(response)
+          if (response.data === 'null order') {
+            t.$message({
+              showClose: true,
+              message: '没有此订单',
+              type: 'danger'
+            })
+          } else if (response.data === 'not the running order') {
+            t.$message({
+              showClose: true,
+              message: '该订单状态不为已接受',
+              type: 'danger'
+            })
+          } else if (response.data === 'order finished!') {
+            t.$message({
+              showClose: true,
+              message: '完成订单！',
+              type: 'success'
+            })
+            document.getElementById('rwaitingcommentorders').click()
+          } else if (response.data === 'false') {
+            t.$message({
+              showClose: true,
+              message: '未知错误',
+              type: 'danger'
+            })
+          }
+          t.getRecivedOrders()
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    },
+    open (id) {
+      var t = this
+      t.ssId = id
+      this.$confirm('此操作将取消订单并作记录, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+        roundButton: true,
+        center: true
+      }).then(function () {
+        console.log(t.ssId)
+        t.cancelOrder(t.ssId)
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
+      })
+    },
+    cancelOrder (id) {
+      var t = this
+      t.$axios({
+        method: 'get',
+        url: t.$url + '/rCancelOrder',
+        params: {
+          OrderId: id,
+          access_token: this.$getCookie('otod_access_token')
+        }
+      })
+        .then(function (response) {
+          console.log(response)
+          if (response.data === 'null order') {
+            t.$message({
+              showClose: true,
+              message: '没有此订单',
+              type: 'danger'
+            })
+          } else if (response.data === 'not the running order') {
+            t.$message({
+              showClose: true,
+              message: '该订单状态不为已接受',
+              type: 'danger'
+            })
+          } else if (response.data === 'order canceled!') {
+            t.$message({
+              showClose: true,
+              message: '订单已取消！',
+              type: 'success'
+            })
+            document.getElementById('rfailedorders').click()
+          } else if (response.data === 'false') {
+            t.$message({
+              showClose: true,
+              message: '未知错误',
+              type: 'danger'
+            })
+          } else if (response.data === 'no such userinfo') {
+            t.$message({
+              showClose: true,
+              message: '用户不符！',
+              type: 'danger'
+            })
+          }
+          t.getRecivedOrders()
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    }
   }
 }
 </script>

@@ -2,9 +2,7 @@ package com.otod.server.otod.controller;
 
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -20,7 +18,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
@@ -36,7 +33,7 @@ import com.otod.server.otod.model.Market_user;
 import com.otod.server.otod.model.P_Order;
 import com.otod.server.otod.model.PageModel;
 import com.otod.server.otod.model.Product;
-import com.otod.server.otod.model.UserInfo;
+import com.otod.server.otod.model.user.UserInfo;
 import com.otod.server.otod.pojos.P_OrderPojo;
 import com.otod.server.otod.pojos.PayPojo;
 import com.otod.server.otod.pojos.ProductPojo;
@@ -181,7 +178,8 @@ public class MarketController {
 		Market_user mUser = mURepository.findByUserInfo(userInfo);
 		String page_num = map.get("page_num");
 		Pageable pageable = new PageRequest(Integer.parseInt(page_num) - 1 , 10 , Sort.Direction.DESC,"product_createtime");
-		return repository.findBySeller(mUser.getMarket_user_id(), pageable);
+		Page<Product>products = repository.findBySeller(mUser.getMarket_user_id(), pageable);
+		return products;
 	}
 	
 	@RequestMapping(value="/getObyMU",method=RequestMethod.POST)
@@ -317,7 +315,7 @@ public class MarketController {
 	@RequestMapping(value="/DeleteProduct",method=RequestMethod.POST)
 	@ResponseBody
 	public String DeleteProduct(@RequestParam int product_id){
-		productService.DeleteProduct(product_id);
-		return "success";
+		return productService.DeleteProduct(product_id);
 	}
+	
 }

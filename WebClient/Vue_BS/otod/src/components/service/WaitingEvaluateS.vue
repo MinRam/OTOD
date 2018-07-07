@@ -2,7 +2,7 @@
     <el-col :xs="12" :sm="12" :md="12" :xl="12" :offset="4">
         <ul v-loading="loadingOrder">
           <!-- 这个是element的特有写法 v-for 就是一个循环 循环输出<li>里面的html message是一个数组，里面存着order 相当于for(m in message){ <li>里面的代码</li>} -->
-            <li v-for="m in message" :key="m.id">
+            <li v-show="message.length != 0" v-for="m in message" :key="m.id">
                 <el-row class="message-bottom" type="flex" justify="center">
                     <el-col :span="24">
                         <el-card shadow="hover" class="center-container-card">
@@ -27,22 +27,27 @@
                                         <div style="clear: both"></div>
                                     </div>
                                     <div class="button-group">
-                                        <div style="margin-bottom: 10px;">
-                                            <el-button type="success" icon="el-icon-check" circle @click="sstatic = !sstatic" @mouseover.native="show = !show" @mouseout.native="show = !show"></el-button>
-                                            <transition name="el-zoom-in-left">
-                                                <div v-show="show || sstatic" class="commit-button-box bg-success">接单！</div>
-                                            </transition>
-                                            <div style="clear: both"></div>
+                                      <div style="margin-bottom: 10px;">
+                                          <el-button type="primary" icon="el-icon-more" circle @click="sstatic = !sstatic;openDialog(m.id)" @mouseover.native="show = !show" @mouseout.native="show = !show"></el-button>
+                                          <transition name="el-zoom-in-left">
+                                              <div v-show="show || sstatic" class="commit-button-box bg-primary">评价订单！</div>
+                                          </transition>
+                                          <div style="clear: both"></div>
+                                      </div>
+                                      <div v-if="m.orderEval !== null">
+                                        <div v-show="m.orderEval.rTitle !== null">
+                                          <p style="color: #67c23a">接收方评价：</p>
+                                          <p><span>标题：</span>{{ m.orderEval.rTitle }}</p>
+                                          <p><span>内容：</span>{{ m.orderEval.rContent }}</p>
+                                          <p><span>评级：</span>{{ level[m.orderEval.rNum] }}</p>
                                         </div>
-                                        <div style="margin-bottom: 10px;">
-                                            <el-button type="warning" icon="el-icon-arrow-right" circle @click="sstatic1 = !sstatic1" @mouseover.native="show1 = !show1" @mouseout.native="show1 = !show1"></el-button>
-                                            <transition name="el-zoom-in-left">
-                                                <div v-show="show1 || sstatic1" class="commit-button-box bg-warning">
-                                                    <span>我需要{{ m.contributers }}个人</span>
-                                                </div>
-                                            </transition>
-                                            <div style="clear: both"></div>
+                                        <div v-show="m.orderEval.rTitle === null">
+                                          <p style="color: #e6a23c">接收方未作出评价</p>
                                         </div>
+                                      </div>
+                                      <div v-show="m.orderEval === null">
+                                        <p style="color: #e6a23c">接收方未作出评价</p>
+                                      </div>
                                     </div>
                                 </el-aside>
                                 <el-container>
@@ -54,25 +59,40 @@
                     </el-col>
                 </el-row>
             </li>
-             <el-card v-show="message.length == 0" shadow="hover" class="center-container-card">
-              <p>没有任何信息哦</p>
-            </el-card>
         </ul>
-        <el-row  v-show="message.length != 0" type="flex" justify="center">
-            <el-col :span="14">
-                <div>
-                  <!-- 这个也是独特的用法 可以在网站shang看到 -->
-                    <el-pagination
-                      @current-change="getOrderPage"
-                      background
-                      layout="prev, pager, next"
-                      :current-page="currentPage"
-                      :page-size="size"
-                      :total="totalPages">
-                    </el-pagination>
-                </div>
-            </el-col>
-        </el-row>
+          <el-card v-show="message.length == 0" shadow="hover" class="center-container-card">
+            <p>没有任何信息哦</p>
+          </el-card>
+        <el-dialog :visible.sync="showFlag">
+            <el-container>
+                <el-header class="po-header-container">评价订单！</el-header>
+                <el-main>
+                    <el-form :model="form">
+                        <el-form-item label="标题" label-width="80px">
+                            <el-input type="text" v-model="form.ctitle"></el-input>
+                        </el-form-item>
+                        <el-form-item label="内容" label-width="80px">
+                            <el-input type="textarea" :autosize="{ minRows: 4}" v-model="form.content"></el-input>
+                        </el-form-item>
+                        <el-form-item label="评级" label-width="80px">
+                            <el-select v-model="form.score" clearable placeholder="打个等级吧！">
+                                <el-option
+                                    v-for="item in form.score_op"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                                </el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-form>
+                </el-main>
+                <el-footer class="po-footer-container">
+                    <el-col :span="24">
+                        <el-button type="primary" style="width: 100%;" @click="submit()">完成评价</el-button>
+                    </el-col>
+                </el-footer>
+            </el-container>
+        </el-dialog>
     </el-col>
 </template>
 
@@ -91,53 +111,145 @@ export default {
       totalPages: 0,
       currentPage: 0,
       loadingOrder: 'true',
-      size: 5
+      size: 5,
+      showFlag: false,
+      ssId: '',
+      form: {
+        ctitle: '',
+        content: '',
+        score: '',
+        score_op: [{
+          value: '5',
+          label: '超棒的！'
+        }, {
+          value: '4',
+          label: '还可以'
+        }, {
+          value: '3',
+          label: '一般般'
+        }, {
+          value: '2',
+          label: '比较差'
+        }, {
+          value: '1',
+          label: '太差了！'
+        }]
+      },
+      level: [
+        '',
+        '太差了！',
+        '比较差',
+        '一般般',
+        '还可以',
+        '超棒的！'
+      ]
     }
   },
   mounted () {
-    this.getAllOrders()
+    this.getWaitingCommentOrders()
   },
   methods: {
-    getAllOrders () {
+    getWaitingCommentOrders () {
       var t = this
       t.loadingOrder = true
-      t.$axios({
+      this.$axios({
+        url: t.$url + '/waitingEvaluateS',
         method: 'get',
-        url: this.$url + '/waitingEvaluateS',
         params: {
           access_token: this.$getCookie('otod_access_token')
         }
       })
         .then(function (response) {
           console.log(response)
-          t.message = response.data.content
-          t.totalPages = response.data.totalPages * t.size
-          t.loadingOrder = false
-        })
-        .catch(function (error) {
-          console.log(error.message)
-        })
-    },
-    getOrderPage (currentPage) {
-      var t = this
-      t.loadingOrder = true
-      t.$axios({
-        method: 'get',
-        url: this.$url + '/allOrderPage?currentPage=' + (currentPage - 1) + '&size=' + t.size,
-        params: {
-          access_token: this.$getCookie('otod_access_token')
-        }
-      })
-        .then(function (response) {
-          console.log(t.$url + '/allOrderPage?currentPage=' + (currentPage - 1) + '&size=' + t.size)
-          t.message = response.data.content
-          t.totalPages = response.data.totalPages * t.size
+          t.message = response.data
           t.loadingOrder = false
           console.log(t.totalPages)
         })
         .catch(function (error) {
           console.log(error.message)
         })
+    },
+    // getServicePage (currentPage) {
+    //   var t = this
+    //   t.loadingOrder = true
+    //   t.$axios.get(t.$url + '/listServices?currentPage=' + (currentPage - 1) + '&size=' + t.size)
+    //     .then(function (response) {
+    //       console.log(t.$url + '/listServices?currentPage=' + (currentPage - 1) + '&size=' + t.size)
+    //       t.message = response.data.content
+    //       t.totalPages = response.data.totalPages * t.size
+    //       t.loadingOrder = false
+    //       console.log(t.totalPages)
+    //     })
+    //     .catch(function (error) {
+    //       console.log(error.message)
+    //     })
+    // }
+    openDialog (id) {
+      this.ssId = id
+      this.showFlag = true
+    },
+    submit () {
+      if (this.form.ctitle === '') {
+        this.$message({
+          showClose: true,
+          message: '警告哦，你的标题没有写',
+          type: 'warning'
+        })
+      } else if (this.form.content === '') {
+        this.$message({
+          showClose: true,
+          message: '警告哦，你的内容没有写',
+          type: 'warning'
+        })
+      } else if (this.form.score === '') {
+        this.$message({
+          showClose: true,
+          message: '警告哦，你的评级没有写',
+          type: 'warning'
+        })
+      } else {
+        var t = this
+        t.$axios({
+          method: 'post',
+          url: t.$url + '/sCommentOrder',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + t.$getCookie('otod_access_token')
+          },
+          data: {
+            orderId: t.ssId,
+            sTitle: t.form.ctitle,
+            sContent: t.form.content,
+            sNum: t.form.score
+          }
+        })
+          .then(function (response) {
+            t.showFlag = false
+            if (response.data === 'comment saved!') {
+              t.$message({
+                showClose: true,
+                message: '评论成功！',
+                type: 'success'
+              })
+              document.getElementById('rdoneorders').click()
+            } else if (response.data === 'false') {
+              t.message({
+                showClose: true,
+                message: '评论失败！',
+                type: 'danger'
+              })
+            } else if (response.data === 'already') {
+              t.$message({
+                showClose: true,
+                message: '已经评论！',
+                type: 'warning'
+              })
+            }
+          })
+          .catch(function (error) {
+            console.log(error)
+          })
+      }
     }
   }
 }

@@ -2,7 +2,7 @@
     <el-col :xs="12" :sm="12" :md="12" :xl="12" :offset="4">
         <ul v-loading="loadingOrder">
           <!-- 这个是element的特有写法 v-for 就是一个循环 循环输出<li>里面的html message是一个数组，里面存着order 相当于for(m in message){ <li>里面的代码</li>} -->
-            <li v-for="m in message" :key="m.id">
+            <li v-show="message.length != 0" v-for="m in message" :key="m.id">
                 <el-row class="message-bottom" type="flex" justify="center">
                     <el-col :span="24">
                         <el-card shadow="hover" class="center-container-card">
@@ -27,22 +27,7 @@
                                         <div style="clear: both"></div>
                                     </div>
                                     <div class="button-group">
-                                        <div style="margin-bottom: 10px;">
-                                            <el-button type="success" icon="el-icon-check" circle @click="sstatic = !sstatic" @mouseover.native="show = !show" @mouseout.native="show = !show"></el-button>
-                                            <transition name="el-zoom-in-left">
-                                                <div v-show="show || sstatic" class="commit-button-box bg-success">接单！</div>
-                                            </transition>
-                                            <div style="clear: both"></div>
-                                        </div>
-                                        <div style="margin-bottom: 10px;">
-                                            <el-button type="warning" icon="el-icon-arrow-right" circle @click="sstatic1 = !sstatic1" @mouseover.native="show1 = !show1" @mouseout.native="show1 = !show1"></el-button>
-                                            <transition name="el-zoom-in-left">
-                                                <div v-show="show1 || sstatic1" class="commit-button-box bg-warning">
-                                                    <span>我需要{{ m.contributers }}个人</span>
-                                                </div>
-                                            </transition>
-                                            <div style="clear: both"></div>
-                                        </div>
+                                        <p><span style="color: #e6a23c">原因：</span>{{m.reason}}</p>
                                     </div>
                                 </el-aside>
                                 <el-container>
@@ -54,25 +39,10 @@
                     </el-col>
                 </el-row>
             </li>
-             <el-card v-show="message.length == 0" shadow="hover" class="center-container-card">
+            <el-card v-show="message.length == 0" shadow="hover" class="center-container-card">
               <p>没有任何信息哦</p>
             </el-card>
         </ul>
-        <el-row type="flex" justify="center">
-            <el-col :span="14">
-                <div>
-                  <!-- 这个也是独特的用法 可以在网站shang看到 -->
-                    <el-pagination
-                      @current-change="getOrderPage"
-                      background
-                      layout="prev, pager, next"
-                      :current-page="currentPage"
-                      :page-size="size"
-                      :total="totalPages">
-                    </el-pagination>
-                </div>
-            </el-col>
-        </el-row>
     </el-col>
 </template>
 
@@ -95,41 +65,36 @@ export default {
     }
   },
   mounted () {
-    this.getAllOrders()
+    this.getAllRunningsOrders()
   },
   methods: {
-    getAllOrders () {
+    getAllRunningsOrders () {
       var t = this
       t.loadingOrder = true
-      t.$axios({
+      this.$axios({
+        url: t.$url + '/failedOrderS',
         method: 'get',
-        url: this.$url + '/failedOrderS',
         params: {
           access_token: this.$getCookie('otod_access_token')
         }
       })
         .then(function (response) {
           console.log(response)
-          t.message = response.data.content
-          t.totalPages = response.data.totalPages * t.size
+          t.message = response.data
+          console.log(t.message)
           t.loadingOrder = false
+          console.log(t.totalPages)
         })
         .catch(function (error) {
           console.log(error.message)
         })
     },
-    getOrderPage (currentPage) {
+    getServicePage (currentPage) {
       var t = this
       t.loadingOrder = true
-      t.$axios({
-        method: 'get',
-        url: this.$url + '/allOrderPage?currentPage=' + (currentPage - 1) + '&size=' + t.size,
-        params: {
-          access_token: this.$getCookie('otod_access_token')
-        }
-      })
+      t.$axios.get(t.$url + '/listServices?currentPage=' + (currentPage - 1) + '&size=' + t.size)
         .then(function (response) {
-          console.log(t.$url + '/allOrderPage?currentPage=' + (currentPage - 1) + '&size=' + t.size)
+          console.log(t.$url + '/listServices?currentPage=' + (currentPage - 1) + '&size=' + t.size)
           t.message = response.data.content
           t.totalPages = response.data.totalPages * t.size
           t.loadingOrder = false

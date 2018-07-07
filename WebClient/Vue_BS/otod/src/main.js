@@ -27,34 +27,27 @@ Vue.prototype.$axios = axios
 Vue.config.productionTip = false
 
 
-// // http request 拦截器
-// axios.interceptors.request.use(
-//   err => {
-//     return Promise.reject(err)
-//   }
-// )
+axios.defaults.timeout = 2000
 
-// // http response 拦截器
-// axios.interceptors.response.use(
-//   response => {
-//     return response
-//   },
-//   error => {
-//     if (error.response) {
-//       switch (error.response.status) {
-//         case 401:
-//         // 返回 401 清除token信息并跳转到登录页面
-//           store.commit(types.LOGOUT)
-//           router.replace({
-//             path: 'login',
-//             query: {redirect: router.currentRoute.fullPath}
-//           })
-//       }
-//     }
-//     // 返回接口返回的错误信息
-//     return Promise.reject(error.response.data)
-//   }
-// )
+// http response 拦截器
+axios.interceptors.response.use(
+  response => {
+    return response
+  },
+  error => {
+    console.log(error)
+    if (error.response) {
+      switch (error.response.status) {
+        case 401:
+        // 返回 401 清除token信息并跳转到登录页面
+          store.commit('loginOut')
+          router.replace('/login')
+      }
+    }
+    // 返回接口返回的错误信息
+    return Promise.reject(error)
+  }
+)
 
 /* eslint-disable no-new */
 new Vue({

@@ -23,24 +23,24 @@
                             <i class="el-icon-location"></i>
                             <span>我的求助</span>
                         </template>
-                        <el-menu-item @click="navClick('/service/allorder')" index="3-1">所有求助</el-menu-item>
-                        <el-menu-item index="3-2">待支付</el-menu-item>
-                        <el-menu-item @click="navClick('/service/waitingrequest')" index="3-3">待接单</el-menu-item>
-                        <el-menu-item @click="navClick('/service/runnings')" index="3-4">进行中</el-menu-item>
-                        <el-menu-item @click="navClick('/service/waitingevaluates')" index="3-5">待评价</el-menu-item>
-                        <el-menu-item @click="navClick('/service/failedorders')" index="3-6">已完成</el-menu-item>
-                        <el-menu-item index="3-7">失败求助</el-menu-item>
+                        <el-menu-item id="allorder" @click="navClick('/service/allorder')" index="3-1">所有求助</el-menu-item>
+                        <!-- <el-menu-item index="3-2">待支付</el-menu-item> -->
+                        <el-menu-item id="waitingrequest" @click="navClick('/service/waitingrequest')" index="3-3">待接单</el-menu-item>
+                        <el-menu-item id="runnings" @click="navClick('/service/runnings')" index="3-4">进行中</el-menu-item>
+                        <el-menu-item id="waitingevaluates" @click="navClick('/service/waitingevaluates')" index="3-5">待评价</el-menu-item>
+                        <el-menu-item id="finishedorders" @click="navClick('/service/finishedorders')" index="3-6">已完成</el-menu-item>
+                        <el-menu-item id="failedorders" @click="navClick('/service/failedorders')" index="3-7">失败求助</el-menu-item>
                     </el-submenu>
                     <el-submenu index="4">
                         <template slot="title">
                             <i class="el-icon-document"></i>
                             <span slot="title">我的订单</span>
                         </template>
-                        <el-menu-item @click="navClick('/service/rmyallorders')" index="4-1">所有订单</el-menu-item>
-                        <el-menu-item @click="navClick('/service/rrecivedorders')" index="4-2">已接受</el-menu-item>
-                        <el-menu-item @click="navClick('/service/rwaitingcommentorders')" index="4-3">待评价</el-menu-item>
-                        <el-menu-item @click="navClick('/service/rdoneorders')" index="4-4">已完成</el-menu-item>
-                        <el-menu-item @click="navClick('/service/rfailedorders')" index="4-5">失败订单</el-menu-item>
+                        <el-menu-item id="rmyallorders" @click="navClick('/service/rmyallorders')" index="4-1">所有订单</el-menu-item>
+                        <el-menu-item id="rrecivedorders" @click="navClick('/service/rrecivedorders')" index="4-2">已接受</el-menu-item>
+                        <el-menu-item id="rwaitingcommentorders" @click="navClick('/service/rwaitingcommentorders')" index="4-3">待评价</el-menu-item>
+                        <el-menu-item id="rdoneorders" @click="navClick('/service/rdoneorders')" index="4-4">已完成</el-menu-item>
+                        <el-menu-item id="rfailedorders" @click="navClick('/service/rfailedorders')" index="4-5">失败订单</el-menu-item>
                     </el-submenu>
                 </el-menu>
             </div>

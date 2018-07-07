@@ -89,13 +89,9 @@ public class FileListService {
     }
     //在专辑中添加文件
     public void addFile(Integer filelist_id,Integer file_id){
+        deleteFile(filelist_id,file_id);
         FileList filelist= fl_fileListRepository.findById(filelist_id).get();
         FileInfo file= fl_fileInfoRepository.findById(file_id).get();
-        List<FileInfo> l=filelist.getFile();
-        if(l.size()==0)  return;
-        for (FileInfo f:l){
-            if(f.equals(file))  return;
-        }
         filelist.getFile().add(file);
         fl_fileListRepository.save(filelist);
     }
@@ -103,15 +99,8 @@ public class FileListService {
     public void deleteFile(Integer filelist_id,Integer file_id){
         FileList filelist= fl_fileListRepository.findById(filelist_id).get();
         FileInfo file= fl_fileInfoRepository.findById(file_id).get();
-        List<FileInfo> l=filelist.getFile();
-        if(l.size()==0)  return;
-        for (FileInfo f:l){
-            if(f.equals(file)){
-                filelist.getFile().remove(file);
-                fl_fileListRepository.save(filelist);
-                return;
-            }
-        }
+        filelist.getFile().remove(file);
+        fl_fileListRepository.save(filelist);
     }
     //查找专辑中的文件
     public List<FileInfo> findFileInList(Integer filelist_id){

@@ -5,9 +5,9 @@ import ForumTopic from '@/pages/ForumTopic'
 import ForumReply from '@/pages/ForumReply'
 // index pages
 import Index from '@/pages/Index'
-
 import Home from '@/pages/Home'
 import Person from '@/components/Person'
+import Notice from '@/components/Notice'
 import Setting from '@/components/Setting'
 
 import Blog from '@/pages/Blog'
@@ -17,7 +17,7 @@ import Book from '@/pages/Book'
 // file pages
 import File from '@/pages/File'
 import download from '@/pages/file/download/download.vue'
-import upload from '@/pages/file/upload/upload.vue'
+import FileUpload from '@/pages/file/upload/upload.vue'
 import recommend from '@/pages/file/recommend/recommend.vue'
 import myfiles from '@/pages/file/myfiles/myfiles.vue'
 import files from '@/pages/file/files/files.vue'
@@ -69,16 +69,21 @@ const routes = [
           requireAuth: true
         },
         component: Home,
-        children: [
-          {
-            path: '/home/person',
-            name: 'Person',
-            meta: {
-              requireAuth: true
-            },
-            component: Person
-          }
-        ]
+        children: [{
+          path: '/home/person',
+          name: 'Person',
+          meta: {
+            requireAuth: true
+          },
+          component: Person
+        }, {
+          path: '/home/notice',
+          name: 'Notice',
+          meta: {
+            requireAuth: true
+          },
+          component: Notice
+        }]
       }, {
         path: '/blog',
         name: 'Blog',
@@ -228,7 +233,8 @@ const routes = [
         },
         {
           path: '/file/upload',
-          component: upload
+          name: 'FileUpload',
+          component: FileUpload
         },
         {
           path: '/file/download',

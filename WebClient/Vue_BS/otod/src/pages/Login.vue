@@ -18,13 +18,13 @@
                             <div id="signup_forms_panel" class="signup_forms_panel clearfix" :class="formType">
                                     <div id="signup_account" class="signup_view" :class="{'active':formsActive}">
                                         <div class="form_row form_row_username">
-                                            <input id="signup_username" type="text" placeholder="用户名" v-model="username"/>
+                                            <input id="signup_username" type="text" placeholder="用户名" v-model="username" @blur="usernameCheck()"/>
                                          </div>
                                         <div class="form_row form_row_password">
                                             <input id="signup_password" type="password" placeholder="用户密码" v-model="password"/>
                                          </div>
-                                        <div class="form_row form_row_phone">
-                                            <input id="signup_phone" type="text"  placeholder="手机号" v-model="telephone"/>
+                                        <div class="form_row form_row_phone" v-if="formType === 'signup'">
+                                            <input id="signup_phone" type="text" onkeypress="return event.keyCode>=48&&event.keyCode<=57" ng-pattern="/[^a-zA-Z]/" maxlength="11" placeholder="手机号" v-model="telephone" @blur="telephoneCheck"/>
                                          </div>
                                     </div>
                              </div>
@@ -349,7 +349,7 @@ export default {
       // 表单类型 'signup_view' / 'signin_view'
       showForms: false, // 展示表单状态
       formsActive: false, // 表单激活
-      formType: '', // 表单类型 signup/signin
+      formType: '', // 表单类型 signup/signin_view
       signupBtnActive: true, // 注册按钮
       signinBtnActive: true, // 登录按钮
       forgotPassword: false, // 忘记密码样式
@@ -431,16 +431,16 @@ export default {
       // shops section
       shops: [{
         username: 'user1',
-        goodImage: 'Images/1.jpg',
-        title: '123'
+        goodImage: 'market/1528780753552.jpg',
+        title: 'T-shirt'
       }, {
         username: 'user1',
-        goodImage: 'Images/2.jpg',
-        title: '123'
+        goodImage: 'market/1528780841204.jpg',
+        title: 'red shoes'
       }, {
         username: 'user1',
-        goodImage: 'Images/3.jpg',
-        title: '123'
+        goodImage: 'market/1529999479384.jpg',
+        title: 'black shoet'
       }],
       // servers section
       servers: [{
@@ -493,47 +493,47 @@ export default {
     signupBtnClick () {
       if (this.showForms) {
         if (this.username !== '' && this.password !== '' && this.telephone !== '') {
-          console.log('name:' + this.username + ',pass:' + this.password + ',phone:' + this.telephone)
+          if (this.hasErrors === false) {
+            this.$axios({
+              method: 'post',
+              url: this.$url + '/register',
+              data: {
+                username: this.username,
+                password: md5(this.password),
+                telephone: this.telephone
+              }
+            }).then(function (response) {
+              if (response.data === 'success') {
+                var params = new URLSearchParams()
+                params.append('grant_type', 'password')
+                params.append('username', this.username)
+                params.append('password', md5(this.password))
 
-          this.$axios({
-            method: 'post',
-            url: this.$url + '/register',
-            data: {
-              username: this.username,
-              password: md5(this.password),
-              telephone: this.telephone
-            }
-          }).then(function (response) {
-            if (response.data === 'success') {
-              var params = new URLSearchParams()
-              params.append('grant_type', 'password')
-              params.append('username', this.username)
-              params.append('password', md5(this.password))
-
-              // 注册后登录
-              this.$axios({
-                method: 'post',
-                url: this.$url + '/oauth/token',
-                auth: {username: 'test', password: '123456'},
-                headers: {'Content-type': 'application/x-www-form-urlencoded; charset=utf-8'},
-                data: params
-              }).then(function (response) {
-                if (response.data.access_token) {
-                  this.$setCookie('otod_access_token', response.data.access_token)
-                  this.$store.commit('userSignIn')
-                  this.$router.push('/')
-                } else {
-                  this._showErrors('请检查网络！')
-                }
-              }.bind(this)).catch(function (error) {
-                if (error.response) {
-                  this._showErrors(error.response.data.error)
-                }
-              }.bind(this))
-            } else {
-              this._showErrors(response.data)
-            }
-          }.bind(this))
+                // 注册后登录
+                this.$axios({
+                  method: 'post',
+                  url: this.$url + '/oauth/token',
+                  auth: {username: 'test', password: '123456'},
+                  headers: {'Content-type': 'application/x-www-form-urlencoded; charset=utf-8'},
+                  data: params
+                }).then(function (response) {
+                  if (response.data.access_token) {
+                    this.$setCookie('otod_access_token', response.data.access_token)
+                    this.$store.commit('userSignIn')
+                    this.$router.push({ name: 'Person', params: { page: 'home' } })
+                  } else {
+                    this._showErrors('请检查网络！')
+                  }
+                }.bind(this)).catch(function (error) {
+                  if (error.response) {
+                    this._showErrors(error.response.data.error)
+                  }
+                }.bind(this))
+              } else {
+                this._showErrors(response.data)
+              }
+            }.bind(this))
+          }
         } else {
           this._showErrors('信息不全,请补全信息！')
         }
@@ -549,8 +549,6 @@ export default {
     signinBtnClick () {
       if (this.showForms) {
         if (this.username !== '' && this.password !== '') {
-          console.log('username' + this.username + ',password:' + this.password)
-
           var params = new URLSearchParams()
           params.append('grant_type', 'password')
           params.append('username', this.username)
@@ -563,16 +561,15 @@ export default {
             headers: {'Content-type': 'application/x-www-form-urlencoded; charset=utf-8'},
             data: params
           }).then(function (response) {
-            if (response.data.access_token) {
+            if (response.data && response.data.access_token) {
               this.$setCookie('otod_access_token', response.data.access_token)
-            } else {
-              this._showErrors('请检查网络！')
+              this.$store.commit('userSignIn')
+              this.$router.push({ name: 'Person', params: { page: 'home' } })
             }
-            this.$store.commit('userSignIn')
-            this.$router.push({ name: 'Person', params: { page: 'home' } })
           }.bind(this)).catch(function (error) {
-            if (error.response) {
-              this._showErrors(error.response.data.error)
+            if (error.response.data.error === 'invalid_grant') {
+              console.log(error.response.data.error)
+              this._showErrors('密码错误')
             }
           }.bind(this))
         } else {
@@ -589,6 +586,57 @@ export default {
       }
     },
 
+    usernameCheck () {
+      if (!/^[a-zA-Z]([-_a-zA-Z0-9]{5,19})+$/.test(this.username)) {
+        this._showErrors('非法用户名：长度应大于等于8，且字符，数字组成')
+      } else {
+        this.$axios({
+          method: 'get',
+          url: this.$url + '/user/getSimpleByUsername',
+          params: {
+            username: this.username
+          }
+        }).then(function (response) {
+          if (this.formType === 'signup') {
+            if (response.data.nickname !== null) {
+              this._showErrors('用户名已存在')
+            } else {
+              this._showErrors('')
+            }
+          } else if (this.formType === 'signin') {
+            if (response.data.nickname === null) {
+              this._showErrors('用户名不存在')
+            } else {
+              this._showErrors('')
+            }
+          }
+        }.bind(this)).catch(function () {
+          this._showErrors('请检查网络！')
+        })
+      }
+    },
+    telephoneCheck () {
+      console.log(this.telephone)
+      if (!/^((1[3,5,8][0-9])|(14[5,7])|(17[0,6,7,8])|(19[7]))\d{8}$/.test(this.telephone)) {
+        this._showErrors('无效手机号')
+      } else if (this.formType === 'signup') {
+        this.$axios({
+          method: 'get',
+          url: this.$url + '/user/telephone',
+          params: {
+            telephone: this.telephone
+          }
+        }).then(function (response) {
+          if (response.data === 'exit') {
+            this._showErrors('手机号已经被绑定')
+          } else {
+            this._showErrors('')
+          }
+        }.bind(this)).catch(function () {
+          this._showErrors('请检查网络')
+        })
+      }
+    },
     // 滚轮实现轮播
     handleScroll: function (event) {
       event = event || window.event
@@ -659,13 +707,14 @@ export default {
 
     // 显示错误提示
     _showErrors (errorname) {
-      if (this.errorList.length === 1) {
-        return false
-      }
-      if (this.hasErrors === false) {
+      if (errorname !== '') {
         this.hasErrors = true
+        this.errorList = []
+        this.errorList.push({ name: errorname })
+      } else {
+        this.hasErrors = false
+        this.errorList = []
       }
-      errorname !== '' && this.errorList.push({ name: errorname })
     }
   }
 }

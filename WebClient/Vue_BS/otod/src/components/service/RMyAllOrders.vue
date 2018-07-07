@@ -26,16 +26,36 @@
                                         </div>
                                         <div style="clear: both"></div>
                                     </div>
-                                    <div class="button-group">
+                                    <div v-show="m.orderState === '2'" class="button-group">
+                                      <p>已接收</p>
                                         <div style="margin-bottom: 10px;">
-                                            <el-button type="success" icon="el-icon-check" circle @click="sstatic = !sstatic" @mouseover.native="show = !show" @mouseout.native="show = !show"></el-button>
+                                            <el-button type="success" icon="el-icon-check" circle @click="gotoRRO()" @mouseover.native="show = !show" @mouseout.native="show = !show"></el-button>
                                             <transition name="el-zoom-in-left">
-                                                <div v-show="show || sstatic" class="commit-button-box bg-success"></div>
+                                                <div v-show="show || sstatic" class="commit-button-box bg-success">完成订单！</div>
                                             </transition>
                                             <div style="clear: both"></div>
                                         </div>
                                         <div style="margin-bottom: 10px;">
-                                            <el-button type="warning" icon="el-icon-arrow-right" circle @click="sstatic1 = !sstatic1" @mouseover.native="show1 = !show1" @mouseout.native="show1 = !show1"></el-button>
+                                            <el-button type="danger" icon="el-icon-close" circle @click="gotoRRO()" @mouseover.native="show1 = !show1" @mouseout.native="show1 = !show1"></el-button>
+                                            <transition name="el-zoom-in-left">
+                                                <div v-show="show1 || sstatic1" class="commit-button-box bg-danger">
+                                                    <span>取消订单</span>
+                                                </div>
+                                            </transition>
+                                            <div style="clear: both"></div>
+                                        </div>
+                                    </div>
+                                    <div v-show="m.orderState === '3'" class="button-group">
+                                      <p>待评价</p>
+                                        <div style="margin-bottom: 10px;">
+                                            <el-button type="primary" icon="el-icon-more" circle @click="gotoRWCO()" @mouseover.native="show = !show" @mouseout.native="show = !show"></el-button>
+                                            <transition name="el-zoom-in-left">
+                                                <div v-show="show || sstatic" class="commit-button-box bg-primary">评价订单！</div>
+                                            </transition>
+                                            <div style="clear: both"></div>
+                                        </div>
+                                        <div style="margin-bottom: 10px;">
+                                            <el-button type="warning" icon="el-icon-arrow-right" circle @click="gotoRWCO()" @mouseover.native="show1 = !show1" @mouseout.native="show1 = !show1"></el-button>
                                             <transition name="el-zoom-in-left">
                                                 <div v-show="show1 || sstatic1" class="commit-button-box bg-warning">
                                                     <span>我需要{{ m.contributers }}个人</span>
@@ -43,6 +63,36 @@
                                             </transition>
                                             <div style="clear: both"></div>
                                         </div>
+                                    </div>
+                                    <div v-show="m.orderState === '4'">
+                                      <p>已完成</p>
+                                      <div v-if="m.orderEval !== null">
+                                      <div v-show="m.orderEval.rTitle !== null">
+                                        <p style="color: #67c23a">接收方评价：</p>
+                                        <p><span>标题：</span>{{ m.orderEval.rTitle }}</p>
+                                        <p><span>内容：</span>{{ m.orderEval.rContent }}</p>
+                                        <p><span>评级：</span>{{ level[m.orderEval.rNum] }}</p>
+                                      </div>
+                                      <div v-show="m.orderEval.rTitle === null">
+                                        <p style="color: #e6a23c">接收方未作出评价</p>
+                                      </div>
+                                      <div style="height: 1px;width: 100%;background-color: #f5f5f5;margin: 10px 0;"></div>
+                                      <div v-show="m.orderEval.sTitle !== null">
+                                        <p style="color: #67c23a">求助方评价：</p>
+                                        <p><span>标题：</span>{{ m.orderEval.sTitle }}</p>
+                                        <p><span>内容：</span>{{ m.orderEval.sContent }}</p>
+                                        <p><span>评级：</span>{{ level[m.orderEval.sNum] }}</p>
+                                      </div>
+                                      <div v-show="m.orderEval.sTitle === null">
+                                        <p style="color: #e6a23c">求助方未作出评价</p>
+                                      </div>
+                                    </div>
+                                    </div>
+                                    <div v-show="m.orderState === '5'">
+                                      <p>失败订单</p>
+                                      <div class="button-group">
+                                          <p><span style="color: #e6a23c">原因：</span>{{m.reason}}</p>
+                                      </div>
                                     </div>
                                 </el-aside>
                                 <el-container>
@@ -58,21 +108,6 @@
               <p>没有任何信息哦</p>
             </el-card>
         </ul>
-        <el-row v-show="message.length != 0" type="flex" justify="center">
-            <el-col :span="14">
-                <div>
-                  <!-- 这个也是独特的用法 可以在网站shang看到 -->
-                    <el-pagination
-                      @current-change="getServicePage"
-                      background
-                      layout="prev, pager, next"
-                      :current-page="currentPage"
-                      :page-size="size"
-                      :total="totalPages">
-                    </el-pagination>
-                </div>
-            </el-col>
-        </el-row>
     </el-col>
 </template>
 
@@ -91,7 +126,15 @@ export default {
       totalPages: 0,
       currentPage: 0,
       loadingOrder: 'true',
-      size: 5
+      size: 5,
+      level: [
+        '',
+        '太差了！',
+        '比较差',
+        '一般般',
+        '还可以',
+        '超棒的！'
+      ]
     }
   },
   mounted () {
@@ -118,7 +161,7 @@ export default {
         .catch(function (error) {
           console.log(error.message)
         })
-    }
+    },
     // getServicePage (currentPage) {
     //   var t = this
     //   t.loadingOrder = true
@@ -134,6 +177,14 @@ export default {
     //       console.log(error.message)
     //     })
     // }
+    gotoRWCO () {
+      console.log('gotoRWCO')
+      document.getElementById('rwaitingcommentorders').click()
+    },
+    gotoRRO () {
+      console.log('gotoRRO')
+      document.getElementById('rrecivedorders').click()
+    }
   }
 }
 </script>
