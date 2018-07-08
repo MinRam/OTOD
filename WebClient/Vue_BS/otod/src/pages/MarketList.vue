@@ -64,7 +64,7 @@
 
       <br>
                   <!--分页-->
-                  <div id="page" class="text-center">
+                  <div>
                     <el-row>
                       <el-col :push="10">
                         <el-pagination
@@ -271,7 +271,7 @@
                     </el-table-column>
                   </el-table>
                   <!--分页-->
-                  <div id="page" class="text-center">
+                  <div>
                     <el-row>
                       <el-col :push="10">
                         <el-pagination
