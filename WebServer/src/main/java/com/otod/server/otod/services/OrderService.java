@@ -194,8 +194,9 @@ public class OrderService {
 	}
 	
 	@Transactional
-	public void DeleteOrder(int order_id) {
+	public String DeleteOrder(int order_id) {
 		orderRepository.deleteById(order_id);
+		return "success";
 	}
 
 }

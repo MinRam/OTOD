@@ -318,4 +318,9 @@ public class MarketController {
 		return productService.DeleteProduct(product_id);
 	}
 	
+	@RequestMapping(value="/DeleteOrder",method=RequestMethod.POST)
+	@ResponseBody
+	public String DeleteOrder(@RequestParam int order_id){
+		return orderService.DeleteOrder(order_id);
+	}
 }

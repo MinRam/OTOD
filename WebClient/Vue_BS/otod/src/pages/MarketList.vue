@@ -38,22 +38,22 @@
                       <el-col>
                         <el-table :data="show_list"  v-loading="loading">
                           <el-table-column label="商品编码">
-                            <template slot-scope="scope" v-if="scope.row.product_status === 1">
+                            <template slot-scope="scope" >
                               <span>{{scope.row.product_encoding}}</span>
                             </template>
                           </el-table-column>
                           <el-table-column label="商品名称">
-                            <template slot-scope="scope" v-if="scope.row.product_status === 1">
+                            <template slot-scope="scope" >
                               <el-button type="text" @click="changepage('/market/product?product_id='+scope.row.product_id)"><img :src="scope.row.product_img_url" width="46px" height="46px" alt="">{{scope.row.product_name}}</el-button>
                             </template>
                           </el-table-column>
                           <el-table-column label="商品价格">
-                            <template slot-scope="scope" v-if="scope.row.product_status === 1">
+                            <template slot-scope="scope" >
                               <span>{{scope.row.product_price}}</span>
                             </template>
                           </el-table-column>
                           <el-table-column label="商品库存">
-                            <template slot-scope="scope" v-if="scope.row.product_status === 1">
+                            <template slot-scope="scope" >
                               <span>{{scope.row.product_stock}}</span>
                             </template>
                           </el-table-column>
