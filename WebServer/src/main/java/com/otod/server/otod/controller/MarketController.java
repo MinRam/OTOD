@@ -101,7 +101,7 @@ public class MarketController {
 		String page_num = map.get("page_num");
 		List<Product> list = repository.FindByName(key);
 		list = productService.ManageList(list);
-		PageModel pm = new PageModel(list, 10);
+		PageModel pm = new PageModel(list, 8);
 		List<Product> products = pm.getObjects(Integer.parseInt(page_num));
 		Map<String, Object> map2 = new HashMap<String, Object>();
 		map2.put("products", products);
