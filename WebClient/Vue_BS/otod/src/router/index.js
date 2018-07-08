@@ -8,6 +8,8 @@ import Index from '@/pages/Index'
 import Home from '@/pages/Home'
 import Person from '@/components/Person'
 import Notice from '@/components/Notice'
+import Follow from '@/components/Follow'
+import Followed from '@/components/Followed'
 import Setting from '@/components/Setting'
 
 import Blog from '@/pages/Blog'
@@ -83,6 +85,20 @@ const routes = [
             requireAuth: true
           },
           component: Notice
+        }, {
+          path: '/home/follow',
+          name: 'Follow',
+          meta: {
+            requireAuth: true
+          },
+          component: Follow
+        }, {
+          path: '/home/followed',
+          name: 'Followed',
+          meta: {
+            requireAuth: true
+          },
+          component: Followed
         }]
       }, {
         path: '/blog',

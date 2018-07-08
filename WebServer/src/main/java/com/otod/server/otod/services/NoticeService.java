@@ -23,7 +23,13 @@ public class NoticeService {
         return noticeRespository.findAllByUserOwnAndRead(user,1);
     }
 
+    public Long getNewNoticesNum(User user){
+        return noticeRespository.countByUserOwnAndRead(user,1);
+    }
+
+    @Transactional
     public List<Notice> getAllNotices(User user) {
+        noticeRespository.readAllNotice(user);
         return noticeRespository.findAllByUserOwn(user);
     }
 

@@ -5,7 +5,7 @@ import java.sql.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "user_updates")
+@Table(name = "user_update")
 public class Update {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -87,4 +87,11 @@ public class Update {
 //        this.objectType = objectType;
 //    }
 
+    public List<UpdateTag> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<UpdateTag> tags) {
+        this.tags = tags;
+    }
 }

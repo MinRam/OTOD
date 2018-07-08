@@ -67,11 +67,13 @@ export default {
       }, {
         icon: 'icon-3',
         title: '粉丝',
+        link: '/home/followed',
         number: 0,
         active: false
       }, {
         icon: 'icon-4',
         title: '关注',
+        link: '/home/follow',
         number: 0,
         active: false
       }, {
@@ -100,32 +102,28 @@ export default {
     }
   },
   created () {
-    window.onscroll = this.scrollHandler
   },
   mounted () {
     // this.$router.push('/home/person')
     this._initialData()
   },
   watch: {
-    '$route': function (to, from) {
-      this.initialInfo()
-    }
   },
   methods: {
     _initialData () {
-      // get followList
+      // get all nums
       this.$axios({
         method: 'get',
-        url: this.$url + '/user/getfollowInfo',
+        url: this.$url + '/user/getUserNum',
         params: {
           access_token: this.$getCookie('otod_access_token')
         }
       }).then(function (response) {
-        this.followInfo.followList = response.data.userFollow
-        this.followInfo.followedList = response.data.userFollowed
-
-        this.menuList[3].number = this.followInfo.followList.length
-        this.menuList[2].number = this.followInfo.followedList.length
+        this.menuList[0].number = response.data.dynamics
+        this.menuList[1].number = response.data.favors
+        this.menuList[2].number = response.data.followed
+        this.menuList[3].number = response.data.follow
+        this.menuList[4].number = response.data.notices
       }.bind(this))
 
       // get activities
@@ -138,24 +136,15 @@ export default {
     },
 
     menuClick (index) {
-      // this.$router.push(this.menuList[index].link)
+      this.$router.push(this.menuList[index].link)
       for (var i = 0; i < this.menuList.length; ++i) {
         this.menuList[i].active = i === index
       }
     },
 
-    // information setting
+    // information setting-item
     setting () {
       this.$router.push('/user/setting')
-    },
-    scrollHandler () {
-      console.log('test')
-      // 变量scrollTop是滚动条滚动时，距离顶部的距离
-      var scrollTop = document.documentElement.scrollTop || document.body.scrollTop
-
-      this.goTop = scrollTop > 300
-
-      console.log(scrollTop)
     }
   }
 }

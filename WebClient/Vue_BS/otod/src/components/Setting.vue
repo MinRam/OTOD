@@ -137,8 +137,8 @@ export default {
       },
       newUserInfo: {},
       error: {
-        nickname: false,
-        email: false
+        nickname: true,
+        email: true
       }
     }
   },
@@ -209,6 +209,7 @@ export default {
     emailCheck () {
       if (this.userInfo.email !== '') {
         this.error.email = !/^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/.test(this.userInfo.email)
+        this.$message.error('请重新检查邮箱')
       }
     },
 
@@ -222,7 +223,15 @@ export default {
     },
 
     saveSetting () {
-      console.log(this.userInfo)
+      if (this.userInfo.nickname === '') {
+        this.$message.error('昵称不为空！')
+        return
+      }
+
+      if (!this.error.email) {
+        this.$message.error('请重新检查邮箱')
+        return
+      }
 
       this.newUserInfo = this.userInfo
 

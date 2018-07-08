@@ -27,7 +27,7 @@ Vue.prototype.$axios = axios
 Vue.config.productionTip = false
 
 
-axios.defaults.timeout = 2000
+axios.defaults.timeout = 10000
 
 // http request 请求拦截器
 axios.interceptors.request.use(

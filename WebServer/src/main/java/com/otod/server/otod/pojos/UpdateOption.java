@@ -6,6 +6,10 @@ public class UpdateOption {
     public UpdateOption() {
     }
 
+    public UpdateOption(boolean recommened){
+        this.recommened = recommened;
+    }
+
     public boolean isRecommened() {
         return recommened;
     }

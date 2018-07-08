@@ -1,0 +1,94 @@
+.followed-box{
+    width: 670px;
+    padding: 0 1px;
+    border-top: 1px solid #d4d4d5;
+    float: left;
+    background-color: #fff;
+    font-size: 12px;
+    color: #444;
+}
+
+.followed-box .box-head{
+    padding: 26px 30px 16px;
+    border-bottom: 1px solid #ebebeb;
+}
+.box-head h2{
+    font-size: 32px;
+    font-weight: normal;
+    font-family: "Hiragino Sans GB","Microsoft YaHei","微软雅黑",tahoma,arial,simhei,"黑体";
+}
+
+.followed-content{
+    padding: 26px 30px 0;
+}
+
+.followed-content .content{
+    width: 610px;
+    margin: 0 0 30px;
+    background: url(../images/glist.png);
+}
+
+.content li{
+    position: relative;
+    float: left;
+    width: 275px;
+    height: 36px;
+    padding: 15px;
+    overflow: hidden;
+}
+
+.content li .user-head{
+    float: left;
+    margin-right: 10px;
+}
+
+.user-head .img{
+    width: 30px;
+    height: 30px;
+}
+
+.user-cnt {
+    float: left;
+    width: 200px;
+}
+
+.user-cnt h4{
+    position: relative;
+    height: 20px;
+    line-height: 20px;
+    padding-right: 0.5em;
+    overflow: hidden;
+    margin: -2px 0 3px;
+    font-size: 16px;
+    word-wrap: break-word;
+    word-break: break-all;
+}
+
+em{
+    position: relative;
+    display: inline-block;
+    font-weight: normal;
+}
+
+.user-cnt h4 a{
+    display: inline-block;
+    max-width: 114px;
+    color: #444;
+}
+
+.content .follow{
+    background: url(../images/icon2-8.png) no-repeat 999px 999px;
+    background-position: -52px -1757px;
+    position: absolute;
+    top: 22px;
+    right: 20px;
+    clear: both;
+    width: 21px;
+    height: 21px;
+    overflow: hidden;
+    text-indent: -2000px;
+}
+
+.content .follow:hover{
+    background-position: -78px -1757px;
+}

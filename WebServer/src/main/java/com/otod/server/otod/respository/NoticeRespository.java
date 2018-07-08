@@ -15,7 +15,13 @@ public interface NoticeRespository extends JpaRepository<Notice,Long> {
 
     List<Notice> findAllByUserOwnAndRead(User user,Integer read);
 
+    Long countByUserOwnAndRead(User user,Integer read);
+
     @Modifying
     @Query("update Notice a set a.read = ?1 where a.noticeId in ?2")
     void updateNoticeStatus(Integer status,List<Long> noticeId);
+
+    @Modifying
+    @Query("update Notice a set a.read = 0 where a.userOwn = ?1")
+    void readAllNotice(User user);
 }

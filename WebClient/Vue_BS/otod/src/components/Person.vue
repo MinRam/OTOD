@@ -41,7 +41,7 @@
             <div v-for="(update,index) in updatings" :key="index" class="update-item">
                 <div class="update-userHead">
                     <a>
-                        <img :src="$imageUrl + update.author.headPhoto"/>
+                        <img :src="$imageUrl + update.author.headImage"/>
                     </a>
                 </div>
                 <div class="update-content">
@@ -50,16 +50,16 @@
                      </div>
                     <div class="update-message">
                         <div class="message-who">
-                            <a class="message-user">{{update.author.username}}</a>
+                            <a class="message-user">{{update.author.nickname}}</a>
                          </div>
                         <div class="message-content">
-                            <div class="content-img">
+                            <div class="content-img" v-if="update.images !== null">
                                 <a>
-                                  <img :src="$imageUrl + update.images[0].url" :title="update.images[0].title"/>
+                                  <img :src="$imageUrl + update.images[0]"/>
                                 </a>
                             </div>
                             <div class="content-txt">
-                                <p v-for="(con,index) in update.content" :key="index">{{con}}</p>
+                                <p>{{update.content}}</p>
                             </div>
                          </div>
                         <div class="message-footer">
@@ -69,7 +69,7 @@
                             <div class="message-options">
                                 <span class="opt-share">推荐</span>
                                 <span class="opt-love">
-                                    <a class="love-icon" :class="{'active':update.updateOpt.recommened}" hideFocus="true" title="喜欢" @click="recommendUpdate(update.updateId,index)">喜欢</a>
+                                    <a class="love-icon" :class="{'active':update.updateOption.recommened}" hideFocus="true" title="喜欢" @click="recommendUpdate(update.updateId,index)">喜欢</a>
                                 </span>
                              </div>
                          </div>
@@ -79,6 +79,9 @@
              </div>
             <div class="load-bar" v-if="loading">
                 <div class="loading">玩命加载中</div>
+            </div>
+            <div class="bottom-bar" v-if="bottom">
+                <div class="bottom">已经到了最底部了</div>
             </div>
          </div>
 </template>
@@ -110,70 +113,12 @@ export default{
       noticeList: [],
 
       // 动态信息列表
-      updatings: [{
-        author: {
-          headPhoto: 'hp/6630576284002729390.jpg',
-          username: 'TianChengLiu',
-          telephone: ''
-        },
-        updateId: 1,
-        updateTags: [{
-          name: '皮皮虾'
-        }, {
-          name: '揍你'
-        }],
-        images: [{
-          url: 'Images/1.jpg',
-          title: '早上好'
-        }],
-        content: ['怕上火爆王老菊'],
-        updateOpt: {
-          recommened: false
-        }
-      }, {
-        author: {
-          headPhoto: 'hp/6630576284002729390.jpg',
-          username: 'TianChengLiu',
-          telephone: ''
-        },
-        updateId: 2,
-        updateTags: [{
-          name: '皮皮虾'
-        }, {
-          name: '揍你'
-        }],
-        images: [{
-          url: 'Images/1.jpg',
-          title: '早上好'
-        }],
-        content: ['怕上火爆王老菊', '123'],
-        updateOpt: {
-          recommened: true
-        }
-      }, {
-        author: {
-          headPhoto: 'hp/6630576284002729390.jpg',
-          username: 'TianChengLiu',
-          telephone: ''
-        },
-        updateId: 3,
-        updateTags: [{
-          name: '皮皮虾'
-        }, {
-          name: '揍你'
-        }],
-        images: [{
-          url: 'Images/1.jpg',
-          title: '早上好'
-        }],
-        content: ['怕上火爆王老菊', '123'],
-        updateOpt: {
-          recommened: true
-        }
-      }],
+      page: 0,
+      updatings: [],
 
       // 加载显示
-      loading: true
+      loading: true,
+      bottom: false
     }
   },
   created () {
@@ -197,12 +142,18 @@ export default{
       }.bind(this))
 
       // get Update List
-      // this.$axios({
-      //   method: 'get',
-      //   url: this.$url + '/user/get'
-      // })
+      this.$axios({
+        method: 'get',
+        url: this.$url + '/user/getUpdateList',
+        params: {
+          access_token: this.$getCookie('otod_access_token'),
+          page: this.page
+        }
+      }).then(function (response) {
+        this.loading = false
+        this.updatings = response.data
+      }.bind(this))
 
-      this.loading = false
       // console.log('finished')
     },
 
@@ -243,49 +194,46 @@ export default{
       var scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight
 
       // 动态加载
-      if (!this.loading && scrollTop + windowHeight > scrollHeight - 100) {
+      if (!this.bottom && !this.loading && scrollTop + windowHeight > scrollHeight - 100) {
         // 写后台加载数据的函数
         this.loading = true
-
-        this.updatings.push({
-          author: {
-            headPhoto: 'hp/6630576284002729390.jpg',
-            username: 'TianChengLiu',
-            telephone: ''
-          },
-          updateTags: [{
-            name: '皮皮虾'
-          }, {
-            name: '揍你'
-          }],
-          images: [{
-            url: 'Images/1.jpg',
-            title: '早上好'
-          }],
-          content: ['怕上火爆王老菊', '123'],
-          updateOpt: {
-            recommened: true
+        // get Update List
+        this.$axios({
+          method: 'get',
+          url: this.$url + '/user/getUpdateList',
+          params: {
+            access_token: this.$getCookie('otod_access_token'),
+            page: this.page + 1
           }
-        })
-
-        this.loading = false
+        }).then(function (response) {
+          if (response.data.length > 0) {
+            this.page += 1
+            for (var i = 0; i < response.data.length; ++i) {
+              this.updatings.push(response.data[i])
+            }
+            this.loading = false
+          } else {
+            this.loading = false
+            this.bottom = true
+          }
+        }.bind(this))
       }
     },
 
     recommendUpdate (id, index) {
-      if (this.updatings[index].updateOpt.recommened) {
+      if (this.updatings[index].updateOption.recommened) {
         this.$axios({
           method: 'get',
-          url: this.$url + '/user/favorUpdate',
+          url: this.$url + '/user/noFavorUpdate',
           params: {
             access_token: this.$getCookie('otod_access_token'),
             update_id: id
           }
         }).then(function (response) {
           if (response.data === 'success') {
-            this.updatings[index].updateOpt.recommened = false
+            this.updatings[index].updateOption.recommened = false
           }
-        })
+        }.bind(this))
       } else {
         this.$axios({
           method: 'get',
@@ -296,9 +244,9 @@ export default{
           }
         }).then(function (response) {
           if (response.data === 'success') {
-            this.updatings[index].updateOpt.recommened = true
+            this.updatings[index].updateOption.recommened = true
           }
-        })
+        }.bind(this))
       }
     }
   }

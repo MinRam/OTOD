@@ -14,6 +14,7 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -38,6 +39,15 @@ public class UserService {
 
     @Autowired
     private VrssUserService vrssUserService;
+
+    @Autowired
+    private UserFavorRepository userFavorRepository;
+
+    @Autowired
+    private NoticeService noticeService;
+
+    @Autowired
+    private UserUpdateTagRepository userUpdateTagRepository;
 //    @Bean
 //    public PasswordEncoder passwordEncoder(){
 //        String idForEncode = "bcrypt";
@@ -92,6 +102,7 @@ public class UserService {
         // 关联信息表
         userInfo.setSex("男");
         userInfo.setUser(user);
+        userInfo.setHeadImage("hp/default.png");
         userInfoRespository.save(userInfo);
 
         // 设置mUser
@@ -129,8 +140,9 @@ public class UserService {
     // 关注用户
     public boolean followUser(User user,String nickname){
         User followUser = this.getUserInfo(nickname).getUser();
+        System.out.println(followUser.getUserId());
         if(followUser == null) return false;
-        else if(userFollowRespository.findAllByUserAndUserFollow(user,followUser)!= null){
+        else if(userFollowRespository.findAllByUserAndUserFollow(user,followUser)== null){
             this.userFollowRespository.save(new UserFollow(user,followUser));
             return true;
         }else return false;
@@ -152,7 +164,62 @@ public class UserService {
     }
 
     public List<Update> getUserUpdate(UserInfo userInfo){
-        System.out.println(userInfo.getId());
         return userUpdateRepository.findAllByUserSender(userInfo);
+    }
+
+    // get Nums
+    public Long getUpdateNumBySender(UserInfo userInfo){
+        return userUpdateRepository.countByUserSender(userInfo);
+    }
+
+    public Long getUpdateFavorNumByUser(User user){
+        return userFavorRepository.countByUser(user);
+    }
+
+    public Long getUserFollowNumByUser(User user){
+        return userFollowRespository.countByUser(user);
+    }
+
+    public Long getUserFollowedNumByUser(User user){
+        return userFollowRespository.countByUserFollow(user);
+    }
+
+    public Page<Update> getUpdateByAllUser(List<User> userfollow,Integer page) {
+        List<UserInfo> userInfos = new ArrayList<>();
+        for(User user:userfollow){
+            userInfos.add(this.getUserInfo(user));
+        }
+        Page<Update> updatePage = userUpdateRepository.findAllByUserSenderIn(userInfos, PageRequest.of(page,6
+                ,new Sort(Sort.Direction.DESC,"date")));
+
+        return updatePage;
+    }
+
+    public UserFavor getUpdateOption(User user, Update update) {
+        return userFavorRepository.findByUserAndUpdate(user,update);
+    }
+
+    public void favorUpdate(User user, Long updateId) {
+        Update update = userUpdateRepository.findByUpdateId(updateId);
+        userFavorRepository.save(new UserFavor(user,update));
+
+        Notice notice = new Notice();
+        notice.setAddtime(new Date());
+        notice.setObject(updateId.intValue());
+        notice.setTitle("喜欢了您的动态：");
+        notice.setUserOwn(update.getUserSender().getUser());
+        notice.setUserOut(user);
+        notice.setRead(1);
+
+        noticeService.addNotice(notice);
+    }
+
+    public void noFavorUpdate(User user, Long updateId) {
+        Update update = userUpdateRepository.findByUpdateId(updateId);
+        userFavorRepository.deleteByUserAndUpdate(user,update);
+    }
+
+    public List<UpdateTag> getAllUpdateTags() {
+        return userUpdateTagRepository.findAll();
     }
 }

@@ -21,24 +21,26 @@ a {
 
 
 .w-top{
-    opacity: 0;
+    opacity: 1;
     background-color: black;
     position: fixed;
     _position: absolute;
     right: 30px;
     bottom: 30px;
-    z-index: 79;
+    z-index: 1;
     width: 50px;
     height: 50px;
     overflow: hidden;
     text-indent: -2000px;
+    background-image: url(../images/icon2-8.png);
     background-position: 0 -934px;
     transition: opacity 0.3s;
 }
 
-.w-top.active{
-    opacity: 1;
+.w-top:hover{
+    background-position: -50px -934px;
 }
+
 /*main css*/
 .otod-home .otod-content .main{
     float: left;
@@ -344,7 +346,7 @@ a {
 }
 
 /*load bar css*/
-.main .load-bar {
+.main .load-bar, .main .bottom-bar{
     float: left;
     width: 100%;
     margin: 40px auto;
@@ -359,6 +361,15 @@ a {
     font-size: 22px;
     line-height: 25px;
     background: url(../images/loading.gif) no-repeat right center;
+}
+
+.bottom-bar .bottom{
+     display: inline-block;
+    padding-right: 68px;
+    margin-left: -70px;
+    color: #444;
+    font-size: 22px;
+    line-height: 25px;
 }
 /*reside css*/
 .otod-home .otod-content .reside {
@@ -462,36 +473,64 @@ a {
     background-position: 0 -1684px;
 }
 
+.user-menu .small.active .menu-item .icon.icon-1{
+    background-position: 0 -1723px;
+}
+
 .user-menu .small .menu-item .icon.icon-2{
     background-position: 0 -432px;
+}
+
+.user-menu .small.active .menu-item .icon.icon-2{
+    background-position: 0 -464px;
 }
 
 .user-menu .small .menu-item .icon.icon-3{
     background-position: 0 -1756px;
 }
 
+.user-menu .small.active .menu-item .icon.icon-3{
+    background-position: 0 -1823px;
+}
+
 .user-menu .small .menu-item .icon.icon-4{
     background-position: 0 -288px;
 }
 
+
 .user-menu .small .menu-item .icon.icon-5{
     background-position: 0 -1823px;
+}
+
+.user-menu .small.active .menu-item .icon.icon-5{
+    background-position: 0 -1857px;
 }
 
 .user-menu .small .menu-item .icon.icon-6{
     background-position: 0 -1966px;
 }
 
+.user-menu .small.active .menu-item .icon.icon-6{
+    background-position: 0 -1997px;
+}
+
 .user-menu .user-setting .icon.setting{
     background-position: 0 -1601px;
 }
 
-.user-menu .small .menu-item .inf {
+.user-menu .small .menu-item .inf{
     float: right;
     color: #888;
     white-space: nowrap;
     margin-right: 18px;
     font-size: 12px;
+}
+
+.user-menu .small.active{
+    background-color: #717171;
+}
+.user-menu .small.active span.inf,.user-menu .small.active span{
+    color: #fff;
 }
 
 .menu-item .lg1{
