@@ -92,8 +92,12 @@ body {
     border-bottom:8px solid #ededef ;
 }
 
-.menu-nav .nav-tab li.active,.menu-nav .nav-tab li:hover{
+.menu-nav .nav-tab li.active,.menu-nav .nav-tab li:hover,.menu-nav .nav-tab li:hover .more-link{
     color: #fff;
+}
+
+.el-popper{
+    border-radius: 1px;
 }
 
 .menu-nav .nav-tab li .more-link{

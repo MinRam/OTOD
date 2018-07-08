@@ -11,5 +11,13 @@ export default{
     Vue.prototype.$UserRouter = function (nickname) {
       console.log(nickname)
     }
+    Vue.prototype.$clearCookie = function clearCookie (name) {
+      var exp = new Date()
+      exp.setTime(exp.getTime() - 1)
+      var cval = this.$getCookie(name)
+      if (cval != null) {
+        document.cookie = name + '=' + cval + ';expires=' + exp.toGMTString() + ';Path=/;'
+      }
+    }
   }
 }

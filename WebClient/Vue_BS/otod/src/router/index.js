@@ -330,15 +330,11 @@ const routerObj = new Router({
 // 跳转检测是否需要验证
 routerObj.beforeEach((to, from, next) => {
   // 从store获取token
-  var token = '123'
-  console.log('router')
+  var token = Vue.prototype.$getCookie('otod_access_token')
   // 当需要验证且无token时候
-  if (to.meta.requireAuth && (token === null)) {
-    alert('Auth:' + to.requireAuth + ',token:' + token)
-
+  if (!token && to.fullPath !== '/login') {
     next('/login')
   } else {
-    // 无需验证
     next()
   }
 })
