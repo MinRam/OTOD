@@ -521,35 +521,35 @@ img{
 }
 
 .section-wrapper .server-graphic .server-post-item.server-1 .icon-picture{
-    background-image: url(../images/server1.png);
+    background-image: url(./../images/server1.png);
 }
 
 .section-wrapper .server-graphic .server-post-item.server-2 .icon-picture{
-    background-image: url(../images/server2.png);
+    background-image: url(./../images/server2.png);
 }
 
 .section-wrapper .server-graphic .server-post-item.server-3 .icon-picture{
-    background-image: url(../images/server3.png);
+    background-image: url(./../images/server3.png);
 }
 
 .section-wrapper .server-graphic .server-post-item.server-4 .icon-picture{
-    background-image: url(../images/server4.png);
+    background-image: url(./../images/server4.png);
 }
 
 .section-wrapper .server-graphic .server-post-item.server-5 .icon-picture{
-    background-image: url(../images/server5.png);
+    background-image: url(./../images/server5.png);
 }
 
 .section-wrapper .server-graphic .server-post-item.server-6 .icon-picture{
-    background-image: url(../images/server6.png);
+    background-image: url(./../images/server6.png);
 }
 
 .section-wrapper .server-graphic .server-post-item.server-7 .icon-picture{
-    background-image: url(../images/server7.png);
+    background-image: url(./../images/server7.png);
 }
 
 .section-wrapper .server-graphic .server-post-item.server-8 .icon-picture{
-    background-image: url(../images/server8.png);
+    background-image: url(./../images/server8.png);
 }
 
 
@@ -564,11 +564,11 @@ img{
 }
 
 .login-section .fullscreen_post_bg {
-    background-image: url(../backgrounds/login.jpg);
+    background-image: url(./../backgrounds/login.jpg);
 }
 
 .welcome-section .fullscreen_post_bg {
-    background-image: url(../backgrounds/login2.jpg);
+    background-image: url(./../backgrounds/login2.jpg);
 }
 
 
