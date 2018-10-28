@@ -92,3 +92,21 @@ em{
 .content .follow:hover{
     background-position: -78px -1757px;
 }
+
+.content .no-follow{
+    background: url(../images/icon2-8.png) no-repeat 999px 999px;
+    background-position: 0 -1757px;
+    display: none;
+    position: absolute;
+    top: 22px;
+    right: 20px;
+    clear: both;
+    width: 21px;
+    height: 21px;
+    overflow: hidden;
+    text-indent: -2000px;
+}
+
+.content .no-follow:hover{
+    background-position: -26px -1757px;
+}

@@ -15,6 +15,7 @@ public interface UserUpdateRepository extends JpaRepository<Update,Long> {
     Page<Update> findAll(Pageable pageable);
     Page<Update> findAllByUserSenderIn(List<UserInfo> userInfos,Pageable pageable);
     List<Update> findAllByUserSender(UserInfo userInfo);
+    Page<Update> findAllByUserSender(UserInfo userInfo,Pageable pageable);
     List<Update> findAllByUserSenderIn(List<UserInfo> userInfo);
     Long countByUserSender(UserInfo userInfo);
 }

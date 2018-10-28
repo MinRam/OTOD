@@ -7,6 +7,7 @@ import ForumReply from '@/pages/ForumReply'
 import Index from '@/pages/Index'
 import Home from '@/pages/Home'
 import Person from '@/components/Person'
+import Dynamic from '@/components/Dynamic'
 import Notice from '@/components/Notice'
 import Follow from '@/components/Follow'
 import Followed from '@/components/Followed'
@@ -78,6 +79,13 @@ const routes = [
             requireAuth: true
           },
           component: Person
+        }, {
+          path: '/home/dynamic',
+          name: 'Dynamic',
+          meta: {
+            requireAuth: true
+          },
+          component: Dynamic
         }, {
           path: '/home/notice',
           name: 'Notice',

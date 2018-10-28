@@ -222,4 +222,9 @@ public class UserService {
     public List<UpdateTag> getAllUpdateTags() {
         return userUpdateTagRepository.findAll();
     }
+
+    public Page<Update> getUpdateByUser(User user, Integer page) {
+        return userUpdateRepository.findAllByUserSender(this.getUserInfo(user),PageRequest.of(page,6
+                ,new Sort(Sort.Direction.DESC,"date")));
+    }
 }

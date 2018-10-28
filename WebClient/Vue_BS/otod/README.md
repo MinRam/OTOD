@@ -1,8 +1,9 @@
 # otod
-
+大学生资源共享平台
 > A Vue.js project
 
 ## Build Setup
+> Don't use cnpm
 
 ``` bash
 # install dependencies

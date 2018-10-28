@@ -1,7 +1,7 @@
 <template>
     <div class="followed-box">
         <div class="box-head">
-            <h2 class="head-title">关注({{followedList.length}})</h2>
+            <h2 class="head-title">关注({{followList.length}})</h2>
         </div>
         <div class="followed-content">
           <div class="content">
@@ -17,7 +17,7 @@
                         </em>
                       </h4>
                     </div>
-                    <a href="#" class="no-follow" title="添加关注" style="display: block;" @click="follow(follow.nickname)">添加关注</a>
+                    <a href="#" class="no-follow" title="取消关注" style="display: block;" @click="noFollow(follow.nickname)">添加关注</a>
                 </li>
              </ul>
           </div>
@@ -51,7 +51,7 @@ export default{
       }.bind(this))
     },
 
-    follow (nickname) {
+    noFollow (nickname) {
       this.$axios({
         methods: 'get',
         url: this.$url + '/user/followUser',

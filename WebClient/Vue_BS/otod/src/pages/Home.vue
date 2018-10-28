@@ -57,6 +57,7 @@ export default {
       menuList: [{
         icon: 'icon-1',
         title: '动态',
+        link: '/home/dynamic',
         number: 1,
         active: false
       }, {

@@ -17,7 +17,7 @@
                         </em>
                       </h4>
                     </div>
-                    <a href="#" v-if="followed.active == true" class="follow" title="添加关注" style="display: block;" @click="follow(followed.nickname)">添加关注</a>
+                    <a href="#" v-if="followed.active" class="follow" title="添加关注" style="display: block;" @click="follow(followed.nickname)">添加关注</a>
                 </li>
              </ul>
           </div>
@@ -62,12 +62,12 @@ export default{
         }
       }).then(function (response) {
         // if (response.data === 'success'){
-          for (var i = 0; i < this.followedList.length; ++i) {
-            if (this.followedList[i].nickname === nickname) {
-              this.followedList[i].active = false
-              break
-            }
+        for (var i = 0; i < this.followedList.length; ++i) {
+          if (this.followedList[i].nickname === nickname) {
+            this.followedList[i].active = false
+            break
           }
+        }
         // } else {
         //   this.$message.error('该用户已经关注')
         // }

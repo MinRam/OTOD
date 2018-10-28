@@ -263,6 +263,26 @@ public class UserController  {
         return userUpdates;
     }
 
+    @GetMapping("/user/getUserUpdateList")
+    private List<UserUpdate> getUserUpdateLIst(@RequestParam(value ="page") Integer page){
+        User user = userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName());
+
+        Page<Update> list = userService.getUpdateByUser(user,page);
+
+        List<Update> updateList = list.getContent();
+        List<UserUpdate> userUpdates = new ArrayList<>();
+
+        for(Update update: updateList){
+            UserUpdate userUpdate = new UserUpdate(update);
+            userUpdate.setAuthor(new UserSimpleInfo(update.getUserSender()));
+            userUpdate.setUpdateTags(update.getTags());
+            userUpdate.setUpdateOption(new UpdateOption(userService.getUpdateOption(user,update)!= null));
+            userUpdates.add(userUpdate);
+        }
+
+        return userUpdates;
+    }
+
     @GetMapping("/user/favorUpdate")
     private String favorUpdate(@RequestParam (value="update_id") Long updateId){
         User user = userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName());
